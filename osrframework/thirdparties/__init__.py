@@ -2,9 +2,9 @@
 #
 ##################################################################################
 #
-#	This file is part of i3visio_tools.
+#	This file is part of OSRFramework.
 #
-#	i3visio_tools is free software: you can redistribute it and/or modify
+#	OSRFramework is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -19,7 +19,11 @@
 #
 ##################################################################################
 
-import i3visiotools.logger
+import os
+import sys
+# Including the previous package
+sys.path.append(os.getcwd())
 
+import logger
 # Calling the logger when being imported
-i3visiotools.logger.setupLogger(loggerName="i3visiotools.apify")
+osrframework.logger.setupLogger(loggerName="osrframework.thirdparties")

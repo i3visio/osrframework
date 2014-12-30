@@ -22,4 +22,4 @@
 import osrframework.logger
 
 # Calling the logger when being imported
-osrframework.logger.setupLogger(loggerName="osrframework")
+osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.ip_api_dot_com")
