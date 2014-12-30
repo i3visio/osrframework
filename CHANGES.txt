@@ -1,0 +1,1 @@
+For more information, check the README.md in http://github.com/i3visio/osrframework

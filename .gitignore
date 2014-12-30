@@ -1,0 +1,12 @@
+results*
+contrib*
+logs*
+*pyc
+*~
+creds.txt
+build*
+dist*
+*egg-info*
+_lab*
+_new*
+user-collector*
