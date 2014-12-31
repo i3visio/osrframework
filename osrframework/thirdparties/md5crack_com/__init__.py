@@ -20,5 +20,6 @@
 ##################################################################################
 
 import osrframework.logger
+
 # Calling the logger when being imported
-osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.blockchain_dot_info")
+osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.md5crack_com")

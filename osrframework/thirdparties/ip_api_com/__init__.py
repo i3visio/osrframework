@@ -22,4 +22,4 @@
 import osrframework.logger
 
 # Calling the logger when being imported
-osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.md5crack_dot_com")
+osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.ip_api_com")

@@ -21,4 +21,4 @@
 
 import osrframework.logger
 # Calling the logger when being imported
-osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.haveibeenpwned_dot_info")
+osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.blockchain_info")
