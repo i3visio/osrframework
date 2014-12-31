@@ -6,7 +6,6 @@ logs*
 creds.txt
 build*
 dist*
-*egg-info*
+*egg*
 _lab*
 _new*
-user-collector*
