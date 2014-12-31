@@ -20,7 +20,7 @@
 
 import argparse
 import json
-import osrframework.config_api_keys as config_api_keys
+import osrframework.utils.config_api_keys as config_api_keys
 import sys
 import urllib2
 

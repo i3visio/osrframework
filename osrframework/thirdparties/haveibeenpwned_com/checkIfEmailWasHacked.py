@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()        
     
-    print json.dumps(checkIfHashIsCracked(email=args.query), indent=2)
+    print json.dumps(checkIfEmailWasHacked(email=args.query), indent=2)
 
 
 
