@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#	This program is part of apify. You can redistribute it and/or modify
+#	This program is part of OSRFramework. You can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -18,16 +18,18 @@
 #
 ##################################################################################
 
-import sys
+import argparse
 import json
+import osrframework.config_api_keys as config_api_keys
+import sys
 import urllib2
-import i3visiotools.config_api_keys as config_api_keys
 
-def checkIfCrackedInMD5crack(hash=None, api_key=None):
+def checkIfHashIsCracked(hash=None, api_key=None):
 	''' 
-		Method that checks if the given hash is stored in the md5crack.com website. An example of the json received:
+		Method that checks if the given hash is stored in the md5crack.com website. 
 
 		:param hash:	hash to verify.
+		:param api_key:	api_key to be used in md5crack.com. If not provided, the API key will be searched in the config_api_keys.py file.
 
 		:return:	Python structure for the Json received.
 	'''
@@ -56,6 +58,18 @@ def checkIfCrackedInMD5crack(hash=None, api_key=None):
 	return jsonData
 
 if __name__ == "__main__":
-	checkIfCrackedInMD5crack(hash=sys.argv[1])
+	parser = argparse.ArgumentParser(description='A library that wraps a search onto md5crack.com.', prog='checkIfHashIsCracked.py', epilog="NOTE: if not provided, the API key will be searched in the config_api_keys.py file.", add_help=False)
+	# Adding the main options
+	# Defining the mutually exclusive group for the main options
+	parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to md5crack.com.', required=True)		
+	parser.add_argument('-a', '--api_key', action='store', help='API key in md5crack.com to be used.', required=False, default=None)
+	
+	groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+	groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+	groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
+
+	args = parser.parse_args()		
+	
+	print json.dumps(checkIfHashIsCracked(hash=args.query, api_key=args.api_key), indent=2)
 
 

@@ -22,7 +22,7 @@
 import logging
 import os
 
-def setupLogger(loggerName="osrframework", logFolder="./logs", verbosity=1):
+def setupLogger(loggerName="osrframework", logFolder="./logs", verbosity=0):
 	""" 
 		Returns the logger to be used for the whole app. This method may be invoked if required by the launcher to update the verbosity syntax.
 	
@@ -43,16 +43,15 @@ def setupLogger(loggerName="osrframework", logFolder="./logs", verbosity=1):
 	formatter = logging.Formatter(loginFormat)
 
 	# first, defining the type of standard output and verbosity 
-        if verbosity == 0:
+    if verbosity == 0:
 		logging.basicConfig(level=logging.ERROR, format=loginFormat)
-        elif verbosity == 1:
+    elif verbosity == 1:
 		logging.basicConfig(level=logging.INFO, format=loginFormat)
-        elif verbosity == 2:
+    elif verbosity == 2:
 		logging.basicConfig(level=logging.DEBUG, format=loginFormat)
 
 	# trying to store the logfile
 	try:
-	
 		# verifying if the logs folder exist
 		logFolder = os.path.join(os.path.dirname(os.path.realpath(__file__)), logFolder)
 		if not os.path.exists(logFolder):

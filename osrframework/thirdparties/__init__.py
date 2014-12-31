@@ -19,11 +19,6 @@
 #
 ##################################################################################
 
-import os
-import sys
-# Including the previous package
-sys.path.append(os.getcwd())
-
-import logger
+import osrframework.utils.logger
 # Calling the logger when being imported
-osrframework.logger.setupLogger(loggerName="osrframework.thirdparties")
+osrframework.utils.logger.setupLogger(loggerName="osrframework.thirdparties")

@@ -16,14 +16,14 @@ except ImportError:
 
     
 # verifying if the credential files have already been created
-"""import os
+import os
 try:
-    if not os.path.isfile("./osrframework/config_credentials.py"):
+    """if not os.path.isfile("./osrframework/config_credentials.py"):
         # An empty credentials file will be created
         with open("./osrframework/config_credentials.py", "w") as oF:
             with open("./osrframework/config_credentials.py.sample") as iF:
                 cont = iF.read()
-                oF.write(cont)
+                oF.write(cont)"""
     if not os.path.isfile("./osrframework/config_api_keys.py"):
         # An empty api_keys file will be created
         with open("./osrframework/config_api_keys.py", "w") as oF:
@@ -35,7 +35,7 @@ except:
     print "The installation is aborting now."
     import sys
     sys.exit()
-""" 
+ 
 setup(    name="osrframework",
     version="v0.1.0",
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
@@ -49,8 +49,10 @@ setup(    name="osrframework",
         "osrframework.thirdparties.blockchain_info", 
         "osrframework.thirdparties.haveibeenpwned_com", 
         "osrframework.thirdparties.ip_api_com", 
+        "osrframework.thirdparties.md5crack_com", 
+        "osrframework.thirdparties.skype",         
+        "osrframework.utils",         
         #"osrframework.wrappers", 
-        #"osrframework.apify", 
         #"osrframework.darkfy",
         #"osrframework.darkfy.lib",
         #"osrframework.darkfy.lib.wrappers",
@@ -59,7 +61,7 @@ setup(    name="osrframework",
     long_description=read_md("README.md"),
 #    long_description=open('README.md').read(),
     install_requires=[
-     "mechanize",
+#    "mechanize",
     "Skype4Py",
     "argparse",
     "requests",

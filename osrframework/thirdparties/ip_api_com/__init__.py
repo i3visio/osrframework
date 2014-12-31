@@ -19,7 +19,7 @@
 #
 ##################################################################################
 
-import osrframework.logger
+import osrframework.utils.logger
 
 # Calling the logger when being imported
-osrframework.logger.setupLogger(loggerName="osrframework.thirdparties.ip_api_com")
+osrframework.utils.logger.setupLogger(loggerName="osrframework.thirdparties.ip_api_com")

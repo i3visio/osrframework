@@ -68,15 +68,15 @@ cd osrframework-master
 ```
 
 Then, you might have to copy the sample files in the osrframework folder to add your  
-own credentials or API Keys. You might edit with your preferred text editor.
+own API Keys. You might edit them with your preferred text editor.
 ```
-cp config_credentials.py.sample config_credentials.py
-nano config_credentials.py
 cp config_api_keys.py.sample config_api_keys.py
 nano config_api_keys.py
 cd ..
 ```
-Then you can proceed to the installation.
+If you skip this step, OSRFramework will create files without any credentials. This is not a
+mojor issue as you will be able to provide them as a parameter. Then you can resume the 
+installation.
 ```
 # Superuser privileges are required so as to complete the installation.
 sudo python setup.py build

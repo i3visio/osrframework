@@ -18,8 +18,9 @@
 #
 ##################################################################################
 
-import sys
+import argparse
 import json
+import sys
 import urllib2
 
 def checkIfEmailWasHacked(email=None):
@@ -29,7 +30,7 @@ def checkIfEmailWasHacked(email=None):
 
         :param email:    email to verify.
 
-        :return:    Python structure for the Json received.
+        :return:    Python structure for the json received. If nothing was found, it will return an empty dictionary.
     '''
 
     apiURL= "https://haveibeenpwned.com/api/v2/breachedaccount/" +email
@@ -47,6 +48,18 @@ def checkIfEmailWasHacked(email=None):
         return {}
 
 if __name__ == "__main__":
-    print json.dumps(checkIfEmailWasHacked(email=sys.argv[1]), indent = 2)
+    parser = argparse.ArgumentParser(description='A library that wraps an account search onto haveibeenpwned.com.', prog='checkIfEmailWasHacked.py', epilog="", add_help=False)
+    # Adding the main options
+    # Defining the mutually exclusive group for the main options
+    parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to haveibeenpwned.com.', required=True)        
+    
+    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
+
+    args = parser.parse_args()        
+    
+    print json.dumps(checkIfHashIsCracked(email=args.query), indent=2)
+
 
 

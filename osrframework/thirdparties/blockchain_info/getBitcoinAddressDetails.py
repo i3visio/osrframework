@@ -18,8 +18,9 @@
 #
 ##################################################################################
 
-import sys
+import argparse
 import json
+import sys
 import urllib2
 
 def getBitcoinAddressDetails(address=None):
@@ -36,17 +37,33 @@ def getBitcoinAddressDetails(address=None):
 
         :param address: Bitcoin address to verify.
 
-        :return:        Python structure for the Json received.
+        :return:        Python structure for the json received. If nothing was found, it will return an empty dictionary.
     '''
+    try:
+        apiURL = "https://blockchain.info/rawaddr/" + str(address)
 
-    apiURL = "https://blockchain.info/rawaddr/" + str(address)
+        # Accessing the HIBP API
+        data = urllib2.urlopen(apiURL).read()
 
-    # Accessing the HIBP API
-    data = urllib2.urlopen(apiURL).read()
+        # Reading the text data onto python structures
+        jsonData = json.loads(data)
+        return jsonData
+    except:
+        # No information was found, then we return a null entity
+        return {}    
 
-    # Reading the text data onto python structures
-    jsonData = json.loads(data)
-    return jsonData
+if __name__ == "__main__":    
+    parser = argparse.ArgumentParser(description='A library that wraps the search about a Bitcoin address in blockchain.info.', prog='getBitcoinAddressDetails.py', epilog="", add_help=False)
+    # Adding the main options
+    # Defining the mutually exclusive group for the main options
+    parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to blockchain.info.', required=True)        
+    
+    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
 
-if __name__ == "__main__":
-    print json.dumps(getBitcoinAddressDetails(address=sys.argv[1]), indent = 2)
+    args = parser.parse_args()        
+    
+    print json.dumps(getBitcoinAddressDetails(address=args.query), indent=2)
+
+    
