@@ -1,0 +1,9 @@
+<MaltegoEntity id="i3visio.location.country" displayName="i3visio - Country" displayNamePlural="i3visio - Countrys" description="" category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.location</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Groups/>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

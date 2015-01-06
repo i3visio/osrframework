@@ -1,0 +1,21 @@
+<MaltegoServer name="Local" enabled="true" description="Local transforms hosted on this machine" url="http://localhost">
+   <LastSync>2014-12-26 10:56:58.766 CET</LastSync>
+   <Protocol version="0.0"/>
+   <Authentication type="none"/>
+   <Transforms>
+      <Transform name="i3visio.hashToMD5crackDotCom"/>
+      <Transform name="i3visio.emailToSkypeAccounts"/>
+      <Transform name="i3visio.extractAllEntitiesFromText"/>
+      <Transform name="i3visio.aliasToSkypeAccounts"/>
+      <Transform name="maltego.transform.WebTx"/>
+      <Transform name="i3visio.uriToEntities"/>
+      <Transform name="i3visio.aliasToAllProfiles"/>
+      <Transform name="felixbrezo.helloworld"/>
+      <Transform name="i3visio.bitcoinAddressToBlockchainDetails"/>
+      <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>
+      <Transform name="i3visio.aliasToFamousPlatforms"/>
+      <Transform name="i3visio.textToDeepWebSearch"/>
+      <Transform name="i3visio.emailToBreachedAccounts"/>
+      <Transform name="i3visio.extractAllEntitiesFromProfile"/>
+   </Transforms>
+</MaltegoServer>

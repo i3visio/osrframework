@@ -1,0 +1,9 @@
+<MaltegoEntity id="i3visio.text" displayName="i3visio - Text" displayNamePlural="i3visio - Texts" description="Any kind of textual data." category="i3visio" smallIconResource="TextField" largeIconResource="TextField" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Groups/>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

@@ -1,0 +1,14 @@
+<MaltegoEntity id="i3visio.alias" displayName="i3visio - Alias" displayNamePlural="i3visio - Aliases" description="Any valid alias to be checked." category="i3visio" smallIconResource="IdGolden" largeIconResource="IdGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.text</BaseEntity>
+   </BaseEntities>
+   <Properties value="properties.i3visio-alias">
+      <Groups/>
+      <Fields>
+         <Field name="properties.i3visio-alias" type="string" nullable="true" hidden="false" readonly="false" description="This field contains the nickname to be looked for." displayName="i3visio - Alias">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>i3visio</SampleValue>
+         </Field>
+      </Fields>
+   </Properties>
+</MaltegoEntity>

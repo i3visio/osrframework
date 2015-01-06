@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.phone.office" displayName="i3visio - Phone Office" displayNamePlural="i3visio - Phone Offices" description="" category="i3visio" smallIconResource="CommutatorGolden" largeIconResource="CommutatorGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.phone</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

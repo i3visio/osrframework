@@ -1,0 +1,9 @@
+<MaltegoEntity id="i3visio.breach" displayName="i3visio - Breach" displayNamePlural="i3visio - Breachs" description="Sites where an email has been breached." category="i3visio" smallIconResource="Murder" largeIconResource="Murder" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Groups/>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

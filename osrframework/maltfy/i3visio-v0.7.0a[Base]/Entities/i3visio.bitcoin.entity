@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.bitcoin" displayName="i3visio - Bitcoin" displayNamePlural="i3visio - Bitcoins" description="Bitcoin Objects" category="i3visio" smallIconResource="bitcoin_large" largeIconResource="bitcoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

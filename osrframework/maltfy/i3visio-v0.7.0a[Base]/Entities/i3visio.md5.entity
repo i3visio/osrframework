@@ -1,0 +1,9 @@
+<MaltegoEntity id="i3visio.md5" displayName="i3visio - MD5" displayNamePlural="i3visio - MD5s" description="MD5 hash" category="i3visio" smallIconResource="BitGolden" largeIconResource="BitGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.hash</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Groups/>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

@@ -1,0 +1,13 @@
+<MaltegoEntity id="i3visio.tag" displayName="i3visio - Tag" displayNamePlural="i3visio - Tags" description="Tags for the i3visio platforms." category="i3visio" smallIconResource="Image" largeIconResource="Image" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties value="properties.i3visio-tag">
+      <Fields>
+         <Field name="properties.i3visio-tag" type="string" nullable="true" hidden="false" readonly="false" description="This field contains the string for the tag." displayName="i3visio - Tag">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>tag</SampleValue>
+         </Field>
+      </Fields>
+   </Properties>
+</MaltegoEntity>

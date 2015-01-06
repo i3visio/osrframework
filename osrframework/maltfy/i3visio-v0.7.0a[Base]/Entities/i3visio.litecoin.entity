@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.litecoin" displayName="i3visio - Litecoin" displayNamePlural="i3visio - Litecoins" description="Any Litecoin-related issue." category="i3visio" smallIconResource="litecoin_large" largeIconResource="litecoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

@@ -1,0 +1,9 @@
+<MaltegoEntity id="i3visio.hash" displayName="i3visio - Hash" displayNamePlural="i3visio - Hashs" description="Any type of hash." category="i3visio" smallIconResource="BitGolden" largeIconResource="BitGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Groups/>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

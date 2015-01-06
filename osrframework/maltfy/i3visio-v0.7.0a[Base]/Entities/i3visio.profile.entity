@@ -1,0 +1,14 @@
+<MaltegoEntity id="i3visio.profile" displayName="i3visio - Profile" displayNamePlural="i3visio - Profiles" description="This is a profile found." category="i3visio" smallIconResource="UserId" largeIconResource="UserId" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.url</BaseEntity>
+   </BaseEntities>
+   <Properties value="properties.i3visio-profile">
+      <Groups/>
+      <Fields>
+         <Field name="properties.i3visio-profile" type="string" nullable="true" hidden="false" readonly="false" description="This field contains the URL of the found profile." displayName="i3visio - Profile">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>http://example.com/i3visio</SampleValue>
+         </Field>
+      </Fields>
+   </Properties>
+</MaltegoEntity>

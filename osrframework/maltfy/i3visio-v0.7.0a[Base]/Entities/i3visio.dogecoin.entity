@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.dogecoin" displayName="i3visio - Dogecoin" displayNamePlural="i3visio - Dogecoins" description="Any Dogecoin-related issue." category="i3visio" smallIconResource="dogecoin_large" largeIconResource="dogecoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

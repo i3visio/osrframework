@@ -1,0 +1,14 @@
+<MaltegoEntity id="i3visio.platform" displayName="i3visio - Platform" displayNamePlural="i3visio - Platforms" description="This is a platform extracted by usufy" category="i3visio" smallIconResource="Cluster" largeIconResource="Cluster" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.Object</BaseEntity>
+   </BaseEntities>
+   <Properties value="properties.i3visio-platform">
+      <Groups/>
+      <Fields>
+         <Field name="properties.i3visio-platform" type="string" nullable="true" hidden="false" readonly="false" description="Name of the platform" displayName="i3visio - Platform">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>-</SampleValue>
+         </Field>
+      </Fields>
+   </Properties>
+</MaltegoEntity>
