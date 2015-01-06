@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#	This program is part of apify. You can redistribute it and/or modify
+#	This program is part of OSRFramework. You can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -22,7 +22,7 @@ from MaltegoTransform import *
 import sys
 import json
 import urllib2
-import i3visiotools.apify.md5crack as md5crack
+import i3OSRFramework.thirdparties.md5crack_com.checkIfHashIsCracked as md5crack
 
 def hashToMD5crackDotCom(hash=None):
 	''' 
@@ -36,12 +36,14 @@ def hashToMD5crackDotCom(hash=None):
 	jsonData = md5crack.checkIfCrackedInMD5crack(hash=hash)
 
 	# This returns a dictionary like:
-	""" {
-  "phrase": "4d186321c1a7f0f354b297e8914ab240",
-  "code": 6,
-  "parsed": "hola",
-  "response": "The MD5 hash was cracked."
-}"""
+	""" 
+	{
+      "phrase": "4d186321c1a7f0f354b297e8914ab240",
+      "code": 6,
+      "parsed": "hola",
+      "response": "The MD5 hash was cracked."
+    }
+    """
 
 	#print json.dumps(entities, indent=2)
 	if not jsonData["parsed"] == "":
