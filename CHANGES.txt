@@ -1,11 +1,16 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
-v0.2.0, 2015/06/06 -- Added Maltego transforms.
+v0.2.0, 2015/01/07 -- Added Maltego transforms.
 - Added Maltego transform: aliasToSkypeAccounts.py
 - Added Maltego transform: bitcoinAddressToBlockchainDetails.py
 - Added Maltego transform: emailToBreachedAccounts.py
 - Added Maltego transform: emailToSkypeAccounts.py
 - Added Maltego transform: hashToMD5crackDotCom.py
+- Added Maltego transform: expandPropertiesFromI3visioEntity.py
+- Added entities and logos for Peercoin and Namecoin addresses.
+- Removed i3visio.bitcoin, i3visio.litecoin, i3visio.dogecoin entities, as the i3visio.bitcoin.address (et al.) will be used.
+- Added entities for i3visio.port, i3visio.domain and i3visio.protocol.
+- Changed icon for i3visio.dni.
 - Added an autoconfiguration file for Maltego Transforms.
 
 v0.1.0, 2014/12/31 -- Initial release.

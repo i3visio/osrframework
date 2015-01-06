@@ -36,38 +36,103 @@ Installation:
 =============
 The instructions may vary in the different OS. 
 
-Under Linux
+Under Windows
 -----------
-We recommend you to create a folder under /var owned by the current user. For
-instance:
+First of all, you will have to download and install Python 2.7 from:
+https://www.python.org/downloads/
+
+The installation should be performed normally. However, you will need
+to add c:\python27 to the system  path variable. You have a tutorial
+here: http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path
+
+You can check how everything went by accessing the cmd. Type
 ```
-# You will need superuser privileges to create this folder 
-sudo mkdir /var/i3visio
-# You will need to change the owner to your user to work with it safely
-# If your user was alice
-sudo chown alice:alice /var/i3visio
+python
 ```
+If you have accessed the Python interpreter, those are good news.
 
 The rest of the installation under Python 2.7 is as follows:
+
+1.- Download the latest version of the osrframework found in:
 ```
-# Navigate to the destiny's folder
-cd /var/i3visio
-# Cloning the repository
+http://github.com/i3visio/osrframework/archive/master.zip
+```
+
+2.- Unzip the master.zip file wherever you want.
+
+3.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
+your own API Keys. You might edit them with your preferred text editor. The files are:
+```
+config_api_keys.py.sample 
+```
+which should be COPIED to 
+```
+config_api_keys.py
+```
+If you skip this step, OSRFramework will create files without any credentials. This is not a
+major issue as you will be able to provide them as a parameter. Then you can resume the 
+installation.
+
+4.- Open the terminal (cmd) and navigate to the recently created folder. You know something like:
+```
+cd Downloads
+cd osrframework-master
+...
+```
+
+5.- In the osrframework-master folder, build and install the modules in your system:
+```
+python setup.py build
+python setup.py install	
+```
+Afterwards, the module will be importable from any python code. You can check this by typing:
+```
+python -c "import osrframework"
+```
+If no error is displayed, the installation would have been performed correctly.
+
+6.- To configure the Maltego Entities, launch the built-in configurator:
+```
+python configure_maltego.py
+```
+This will create a .mtz file under: 
+```
+<INSTALLATION_FOLDER>/osrframework/maltfy/
+```
+
+7.- However, to use our Maltego Transforms, you will have to download Maltego from 
+Paterva's site: 
+```
+http://www.paterva.com
+```
+Follow the instructions there. Afterwards, you may launch the application.
+8.- Finally, you will have to import the recently created .mtz configuration file. 
+Select all the groups and click next. You may use the recently added i3visio 
+entities now.
+
+Under Linux
+-----------
+As Python is alrady installed, the rest of the installation under Python 2.7 is as 
+follows:
+
+1.- Download the repository. You have several options:
+```
+# Cloning the repository if you have git installed
 git clone http://github.com/i3visio/osrframework osrframework-master
+# Navigate to the destiny's folder
 cd osrframework-master
 ```
 or
 ```
-# Navigate to the destiny's folder
-cd /var/i3visio
 # Download
 wget http://github.com/i3visio/osrframework/archive/master.zip
 # Unzip
 unzip osrframework-master.zip
+# Navigate to the destiny's folder
 cd osrframework-master
 ```
 
-Then, you might have to copy the sample files in the osrframework folder to add your  
+2.- Then, you might have to COPY the sample files in the osrframework folder to add your  
 own API Keys. You might edit them with your preferred text editor.
 ```
 cp config_api_keys.py.sample config_api_keys.py
@@ -75,8 +140,9 @@ nano config_api_keys.py
 cd ..
 ```
 If you skip this step, OSRFramework will create files without any credentials. This is not a
-mojor issue as you will be able to provide them as a parameter. Then you can resume the 
-installation.
+major issue as you will be able to provide them as a parameter. 
+
+3.- Then you can resume the installation.
 ```
 # Superuser privileges are required so as to complete the installation.
 sudo python setup.py build
@@ -87,3 +153,23 @@ Afterwards, the module will be importable from any python code. You can check th
 python -c "import osrframework"
 ```
 If no error is displayed, the installation would have been performed correctly.
+
+4.- To configure the Maltego Entities, launch the built-in configurator:
+```
+python configure_maltego.py
+```
+This will create a .mtz file under: 
+```
+<INSTALLATION_FOLDER>/osrframework/maltfy/
+```
+
+5.- However, to use our Maltego Transforms, you will have to download Maltego from 
+Paterva's site: 
+```
+http://www.paterva.com
+```
+Follow the instructions there. Afterwards, you may launch the application.
+
+6.- You will have to import the recently created .mtz configuration file. Select 
+all the groups and click next. You may use the recently added i3visio entities 
+now.
