@@ -103,12 +103,12 @@ This will create a .mtz file under:
 7.- However, to use our Maltego Transforms, you will have to download Maltego from 
 Paterva's site: 
 ```
-http://www.paterva.com
+http://www.paterva.com/web6/products/download2.php
 ```
 Follow the instructions there. Afterwards, you may launch the application.
+
 8.- Finally, you will have to import the recently created .mtz configuration file. 
-Select all the groups and click next. You may use the recently added i3visio 
-entities now.
+Select all the groups and click next. You may use the new i3visio entities now.
 
 Under Linux
 -----------
@@ -166,10 +166,9 @@ This will create a .mtz file under:
 5.- However, to use our Maltego Transforms, you will have to download Maltego from 
 Paterva's site: 
 ```
-http://www.paterva.com
+http://www.paterva.com/web6/products/download2.php
 ```
 Follow the instructions there. Afterwards, you may launch the application.
 
 6.- You will have to import the recently created .mtz configuration file. Select 
-all the groups and click next. You may use the recently added i3visio entities 
-now.
+all the groups and click next. You may use the new i3visio entities now.
