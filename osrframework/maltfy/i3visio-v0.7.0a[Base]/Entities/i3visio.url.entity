@@ -1,6 +1,6 @@
 <MaltegoEntity id="i3visio.url" displayName="i3visio - URL" displayNamePlural="i3visio - URLs" description="Any URL" category="i3visio" smallIconResource="Document" largeIconResource="Document" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
-      <BaseEntity>i3visio.Object</BaseEntity>
+      <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>
    <Properties>
       <Groups/>

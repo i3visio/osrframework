@@ -1,6 +1,6 @@
 <MaltegoEntity id="i3visio.platform" displayName="i3visio - Platform" displayNamePlural="i3visio - Platforms" description="This is a platform extracted by usufy" category="i3visio" smallIconResource="Cluster" largeIconResource="Cluster" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
-      <BaseEntity>i3visio.Object</BaseEntity>
+      <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>
    <Properties value="properties.i3visio-platform">
       <Groups/>

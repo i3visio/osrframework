@@ -1,6 +1,6 @@
 <MaltegoEntity id="i3visio.tag" displayName="i3visio - Tag" displayNamePlural="i3visio - Tags" description="Tags for the i3visio platforms." category="i3visio" smallIconResource="Image" largeIconResource="Image" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
-      <BaseEntity>i3visio.Object</BaseEntity>
+      <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>
    <Properties value="properties.i3visio-tag">
       <Fields>

@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.port" displayName="i3visio - Port" displayNamePlural="i3visio - Ports" description="Any telecommunication port found in the system ." category="i3visio" smallIconResource="PortGolden" largeIconResource="PortGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.text</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

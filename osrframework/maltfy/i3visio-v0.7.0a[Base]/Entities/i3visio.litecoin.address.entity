@@ -1,6 +1,6 @@
 <MaltegoEntity id="i3visio.litecoin.address" displayName="i3visio - Litecoin Address" displayNamePlural="i3visio - Litecoin Addresses" description="Any Litecoin address." category="i3visio" smallIconResource="litecoin_large" largeIconResource="litecoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
-      <BaseEntity>i3visio.litecoin</BaseEntity>
+      <BaseEntity>i3visio.text</BaseEntity>
    </BaseEntities>
    <Properties>
       <Fields/>

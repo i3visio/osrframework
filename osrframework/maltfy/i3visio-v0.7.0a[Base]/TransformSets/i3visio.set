@@ -10,8 +10,6 @@
       <Transform name="i3visio.extractAllEntitiesFromProfile"/>
       <Transform name="i3visio.extractAllEntitiesFromText"/>
       <Transform name="i3visio.hashToMD5crackDotCom"/>
-      <Transform name="i3visio.test"/>
-      <Transform name="i3visio.testing"/>
       <Transform name="i3visio.textToDeepWebSearch"/>
       <Transform name="i3visio.uriToEntities"/>
    </Transforms>

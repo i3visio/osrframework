@@ -1,5 +1,13 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+v0.2.0, 2015/06/06 -- Added Maltego transforms.
+- Added Maltego transform: aliasToSkypeAccounts.py
+- Added Maltego transform: bitcoinAddressToBlockchainDetails.py
+- Added Maltego transform: emailToBreachedAccounts.py
+- Added Maltego transform: emailToSkypeAccounts.py
+- Added Maltego transform: hashToMD5crackDotCom.py
+- Added an autoconfiguration file for Maltego Transforms.
+
 v0.1.0, 2014/12/31 -- Initial release.
 - Added a third-party API wrapper for Skype: checkIPDetails.py
 - Added a third-party API wrapper for md5crack.com: checkIPDetails.py

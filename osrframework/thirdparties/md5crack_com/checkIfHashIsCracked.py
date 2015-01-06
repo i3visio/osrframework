@@ -31,10 +31,14 @@ def checkIfHashIsCracked(hash=None, api_key=None):
 		:param hash:	hash to verify.
 		:param api_key:	api_key to be used in md5crack.com. If not provided, the API key will be searched in the config_api_keys.py file.
 
-		:return:	Python structure for the Json received.
+		:return:	Python structure for the Json received. It has the following structure:
+	        {
+              "phrase": "4d186321c1a7f0f354b297e8914ab240",
+              "code": 6,
+              "parsed": "hola",
+              "response": "The MD5 hash was cracked."
+            }
 	'''
-	#with open("./_config.txt", "r") as iF:
-	#	cont = iF.read().splitlines()
 	# This is for i3visio
 	if api_key==None:
 		#api_key = raw_input("Insert the API KEY here:\t")

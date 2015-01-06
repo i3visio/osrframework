@@ -37,7 +37,7 @@ except:
     sys.exit()
  
 setup(    name="osrframework",
-    version="v0.1.0",
+    version="v0.2.0",
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
     author="Felix Brezo and Yaiza Rubio",
     author_email="contacto@i3visio.com",
@@ -52,7 +52,7 @@ setup(    name="osrframework",
         "osrframework.thirdparties.md5crack_com", 
         "osrframework.thirdparties.skype",         
         "osrframework.utils",         
-        #"osrframework.wrappers", 
+        "osrframework.maltfy", 
         #"osrframework.darkfy",
         #"osrframework.darkfy.lib",
         #"osrframework.darkfy.lib.wrappers",
