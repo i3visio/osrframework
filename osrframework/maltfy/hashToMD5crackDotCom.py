@@ -18,7 +18,7 @@
 #
 ##################################################################################
 
-from MaltegoTransform import *
+from osrframework.maltfy.maltego import *
 import sys
 import json
 import urllib2
