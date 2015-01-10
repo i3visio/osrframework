@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    This program is part of osrframework. You can redistribute it and/or modify
+#    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -18,9 +18,10 @@
 #
 ##################################################################################
 
-from osrframework.maltfy.maltego import *
-import sys
 import json
+import sys
+
+from osrframework.maltfy.maltego import *
 import osrframework.thirdparties.skype.checkInSkype as skype
 
 def emailToSkypeAccount(query=None):

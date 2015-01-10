@@ -18,10 +18,11 @@
 #
 ##################################################################################
 
-from osrframework.maltfy.maltego import *
-import sys
 import json
+import sys
 import urllib2
+
+from osrframework.maltfy.maltego import *
 import osrframework.thirdparties.blockchain_info.getBitcoinAddressDetails as blockchain
 
 def bitcoinAddressToBlockchainDetails(bitcoinAddress=None):

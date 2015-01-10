@@ -18,10 +18,10 @@
 #
 ##################################################################################
 
-from osrframework.maltfy.maltego import *
+from osrframework.maltfy.lib.maltego import *
 import sys
 import json
-import constants
+import osrframework.maltfy.lib.constants as constants
 
 def expandPropertiesFromI3visioEntity(argv):
 	''' 

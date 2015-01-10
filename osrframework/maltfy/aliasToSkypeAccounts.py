@@ -18,9 +18,10 @@
 #
 ##################################################################################
 
-from osrframework.maltfy.maltego import *
+
 import sys
 import json
+from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.skype.checkInSkype as skype
 
 def aliasToSkypeAccounts(query=None):
