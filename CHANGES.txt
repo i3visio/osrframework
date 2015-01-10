@@ -1,5 +1,9 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+v0.3.0, 2015/01/10 -- Added the extraction of regular expression with entify.
+- Added entify v0.5.0 as part of OSRFramework to extract regular expressions.
+- Inclusion of a --quiet option.
+
 v0.2.0, 2015/01/07 -- Added Maltego transforms.
 - Added Maltego transform: aliasToSkypeAccounts.py
 - Added Maltego transform: bitcoinAddressToBlockchainDetails.py
