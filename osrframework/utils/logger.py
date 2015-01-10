@@ -71,5 +71,5 @@ def setupLogger(loggerName="osrframework", logFolder="./logs", verbosity=0):
         logger.warning("The log file could not be created. No log will be stored for this session.")
 
     # Notifying correctly import
-    logger.debug(loggerName+ " successfully imported.")
+    #logger.debug(loggerName+ " successfully imported.")
     return logger

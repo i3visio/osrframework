@@ -2,20 +2,20 @@
 #
 ##################################################################################
 #
-#    This file is part of entify.
+#	This file is part of OSRFramework.
 #
-#    entify is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#	OSRFramework is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##################################################################################
 
@@ -25,18 +25,18 @@ import logging
 # Importing Classes of <RegexpObject> objects that will be used in the script. The files are stored in the regexp folder.
 # For demo only
 #from regexp.demo import Demo
-from entify.lib.patterns.bitcoinaddress import BitcoinAddress
-from entify.lib.patterns.dni import DNI
-from entify.lib.patterns.dogecoinaddress import DogecoinAddress
-from entify.lib.patterns.email import Email
-from entify.lib.patterns.ipv4 import IPv4
-from entify.lib.patterns.litecoinaddress import LitecoinAddress
-from entify.lib.patterns.md5 import MD5
-from entify.lib.patterns.namecoinaddress import NamecoinAddress
-from entify.lib.patterns.peercoinaddress import PeercoinAddress
-from entify.lib.patterns.sha1 import SHA1
-from entify.lib.patterns.sha256 import SHA256
-from entify.lib.patterns.url import URL
+from osrframework.entify.patterns.bitcoinaddress import BitcoinAddress
+from osrframework.entify.patterns.dni import DNI
+from osrframework.entify.patterns.dogecoinaddress import DogecoinAddress
+from osrframework.entify.patterns.email import Email
+from osrframework.entify.patterns.ipv4 import IPv4
+from osrframework.entify.patterns.litecoinaddress import LitecoinAddress
+from osrframework.entify.patterns.md5 import MD5
+from osrframework.entify.patterns.namecoinaddress import NamecoinAddress
+from osrframework.entify.patterns.peercoinaddress import PeercoinAddress
+from osrframework.entify.patterns.sha1 import SHA1
+from osrframework.entify.patterns.sha256 import SHA256
+from osrframework.entify.patterns.url import URL
 # Add any additional import here
 #from regexp.anynewregexp import AnyNewRegexp
 # <ADD_NEW_REGEXP_IMPORT_BELOW>
@@ -48,7 +48,7 @@ def getAllRegexp():
 
         :return:    Returns a list [] of <RegexpObject> classes.
     '''
-    logger = logging.getLogger("entify")
+    logger = logging.getLogger("osrframework.entify")
 
     logger.debug("Recovering all the available <RegexpObject> classes.")
     listAll = []
