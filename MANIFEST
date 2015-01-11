@@ -1,0 +1,5 @@
+include configure_maltego.py
+include CHANGES.txt
+include README.md
+include COPYING
+include *sample
