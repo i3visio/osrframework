@@ -4,6 +4,9 @@ v0.4.0, 2015/01/11 -- Added the usufy package onto OSRFramework.
 - Added Maltego transform: aliasToAllProfiles.py
 - Added Maltego transform: aliasToFamousProfiles.py
 - Inclusion of i3visiotools global files as osrframework.utils.
+- Change in old displaying format of usufy entities.
+- Change inheritance of i3visio.uri to i3visio.text (rather than i3visio.object).
+- Change icon of i3visio.platform.
 
 v0.3.0, 2015/01/11 -- Added the extraction of regular expression with entify.
 - Added Maltego transform: textToAllEntities.py
