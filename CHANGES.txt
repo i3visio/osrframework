@@ -1,13 +1,17 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
 v0.3.0, 2015/01/11 -- Added the extraction of regular expression with entify.
-- Added entify v0.5.0 as part of OSRFramework to extract regular expressions.
+- Added Maltego transform: textToAllEntities.py
+- Added Maltego transform: uriToAllEntities.py
+- Added Maltego transform: emailToAlias.py
+- Added Maltego transform: emailToDomain.py
 - Inclusion of a --quiet option.
 - Inclusion of transforms related to the extraction of entities.
 - Minor changes in the name of entify transforms and i3visio.url has been moved to i3visio.uri.
 - Changed the url.py module to uri.py. References changed everywhere.
-- Added a short transformation of foo[at]bar[dot]com mails to be foo@bar.com.
+- Added a simple transformation of foo[at]bar[dot]com mails to be foo@bar.com.
 - Fix on i3visio.object entity which was not being imported correctly.
+- Edit configuration of configure_maltego to update also default paths for the transforms.
 
 v0.2.0, 2015/01/07 -- Added Maltego transforms.
 - Added Maltego transform: aliasToSkypeAccounts.py

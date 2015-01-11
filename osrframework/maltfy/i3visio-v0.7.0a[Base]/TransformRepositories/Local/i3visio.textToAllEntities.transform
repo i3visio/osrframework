@@ -9,7 +9,7 @@
             <SampleValue></SampleValue>
          </Property>
          <Property name="transform.local.working-directory" type="string" nullable="true" hidden="false" readonly="false" description="The working directory used when invoking the executable" popup="false" abstract="false" visibility="public" displayName="Working directory">
-            <DefaultValue><CUSTOM_WORKING_DIRECTORY></DefaultValue>
+            <DefaultValue><CUSTOM_WORKING_DIRECTORY>/osrframework/maltfy</DefaultValue>
             <SampleValue></SampleValue>
          </Property>
          <Property name="transform.local.debug" type="boolean" nullable="true" hidden="false" readonly="false" description="When this is set, the transform&apos;s text output will be printed to the output window" popup="false" abstract="false" visibility="public" displayName="Show debug info">
