@@ -1,5 +1,10 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+v0.4.0, 2015/01/11 -- Added the usufy package onto OSRFramework.
+- Added Maltego transform: aliasToAllProfiles.py
+- Added Maltego transform: aliasToFamousProfiles.py
+- Inclusion of i3visiotools global files as osrframework.utils.
+
 v0.3.0, 2015/01/11 -- Added the extraction of regular expression with entify.
 - Added Maltego transform: textToAllEntities.py
 - Added Maltego transform: uriToAllEntities.py
