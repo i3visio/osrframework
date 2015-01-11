@@ -53,8 +53,9 @@ class Email(RegexpObject):
             Method to extract additional attributes from a given expression (i. e.: domains and ports from URL and so on). This method may be overwritten in certain child classes.
             :param found:   expression to be processed.
             :return:    The output format will be like:
-                [{"type" : "i3visio.email", "value": "foo@bar.com", "attributes": [] }, {"type" : "i3visio.email", "value": "bar@foo.com", "attributes": [] }]
+                [{"type" : "i3visio.email", "value": "foo@bar.com", "attributes": [] }, {"type" : "i3visio.domain", "value": "foo.com", "attributes": [] }]
         '''
+        # List of attributes
         results = []
         
         if not '@' in found:    
@@ -70,20 +71,20 @@ class Email(RegexpObject):
             aux["value"] = found
             aux["attributes"] = []
             results.append(aux)   
-        
-        # Getting the information of the alias:
-        aux = {}
-        aux["type"] = "i3visio.alias"
-        aux["value"] = found.split('@')[0]
-        aux["attributes"] = []
-        results.append(aux)           
+        else:
+            # Getting the information of the alias:
+            aux = {}
+            aux["type"] = "i3visio.alias"
+            aux["value"] = found.split('@')[0]
+            aux["attributes"] = []
+            results.append(aux)           
 
-        # Getting the information of the domain:
-        aux = {}
-        aux["type"] = "i3visio.domain"
-        aux["value"] = found.split('@')[1]
-        aux["attributes"] = []
-        results.append(aux)         
+            # Getting the information of the domain:
+            aux = {}
+            aux["type"] = "i3visio.domain"
+            aux["value"] = found.split('@')[1]
+            aux["attributes"] = []
+            results.append(aux)         
         
         return results
 
