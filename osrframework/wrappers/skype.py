@@ -2,9 +2,7 @@
 #
 ##################################################################################
 #
-#	This file is part of usufy.py.
-#
-#	Usufy is free software: you can redistribute it and/or modify
+#	This file is part of OSRFramework. You can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -24,7 +22,7 @@ import logging
 import os
 
 from platforms import Platform
-import i3visiotools.general as general
+import osrframework.utils.general as general
 
 import Skype4Py
 
@@ -82,7 +80,7 @@ class Skype(Platform):
 				None	En el caso de que no se haya podido obtener una URL válida.
 		'''
 		try:
-			logger = logging.getLogger("usufy")
+			logger = logging.getLogger("osrframework.wrappers")
 			# Verifying if the nick is a correct nick
 			if self._isValidUser(nick):
 				logger.debug("Starting Skype client...")
@@ -100,7 +98,7 @@ class Skype(Platform):
 						return None
 			
 				# Set our application name.
-				skype.FriendlyName = 'Usufy with Skype4Py'
+				skype.FriendlyName = 'i3visio - OSRFramework'
 
 				# Attach to Skype. This may cause Skype to open a confirmation
 				# dialog.

@@ -2,9 +2,7 @@
 #
 ##################################################################################
 #
-#	This file is part of i3visiotools.
-#
-#	i3visiotools is free software: you can redistribute it and/or modify
+#	This file is part of OSRFramework. You can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -23,10 +21,10 @@ import os
 import random
 import re
 
-from i3visiotools.browser import Browser
-from i3visiotools.credentials import Credential
-import i3visiotools.general as general
-import entify.lib.processing as entify
+from osrframework.utils.browser import Browser
+from osrframework.utils.credentials import Credential
+import osrframework.utils.general as general
+import osrframework.entify.processing as entify
 
 # logging imports
 import logging
@@ -137,7 +135,7 @@ class Platform():
 				html	Si el usuario en cuestión existe en esta red social.
 				None	Si el usuario en cuestión no existe en esta red social.
 		'''
-		logger = logging.getLogger("i3visiotools")
+		logger = logging.getLogger("osrframework.wrappers")
 		
 		logger.debug("Trying to recover the url: " + url)
 		i3Browser = Browser()
@@ -238,7 +236,7 @@ class Platform():
 
 			:return:	number of profiles processed
 		'''
-		logger = logging.getLogger("i3visiotools")
+		logger = logging.getLogger("osrframework.wrappers")
 		foundUsers = 0
 		try:
 			if not os.path.exists(outputFolder):
@@ -395,7 +393,7 @@ class Platform():
 				url	URL del usuario en cuestión una vez que se haya confirmado su validez.
 				None	En el caso de que no se haya podido obtener una URL válida.
 		'''
-		logger = logging.getLogger("i3visiotools")
+		logger = logging.getLogger("osrframework.wrappers")
 		
 		# Verifying if the nick is a correct nick
 		if self._isValidUser(nick):
@@ -547,7 +545,7 @@ class Platform():
 			return final
 
 
-		logger = logging.getLogger("i3visiotools")
+		logger = logging.getLogger("osrframework.wrappers")
 		try:
 			# May be revisited in the future so as to add any additional check of whether the profile is correct.
 			self.foundFields["type"] = "i3visio.alias"
@@ -700,243 +698,243 @@ def getAllPlatformParametersByMode(mode):
 
 # Importing Classes of <Platform> objects that will be used in the script. The files are stored in the wrappers folder.
 # For demo only
-#from i3visiotools.wrappers.demo import Demo
-from i3visiotools.wrappers.px500 import Px500
-from i3visiotools.wrappers.adtriboo import Adtriboo
-from i3visiotools.wrappers.anarchy101 import Anarchy101
-from i3visiotools.wrappers.aporrealos import Aporrealos
-from i3visiotools.wrappers.apsense import Apsense
-from i3visiotools.wrappers.arduino import Arduino
-from i3visiotools.wrappers.ariva import Ariva
-from i3visiotools.wrappers.armorgames import Armorgames
-from i3visiotools.wrappers.artbreak import Artbreak
-from i3visiotools.wrappers.artician import Artician
-from i3visiotools.wrappers.arto import Arto
-from i3visiotools.wrappers.askfm import Askfm
-from i3visiotools.wrappers.audiob import Audiob
-from i3visiotools.wrappers.audioboo import Audioboo
-from i3visiotools.wrappers.authorstream import Authorstream
-from i3visiotools.wrappers.autospies import Autospies
-from i3visiotools.wrappers.backyardchickens import Backyardchickens
-from i3visiotools.wrappers.badoo import Badoo
-from i3visiotools.wrappers.behance import Behance
-from i3visiotools.wrappers.bennugd import Bennugd
-from i3visiotools.wrappers.bitbucket import Bitbucket
-from i3visiotools.wrappers.bitcointalk import Bitcointalk
-from i3visiotools.wrappers.bitly import Bitly
-from i3visiotools.wrappers.blackplanet import Blackplanet
-from i3visiotools.wrappers.bladna import Bladna
-from i3visiotools.wrappers.blip import Blip
-from i3visiotools.wrappers.blogspot import Blogspot
-from i3visiotools.wrappers.bookmarky import Bookmarky
-from i3visiotools.wrappers.boonex import Boonex
-from i3visiotools.wrappers.bookofmatches import Bookofmatches
-from i3visiotools.wrappers.bordom import Bordom
-from i3visiotools.wrappers.boxedup import Boxedup
-from i3visiotools.wrappers.breakcom import Breakcom
-from i3visiotools.wrappers.bucketlistly import Bucketlistly
-from i3visiotools.wrappers.burbuja import Burbuja
-from i3visiotools.wrappers.burdastyle import Burdastyle
-from i3visiotools.wrappers.buzznet import Buzznet
-from i3visiotools.wrappers.cafemom import Cafemom
-from i3visiotools.wrappers.carbonmade import Carbonmade
-from i3visiotools.wrappers.cardomain import Cardomain
-from i3visiotools.wrappers.care2 import Care2
-from i3visiotools.wrappers.castroller import Castroller
-from i3visiotools.wrappers.causes import Causes
-from i3visiotools.wrappers.ccsinfo import Ccsinfo
-from i3visiotools.wrappers.chess import Chess
-from i3visiotools.wrappers.cockos import Cockos
-from i3visiotools.wrappers.connectingsingles import Connectingsingles
-from i3visiotools.wrappers.couchsurfing import Couchsurfing
-from i3visiotools.wrappers.dailymail import Dailymail
-from i3visiotools.wrappers.dailymotion import Dailymotion
-from i3visiotools.wrappers.deviantart import Deviantart
-from i3visiotools.wrappers.digitalspy import Digitalspy
-from i3visiotools.wrappers.disqus import Disqus
-from i3visiotools.wrappers.doodle import Doodle
-from i3visiotools.wrappers.douban import Douban
-from i3visiotools.wrappers.dribbble import Dribbble
-from i3visiotools.wrappers.drupal import Drupal
-from i3visiotools.wrappers.drugbuyersforum import Drugbuyersforum
-from i3visiotools.wrappers.ebay import Ebay
-from i3visiotools.wrappers.echatta import Echatta
-from i3visiotools.wrappers.elmundo import Elmundo
-from i3visiotools.wrappers.enfemenino import Enfemenino
-from i3visiotools.wrappers.epinions import Epinions
-from i3visiotools.wrappers.eqe import Eqe
-from i3visiotools.wrappers.ethereum import Ethereum
-from i3visiotools.wrappers.etsy import Etsy
-from i3visiotools.wrappers.evilzone import Evilzone
-from i3visiotools.wrappers.facebook import Facebook
-from i3visiotools.wrappers.fanpop import Fanpop
-from i3visiotools.wrappers.fark import Fark
-from i3visiotools.wrappers.favstar import Favstar
-from i3visiotools.wrappers.flickr import Flickr
-from i3visiotools.wrappers.flixster import Flixster
-from i3visiotools.wrappers.foodspotting import Foodspotting
-from i3visiotools.wrappers.forobtc import Forobtc
-from i3visiotools.wrappers.forocoches import Forocoches
-from i3visiotools.wrappers.forosperu import Forosperu
-from i3visiotools.wrappers.foursquare import Foursquare
-from i3visiotools.wrappers.freebase import Freebase
-from i3visiotools.wrappers.freerepublic import Freerepublic
-from i3visiotools.wrappers.friendfeed import Friendfeed
-from i3visiotools.wrappers.gametracker import Gametracker
-from i3visiotools.wrappers.gapyear import Gapyear
-from i3visiotools.wrappers.garage4hackers import Garage4hackers
-from i3visiotools.wrappers.gather import Gather
-from i3visiotools.wrappers.geeksphone import Geeksphone
-from i3visiotools.wrappers.genspot import Genspot
-from i3visiotools.wrappers.getsatisfaction import Getsatisfaction
-from i3visiotools.wrappers.github import Github
-from i3visiotools.wrappers.gitorious import Gitorious
-from i3visiotools.wrappers.gogobot import Gogobot
-from i3visiotools.wrappers.goodreads import Goodreads
-from i3visiotools.wrappers.googleplus import GooglePlus
-from i3visiotools.wrappers.gsmspain import Gsmspain
-from i3visiotools.wrappers.hellboundhackers import Hellboundhackers
-from i3visiotools.wrappers.hi5 import Hi5
-from i3visiotools.wrappers.ibosocial import Ibosocial
-from i3visiotools.wrappers.identica import Identica
-from i3visiotools.wrappers.imgur import Imgur
-from i3visiotools.wrappers.instagram import Instagram
-from i3visiotools.wrappers.instructables import Instructables
-from i3visiotools.wrappers.interracialmatch import Interracialmatch
-from i3visiotools.wrappers.intersect import Intersect
-from i3visiotools.wrappers.intfiction import Intfiction
-from i3visiotools.wrappers.islamicawakening import Islamicawakening
-from i3visiotools.wrappers.issuu import Issuu
-from i3visiotools.wrappers.ixgames import Ixgames
-from i3visiotools.wrappers.jamiiforums import Jamiiforums
-from i3visiotools.wrappers.kaboodle import Kaboodle
-from i3visiotools.wrappers.kali import Kali
-from i3visiotools.wrappers.karmacracy import Karmacracy
-from i3visiotools.wrappers.kickstarter import Kickstarter
-from i3visiotools.wrappers.kinja import Kinja
-from i3visiotools.wrappers.klout import Klout
-from i3visiotools.wrappers.kongregate import Kongregate
-from i3visiotools.wrappers.kupika import Kupika
-from i3visiotools.wrappers.lastfm import Lastfm
-from i3visiotools.wrappers.linkedin import Linkedin
-from i3visiotools.wrappers.livejournal import Livejournal
-from i3visiotools.wrappers.looki import Looki
-from i3visiotools.wrappers.marca import Marca
-from i3visiotools.wrappers.matchdoctor import Matchdoctor
-from i3visiotools.wrappers.mcneel import Mcneel
-from i3visiotools.wrappers.mediavida import Mediavida
-from i3visiotools.wrappers.medium import Medium
-from i3visiotools.wrappers.meneame import Meneame
-from i3visiotools.wrappers.metacafe import Metacafe
-from i3visiotools.wrappers.migente import Migente
-from i3visiotools.wrappers.minecraft import Minecraft
-from i3visiotools.wrappers.musicasacra import Musicasacra
-from i3visiotools.wrappers.myeloma import Myeloma
-from i3visiotools.wrappers.myspace import Myspace
-from i3visiotools.wrappers.naver import Naver
-from i3visiotools.wrappers.netlog import Netlog
-from i3visiotools.wrappers.netvibes import Netvibes
-from i3visiotools.wrappers.occupywallst import Occupywallst
-from i3visiotools.wrappers.odnoklassniki import Odnoklassniki
-from i3visiotools.wrappers.openframeworks import Openframeworks
-from i3visiotools.wrappers.oroom import Oroom
-from i3visiotools.wrappers.pastebin import Pastebin
-from i3visiotools.wrappers.pearltrees import Pearltrees
-from i3visiotools.wrappers.peerbackers import Peerbackers
-from i3visiotools.wrappers.photobucket import Photobucket
-from i3visiotools.wrappers.pinterest import Pinterest
-from i3visiotools.wrappers.pixinsight import Pixinsight
-from i3visiotools.wrappers.pjrc import Pjrc
-from i3visiotools.wrappers.plancast import Plancast
-from i3visiotools.wrappers.pokerred import Pokerred
-from i3visiotools.wrappers.pokerstrategy import Pokerstrategy
-from i3visiotools.wrappers.pornhub import Pornhub
-from i3visiotools.wrappers.proboards import Proboards
-from i3visiotools.wrappers.pz import Pz
-from i3visiotools.wrappers.qq import QQ
-from i3visiotools.wrappers.quartermoonsaloon import Quartermoonsaloon
-from i3visiotools.wrappers.rankia import Rankia
-from i3visiotools.wrappers.rapid import Rapid
-from i3visiotools.wrappers.ratemypoo import Ratemypoo
-from i3visiotools.wrappers.rawtherapee import Rawtherapee
-from i3visiotools.wrappers.rebelmouse import Rebelmouse
-from i3visiotools.wrappers.redtube import Redtube
-from i3visiotools.wrappers.relatious import Relatious
-from i3visiotools.wrappers.researchgate import Researchgate
-from i3visiotools.wrappers.rojadirecta import Rojadirecta
-from i3visiotools.wrappers.ruby import Ruby
-from i3visiotools.wrappers.scribd import Scribd
-from i3visiotools.wrappers.sencha import Sencha
-from i3visiotools.wrappers.skype import Skype
-from i3visiotools.wrappers.slashdot import Slashdot
-from i3visiotools.wrappers.slideshare import Slideshare
-from i3visiotools.wrappers.smartcitizen import Smartcitizen
-from i3visiotools.wrappers.sokule import Sokule
-from i3visiotools.wrappers.soundcloud import Soundcloud
-from i3visiotools.wrappers.sourceforge import Sourceforge
-from i3visiotools.wrappers.spaniards import Spaniards
-from i3visiotools.wrappers.spoj import Spoj
-from i3visiotools.wrappers.spotify import Spotify
-from i3visiotools.wrappers.squidoo import Squidoo
-from i3visiotools.wrappers.steamcommunity import Steamcommunity
-from i3visiotools.wrappers.steinberg import Steinberg
-from i3visiotools.wrappers.streakgaming import Streakgaming
-from i3visiotools.wrappers.stuff import Stuff
-from i3visiotools.wrappers.stumbleupon import Stumbleupon
-from i3visiotools.wrappers.teamtreehouse import Teamtreehouse
-from i3visiotools.wrappers.techcrunch import Techcrunch
-from i3visiotools.wrappers.thecarcommunity import Thecarcommunity
-from i3visiotools.wrappers.theguardian import Theguardian
-from i3visiotools.wrappers.thehoodup import Thehoodup
-from i3visiotools.wrappers.thesims import Thesims
-from i3visiotools.wrappers.thestudentroom import Thestudentroom
-from i3visiotools.wrappers.tradimo import Tradimo
-from i3visiotools.wrappers.travian import Travian
-from i3visiotools.wrappers.tripadvisor import Tripadvisor
-from i3visiotools.wrappers.tripit import Tripit
-from i3visiotools.wrappers.trulia import Trulia
-from i3visiotools.wrappers.tumblr import Tumblr
-from i3visiotools.wrappers.tuporno import Tuporno
-from i3visiotools.wrappers.tvtag import Tvtag
-from i3visiotools.wrappers.twicsy import Twicsy
-from i3visiotools.wrappers.twitch import Twitch
-from i3visiotools.wrappers.twoplustwo import Twoplustwo
-from i3visiotools.wrappers.twitpic import Twitpic
-from i3visiotools.wrappers.twitter import Twitter
-from i3visiotools.wrappers.ukdebate import Ukdebate
-from i3visiotools.wrappers.ummahforum import Ummahforum
-from i3visiotools.wrappers.unsystem import Unsystem
-from i3visiotools.wrappers.ustream import Ustream
-from i3visiotools.wrappers.vexforum import Vexforum
-from i3visiotools.wrappers.vimeo import Vimeo
-from i3visiotools.wrappers.videohelp import Videohelp
-from i3visiotools.wrappers.virustotal import Virustotal
-from i3visiotools.wrappers.vk import Vk
-from i3visiotools.wrappers.wefollow import Wefollow
-from i3visiotools.wrappers.wikipediaar import WikipediaAr
-from i3visiotools.wrappers.wikipediaca import WikipediaCa
-from i3visiotools.wrappers.wikipediade import WikipediaDe
-from i3visiotools.wrappers.wikipediaen import WikipediaEn
-from i3visiotools.wrappers.wikipediaes import WikipediaEs
-from i3visiotools.wrappers.wikipediaeu import WikipediaEu
-from i3visiotools.wrappers.winamp import Winamp
-from i3visiotools.wrappers.wishlistr import Wishlistr
-from i3visiotools.wrappers.wordpress import Wordpress
-from i3visiotools.wrappers.wykop import Wykop
-from i3visiotools.wrappers.xanga import Xanga
-from i3visiotools.wrappers.xat import Xat
-from i3visiotools.wrappers.xing import Xing
-from i3visiotools.wrappers.xtube import Xtube
-from i3visiotools.wrappers.youku import Youku
-from i3visiotools.wrappers.youtube import Youtube
-from i3visiotools.wrappers.zabbix import Zabbix
-from i3visiotools.wrappers.zentyal import Zentyal
+#from osrframework.wrappers.demo import Demo
+from osrframework.wrappers.px500 import Px500
+from osrframework.wrappers.adtriboo import Adtriboo
+from osrframework.wrappers.anarchy101 import Anarchy101
+from osrframework.wrappers.aporrealos import Aporrealos
+from osrframework.wrappers.apsense import Apsense
+from osrframework.wrappers.arduino import Arduino
+from osrframework.wrappers.ariva import Ariva
+from osrframework.wrappers.armorgames import Armorgames
+from osrframework.wrappers.artbreak import Artbreak
+from osrframework.wrappers.artician import Artician
+from osrframework.wrappers.arto import Arto
+from osrframework.wrappers.askfm import Askfm
+from osrframework.wrappers.audiob import Audiob
+from osrframework.wrappers.audioboo import Audioboo
+from osrframework.wrappers.authorstream import Authorstream
+from osrframework.wrappers.autospies import Autospies
+from osrframework.wrappers.backyardchickens import Backyardchickens
+from osrframework.wrappers.badoo import Badoo
+from osrframework.wrappers.behance import Behance
+from osrframework.wrappers.bennugd import Bennugd
+from osrframework.wrappers.bitbucket import Bitbucket
+from osrframework.wrappers.bitcointalk import Bitcointalk
+from osrframework.wrappers.bitly import Bitly
+from osrframework.wrappers.blackplanet import Blackplanet
+from osrframework.wrappers.bladna import Bladna
+from osrframework.wrappers.blip import Blip
+from osrframework.wrappers.blogspot import Blogspot
+from osrframework.wrappers.bookmarky import Bookmarky
+from osrframework.wrappers.boonex import Boonex
+from osrframework.wrappers.bookofmatches import Bookofmatches
+from osrframework.wrappers.bordom import Bordom
+from osrframework.wrappers.boxedup import Boxedup
+from osrframework.wrappers.breakcom import Breakcom
+from osrframework.wrappers.bucketlistly import Bucketlistly
+from osrframework.wrappers.burbuja import Burbuja
+from osrframework.wrappers.burdastyle import Burdastyle
+from osrframework.wrappers.buzznet import Buzznet
+from osrframework.wrappers.cafemom import Cafemom
+from osrframework.wrappers.carbonmade import Carbonmade
+from osrframework.wrappers.cardomain import Cardomain
+from osrframework.wrappers.care2 import Care2
+from osrframework.wrappers.castroller import Castroller
+from osrframework.wrappers.causes import Causes
+from osrframework.wrappers.ccsinfo import Ccsinfo
+from osrframework.wrappers.chess import Chess
+from osrframework.wrappers.cockos import Cockos
+from osrframework.wrappers.connectingsingles import Connectingsingles
+from osrframework.wrappers.couchsurfing import Couchsurfing
+from osrframework.wrappers.dailymail import Dailymail
+from osrframework.wrappers.dailymotion import Dailymotion
+from osrframework.wrappers.deviantart import Deviantart
+from osrframework.wrappers.digitalspy import Digitalspy
+from osrframework.wrappers.disqus import Disqus
+from osrframework.wrappers.doodle import Doodle
+from osrframework.wrappers.douban import Douban
+from osrframework.wrappers.dribbble import Dribbble
+from osrframework.wrappers.drupal import Drupal
+from osrframework.wrappers.drugbuyersforum import Drugbuyersforum
+from osrframework.wrappers.ebay import Ebay
+from osrframework.wrappers.echatta import Echatta
+from osrframework.wrappers.elmundo import Elmundo
+from osrframework.wrappers.enfemenino import Enfemenino
+from osrframework.wrappers.epinions import Epinions
+from osrframework.wrappers.eqe import Eqe
+from osrframework.wrappers.ethereum import Ethereum
+from osrframework.wrappers.etsy import Etsy
+from osrframework.wrappers.evilzone import Evilzone
+from osrframework.wrappers.facebook import Facebook
+from osrframework.wrappers.fanpop import Fanpop
+from osrframework.wrappers.fark import Fark
+from osrframework.wrappers.favstar import Favstar
+from osrframework.wrappers.flickr import Flickr
+from osrframework.wrappers.flixster import Flixster
+from osrframework.wrappers.foodspotting import Foodspotting
+from osrframework.wrappers.forobtc import Forobtc
+from osrframework.wrappers.forocoches import Forocoches
+from osrframework.wrappers.forosperu import Forosperu
+from osrframework.wrappers.foursquare import Foursquare
+from osrframework.wrappers.freebase import Freebase
+from osrframework.wrappers.freerepublic import Freerepublic
+from osrframework.wrappers.friendfeed import Friendfeed
+from osrframework.wrappers.gametracker import Gametracker
+from osrframework.wrappers.gapyear import Gapyear
+from osrframework.wrappers.garage4hackers import Garage4hackers
+from osrframework.wrappers.gather import Gather
+from osrframework.wrappers.geeksphone import Geeksphone
+from osrframework.wrappers.genspot import Genspot
+from osrframework.wrappers.getsatisfaction import Getsatisfaction
+from osrframework.wrappers.github import Github
+from osrframework.wrappers.gitorious import Gitorious
+from osrframework.wrappers.gogobot import Gogobot
+from osrframework.wrappers.goodreads import Goodreads
+from osrframework.wrappers.googleplus import GooglePlus
+from osrframework.wrappers.gsmspain import Gsmspain
+from osrframework.wrappers.hellboundhackers import Hellboundhackers
+from osrframework.wrappers.hi5 import Hi5
+from osrframework.wrappers.ibosocial import Ibosocial
+from osrframework.wrappers.identica import Identica
+from osrframework.wrappers.imgur import Imgur
+from osrframework.wrappers.instagram import Instagram
+from osrframework.wrappers.instructables import Instructables
+from osrframework.wrappers.interracialmatch import Interracialmatch
+from osrframework.wrappers.intersect import Intersect
+from osrframework.wrappers.intfiction import Intfiction
+from osrframework.wrappers.islamicawakening import Islamicawakening
+from osrframework.wrappers.issuu import Issuu
+from osrframework.wrappers.ixgames import Ixgames
+from osrframework.wrappers.jamiiforums import Jamiiforums
+from osrframework.wrappers.kaboodle import Kaboodle
+from osrframework.wrappers.kali import Kali
+from osrframework.wrappers.karmacracy import Karmacracy
+from osrframework.wrappers.kickstarter import Kickstarter
+from osrframework.wrappers.kinja import Kinja
+from osrframework.wrappers.klout import Klout
+from osrframework.wrappers.kongregate import Kongregate
+from osrframework.wrappers.kupika import Kupika
+from osrframework.wrappers.lastfm import Lastfm
+from osrframework.wrappers.linkedin import Linkedin
+from osrframework.wrappers.livejournal import Livejournal
+from osrframework.wrappers.looki import Looki
+from osrframework.wrappers.marca import Marca
+from osrframework.wrappers.matchdoctor import Matchdoctor
+from osrframework.wrappers.mcneel import Mcneel
+from osrframework.wrappers.mediavida import Mediavida
+from osrframework.wrappers.medium import Medium
+from osrframework.wrappers.meneame import Meneame
+from osrframework.wrappers.metacafe import Metacafe
+from osrframework.wrappers.migente import Migente
+from osrframework.wrappers.minecraft import Minecraft
+from osrframework.wrappers.musicasacra import Musicasacra
+from osrframework.wrappers.myeloma import Myeloma
+from osrframework.wrappers.myspace import Myspace
+from osrframework.wrappers.naver import Naver
+from osrframework.wrappers.netlog import Netlog
+from osrframework.wrappers.netvibes import Netvibes
+from osrframework.wrappers.occupywallst import Occupywallst
+from osrframework.wrappers.odnoklassniki import Odnoklassniki
+from osrframework.wrappers.openframeworks import Openframeworks
+from osrframework.wrappers.oroom import Oroom
+from osrframework.wrappers.pastebin import Pastebin
+from osrframework.wrappers.pearltrees import Pearltrees
+from osrframework.wrappers.peerbackers import Peerbackers
+from osrframework.wrappers.photobucket import Photobucket
+from osrframework.wrappers.pinterest import Pinterest
+from osrframework.wrappers.pixinsight import Pixinsight
+from osrframework.wrappers.pjrc import Pjrc
+from osrframework.wrappers.plancast import Plancast
+from osrframework.wrappers.pokerred import Pokerred
+from osrframework.wrappers.pokerstrategy import Pokerstrategy
+from osrframework.wrappers.pornhub import Pornhub
+from osrframework.wrappers.proboards import Proboards
+from osrframework.wrappers.pz import Pz
+from osrframework.wrappers.qq import QQ
+from osrframework.wrappers.quartermoonsaloon import Quartermoonsaloon
+from osrframework.wrappers.rankia import Rankia
+from osrframework.wrappers.rapid import Rapid
+from osrframework.wrappers.ratemypoo import Ratemypoo
+from osrframework.wrappers.rawtherapee import Rawtherapee
+from osrframework.wrappers.rebelmouse import Rebelmouse
+from osrframework.wrappers.redtube import Redtube
+from osrframework.wrappers.relatious import Relatious
+from osrframework.wrappers.researchgate import Researchgate
+from osrframework.wrappers.rojadirecta import Rojadirecta
+from osrframework.wrappers.ruby import Ruby
+from osrframework.wrappers.scribd import Scribd
+from osrframework.wrappers.sencha import Sencha
+from osrframework.wrappers.skype import Skype
+from osrframework.wrappers.slashdot import Slashdot
+from osrframework.wrappers.slideshare import Slideshare
+from osrframework.wrappers.smartcitizen import Smartcitizen
+from osrframework.wrappers.sokule import Sokule
+from osrframework.wrappers.soundcloud import Soundcloud
+from osrframework.wrappers.sourceforge import Sourceforge
+from osrframework.wrappers.spaniards import Spaniards
+from osrframework.wrappers.spoj import Spoj
+from osrframework.wrappers.spotify import Spotify
+from osrframework.wrappers.squidoo import Squidoo
+from osrframework.wrappers.steamcommunity import Steamcommunity
+from osrframework.wrappers.steinberg import Steinberg
+from osrframework.wrappers.streakgaming import Streakgaming
+from osrframework.wrappers.stuff import Stuff
+from osrframework.wrappers.stumbleupon import Stumbleupon
+from osrframework.wrappers.teamtreehouse import Teamtreehouse
+from osrframework.wrappers.techcrunch import Techcrunch
+from osrframework.wrappers.thecarcommunity import Thecarcommunity
+from osrframework.wrappers.theguardian import Theguardian
+from osrframework.wrappers.thehoodup import Thehoodup
+from osrframework.wrappers.thesims import Thesims
+from osrframework.wrappers.thestudentroom import Thestudentroom
+from osrframework.wrappers.tradimo import Tradimo
+from osrframework.wrappers.travian import Travian
+from osrframework.wrappers.tripadvisor import Tripadvisor
+from osrframework.wrappers.tripit import Tripit
+from osrframework.wrappers.trulia import Trulia
+from osrframework.wrappers.tumblr import Tumblr
+from osrframework.wrappers.tuporno import Tuporno
+from osrframework.wrappers.tvtag import Tvtag
+from osrframework.wrappers.twicsy import Twicsy
+from osrframework.wrappers.twitch import Twitch
+from osrframework.wrappers.twoplustwo import Twoplustwo
+from osrframework.wrappers.twitpic import Twitpic
+from osrframework.wrappers.twitter import Twitter
+from osrframework.wrappers.ukdebate import Ukdebate
+from osrframework.wrappers.ummahforum import Ummahforum
+from osrframework.wrappers.unsystem import Unsystem
+from osrframework.wrappers.ustream import Ustream
+from osrframework.wrappers.vexforum import Vexforum
+from osrframework.wrappers.vimeo import Vimeo
+from osrframework.wrappers.videohelp import Videohelp
+from osrframework.wrappers.virustotal import Virustotal
+from osrframework.wrappers.vk import Vk
+from osrframework.wrappers.wefollow import Wefollow
+from osrframework.wrappers.wikipediaar import WikipediaAr
+from osrframework.wrappers.wikipediaca import WikipediaCa
+from osrframework.wrappers.wikipediade import WikipediaDe
+from osrframework.wrappers.wikipediaen import WikipediaEn
+from osrframework.wrappers.wikipediaes import WikipediaEs
+from osrframework.wrappers.wikipediaeu import WikipediaEu
+from osrframework.wrappers.winamp import Winamp
+from osrframework.wrappers.wishlistr import Wishlistr
+from osrframework.wrappers.wordpress import Wordpress
+from osrframework.wrappers.wykop import Wykop
+from osrframework.wrappers.xanga import Xanga
+from osrframework.wrappers.xat import Xat
+from osrframework.wrappers.xing import Xing
+from osrframework.wrappers.xtube import Xtube
+from osrframework.wrappers.youku import Youku
+from osrframework.wrappers.youtube import Youtube
+from osrframework.wrappers.zabbix import Zabbix
+from osrframework.wrappers.zentyal import Zentyal
 ################################
 # Automatically generated code #
 ################################
 # <ADD_HERE_THE_NEW_IMPORTS>
 # Add any additional import here
-#from i3visiotools.wrappers.any_new_social_network import Any_New_Social_Network
+#from osrframework.wrappers.any_new_social_network import Any_New_Social_Network
 # ...
 # Please, notify the authors if you have written a new wrapper.
 	
