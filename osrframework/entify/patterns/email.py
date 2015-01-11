@@ -56,19 +56,35 @@ class Email(RegexpObject):
                 [{"type" : "i3visio.email", "value": "foo@bar.com", "attributes": [] }, {"type" : "i3visio.email", "value": "bar@foo.com", "attributes": [] }]
         '''
         results = []
-        # character may be '@' or '.'
-        for character in self.substitutionValues.keys():
-            for value in self.substitutionValues[character]:
-                # replacing '[at]' for '@'...
-                found=found.replace(value, character)
-                
-        # Building the auxiliar  email
+        
+        # An auxiliar object
         aux = {}
-        aux["type"] = "i3visio.email"
-        aux["value"] = found
+        
+        if not '@' in found:    
+            # character may be '@' or '.'
+            for character in self.substitutionValues.keys():
+                for value in self.substitutionValues[character]:
+                    # replacing '[at]' for '@'...
+                    found=found.replace(value, character)
+                
+                # Building the auxiliar  email
+                aux["type"] = "i3visio.email"
+                aux["value"] = found
+                aux["attributes"] = []
+                results.append(aux)   
+        
+        # Getting the information of the alias:
+        aux["type"] = "i3visio.alias"
+        aux["value"] = found.split('@')[0]
         aux["attributes"] = []
-        results.append(aux)   
-             
+        results.append(aux)           
+
+        # Getting the information of the domain:
+        aux["type"] = "i3visio.domain"
+        aux["value"] = found.split('@')[1]
+        aux["attributes"] = []
+        results.append(aux)         
+        
         return results
 
     def getEntityType(self, found = None):

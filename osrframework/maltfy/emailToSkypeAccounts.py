@@ -44,7 +44,8 @@ def emailToSkypeAccount(query=None):
         # From v0.3.1 and ongoing versions, the i3visio.alias is not created directly but appended to the profile.
         #aliasEnt = me.addEntity("i3visio.alias",user["i3visio.alias"])
 
-        newEnt.setDisplayInformation("<h3>" + user["i3visio.alias"] +"</h3><p>");# + json.dumps(user, sort_keys=True, indent=2) + "!</p>");
+        # + json.dumps(user, sort_keys=True, indent=2) + "!</p>");
+        newEnt.setDisplayInformation("<h3>" + user["i3visio.alias"] +"</h3>")
         newEnt.addAdditionalFields("i3visio.platform","i3visio.platform",True,"Skype")
         for field in user.keys():
             # [TO-DO] Appending all the information from the json:

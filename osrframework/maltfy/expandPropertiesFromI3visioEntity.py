@@ -47,6 +47,9 @@ def expandPropertiesFromI3visioEntity(argv):
 		#newEnt.setDisplayInformation("<h3>" + prof +"</h3><p>" + str(prof) + "\t" + str(plat) + "\t" + profiles[prof][plat]  + "</p>");
 		#newEnt.addAdditionalFields("i3visio.platform","Platform name",True,plat)
 
+    #########
+    # TO-DO #
+    #########    
 	try:
 		# Adding new entities observing the attributes tab:
 		attributes = me.getVar("attributes")

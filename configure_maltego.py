@@ -50,7 +50,7 @@ def setNewPath(iPath=None, dst=None):
     '''
     pathFolder = dst + "/TransformRepositories/Local"
     for file in os.listdir( pathFolder):
-        if file.endswith("settings"):
+        if file.endswith("transformsettings") or file.endswith("transform"):
             cont = ""
             # reading the contents of such file
             with open(os.path.join(pathFolder, file), "r") as iF:
