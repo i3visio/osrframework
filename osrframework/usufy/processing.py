@@ -174,7 +174,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
 		:return:
 			Returns a dictionary where the key is the nick and the value another dictionary where the keys are the social networks and te value is the corresponding URL.
 	'''
-	i3visiotools.logger.setupLogger(loggerName="osrframework.usufy", verbosity=verbosity, logFolder=logFolder)	
+	osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=verbosity, logFolder=logFolder)	
 	logger = logging.getLogger("osrframework.usufy")
 	
 	if platforms == None:
@@ -230,7 +230,7 @@ def usufy_main(args):
 	'''
 	# Recovering the logger
 	# Calling the logger when being imported
-	i3visiotools.logger.setupLogger(loggerName="osrframework.usufy", verbosity=args.verbose, logFolder=args.logfolder)	
+	osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=args.verbose, logFolder=args.logfolder)	
 	# From now on, the logger can be recovered like this:
 	logger = logging.getLogger("osrframework.usufy")
 

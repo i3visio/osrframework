@@ -1,3 +1,4 @@
+# !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
 ##################################################################################
@@ -17,8 +18,22 @@
 #
 ##################################################################################
 
+"""
+	NOTE: you will have to rename this file to config_credentials.py to let the library open the credentials.
+"""
 
-import logger
-
-# Calling the logger when being imported
-logger.setupLogger(loggerName="osrframework.utils")
+def returnListOfCreds():
+	'''
+		:return: A list of tuples containing in the first the name of the platform
+	'''
+	listCreds = []
+	#listCreds.append(("<platform>", "<username>", "<password>"))
+	#
+	# The platforms that need a username and password are the following. 
+	# Uncomment the lines and change the <user> and <pass>.
+	#
+	#listCreds.append(("tripit", "<username>", "<password>"))
+	#listCreds.append(("wordreference", "<username>", "<password>"))
+	#listCreds.append(("rapid", "<username>", "<password>"))
+	#listCreds.append(("eqe", "<username>", "<password>"))
+	return listCreds

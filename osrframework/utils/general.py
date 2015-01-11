@@ -2,8 +2,6 @@
 #
 ##################################################################################
 #
-#	This file is part of OSRFramework.
-#
 #	OSRFramework is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +21,7 @@
 import hashlib
 import json
 import datetime
-from osrframework.maltfy.maltego import MaltegoEntity, MaltegoTransform
+from osrframework.maltfy.lib.maltego import MaltegoEntity, MaltegoTransform
 
 import logging
 
