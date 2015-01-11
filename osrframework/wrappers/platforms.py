@@ -613,9 +613,10 @@ class Platform():
             # May be revisited in the future so as to add any additional check of whether the profile is correct.
             # Adding the basic values
             # Setting the profile
-            self.foundFields["type"] = "i3visio.profile"
-            self.foundFields["value"] = self.platformName + " - " + nick
-            self.foundFields["attributes"] = []        
+            aux = {}
+            aux["type"] = "i3visio.profile"
+            aux["value"] = self.platformName + " - " + nick
+            aux["attributes"] = []        
             
             # May be revisited in the future so as to add any additional check of whether the profile is correct.
             # Define an attribute for the uri
@@ -623,22 +624,22 @@ class Platform():
             aux_att["type"] = "i3visio.uri"
             aux_att["value"] = url
             aux_att["attributes"] = []
-            self.foundFields.append(aux_att)
+            aux["attributes"].append(aux_att)
             
             # Define an attribute for the alias
             aux_att = {}
             aux_att["type"] = "i3visio.alias"
             aux_att["value"] = nick
             aux_att["attributes"] = []
-            self.foundFields.append(aux_att)
+            aux["attributes"].append(aux_att)
                         
             # Define an attribute for the platforms
             aux_att = {}
             aux_att["type"] = "i3visio.platform"
             aux_att["value"] = self.platformName
             aux_att["attributes"] = []
-            self.foundFields.append(aux_att)
-            return self.foundFields
+            aux["attributes"].append(aux_att)
+            return aux
             
     def setCredentials(self, creds):
         ''' 
