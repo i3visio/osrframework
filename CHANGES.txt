@@ -7,6 +7,7 @@ v0.3.0, 2015/01/11 -- Added the extraction of regular expression with entify.
 - Minor changes in the name of entify transforms and i3visio.url has been moved to i3visio.uri.
 - Changed the url.py module to uri.py. References changed everywhere.
 - Added a short transformation of foo[at]bar[dot]com mails to be foo@bar.com.
+- Fix on i3visio.object entity which was not being imported correctly.
 
 v0.2.0, 2015/01/07 -- Added Maltego transforms.
 - Added Maltego transform: aliasToSkypeAccounts.py

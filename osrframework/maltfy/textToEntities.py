@@ -7,51 +7,55 @@ import osrframework.maltfy.lib.constants as constants
 from osrframework.maltfy.maltego import *
 import osrframework.thirdparties.blockchain_info.getBitcoinAddressDetails as blockchain
 
-def extractAllEntitiesFromI3visioText(argv):
-	''' 
-		Method that obtains all the entities in a given i3visio.Object that contains an i3visio.text property.
+def textToI3visioEntities(argv):
+    ''' 
+        Method that obtains all the entities in a given i3visio.object that contains an i3visio.text property.
 
-		:param argv:	the serialized entity.
+        :param argv:    the serialized entity.
 
-		:return:	Nothing is returned but the code of the entities is created.
-	'''
-	me = MaltegoTransform()
-	#me.parseArguments(argv);
-	#data = sys.argv[1]
+        :return:    Nothing is returned but the code of the entities is created.
+    '''
+    me = MaltegoTransform()
+    #me.parseArguments(argv);
+    #data = sys.argv[1]
 
-	# Trying to recover all the possible i3visio entities
-	found_fields = {}
+    # Trying to recover all the possible i3visio entities
+    found_fields = {}
 
-	#data = me.getVar("i3visio.text")
-	data = sys.argv[1]
-	entities = entify.getEntitiesByRegexp(data=data)	
+    #data = me.getVar("i3visio.text")
+    data = sys.argv[1]
+    entities = entify.getEntitiesByRegexp(data=data)    
+	entities = processing.getEntitiesByRegexp(data=data)	
+	# This returns a dictionary like the following:
+	"""
+		[{
+		'attributes': [],
+		'type': 'i3visio.sha256',
+		'value': 'a9b8c5d848205db514d4097d2b78f4528d01a79f39601e0f9c5c40ed689471'
+		}, {
+		'attributes': [],
+		'type': 'i3visio.sha256',
+		'value': 'b28b896e6eeb8d651cacd5f4a4d1490fbe9d05dbc92221609350b0ce7a68e9'
+		}, {
+		'attributes': [],
+		'type': 'i3visio.sha256',
+		'value': 'd727fed4d969b14b28165c75ad12d7dddd56c0198fa70cedc3fdad7ac395b2'
+		}, {
+		'attributes': [],
+		'type': 'i3visio.sha256',
+		'value': '3e9a2204fcfc6f7dde250e61ca35353411880024102cba14a0bd45f05f1e74'
+		}]
+	"""
 
-	# This returns a dictionary like:
-	# {'email': {'reg_exp': ['[a-zA-Z0-9\\.\\-]+@[a-zA-Z0-9\\.\\-]+\\.[a-zA-Z]+'], 'found_exp': ['bar@foo.com', 'foo@bar.com']}}
-
-	#print entities
 	#print json.dumps(entities, indent=2)
-	for type_regexp in entities:
-		for k in type_regexp.keys():
-			for element in type_regexp[k]['found_exp']:
-				if k == "i3visio.bitcoin.address":
-					bitcoinAddress = str(element)
-					newEnt = me.addEntity(k,str(element))
-					# Looking for information on Blockchain
-					jsonData = blockchain.getBitcoinAddressDetails(address=bitcoinAddress)
-					# Adding the fields
-					newEnt.setDisplayInformation(json.dumps(jsonData, sort_keys=True, indent=2))
-					newEnt.addAdditionalFields("Final balance (nanobitcoins)", "Final balance (nanobitcoins)", True, str(jsonData["final_balance"]))
-					newEnt.addAdditionalFields("Total sent (nanobitcoins)", "Total sent (nanobitcoins)", True, str(jsonData["total_sent"]))
-					newEnt.addAdditionalFields("Total received (nanobitcoins)", "Total received (nanobitcoins)", True, str(jsonData["total_received"]))
-					newEnt.addAdditionalFields("Number of transactions", "Number of transactions", True, str(jsonData["n_tx"]))					
-				else:
-					newEnt = me.addEntity(k,str(element))
+	for elem in entities:
+		newEnt = me.addEntity(elem["type"],elem["value"])
+		newEnt.addAdditionalFields("i3visio.attributes", "i3visio.attributes", True, str(elem["attributes"]))	
 
-	# Returning the output text...
-	me.returnOutput()
+    # Returning the output text...
+    me.returnOutput()
 
 if __name__ == "__main__":
-	extractAllEntitiesFromI3visioText(sys.argv)
+    textToI3visioEntities(sys.argv)
 
 

@@ -22,9 +22,9 @@
 import re
 from osrframework.entify.patterns.regexp import RegexpObject
 
-class URL(RegexpObject):
+class URI(RegexpObject):
     ''' 
-        <URL> class.
+        <URI> class.
     '''
     def __init__(self):
         ''' 
@@ -35,7 +35,7 @@ class URL(RegexpObject):
             :param reg_exp:    string containing the regular expresion.
         '''
         # This is the tag of the regexp
-        self.name = "i3visio.url"
+        self.name = "i3visio.uri"
         # This is the string containing the reg_exp to be seeked. The former and latter characters are not needed.
         #self.reg_exp = ["((?:https?|s?ftp|file)://[a-zA-Z0-9\_\.\-]+(?:\:[0-9]{1,5})(?:/[a-zA-Z0-9\_\.\-/=\?&]+))"]
         self.reg_exp = ["((?:https?|s?ftp|file)://[a-zA-Z0-9\_\.\-]+(?:\:[0-9]{1,5}|)(?:/[a-zA-Z0-9\_\.\-/=\?&]+|))"]
