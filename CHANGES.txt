@@ -3,6 +3,8 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 v0.3.0, 2015/01/10 -- Added the extraction of regular expression with entify.
 - Added entify v0.5.0 as part of OSRFramework to extract regular expressions.
 - Inclusion of a --quiet option.
+- Inclusion of transforms related to the extraction of entities.
+- Minor changes in the name of entify transforms and i3visio.url has been moved to i3visio.uri.
 
 v0.2.0, 2015/01/07 -- Added Maltego transforms.
 - Added Maltego transform: aliasToSkypeAccounts.py

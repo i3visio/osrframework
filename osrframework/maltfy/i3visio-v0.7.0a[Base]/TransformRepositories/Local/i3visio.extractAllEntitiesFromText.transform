@@ -1,4 +1,4 @@
-<MaltegoTransform name="i3visio.extractAllEntitiesFromText" displayName="i3visio - extractAllEntitiesFromText" abstract="false" template="false" visibility="public" author="i3visio" requireDisplayInfo="false">
+<MaltegoTransform name="i3visio.textToEntities" displayName="i3visio - textToAllEntities" abstract="false" template="false" visibility="public" author="i3visio" requireDisplayInfo="false">
    <TransformAdapter>com.paterva.maltego.transform.protocol.v2api.LocalTransformAdapterV2</TransformAdapter>
    <Properties>
       <Fields>

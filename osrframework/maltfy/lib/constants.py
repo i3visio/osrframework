@@ -49,5 +49,5 @@ I3VISIO_ENTITIES = [
     "i3visio.sha1",
     "i3visio.sha256",    
     "i3visio.tag",     
-    "i3visio.url",     
+    "i3visio.uri",     
     ]

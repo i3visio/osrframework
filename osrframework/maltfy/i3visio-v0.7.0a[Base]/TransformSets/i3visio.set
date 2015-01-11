@@ -7,10 +7,9 @@
       <Transform name="i3visio.emailToBreachedAccounts"/>
       <Transform name="i3visio.emailToSkypeAccounts"/>
       <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>
-      <Transform name="i3visio.extractAllEntitiesFromProfile"/>
-      <Transform name="i3visio.extractAllEntitiesFromText"/>
+      <Transform name="i3visio.textToAllEntities"/>
       <Transform name="i3visio.hashToMD5crackDotCom"/>
       <Transform name="i3visio.textToDeepWebSearch"/>
-      <Transform name="i3visio.uriToEntities"/>
+      <Transform name="i3visio.uriToAllEntities"/>
    </Transforms>
 </TransformSet>
