@@ -18,8 +18,27 @@
 #
 ##################################################################################
 
+# logging imports
+import logging
 
-import osrframework.utils.logger
 
-# Calling the logger when being imported
-osrframework.utils.logger.setupLogger(loggerName="osrframework.utils")
+def resultsToCSV(res):
+	""" 
+		Method to generate the text to be appended to a CSV file.
+
+		:param res:	a dictionary with the information of the profiles
+		
+		:return:	csvText as the string to be written in a CSV file.				
+	"""
+	logger = logging.getLogger("osrframework.utils")
+	logger.info( "Generating .csv...")
+	csvText = "User\tPlatform\tURL\n"
+	logger.debug("Going through all the keys in the dictionary...")
+	for r in res.keys():
+		for p in res[r].keys():
+			csvText += str(r) + "\t" + str(p) + "\t" + res[r][p] + "\n" 
+	logger.debug("Loading the dictionary onto a csv-style text...")
+	return csvText
+
+
+

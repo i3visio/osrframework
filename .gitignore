@@ -10,3 +10,4 @@ dist*
 _lab*
 _new*
 config_api_keys.py
+bin*

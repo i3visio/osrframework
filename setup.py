@@ -18,12 +18,12 @@ except ImportError:
 # verifying if the credential files have already been created
 import os
 try:
-    """if not os.path.isfile("./osrframework/utils/config_credentials.py"):
+    if not os.path.isfile("./osrframework/utils/config_credentials.py"):
         # An empty credentials file will be created
         with open("./osrframework/utils/config_credentials.py", "w") as oF:
             with open("./osrframework/utils/config_credentials.py.sample") as iF:
                 cont = iF.read()
-                oF.write(cont)"""
+                oF.write(cont)
     if not os.path.isfile("./osrframework/utils/config_api_keys.py"):
         # An empty api_keys file will be created
         with open("./osrframework/utils/config_api_keys.py", "w") as oF:

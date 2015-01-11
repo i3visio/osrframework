@@ -1,10 +1,9 @@
+# !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
 ##################################################################################
 #
-#    This file is part of OSRFramework.
-#
-#    OSRFramework is free software: you can redistribute it and/or modify
+#    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -18,6 +17,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##################################################################################
+
+''' 
+entify-launcher.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions.
+For details, run:
+	python entify-launcher.py --license
+'''
+__author__ = "Felix Brezo, Yaiza Rubio "
+__copyright__ = "Copyright 2015, i3visio"
+__credits__ = ["Felix Brezo", "Yaiza Rubio"]
+__license__ = "GPLv3+"
+__version__ = "v0.5.0"
+__maintainer__ = "Felix Brezo, Yaiza Rubio"
+__email__ = "contacto@i3visio.com"
 
 import argparse
 import osrframework.utils.logger as logSet
@@ -54,7 +68,7 @@ if __name__ == "__main__":
 
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.5.0', help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s '+__version__, help='shows the version of the program and exists.')
 
     args = parser.parse_args()    
 
