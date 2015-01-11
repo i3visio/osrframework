@@ -458,5 +458,7 @@ For details, run:
 						profiles+=element["attributes"]
 					general.listToMaltego(profiles)
 			# here goes the printing the results
+			if not args.quiet:
+			    print general.dictToJson(res)
 			return res
 
