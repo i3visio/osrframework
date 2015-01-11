@@ -62,14 +62,30 @@ class RegexpObject():
         '''
         return str(self.getResults())
 
-    def getAttributes(self, foundExp):
+    def getAttributes(self, found = None):
         '''
             Method to extract additional attributes from a given expression (i. e.: domains and ports from URL and so on). This method may be overwritten in certain child classes.
-            :param found exp:   expression to be processed.
+            :param found:   expression to be processed.
             :return:    The output format will be like:
                 [{"type" : "i3visio.email", "value": "foo@bar.com", "attributes": [] }, {"type" : "i3visio.email", "value": "bar@foo.com", "attributes": [] }]
         '''
         return []
+
+    def getEntityType(self, found = None):
+        '''
+            Method to recover the value of the entity in case it may vary. By default this method does nothing but returning the entity type. However, some plugins may have to choose the entity type. This method may be overwritten in certain child classes.
+            :param found:   The expression to be analysed.
+            :return:    The entity type to be provided.
+        '''
+        return self.name
+
+    def getValue(self, found = None):
+        '''
+            Method to recover the value of the entity in case it needs any kind of processing. By default this method does nothing but returning the value. However, some plugins may need transformations such as the foo[at]bar[dot]com to be foo@bar.com. This method may be overwritten in certain child classes.
+            :param found:   The expression to be analysed.
+            :return:    Any kind of transformed value.
+        '''
+        return found
         
     def getResults(self, parFound = None):
         ''' 
@@ -88,8 +104,8 @@ class RegexpObject():
         if len(parFound ) >0:
             for found in parFound:
                 aux = {}
-                aux["type"] = self.name
-                aux["value"] = found
+                aux["type"] = self.getEntityType(found)
+                aux["value"] = self.getValue(found)
                 aux["attributes"] = self.getAttributes(found)
                 results.append(aux)
         return results

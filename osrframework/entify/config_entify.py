@@ -36,7 +36,7 @@ from osrframework.entify.patterns.namecoinaddress import NamecoinAddress
 from osrframework.entify.patterns.peercoinaddress import PeercoinAddress
 from osrframework.entify.patterns.sha1 import SHA1
 from osrframework.entify.patterns.sha256 import SHA256
-from osrframework.entify.patterns.url import URL
+from osrframework.entify.patterns.uri import URI
 # Add any additional import here
 #from regexp.anynewregexp import AnyNewRegexp
 # <ADD_NEW_REGEXP_IMPORT_BELOW>
@@ -65,7 +65,7 @@ def getAllRegexp():
     listAll.append(PeercoinAddress())
     listAll.append(SHA1())
     listAll.append(SHA256())
-    listAll.append(URL())
+    listAll.append(URI())
     # Add any additional import here
     #listAll.append(AnyNewRegexp)
     # <ADD_NEW_REGEXP_TO_THE_LIST>
