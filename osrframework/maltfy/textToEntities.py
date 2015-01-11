@@ -4,7 +4,7 @@ import sys
 
 import osrframework.entify.processing as entify
 import osrframework.maltfy.lib.constants as constants
-from osrframework.maltfy.maltego import *
+from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.blockchain_info.getBitcoinAddressDetails as blockchain
 
 def textToI3visioEntities(argv):

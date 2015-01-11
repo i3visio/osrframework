@@ -21,7 +21,7 @@
 import json
 import sys
 
-from osrframework.maltfy.maltego import *
+from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.skype.checkInSkype as skype
 
 def emailToSkypeAccount(query=None):

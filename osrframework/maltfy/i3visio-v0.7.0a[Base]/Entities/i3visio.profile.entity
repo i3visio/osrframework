@@ -1,4 +1,7 @@
 <MaltegoEntity id="i3visio.profile" displayName="i3visio - Profile" displayNamePlural="i3visio - Profiles" description="This is a profile found." category="i3visio" smallIconResource="UserId" largeIconResource="UserId" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.object</BaseEntity>
+   </BaseEntities>
    <Properties value="properties.i3visio-profile">
       <Groups/>
       <Fields>

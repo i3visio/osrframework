@@ -23,7 +23,7 @@ import json
 import sys
 import urllib2
 
-from osrframework.maltfy.maltego import *
+from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.md5crack_com.checkIfHashIsCracked as md5crack
 
 def hashToMD5crackDotCom(hash=None):

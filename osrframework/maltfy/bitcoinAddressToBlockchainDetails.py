@@ -22,7 +22,7 @@ import json
 import sys
 import urllib2
 
-from osrframework.maltfy.maltego import *
+from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.blockchain_info.getBitcoinAddressDetails as blockchain
 
 def bitcoinAddressToBlockchainDetails(bitcoinAddress=None):

@@ -23,7 +23,7 @@ import sys
 
 import osrframework.entify.processing as processing
 import osrframework.maltfy.lib.constants as constants
-from osrframework.maltfy.maltego import *
+from osrframework.maltfy.lib.maltego import *
 
 def uriToI3visioEntities(argv):
     ''' 

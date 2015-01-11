@@ -478,20 +478,11 @@ For details, run:
                             oF.write( general.dictToJson(res) + "\n")    
                     if  "maltego" in args.extension:
                         logger.info("Writing results to maltego file.")
-                        with open (os.path.join(args.output_folder, "results_" + nick+ "_" + strTime + ".maltego"), "w") as oF:
-                            profiles = []
-                            for element in res[nick]:
-                                # recovering the profiles 
-                                profiles+=element["attributes"]
-                            
+                        with open (os.path.join(args.output_folder, "results_" + nick+ "_" + strTime + ".maltego"), "w") as oF:                           
                             oF.write( general.listToMaltego(profiles) + "\n")    
     
                 if args.maltego:
-                    profiles = []
-                    for element in res[nick]:
-                        # recovering the profiles 
-                        profiles+=element["attributes"]
-                    general.listToMaltego(profiles)
+                    general.listToMaltego(res[nick])
             # here goes the printing the results
             if not args.quiet:
                 print general.dictToJson(res)
