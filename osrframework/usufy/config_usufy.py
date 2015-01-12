@@ -23,7 +23,7 @@ import os
 import logging
 
 import osrframework.wrappers.platforms as platforms
-import i3visiotools.credentials as credentials
+import osrframework.utils.credentials as credentials
 
 def getPlatforms(sites=["all"], tags=[], fileCreds="./creds.txt"):
 	''' 
