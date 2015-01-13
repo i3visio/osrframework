@@ -85,7 +85,7 @@ def getPlatformsByName(platformNames = ['all']):
     # going through the regexpList 
     for name in platformNames:
         for plat in allPlatformsList:
-            if name == plat.platformName:
+            if name == str.lower(plat.platformName):
                 platformList.append(plat)
     return platformList
 

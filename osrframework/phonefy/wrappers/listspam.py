@@ -37,7 +37,7 @@ class Listspam(Platform):
     
         # Strings linked to the URL
         self.url = {}    
-        self.url["phonefy"] = "http://www.listaspam.com/busca.php?Telefono=" + "<PHONE_NUMBER>"
+        self.url["phonefy"] = "http://www.listaspam.com/busca.php?Telefono=" + "<phonefy>"
         
         # Strings that will imply that the phone number is not appearing
         self.notFoundText = {}

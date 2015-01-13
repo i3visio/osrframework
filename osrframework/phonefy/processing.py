@@ -34,7 +34,9 @@ def processPhoneList(platforms=[], numbers=[]):
     results = {}
     for num in numbers:
         for pla in platforms:
-            results.update(pla.getInfo(query=num, process = True, mode="phonefy"))
+            entities = pla.getInfo(query=num, process = True, mode="phonefy")
+            if entities != {}:
+                results[num] = entities
     return results
 
 def phonefy_main(args):
