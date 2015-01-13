@@ -44,8 +44,13 @@ def phoneToMoreInfo(argv ):
     numbers = [phone]        
 
     # Trying to recover all the possible i3visio entities    
-    entities = processing.processPhoneList(platforms=platforms, numbers=numbers)
+    results = processing.processPhoneList(platforms=platforms, numbers=numbers)
 
+    # Getting the first and unique object retrieved
+    entities = results[0]["attributes"]
+
+    #print entities
+    
     #entities = listspam_com.getPhoneComplains(query=phone)    
     # This returns a dictionary like the following:
     """
@@ -81,13 +86,22 @@ def phoneToMoreInfo(argv ):
     #print json.dumps(entities, indent=2)
     for elem in entities:
         newEnt = me.addEntity(elem["type"],elem["value"])
+        
+        otherIssues = []
+        
         for att in elem["attributes"]:
-            newEnt.addAdditionalFields(att["type"], att["type"], True, str(att["value"]))    
+            # This will create new entities linked to the telephone
+            if att["type"] == "i3visio.location.country" or att["type"] == "i3visio.location.province":
+                me.addEntity(att["type"],att["value"])
+            if att:
+                otherIssues.append(att) 
+        
+		newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>" + json.dumps(elem["attributes"], sort_keys=True, indent=2) + "!</p>");        
 
     # Returning the output text...
     me.returnOutput()
 
-    print json.dumps(entities, indent = 2)
+    #print json.dumps(entities, indent = 2)
 
 
 if __name__ == "__main__":

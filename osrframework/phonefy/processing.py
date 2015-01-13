@@ -31,12 +31,12 @@ def processPhoneList(platforms=[], numbers=[]):
         
         :return:
     '''
-    results = {}
+    results = []
     for num in numbers:
         for pla in platforms:
             entities = pla.getInfo(query=num, process = True, mode="phonefy")
             if entities != {}:
-                results[num] = entities
+                results.append(entities)
     return results
 
 def phonefy_main(args):
