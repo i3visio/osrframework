@@ -83,7 +83,7 @@ class Platform():
         
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
-            print "InvalidModeException"
+            #print "InvalidModeException"
             return results
             
         try:
@@ -94,7 +94,8 @@ class Platform():
             data = i3Browser.recoverURL(qURL)
         except:
             # No information was found, then we return a null entity
-            print "i3BrowserException"
+            # TO-DO: i3BrowserException            
+            #print "i3BrowserException"
             return results            
             
         # Verifying if the platform exists
