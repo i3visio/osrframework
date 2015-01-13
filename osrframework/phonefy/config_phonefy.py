@@ -35,7 +35,7 @@ def getAllPlatforms():
     ''' 
         Method that recovers ALL the list of <Platform> classes to be processed....
 
-        :return:    Returns a list [] of <Platform> classes.
+        :return:    Returns a list [] of <Platform> objects.
     '''
     logger = logging.getLogger("osrframework.phonefy")
 
@@ -46,26 +46,26 @@ def getAllPlatforms():
     listAll.append(Listspam())
     # Add any additional import here
     #listAll.append(AnyNewRegexp)
-    # <ADD_NEW_REGEXP_TO_THE_LIST>
+    # <ADD_NEW_PLATFORM_TO_THE_LIST>
     # Please, notify the authors if you have written a new regexp.
 
-    logger.debug("Returning a list of " + str(len(listAll)) + " <RegexpObject> classes.")
+    logger.debug("Returning a list of " + str(len(listAll)) + " <Platform> classes.")
     return listAll
 
 def getPlatformNames(platList = None):
     ''' 
         Method that recovers the names of the <Platform> in a given list.
 
-        :param platList:    list of <Platform>. If None, all the available <Platform> will be recovered.
+        :param platList:    list of <Platform> objects. If None, all the available <Platform> will be recovered.
 
         :return:    Array of strings containing the available regexps.
     '''
     if platList == None:
         platList = getAllPlatforms()
     listNames = ['all']
-    # going through the regexpList 
+    # going through the platList 
     for r in platList:
-        listNames.append(r.name)
+        listNames.append(r.platformName)
     return listNames
 
 def getPlatformsByName(platformNames = ['all']):

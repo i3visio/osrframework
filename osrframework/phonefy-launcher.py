@@ -79,7 +79,7 @@ if __name__ == "__main__":
     general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
     general.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
 
-    listAll = config.getAllPlatforms()
+    listAll = config.getPlatformNames()
     # Selecting the platforms where performing the search
     groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
 
