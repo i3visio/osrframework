@@ -1,4 +1,4 @@
-<MaltegoEntity id="ii3visio.location.province" displayName="i3visio - Province" displayNamePlural="i3visio - Provinces" description="" category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.location.province" displayName="i3visio - Province" displayNamePlural="i3visio - Provinces" description="" category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.location</BaseEntity>
    </BaseEntities>
