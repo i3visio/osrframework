@@ -1,11 +1,10 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
 v0.5.0, 2015/01/13 -- Creation of Phonefy architecture.
-- Added Maltego transform: phoneToPhoneIncidents.py
-- Added Maltego transform: phoneToOwner.py
-- Added Maltego transform: textToPhone.py
+- Added Maltego transform: phoneToMoreInfo.py
 - Added Maltego transform: textToGoogleSearch.py
 - Restructuration of phonefy package.
+[TO-DO] Addition of new Entities related to phone.
 
 v0.4.0, 2015/01/11 -- Added the usufy package onto OSRFramework.
 - Added Maltego transform: aliasToAllProfiles.py
