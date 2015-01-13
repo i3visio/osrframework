@@ -79,47 +79,50 @@ class Platform():
         '''
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
+            print "InvalidModeException"
             return {}
             
         results = {}
+        data = ""
         try:
             i3Browser = browser.Browser()
             qURL = createURL(word=query, mode=mode)
 
             # Accessing the resources
             data = i3Browser.recoverURL(qURL)
-            
-            # Verifying if the platform exists
-            if somethingFound(data, mode=mode):
-                if mode == "phonefy":
-                    results["type"] = "i3visio.phone"
-                    results["value"] = self.platformName + " - " + query
-                #else:
-                #    results["type"] = "i3visio.phone"
-                #    results["value"] = self.platformName + " - " + query
-                results["attributes"] = []
-                
-                # Appending platform name
-                aux = {}
-                aux["type"] = "i3visio.platform"
-                aux["value"] = self.platformName
-                aux["attributes"] = []
-                results["attributes"].append(aux)
-                
-                # Appending platform name
-                aux = {}
-                aux["type"] = "i3visio.uri"
-                aux["value"] = qURL
-                # Iterating if requested to extract more entities from the URI
-                if not process:                
-                    aux["attributes"] = []
-                else:
-                    aux["attributes"] = self.processURI(data=data, mode=mode)
-                results["attributes"].append(aux)                
-                
         except:
             # No information was found, then we return a null entity
-            pass
+            print "i3BrowserException"
+            pass            
+            
+        # Verifying if the platform exists
+        if somethingFound(data, mode=mode):
+            if mode == "phonefy":
+                results["type"] = "i3visio.phone"
+                results["value"] = self.platformName + " - " + query
+            #else:
+            #    results["type"] = "i3visio.phone"
+            #    results["value"] = self.platformName + " - " + query
+            results["attributes"] = []
+            
+            # Appending platform name
+            aux = {}
+            aux["type"] = "i3visio.platform"
+            aux["value"] = self.platformName
+            aux["attributes"] = []
+            results["attributes"].append(aux)
+            
+            # Appending platform name
+            aux = {}
+            aux["type"] = "i3visio.uri"
+            aux["value"] = qURL
+            # Iterating if requested to extract more entities from the URI
+            if not process:                
+                aux["attributes"] = []
+            else:
+                aux["attributes"] = self.processURI(data=data, mode=mode)
+            results["attributes"].append(aux)                
+                
         return results
 
     def modeIsValid(self, mode):

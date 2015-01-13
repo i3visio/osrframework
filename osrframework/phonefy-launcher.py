@@ -38,36 +38,8 @@ import argparse
 import json
 
 import osrframework.phonefy.config_phonefy as config
+import osrframework.phonefy.processing as processing
 
-
-def processPhoneList(platforms=[], numbers=[]):
-    ''' 
-        Method to perform the phone list.
-        
-        :param platforms: List of <Platform> objects.
-        :param numbers: List of numbers to be queried.
-        
-        :return:
-    '''
-    results = {}
-    for num in numbers:
-        for pla in platforms:
-            results.update(pla.getInfo(query=num, process = True, mode="phonefy"))
-    return results
-
-def phonefy_main(args):
-    ''' 
-        Main program.
-        
-        :param args: Arguments received by parameter
-    '''
-    platforms = config.getPlatformsByName(args.platforms)
-    numbers = args.numbers
-    
-    results = processPhoneList(platforms=platforms, numbers=numbers)
-
-    if not args.quiet:
-        print json.dumps(results, indent=2)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='phonefy-launcher.py - Piece of software that checks the existence of given phone in phone number list.', prog='phonefy-launcher.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
@@ -99,4 +71,4 @@ if __name__ == "__main__":
     args = parser.parse_args()    
 
     # Calling the main function
-    phonefy_main(args)
+    processing.phonefy_main(args)
