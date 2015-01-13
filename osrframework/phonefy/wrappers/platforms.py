@@ -80,7 +80,6 @@ class Platform():
         # Defining variables for this process
         results = {}
         data = ""
-        
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
             #print "InvalidModeException"
@@ -88,8 +87,7 @@ class Platform():
             
         try:
             i3Browser = browser.Browser()
-            qURL = createURL(word=query, mode=mode)
-
+            qURL = self.createURL(word=query, mode=mode)
             # Accessing the resources
             data = i3Browser.recoverURL(qURL)
         except:
@@ -97,7 +95,7 @@ class Platform():
             # TO-DO: i3BrowserException            
             #print "i3BrowserException"
             return results            
-            
+
         # Verifying if the platform exists
         if self.somethingFound(data, mode=mode):
             if mode == "phonefy":
@@ -161,7 +159,7 @@ class Platform():
         # Iterating through all the type of fields
         for field in self.fieldsRegExp[mode].keys():
             # Recovering all the matching expressions
-            values = re.findall(fieldsRegExp[mode][field], data)
+            values = re.findall(self.fieldsRegExp[mode][field], data)
             
             for val in values:
                 aux = {}
