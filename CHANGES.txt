@@ -1,5 +1,15 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+v0.6.0, 2015/01/14 -- Creation of Phonefy architecture.
+- Added a Google Search wrapper based on Mario Vilas approach.
+[TO-DO] - Added Maltego transform: phoneToDetails.py
+[TO-DO] - Added Maltego transform: textToGoogleSearchURI.py
+- Added Maltego transform: uriToProtocol.py
+- Added Maltego transform: uriToPort.py
+- Added Maltego transform: uriToDomain.py
+- Added Maltego transform: domainToTLD.py
+[TO-DO] - Added tld and fullname entities.
+
 v0.5.0, 2015/01/13 -- Creation of Phonefy architecture.
 - Added Maltego transform: phoneToMoreInfoListspam.py
 - Restructuration of phonefy package.
