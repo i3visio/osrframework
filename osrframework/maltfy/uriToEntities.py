@@ -23,7 +23,9 @@ import sys
 
 import osrframework.entify.processing as processing
 import osrframework.maltfy.lib.constants as constants
+import osrframework.utils.browser as browser
 from osrframework.maltfy.lib.maltego import *
+
 
 def uriToI3visioEntities(argv):
     ''' 
@@ -39,8 +41,12 @@ def uriToI3visioEntities(argv):
 
     # Trying to recover all the possible i3visio entities
     found_fields = {}
-    import urllib2
-    data = urllib2.urlopen(uri).read()
+
+    # Using i3visio browser to avoid certain issues...
+    i3Browser = browser.Browser()
+    # Accessing the resources
+    data = i3Browser.recoverURL(uri)
+
     entities = processing.getEntitiesByRegexp(data=data)    
     # This returns a dictionary like the following:
     """
