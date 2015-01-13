@@ -53,7 +53,7 @@ class Platform():
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
         
     def createURL(self, word, mode="phonefy"):
-        '''
+        ''' 
             Method to create the URL replacing the word in the appropriate URL.
             
             :param word:   Word to be searched.
@@ -77,7 +77,7 @@ class Platform():
 
             :return:    Python structure for the html processed.
         '''
-        if not modeIsValid:
+        if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
             return {}
             
@@ -123,21 +123,21 @@ class Platform():
         return results
 
     def modeIsValid(self, mode):
-        '''
+        ''' 
             Verification of whether the mode is a correct option to be used.
             
             :param mode:    Mode to be executed.            
             
             :return:    True if the mode exists in the three main folders.
         '''
-        if mode in self.url:
-            if mode in self.notFoundText:
-                #if mode in self.fieldsRegexp:
+        if mode in self.url.keys():
+            if mode in self.notFoundText.keys():
+                #if mode in self.fieldsRegexp.keys():
                 return True
         return False
         
     def processURI(self, uri=None, data = None, mode=None):
-        '''
+        ''' 
             Method to process and extract the entities of a URL of this type.
            
             :param uri: The URI of this platform to be processed.
@@ -145,7 +145,7 @@ class Platform():
             :param mode:    Mode to be executed.            
                         
             :return:    A list of the entities found.
-        '''            
+        '''
         if data == None:
             # Accessing the resource
             data = i3Browser.recoverURL(uri)        
@@ -167,7 +167,7 @@ class Platform():
         return info
     
     def somethingFound(self,data,mode="phonefy"):
-        '''
+        ''' 
             Verifying if something was found.
             
             :param data:    Data where the self.notFoundText will be searched.

@@ -23,7 +23,7 @@ phonefy-launcher.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
 For details, run:
-	python phonefy-launcher.py --license
+    python phonefy-launcher.py --license
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
@@ -37,11 +37,11 @@ __email__ = "contacto@i3visio.com"
 import argparse
 import json
 
-import osrframework.thirdparties.listspam_com as listspam
+import osrframework.phonefy.config_phonefy as config
 
 
-def processPhoneList(platforms, numbers=[]):
-    '''
+def processPhoneList(platforms=[], numbers=[]):
+    ''' 
         Method to perform the phone list.
         
         :param platforms: List of <Platform> objects.
@@ -52,50 +52,51 @@ def processPhoneList(platforms, numbers=[]):
     results = {}
     for num in numbers:
         for pla in platforms:
-            results += pla.getInfo(query=num, process = True, mode="phonefy")
+            results.update(pla.getInfo(query=num, process = True, mode="phonefy"))
     return results
 
 def phonefy_main(args):
     ''' 
         Main program.
         
-        :param args:    
+        :param args: Arguments received by parameter
     '''
     platforms = config.getPlatformsByName(args.platforms)
     numbers = args.numbers
-    aux =
-    results[""]
+    
+    results = processPhoneList(platforms=platforms, numbers=numbers)
+
     if not args.quiet:
         print json.dumps(results, indent=2)
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='phonefy-launcher.py - Piece of software that checks the existence of given phone in phone number list.', prog='phonefy-launcher.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
-	parser._optionals.title = "Input options (one required)"
+    parser = argparse.ArgumentParser(description='phonefy-launcher.py - Piece of software that checks the existence of given phone in phone number list.', prog='phonefy-launcher.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
+    parser._optionals.title = "Input options (one required)"
 
-	# Defining the mutually exclusive group for the main options
-	general = parser.add_mutually_exclusive_group(required=True)
-	# Adding the main options
-	general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')	
-	general.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
+    # Defining the mutually exclusive group for the main options
+    general = parser.add_mutually_exclusive_group(required=True)
+    # Adding the main options
+    general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
+    general.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
 
     listAll = config.getAllPlatforms()
-	# Selecting the platforms where performing the search
-	groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
+    # Selecting the platforms where performing the search
+    groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
 
-	# Configuring the processing options
-	groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')
-	groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')		
+    # Configuring the processing options
+    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')
+    groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
     groupProcessing.add_argument('-o', '--output_folder',  metavar='<path_to_output_folder>',  action='store', help='path to the output folder where the results will be stored.', required=False)
-	groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')	
-	groupProcessing.add_argument('-q', '--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')		
+    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')    
+    groupProcessing.add_argument('-q', '--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')        
 
-	# About options
-	groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
-	groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-	groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
-	groupAbout.add_argument('--version', action='version', version='%(prog)s ' +__version__, help='shows the version of the program and exists.')
+    # About options
+    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
+    groupAbout.add_argument('--version', action='version', version='%(prog)s ' +__version__, help='shows the version of the program and exists.')
 
-	args = parser.parse_args()	
+    args = parser.parse_args()    
 
-	# Calling the main function
-	phonefy_main(args)
+    # Calling the main function
+    phonefy_main(args)
