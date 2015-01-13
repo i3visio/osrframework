@@ -77,13 +77,15 @@ class Platform():
 
             :return:    Python structure for the html processed.
         '''
+        # Defining variables for this process
+        results = {}
+        data = ""
+        
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
             print "InvalidModeException"
-            return {}
+            return results
             
-        results = {}
-        data = ""
         try:
             i3Browser = browser.Browser()
             qURL = createURL(word=query, mode=mode)
@@ -93,10 +95,10 @@ class Platform():
         except:
             # No information was found, then we return a null entity
             print "i3BrowserException"
-            pass            
+            return results            
             
         # Verifying if the platform exists
-        if somethingFound(data, mode=mode):
+        if self.somethingFound(data, mode=mode):
             if mode == "phonefy":
                 results["type"] = "i3visio.phone"
                 results["value"] = self.platformName + " - " + query
