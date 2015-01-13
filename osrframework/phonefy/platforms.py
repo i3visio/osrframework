@@ -32,57 +32,71 @@ class Platform():
         '''
         self.platformName = "Platform"
         
-        self.basePhoneURL = "http://anyurl.com/" + "<PHONE_NUMBER>"
+        # Strings with the URL for each and every mode
+        self.url = {}        
+        self.url["phonefy"] = "http://anyurl.com/" + "<phonefy>"
         
         # Strings that will imply that the phone number is not appearing
-        self.notFoundText = [""]
+        self.notFoundText = {}
+        # List of strings that appear when the phone IS NOT found
+        self.notFoundText["phonefy"] = []
+        # List of strings that appear when the user IS NOT found
+        #self.notFoundText["usufy"] = []        
         
+        # Strings to be searched
         self.fieldsRegExp = {}
+        # Definition of regualr expressions to be searched in phonefy mode
+        self.fieldsRegExp["phonefy"] = {}
+        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
+        # Definition of regualr expressions to be searched in usufy mode
+        #self.fieldsRegExp["phonefy"] = {}
+        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
         
-    def createPhoneURL(self, phone):
+    def createURL(self, word, mode="phonefy"):
         '''
-            Method to create the URL replacing the 
+            Method to create the URL replacing the word in the appropriate URL.
             
-            :param phone:   Phone to be searched.
+            :param word:   Word to be searched.
+            :param mode:    Mode to be executed.
             
             :return:    The URL to be queried.
         '''
-        return self.basePhoneURL.replace("<PHONE_NUMBER>", phone)
-
-    def doesPhoneExist(self,data):
-        '''
-            Verifying if the platform exists.
-            
-            :param data:    Data where the self.notFoundText will be searched.
-            
-            :return: Returns True if exists.
-        '''
-        for text in self.notFoundText:
-            if text in data:
-                return False
-        return True
+        try:
+            return self.url[mode].replace("<"+mode+">", word)
+        except:
+            pass
+            # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.
         
-    def getPhoneComplains(self, query=None, process = False):
+    def getInfo(self, query=None, process = False, mode="phonefy"):
         ''' 
             Method that checks the presence of a given telephone in listspam.com and recovers the first list of complains.
 
             :param query: Phone number to verify.
             :param proces:  Calling the processing function.
+            :param mode:    Mode to be executed.            
 
             :return:    Python structure for the html processed.
         '''
+        if not modeIsValid:
+            # TO-DO: InvalidModeException
+            return {}
+            
         results = {}
         try:
             i3Browser = browser.Browser()
-            qURL = createPhoneURL(phone=query)
+            qURL = createURL(word=query, mode=mode)
 
             # Accessing the resources
             data = i3Browser.recoverURL(qURL)
             
             # Verifying if the platform exists
-            if doesPhoneExist(data):
-                results["type"] = "i3visio.phone"
-                results["value"] = self.platformName + " - " + query
+            if somethingFound(data, mode=mode):
+                if mode == "phonefy":
+                    results["type"] = "i3visio.phone"
+                    results["value"] = self.platformName + " - " + query
+                #else:
+                #    results["type"] = "i3visio.phone"
+                #    results["value"] = self.platformName + " - " + query
                 results["attributes"] = []
                 
                 # Appending platform name
@@ -100,22 +114,37 @@ class Platform():
                 if not process:                
                     aux["attributes"] = []
                 else:
-                    aux["attributes"] = self.processingURI(data=data)
+                    aux["attributes"] = self.processURI(data=data, mode=mode)
                 results["attributes"].append(aux)                
                 
         except:
             # No information was found, then we return a null entity
             pass
         return results
+
+    def modeIsValid(self, mode):
+        '''
+            Verification of whether the mode is a correct option to be used.
+            
+            :param mode:    Mode to be executed.            
+            
+            :return:    True if the mode exists in the three main folders.
+        '''
+        if mode in self.url:
+            if mode in self.notFoundText:
+                #if mode in self.fieldsRegexp:
+                return True
+        return False
         
-    def processingURI(self, uri=None, data = None):
+    def processURI(self, uri=None, data = None, mode=None):
         '''
             Method to process and extract the entities of a URL of this type.
            
             :param uri: The URI of this platform to be processed.
             :param data: The information from which the info will be extracted. This way, info will not be downloaded twice.
-            
-            :return:    
+            :param mode:    Mode to be executed.            
+                        
+            :return:    A list of the entities found.
         '''            
         if data == None:
             # Accessing the resource
@@ -123,16 +152,35 @@ class Platform():
 
         info = []
         
-        # Iterating thorugh all the type of fields
-        for field in self.fieldsRegExp.keys():
+        # Iterating through all the type of fields
+        for field in self.fieldsRegExp[mode].keys():
             # Recovering all the matching expressions
-            values = re.findall(fieldsRegExp[field], data)
+            values = re.findall(fieldsRegExp[mode][field], data)
             
-            for v in values:
+            for val in values:
                 aux = {}
                 aux["type"] = field
-                aux["value"] = v
+                aux["value"] = val
                 aux["attributes"] = []                
                 if aux not in info:
                     info.append(aux)        
         return info
+    
+    def somethingFound(self,data,mode="phonefy"):
+        '''
+            Verifying if something was found.
+            
+            :param data:    Data where the self.notFoundText will be searched.
+            :param mode:    Mode to be executed.            
+            
+            :return: Returns True if exists.
+        '''
+        try:
+            for text in self.notFoundText[mode]:
+                if text in data:
+                    return False
+            return True
+        except:
+            pass
+            # TO-DO: Throw notFoundText not found for thid mode.        
+            

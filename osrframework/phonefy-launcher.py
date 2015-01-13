@@ -39,14 +39,34 @@ import json
 
 import osrframework.thirdparties.listspam_com as listspam
 
-def phonefy_main():
-    ''' 
+
+def processPhoneList(platforms, numbers=[]):
+    '''
+        Method to perform the phone list.
         
+        :param platforms: List of <Platform> objects.
+        :param numbers: List of numbers to be queried.
+        
+        :return:
     '''
     results = {}
+    for num in numbers:
+        for pla in platforms:
+            results += pla.getInfo(query=num, process = True, mode="phonefy")
+    return results
+
+def phonefy_main(args):
+    ''' 
+        Main program.
+        
+        :param args:    
+    '''
+    platforms = config.getPlatformsByName(args.platforms)
+    numbers = args.numbers
     aux =
-    results["]
-    if not args.
+    results[""]
+    if not args.quiet:
+        print json.dumps(results, indent=2)
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='phonefy-launcher.py - Piece of software that checks the existence of given phone in phone number list.', prog='phonefy-launcher.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
@@ -56,7 +76,7 @@ if __name__ == "__main__":
 	general = parser.add_mutually_exclusive_group(required=True)
 	# Adding the main options
 	general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')	
-	general.add_argument('-p', '--phones', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
+	general.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
 
     listAll = config.getAllPlatforms()
 	# Selecting the platforms where performing the search

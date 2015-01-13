@@ -35,15 +35,19 @@ class Listspam(Platform):
         '''
         self.platformName = "Listspam"        
         
-        self.basePhoneURL = "http://www.listaspam.com/busca.php?Telefono=" + "<PHONE_NUMBER>"
+        self.url["phonefy"] = "http://www.listaspam.com/busca.php?Telefono=" + "<PHONE_NUMBER>"
         
         # Strings that will imply that the phone number is not appearing
-        self.notFoundText = ["No te quedes sin saber quien te llama por teléfono."]
+        self.notFoundText = {}
+        self.notFoundText["phonefy"] = ["No te quedes sin saber quien te llama por teléfono."]
         
+        # Strings to be searched
         self.fieldsRegExp = {}
-        self.fieldsRegExp["i3visio.location.province"] = "<strong class='located_label'>(.*),"
-        self.fieldsRegExp["i3visio.location.country"] = "class='country_located' alt='([a-zA-Zñ]*)'"
-        self.fieldsRegExp["i3visio.text"] = '<h4 class="media-heading">(.*)</p>'
+        # phonefy things
+        self.fieldsRegExp["phonefy"] = {}
+        self.fieldsRegExp["phonefy"]["i3visio.location.province"] = "<strong class='located_label'>(.*),"
+        self.fieldsRegExp["phonefy"]["i3visio.location.country"] = "class='country_located' alt='([a-zA-Zñ]*)'"
+        self.fieldsRegExp["phonefy"]["i3visio.text"] = '<h4 class="media-heading">(.*)</p>'
 
 
 
