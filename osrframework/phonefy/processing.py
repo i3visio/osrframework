@@ -49,4 +49,4 @@ def phonefy_main(args):
     results = processPhoneList(platforms=platforms, numbers=numbers)
 
     if not args.quiet:
-        print json.dumps(results, indent=2)
+        print json.dumps(results, indent=2) 
