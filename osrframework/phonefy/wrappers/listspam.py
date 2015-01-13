@@ -25,7 +25,7 @@ import sys
 import urllib2
 
 import osrframework.utils.browser as browser
-from osrframework.phonefy.platforms import Platform
+from osrframework.phonefy.wrappers.platforms import Platform
 
 class Listspam(Platform):
     '''

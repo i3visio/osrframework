@@ -25,7 +25,7 @@ import logging
 # Importing Classes of <RegexpObject> objects that will be used in the script. The files are stored in the regexp folder.
 # For demo only
 #from regexp.demo import Demo
-from osrframework.phonefy.listspam import Listspam
+from osrframework.phonefy.wrappers.listspam import Listspam
 # Add any additional import here
 #from regexp.anynewregexp import AnyNewRegexp
 # <ADD_NEW_REGEXP_IMPORT_BELOW>
@@ -37,7 +37,7 @@ def getAllPlatforms():
 
         :return:    Returns a list [] of <Platform> objects.
     '''
-    logger = logging.getLogger("osrframework.phonefy")
+    logger = logging.getLogger("osrframework.phonefy.wrappers")
 
     logger.debug("Recovering all the available <Platform> classes.")
     listAll = []
