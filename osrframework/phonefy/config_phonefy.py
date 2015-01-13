@@ -65,7 +65,7 @@ def getPlatformNames(platList = None):
     listNames = ['all']
     # going through the platList 
     for r in platList:
-        listNames.append(r.platformName)
+        listNames.append(str.lower(r.platformName))
     return listNames
 
 def getPlatformsByName(platformNames = ['all']):
