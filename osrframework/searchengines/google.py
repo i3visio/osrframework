@@ -232,6 +232,29 @@ def search(query, tld='com', lang='en', num=10, start=0, stop=None, pause=2.0,
         else:
             url = url_next_page_num % vars()
 
+# Returns a generator that yields URLs.
+def processSearch(query, tld='com', lang='en', num=10, start=0, stop=None, pause=2.0, only_standard=False):
+    '''
+        Method that recovers the URI for a search returning an i3visio-compliant json object.
+        
+        :return:    A json-like object.
+
+    '''
+    uriList = search(query, tld=tld, lang=lang, num=int(num), start=int(start), stop=int(stop), pause=float(pause),only_standard=only_standard)       
+    
+    # Dictionary containing the URI objects
+    results = []
+    
+    # Building the objects
+    for uri in uriList:
+        aux = {}
+        aux["type"] = "i3visio.uri"
+        aux["value"] = uri        
+        aux["attributes"] = []
+        results.append(aux)
+
+    return results
+    
 # When run as a script...
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A package that allows the execution of searches in Google.', prog='google.py', add_help=False)
@@ -250,15 +273,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print "Searching..." 
-    contador = 0
     
-    results = search(args.query, tld=args.tld, lang=args.lang, num=int(args.num), start=int(args.start), stop=int(args.stop), pause=float(args.pause),only_standard=args.only_standard)
+    results = processSearch(args.query, tld=args.tld, lang=args.lang, num=int(args.num), start=int(args.start), stop=int(args.stop), pause=float(args.pause),only_standard=args.only_standard)
 
-    for url in results:
-        printurl
-
-    print query + "\t" + str(contador)+"\n"
-
+    print json.dumps(results, indent=2)
                     
                     
 # Original code was distributed by Mario Vilas under BSD license.
