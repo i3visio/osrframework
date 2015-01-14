@@ -1,5 +1,5 @@
 <MaltegoServer name="Local" enabled="true" description="Local transforms coded by i3visio to be executed in the machine" url="http://localhost">
-   <LastSync>2014-12-26 10:56:58.766 CET</LastSync>
+   <LastSync>2015-1-14 7:00:00.000 CET</LastSync>
    <Protocol version="0.0"/>
    <Authentication type="none"/>
    <Transforms>
@@ -7,6 +7,7 @@
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
       <Transform name="i3visio.aliasToSkypeAccounts"/>
       <Transform name="i3visio.bitcoinAddressToBlockchainDetails"/>
+      <Transform name="i3visio.domainToTld"/>      
       <Transform name="i3visio.emailToAlias"/>
       <Transform name="i3visio.emailToBreachedAccounts"/>
       <Transform name="i3visio.emailToDomain"/>       
@@ -16,6 +17,11 @@
       <Transform name="i3visio.phoneToMoreInfoListspam"/>      
       <Transform name="i3visio.textToAllEntities"/>      
       <Transform name="i3visio.textToDeepWebSearch"/>      
-      <Transform name="i3visio.uriToAllEntities"/>                 
+      <Transform name="i3visio.textToGoogleSearchUri"/>      
+      <Transform name="i3visio.uriToAllEntities"/> 
+      <Transform name="i3visio.uriToDomain"/> 
+      <Transform name="i3visio.uriToPort"/>       
+      <Transform name="i3visio.uriToProtocol"/>       
    </Transforms>
 </MaltegoServer>
+

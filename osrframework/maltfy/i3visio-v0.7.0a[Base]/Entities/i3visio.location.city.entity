@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.location.city" displayName="i3visio - City" displayNamePlural="i3visio - Citys" description="" category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.location.city" displayName="i3visio - City" displayNamePlural="i3visio - Cities" description="" category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.location</BaseEntity>
    </BaseEntities>
