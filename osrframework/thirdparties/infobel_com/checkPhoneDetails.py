@@ -23,40 +23,60 @@ import json
 import sys
 import urllib2
 
+import osrframework.searchengines.google as google
+import osrframework.thirdparties.infobel_com.processing as processing
+
 def checkPhoneDetails(query=None):
     ''' 
         Method that checks if the given hash is stored in the md5crack.com website. 
 
         :param query:    query to verify.
 
-        :return:    Python structure. It has the following structure:
-            [ 
-            {  
-                          TO_BE_DEFINED
-            },
-            {  
-                          TO_BE_DEFINED
-            },
-            ...
-            ]
-            
+        :return:    Python structure. 
     '''
     results = []
     
     #TO-DO executing the query against Google and grab the results
     #   The query should be something like "<QUERY> site:infobel.com"
-    searches = []
+    search = query + " site:infobel.com"    
+    
+    # This will return a list of i3visio.uri objects
+    uriObjects = google.processSearch(search) 
     
     #TO-DO: grabbing the phone details for the QUERY        
-    for s in searches:
+    for uri in uriObjects:
         # Recovering the website
-        data = urllib2.urlopen(apiURL).read()
-        
-        # TO-DO: generating the objects
-        aux = {}
-        
-        # Appending to the results
-        results.append(aux)
+        # Accessing the resources
+        textResults = processing.getResults(uri["value"])
+        # Iterating over every result to process it and recover a person object
+        for r in textResults:
+            person = {}
+            fullname = ""
+            person["type"]="i3visio.person"
+            person["value"] = "NOT_FOUND"
+            person["attributes"] = processing.extractFieldsFromResult(r)
+            
+            for entity in person["attributes"]:
+                if entity["type"] == "i3visio.fullname":
+                    person["value"] = entity["value"]
+            
+            # Appending the Uri of the infobel record:
+            aux = {}
+            aux["type"]= "i3visio.uri"
+            aux["value"] = uri["value"]
+            aux["attributes"] = []
+            person["attributes"].append(aux)            
+            
+            # Appending the platform of the infobel record:
+            aux = {}
+            aux["type"]= "i3visio.platform"
+            aux["value"] = "Infobel"
+            aux["attributes"] = []
+            person["attributes"].append(aux)  
+                      
+            # Appending to the results
+            results.append(person)
+            
     return results
 
 if __name__ == "__main__":

@@ -20,10 +20,11 @@
 
 __all__ = ['search']
 
+import argparse
+import json
 import os
 import sys
 import time
-import argparse
 
 if sys.version_info[0] > 2:
     from http.cookiejar import LWPCookieJar
@@ -233,8 +234,8 @@ def search(query, tld='com', lang='en', num=10, start=0, stop=None, pause=2.0,
             url = url_next_page_num % vars()
 
 # Returns a generator that yields URLs.
-def processSearch(query, tld='com', lang='en', num=10, start=0, stop=None, pause=2.0, only_standard=False):
-    '''
+def processSearch(query, tld='com', lang='en', num=10, start=0, stop=50, pause=2.0, only_standard=False):
+    ''' 
         Method that recovers the URI for a search returning an i3visio-compliant json object.
         
         :return:    A json-like object.
@@ -253,6 +254,7 @@ def processSearch(query, tld='com', lang='en', num=10, start=0, stop=None, pause
         aux["attributes"] = []
         results.append(aux)
 
+    print results
     return results
     
 # When run as a script...
@@ -277,34 +279,4 @@ if __name__ == "__main__":
     results = processSearch(args.query, tld=args.tld, lang=args.lang, num=int(args.num), start=int(args.start), stop=int(args.stop), pause=float(args.pause),only_standard=args.only_standard)
 
     print json.dumps(results, indent=2)
-                    
-                    
-# Original code was distributed by Mario Vilas under BSD license.
-# Python bindings to the Google search engine
-# Copyright (c) 2009-2014, Mario Vilas
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-#
-#     * Redistributions of source code must retain the above copyright notice,
-#       this list of conditions and the following disclaimer.
-#     * Redistributions in binary form must reproduce the above copyright
-#       notice,this list of conditions and the following disclaimer in the
-#       documentation and/or other materials provided with the distribution.
-#     * Neither the name of the copyright holder nor the names of its
-#       contributors may be used to endorse or promote products derived from
-#       this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
                     

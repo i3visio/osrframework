@@ -33,8 +33,6 @@ def uriToDomain(uri=None):
     '''
     me = MaltegoTransform()
 
-    newEnt = me.addEntity("i3visio.domain",domain.split('.')[-1])
-
     domainRegExp = "(?:https?|s?ftp)://([a-zA-Z0-9\_\.\-]+)(?:\:|/)"
     found = re.findall(domainRegExp, uri)
     if len(found) > 0:        

@@ -33,8 +33,6 @@ def uriToPort(uri=None):
     '''
     me = MaltegoTransform()
 
-    newEnt = me.addEntity("i3visio.port",domain.split('.')[-1])
-
     portRegExp = "(?:https?|s?ftp)://[a-zA-Z0-9\_\.\-]+:([0-9]{1,5})/"
     found = re.findall(portRegExp, uri)
     if len(found) > 0:        

@@ -33,8 +33,6 @@ def uriToProtocol(uri=None):
     '''
     me = MaltegoTransform()
 
-    newEnt = me.addEntity("i3visio.tld",domain.split('.')[-1])
-
     protocolRegExp = "((?:https?|s?ftp|file))://"
     foundProtocol = re.findall(protocolRegExp, uri)
     if len(foundProtocol) > 0:        

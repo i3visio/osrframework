@@ -38,7 +38,7 @@ def textToGoogleSearchUri(argv):
 
     uriList = google.processSearch(text)
     # This returns a dictionary like the following:
-    """
+    """ 
         [{
         'attributes': [],
         'type': 'i3visio.uri',
