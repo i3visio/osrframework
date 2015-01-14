@@ -1,8 +1,0 @@
-<MaltegoEntity id="i3visio.dogecoin.address" displayName="i3visio - Dogecoin Address" displayNamePlural="i3visio - Dogecoin Addresses" description="Any Dogecoin address." category="i3visio" smallIconResource="dogecoin_large" largeIconResource="dogecoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
-   <BaseEntities>
-      <BaseEntity>i3visio.text</BaseEntity>
-   </BaseEntities>
-   <Properties>
-      <Fields/>
-   </Properties>
-</MaltegoEntity>

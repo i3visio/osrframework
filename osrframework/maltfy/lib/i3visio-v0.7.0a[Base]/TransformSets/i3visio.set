@@ -1,7 +1,4 @@
-<MaltegoServer name="Local" enabled="true" description="Local transforms coded by i3visio to be executed in the machine" url="http://localhost">
-   <LastSync>2015-1-14 7:00:00.000 CET</LastSync>
-   <Protocol version="0.0"/>
-   <Authentication type="none"/>
+<TransformSet name="i3visio" description="Transforms from i3visio for OSINT">
    <Transforms>
       <Transform name="i3visio.aliasToAllProfiles"/>  
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
@@ -13,7 +10,8 @@
       <Transform name="i3visio.emailToDomain"/>       
       <Transform name="i3visio.emailToSkypeAccounts"/>
       <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>      
-      <Transform name="i3visio.hashToMD5crackDotCom"/>      
+      <Transform name="i3visio.hashToMD5crackDotCom"/> 
+      <Transform name="i3visio.phoneToPerson"/>                
       <Transform name="i3visio.phoneToMoreInfoListspam"/>      
       <Transform name="i3visio.textToAllEntities"/>      
       <Transform name="i3visio.textToDeepWebSearch"/>      
@@ -23,5 +21,4 @@
       <Transform name="i3visio.uriToPort"/>       
       <Transform name="i3visio.uriToProtocol"/>       
    </Transforms>
-</MaltegoServer>
-
+</TransformSet>

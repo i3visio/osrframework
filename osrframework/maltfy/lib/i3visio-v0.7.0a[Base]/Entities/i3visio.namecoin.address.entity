@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.namecoin.address" displayName="i3visio - Namecoin Address" displayNamePlural="i3visio - Namecoin Addresses" description="A Namecoin address" category="i3visio.currencies" smallIconResource="namecoin_large" largeIconResource="namecoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.text</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

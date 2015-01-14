@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.name" displayName="i3visio - Name" displayNamePlural="i3visio - Names" description="The first name of a person." category="i3visio" smallIconResource="TextField" largeIconResource="TextField" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.text</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

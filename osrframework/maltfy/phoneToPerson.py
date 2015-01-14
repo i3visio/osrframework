@@ -21,7 +21,7 @@
 import json
 import sys
 
-import osrframework.thirdparties.infobel_com.processing as processing
+import osrframework.thirdparties.infobel_com.checkPhoneDetails as infobel_com
 #import osframework.maltfy.lib.constants as constants
 from osrframework.maltfy.lib.maltego import *
 
@@ -39,7 +39,7 @@ def phoneToPerson(argv ):
     phone = sys.argv[1]
 
     # Trying to recover all the possible i3visio entities    
-    results = processing.checkPhoneDetails(phone)
+    results = infobel_com.checkPhoneDetails(phone)
     # This returns a dictionary like the following:
     """
     [
@@ -48,27 +48,27 @@ def phoneToPerson(argv ):
           {
             "attributes": [], 
             "type": "i3visio.fullname", 
-            "value": "BREZO GOMEZ FELIX"
+            "value": "-----"
           }, 
           {
             "attributes": [], 
             "type": "i3visio.location.postalcode", 
-            "value": "48013"
+            "value": "-----"
           }, 
           {
             "attributes": [], 
             "type": "i3visio.location.city", 
-            "value": "Bilbao"
+            "value": "-----"
           }, 
           {
             "attributes": [], 
             "type": "i3visio.location.address", 
-            "value": "ZUNZUNEGUI JUAN ANTONIO 1"
+            "value": "-----"
           }, 
           {
             "attributes": [], 
             "type": "i3visio.uri", 
-            "value": "http://www.infobel.com/es/spain/people/bilbao-48013/zunzunegui_juan_antonio/brezo_gomez-felix/971023530"
+            "value": "-----"
           }, 
           {
             "attributes": [], 
@@ -77,26 +77,24 @@ def phoneToPerson(argv ):
           }
         ], 
         "type": "i3visio.person", 
-        "value": "BREZO GOMEZ FELIX"
+        "value": "-----"
       }
     ]
     """
 
-
-
     # Getting the first and unique object retrieved
     if len(results) > 0:
+        # Creating the entity
+        newEnt = me.addEntity("i3visio.person",results[0]["value"])    
+        
+        # Writing down the extra information
+        newEnt.setDisplayInformation("<h3>" + results[0]["value"] +"</h3><p>" + json.dumps(results[0], sort_keys=True, indent=2) + "!</p>");                
+        
+        # Selecting the attributes
         entities = results[0]["attributes"]
-
-        #print json.dumps(entities, indent=2)
         for elem in entities:
-            newEnt = me.addEntity("i3visio.person",results[0]["value"])
-            
-            for att in elem["attributes"]:
-                # This will create new entities linked to the telephone
-                newEnt.addAdditionalFields(att["type"],att["type"],True,att["value"])
-            
-		    newEnt.setDisplayInformation("<h3>" + results[0]["value"] +"</h3><p>" + json.dumps(results[0], sort_keys=True, indent=2) + "!</p>");        
+            # This will create new entities linked to the telephone
+            newEnt.addAdditionalFields(elem["type"],elem["type"],True,elem["value"])
 
         # Returning the output text...
     me.returnOutput()

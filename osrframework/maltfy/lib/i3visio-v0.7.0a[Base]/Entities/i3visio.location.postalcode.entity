@@ -1,0 +1,9 @@
+<MaltegoEntity id="i3visio.location.postalcode" displayName="i3visio - Postalcode" displayNamePlural="i3visio - Postalcodes" description="A postalcode." category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.location</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Groups/>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>

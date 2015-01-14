@@ -2,14 +2,14 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 
 v0.6.0, 2015/01/14 -- Creation of Phonefy architecture.
 - Added a Google Search wrapper based on Mario Vilas approach.
-- Added Maltego transform: phoneToDetails.py
+- Added Maltego transform: phoneToPerson.py
 - Added Maltego transform: textToGoogleSearchURI.py
 - Added Maltego transform: uriToProtocol.py
 - Added Maltego transform: uriToPort.py
 - Added Maltego transform: uriToDomain.py
 - Added Maltego transform: domainToTLD.py
-[TO-DO] person, name, surname, location.postalcode
-- Added tld, person, fullname, name, surname, location.postalcode and location.address entities.
+- Added tld, person, fullname, name, surname1, surname2, location.postalcode and location.address entities.
+- Changed the main path for the configuration files
 
 v0.5.0, 2015/01/13 -- Creation of Phonefy architecture.
 - Added Maltego transform: phoneToMoreInfoListspam.py

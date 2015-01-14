@@ -103,7 +103,7 @@ if __name__ == "__main__":
     parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-v0.7.0a[Base]")            
     parser.add_argument('-i', '--installation_folder', metavar='<path>', action='store', help="path to wherever this framework is installed. By default, this folder.", required=False, default = os.getcwd())
     parser.add_argument('-p', '--personal', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="i3visio-v0.7.0a[Personal]", required=False)                
-    parser.add_argument('-w', '--working_folder', metavar='<path>', action='store', help="path to the working folder.", default="./osrframework/maltfy/", required=False)                    
+    parser.add_argument('-w', '--working_folder', metavar='<path>', action='store', help="path to the working folder.", default="./osrframework/maltfy/lib/", required=False)                    
     
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')

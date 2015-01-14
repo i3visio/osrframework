@@ -1,8 +1,0 @@
-<MaltegoEntity id="i3visio.fullname" displayName="i3visio - Fullname" displayNamePlural="i3visio - Fullnames" description="The fullname of a person." category="i3visio" smallIconResource="Person" largeIconResource="Person" allowedRoot="true" conversionOrder="2147483647" visible="true">
-   <BaseEntities>
-      <BaseEntity>i3visio.text</BaseEntity>
-   </BaseEntities>
-   <Properties>
-      <Fields/>
-   </Properties>
-</MaltegoEntity>

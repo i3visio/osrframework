@@ -1,9 +1,0 @@
-<MaltegoEntity id="i3visio.location.address" displayName="i3visio - Address" displayNamePlural="i3visio - Addresses" description="" category="i3visio" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
-   <BaseEntities>
-      <BaseEntity>i3visio.location</BaseEntity>
-   </BaseEntities>
-   <Properties>
-      <Groups/>
-      <Fields/>
-   </Properties>
-</MaltegoEntity>

@@ -254,7 +254,6 @@ def processSearch(query, tld='com', lang='en', num=10, start=0, stop=50, pause=2
         aux["attributes"] = []
         results.append(aux)
 
-    print results
     return results
     
 # When run as a script...

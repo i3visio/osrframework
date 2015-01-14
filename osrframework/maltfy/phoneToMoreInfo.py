@@ -47,61 +47,57 @@ def phoneToMoreInfo(argv ):
     results = processing.processPhoneList(platforms=platforms, numbers=numbers)
 
     # Getting the first and unique object retrieved
-    entities = results[0]["attributes"]
+    if len(results) >0:
+        entities = results[0]["attributes"]
+        # This returns a dictionary like the following:
+        """
+        [
+          {
+            "attributes": [],
+            "type": "i3visio.location.country",
+            "value": "Espa\u00f1a"
+          },
+          {
+            "attributes": [],
+            "type": "i3visio.location.province",
+            "value": "Sevilla"
+          },
+          {
+            "attributes": [],
+            "type": "i3visio.text",
+            "value": "Por <span>An\u00f3nimo</span>&nbsp;hace 2 meses </h4><p class=\"co
+        mment_text\">Gentuza. se vayan mirando esto http://ccaa.elpais.com/ccaa/2013/11/
+        20/madrid/<a target='_blank' href='busca.php?Telefono=1384983847'>1384983847</a>
+        _<a target='_blank' href='busca.php?Telefono=570086'>570086</a>.html"
+          },
+          {
+            "attributes": [],
+            "type": "i3visio.text",
+            "value": "Por <span>An\u00f3nimo</span>&nbsp;hace 5 meses </h4><p class=\"co
+        mment_text\">Los mejores clientes de todas las telefonicas son los centros de ll
+        amadas,hay mucho dinero en juego."
+        }
+        ]
+        """
 
-    #print entities
-    
-    #entities = listspam_com.getPhoneComplains(query=phone)    
-    # This returns a dictionary like the following:
-    """
-    [
-      {
-        "attributes": [],
-        "type": "i3visio.location.country",
-        "value": "Espa\u00f1a"
-      },
-      {
-        "attributes": [],
-        "type": "i3visio.location.province",
-        "value": "Sevilla"
-      },
-      {
-        "attributes": [],
-        "type": "i3visio.text",
-        "value": "Por <span>An\u00f3nimo</span>&nbsp;hace 2 meses </h4><p class=\"co
-    mment_text\">Gentuza. se vayan mirando esto http://ccaa.elpais.com/ccaa/2013/11/
-    20/madrid/<a target='_blank' href='busca.php?Telefono=1384983847'>1384983847</a>
-    _<a target='_blank' href='busca.php?Telefono=570086'>570086</a>.html"
-      },
-      {
-        "attributes": [],
-        "type": "i3visio.text",
-        "value": "Por <span>An\u00f3nimo</span>&nbsp;hace 5 meses </h4><p class=\"co
-    mment_text\">Los mejores clientes de todas las telefonicas son los centros de ll
-    amadas,hay mucho dinero en juego."
-    }
-    ]
-    """
-
-    #print json.dumps(entities, indent=2)
-    for elem in entities:
-        newEnt = me.addEntity(elem["type"],elem["value"])
-        
-        otherIssues = []
-        
-        for att in elem["attributes"]:
-            # This will create new entities linked to the telephone
-            if att["type"] == "i3visio.location.country" or att["type"] == "i3visio.location.province":
-                me.addEntity(att["type"],att["value"])
-            if att:
-                otherIssues.append(att) 
-        
-		newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>" + json.dumps(elem["attributes"], sort_keys=True, indent=2) + "!</p>");        
+        #print json.dumps(entities, indent=2)
+        for elem in entities:
+            newEnt = me.addEntity(elem["type"],elem["value"])
+            
+            otherIssues = []
+            
+            for att in elem["attributes"]:
+                # This will create new entities linked to the telephone
+                if att["type"] == "i3visio.location.country" or att["type"] == "i3visio.location.province":
+                    me.addEntity(att["type"],att["value"])
+                if att:
+                    otherIssues.append(att) 
+            
+		    newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>" + json.dumps(elem["attributes"], sort_keys=True, indent=2) + "!</p>");        
 
     # Returning the output text...
     me.returnOutput()
 
-    #print json.dumps(entities, indent = 2)
 
 
 if __name__ == "__main__":

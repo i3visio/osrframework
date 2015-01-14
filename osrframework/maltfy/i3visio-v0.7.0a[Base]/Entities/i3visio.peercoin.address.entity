@@ -1,8 +1,0 @@
-<MaltegoEntity id="i3visio.peercoin.address" displayName="i3visio - Peercoin Address" displayNamePlural="i3visio - Peercoin Addresses" description="A Peercoin address" category="i3visio" smallIconResource="peercoin_large" largeIconResource="peercoin_large" allowedRoot="true" conversionOrder="2147483647" visible="true">
-   <BaseEntities>
-      <BaseEntity>i3visio.text</BaseEntity>
-   </BaseEntities>
-   <Properties>
-      <Fields/>
-   </Properties>
-</MaltegoEntity>
