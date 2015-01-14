@@ -14,7 +14,7 @@
       <Transform name="i3visio.emailToSkypeAccounts"/>
       <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>      
       <Transform name="i3visio.hashToMD5crackDotCom"/>      
-      <Transform name="i3visio.phoneToPerson"/>      
+      <Transform name="i3visio.textToPhoneDetails"/>      
       <Transform name="i3visio.phoneToMoreInfoListspam"/>      
       <Transform name="i3visio.textToAllEntities"/>      
       <Transform name="i3visio.textToDeepWebSearch"/>      

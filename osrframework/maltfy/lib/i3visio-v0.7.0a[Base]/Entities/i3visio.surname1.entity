@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.surname1" displayName="i3visio - 1st Surname " displayNamePlural="i3visio - 1st Surnames" description="The 1st surname of a person." category="i3visio" smallIconResource="TextField" largeIconResource="TextField" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.surname1" displayName="i3visio - 1st Surname " displayNamePlural="i3visio - 1st Surnames" description="The first surname of a person." category="i3visio" smallIconResource="TextField" largeIconResource="TextField" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.text</BaseEntity>
    </BaseEntities>
