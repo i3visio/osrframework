@@ -42,7 +42,7 @@ def extractFieldsFromResult(data):
     fieldsRegExp["i3visio.location.address"] = "itemprop=\"streetAddress\">([^<]*)</span>"
     fieldsRegExp["i3visio.location.city"] = "addressLocality\">([^<]*)</span>"
     fieldsRegExp["i3visio.location.postalcode"] = "postalCode\">([^<]*)</span>"    
-    fieldsRegExp["i3visio.location.phone"] = "document.write\('([0-9]+)'"        
+    fieldsRegExp["i3visio.phone"] = "document.write\('([0-9]+)'"        
 
     for field in fieldsRegExp.keys():
         listRecovered = re.findall(fieldsRegExp[field], data)

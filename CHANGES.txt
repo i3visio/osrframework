@@ -1,5 +1,9 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+v0.6.1, 2015/01/15 -- Correction of a couple of issues in the entities.
+- Added properties by default to i3visio.person.
+- Corrected a reference to a i3visio.phone in infobel_com package (it was identified wrongly as i3visio.location.phone)
+
 v0.6.0, 2015/01/14 -- Creation of Phonefy architecture.
 - Added a Google Search wrapper based on Mario Vilas approach.
 - Added Maltego transform: phoneToPerson.py

@@ -2,7 +2,47 @@
    <BaseEntities>
       <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>
-   <Properties>
-      <Fields/>
-   </Properties>
+   
+   <Properties value="properties.i3visio-alias">
+      <Groups/>
+      <Fields>
+         <Field name="i3visio.fullname" type="string" nullable="true" hidden="false" readonly="false" description="The fullname of the target person." displayName="i3visio - Fullname">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Alicia Álvarez Abad</SampleValue>
+         </Field>
+         <Field name="i3visio.name" type="string" nullable="true" hidden="false" readonly="false" description="The first name of the target person." displayName="i3visio - Name">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Alicia</SampleValue>
+         </Field>
+         <Field name="i3visio.surname1" type="string" nullable="true" hidden="false" readonly="false" description="The first surname of the target person." displayName="i3visio - 1st surname">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Álvarez</SampleValue>
+         </Field>        
+         <Field name="i3visio.surname2" type="string" nullable="true" hidden="false" readonly="false" description="The second surname of the target person." displayName="i3visio - 2nd surname">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Abad</SampleValue>
+         </Field>           
+         <Field name="i3visio.location.address" type="string" nullable="true" hidden="false" readonly="false" description="The address of the target person." displayName="i3visio - Address">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Gran Vía 1</SampleValue>
+         </Field>         
+         <Field name="i3visio.location.postalcode" type="string" nullable="true" hidden="false" readonly="false" description="The postalcode of the target person." displayName="i3visio - Postalcode">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>28001</SampleValue>
+         </Field>                                            
+         <Field name="i3visio.location.city" type="string" nullable="true" hidden="false" readonly="false" description="The city of the target person." displayName="i3visio - City">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Madrid</SampleValue>
+         </Field>                    
+         <Field name="i3visio.location.province" type="string" nullable="true" hidden="false" readonly="false" description="The province of the target person." displayName="i3visio - Province">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Madrid</SampleValue>
+         </Field>             
+         <Field name="i3visio.location.country" type="string" nullable="true" hidden="false" readonly="false" description="The country of the target person." displayName="i3visio - Country">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Spain</SampleValue>
+         </Field>  
+      </Fields>
+   </Properties>   
+   
 </MaltegoEntity>
