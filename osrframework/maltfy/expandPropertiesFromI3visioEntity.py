@@ -42,7 +42,7 @@ def expandPropertiesFromI3visioEntity(argv):
 
 	# iterating through the possible i3visio entities
 	for field in found_fields.keys():
-		if found_fields[field] != None and found_fields[field] != "":
+		if found_fields[field] != None and found_fields[field] != " " and found_fields[field] != "":
 			newEnt = me.addEntity(field,str(found_fields[field]))
 		#newEnt.setDisplayInformation("<h3>" + prof +"</h3><p>" + str(prof) + "\t" + str(plat) + "\t" + profiles[prof][plat]  + "</p>");
 		#newEnt.addAdditionalFields("i3visio.platform","Platform name",True,plat)
