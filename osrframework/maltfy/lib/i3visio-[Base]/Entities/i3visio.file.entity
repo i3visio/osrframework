@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.file" displayName="i3visio - File" displayNamePlural="i3visio - Files" description="The filepath or filename of any file." category="i3visio" smallIconResource="List" largeIconResource="List" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.file" displayName="i3visio - File" displayNamePlural="i3visio - Files" description="The filepath or filename of any file." category="i3visio.web" smallIconResource="List" largeIconResource="List" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>

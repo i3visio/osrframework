@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.protocol" displayName="i3visio - Protocol" displayNamePlural="i3visio - Protocols" description="Any communication protocol found such as HTTP, HTTPS, FTP, etc.." category="i3visio" smallIconResource="Datagram" largeIconResource="Datagram" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.protocol" displayName="i3visio - Protocol" displayNamePlural="i3visio - Protocols" description="Any communication protocol found such as HTTP, HTTPS, FTP, etc.." category="i3visio.web" smallIconResource="Datagram" largeIconResource="Datagram" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.text</BaseEntity>
    </BaseEntities>

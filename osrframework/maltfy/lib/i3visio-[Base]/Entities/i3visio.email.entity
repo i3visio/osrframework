@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.email" displayName="i3visio - Email" displayNamePlural="i3visio - Emails" description="This is an i3visio email." category="i3visio" smallIconResource="EmailConversation" largeIconResource="EmailConversation" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.email" displayName="i3visio - Email" displayNamePlural="i3visio - Emails" description="This is an i3visio email." category="i3visio.person" smallIconResource="EmailConversation" largeIconResource="EmailConversation" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>

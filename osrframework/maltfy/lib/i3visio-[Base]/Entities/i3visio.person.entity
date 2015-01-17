@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.person" displayName="i3visio - Person" displayNamePlural="i3visio - Persons" description="Any person." category="i3visio" smallIconResource="Person" largeIconResource="Person" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.person" displayName="i3visio - Person" displayNamePlural="i3visio - Persons" description="Any person." category="i3visio.person" smallIconResource="Person" largeIconResource="Person" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>

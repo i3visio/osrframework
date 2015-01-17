@@ -41,7 +41,7 @@ v0.7.0, 2015/01/15 -- Release of v0.7.0.
 - Refactoring of uriToEntities.py and textToEntities.py python codes to accept a platform parameter in the transform.
 - Changed the name of the Maltego Configuration folder to remove the version in the name.
 - Fix the i3visio.surname2 which was wrongly referred as i3visio.surnme2.
-- Added different entity categories such as: i3visio.hash, i3visio.location or i3visio.phone.
+- Added different entity categories such as: i3visio.hash, i3visio.location, i3visio.person, i3visio.phone, i3visio.web.
 
 v0.6.1, 2015/01/15 -- Correction of a couple of issues in the entities.
 - Added properties by default to i3visio.person.

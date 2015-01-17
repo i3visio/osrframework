@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.domain" displayName="i3visio - Domain" displayNamePlural="i3visio - Domains" description="Any domain or subdomain found." category="i3visio" smallIconResource="DNS Name" largeIconResource="DNS Name" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.domain" displayName="i3visio - Domain" displayNamePlural="i3visio - Domains" description="Any domain or subdomain found." category="i3visio.web" smallIconResource="DNS Name" largeIconResource="DNS Name" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.text</BaseEntity>
    </BaseEntities>

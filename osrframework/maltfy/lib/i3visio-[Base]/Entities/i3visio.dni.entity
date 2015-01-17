@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.dni" displayName="i3visio - DNI" displayNamePlural="i3visio - DNIs" description="A valid Spanish DNI." category="i3visio" smallIconResource="Passport" largeIconResource="Passport" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.dni" displayName="i3visio - DNI" displayNamePlural="i3visio - DNIs" description="A valid Spanish DNI." category="i3visio.person" smallIconResource="Passport" largeIconResource="Passport" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.text</BaseEntity>
    </BaseEntities>

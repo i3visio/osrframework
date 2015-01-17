@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.tld" displayName="i3visio - TLD" displayNamePlural="i3visio - TLDs" description="The TLD of a domain." category="i3visio" smallIconResource="DNS Name" largeIconResource="DNS Name" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.tld" displayName="i3visio - TLD" displayNamePlural="i3visio - TLDs" description="The TLD of a domain." category="i3visio.web" smallIconResource="DNS Name" largeIconResource="DNS Name" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.domain</BaseEntity>
    </BaseEntities>

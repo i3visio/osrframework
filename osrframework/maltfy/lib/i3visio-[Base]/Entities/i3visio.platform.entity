@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.platform" displayName="i3visio - Platform" displayNamePlural="i3visio - Platforms" description="This is a platform extracted by usufy" category="i3visio" smallIconResource="Nic" largeIconResource="Nic" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.platform" displayName="i3visio - Platform" displayNamePlural="i3visio - Platforms" description="This is a platform extracted by OSRFramework." category="i3visio.web" smallIconResource="Nic" largeIconResource="Nic" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.object</BaseEntity>
    </BaseEntities>
