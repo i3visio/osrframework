@@ -2,29 +2,33 @@
 import json
 import sys
 
-import osrframework.entify.processing as entify
+import osrframework.entify.processing as processing
 import osrframework.maltfy.lib.constants as constants
 from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.blockchain_info.getBitcoinAddressDetails as blockchain
+import osrframework.entify.config_entify as config
 
-def textToI3visioEntities(argv):
+def textToI3visioEntities(data, platform='all'):
     ''' 
-        Method that obtains all the entities in a given i3visio.object that contains an i3visio.text property.
+        Method that obtains all the entities in a given i3visio.text entity.
 
-        :param argv:    the serialized entity.
+        :param uri:    the uri to be received.
+        :param platform:    a platform string representing the regular expression to be used.
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
     me = MaltegoTransform()
     #me.parseArguments(argv);
+    #data = me.getVar("i3visio.text")
     #data = sys.argv[1]
 
     # Trying to recover all the possible i3visio entities
     found_fields = {}
+    
+    # Getting the list of <RegExp> objects from entify
+    lRegexp = config.getRegexpsByName([platform])
 
-    #data = me.getVar("i3visio.text")
-    data = sys.argv[1]
-    entities = entify.getEntitiesByRegexp(data=data)    
+    entities = processing.getEntitiesByRegexp(data=data, listRegexp = lRegexp)    
     # This returns a dictionary like the following:
     """
         [{
@@ -57,6 +61,6 @@ def textToI3visioEntities(argv):
     me.returnOutput()
 
 if __name__ == "__main__":
-    textToI3visioEntities(sys.argv)
+    textToI3visioEntities(sys.argv[2], platform = sys.argv[1])
 
 

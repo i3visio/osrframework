@@ -37,7 +37,7 @@ except:
     sys.exit()
  
 setup(    name="osrframework",
-    version="v0.6.1",
+    version="v0.7.0",
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
     author="Felix Brezo and Yaiza Rubio",
     author_email="contacto@i3visio.com",

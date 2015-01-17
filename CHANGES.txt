@@ -1,39 +1,79 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+[TO-DO]
+- Generation of aliases from a person.
+- Creation of different transforms for each and every platform in usufy.
+- Migration from old usufy platforms to newest approach used in phonefy.
+- Inclusion of new usufy platforms which are now in testing mode.
+- Create domainToInfo and IPv4ToInfo transforms using ip-api.com.
+
+v0.7.0, 2015/01/15 -- Release of v0.7.0.
+- Added Maltego transform: uriToBrowser.
+- Added Maltego transform: uriToBitcoinAddressEntities.
+- Added Maltego transform: uriToDniEntities.
+- Added Maltego transform: uriToDogecoinAddressEntities.
+- Added Maltego transform: uriToEmailEntities.
+- Added Maltego transform: uriToIPv4Entities.
+- Added Maltego transform: uriToLitecoinAddressEntities.
+- Added Maltego transform: uriToMD5Entities.
+- Added Maltego transform: uriToNamecoinAddressEntities.
+- Added Maltego transform: uriToPeercoinAddressEntities.
+- Added Maltego transform: uriToSHA1Entities.
+- Added Maltego transform: uriToSHA256Entities.
+- Added Maltego transform: uriToUriEntities.
+- Added Maltego transform: textToBitcoinAddressEntities.
+- Added Maltego transform: textToDniEntities.
+- Added Maltego transform: textToDogecoinAddressEntities.
+- Added Maltego transform: textToEmailEntities.
+- Added Maltego transform: textToIPv4Entities.
+- Added Maltego transform: textToLitecoinAddressEntities.
+- Added Maltego transform: textToMD5Entities.
+- Added Maltego transform: textToNamecoinAddressEntities.
+- Added Maltego transform: textToPeercoinAddressEntities.
+- Added Maltego transform: textToSHA1Entities.
+- Added Maltego transform: textToSHA256Entities.
+- Added Maltego transform: textToUriEntities.
+- Added Maltego transform: domainToGoogleSearchUriWithEmails.
+- Added Maltego transform: textToPhoneDetails.
+- Removed Maltego transform: phoneToPerson.
+- Reorganization of transforms in different thematic sets.
+- Refactoring of uriToEntities.py and textToEntities.py python codes to accept a platform parameter in the transform.
+- Changed the name of the Maltego Configuration folder to remove the version in the name.
+
 v0.6.1, 2015/01/15 -- Correction of a couple of issues in the entities.
 - Added properties by default to i3visio.person.
 - Corrected a reference to a i3visio.phone in infobel_com package (it was identified wrongly as i3visio.location.phone)
 
 v0.6.0, 2015/01/14 -- Creation of Phonefy architecture.
 - Added a Google Search wrapper based on Mario Vilas approach.
-- Added Maltego transform: phoneToPerson.py
-- Added Maltego transform: textToGoogleSearchURI.py
-- Added Maltego transform: uriToProtocol.py
-- Added Maltego transform: uriToPort.py
-- Added Maltego transform: uriToDomain.py
-- Added Maltego transform: domainToTLD.py
+- Added Maltego transform: phoneToPerson.
+- Added Maltego transform: textToGoogleSearchURI.
+- Added Maltego transform: uriToProtocol.
+- Added Maltego transform: uriToPort.
+- Added Maltego transform: uriToDomain.
+- Added Maltego transform: domainToTLD.
 - Added tld, person, fullname, name, surname1, surname2, location.postalcode and location.address entities.
 - Changed the main path for the configuration files
 
 v0.5.0, 2015/01/13 -- Creation of Phonefy architecture.
-- Added Maltego transform: phoneToMoreInfoListspam.py
+- Added Maltego transform: phoneToMoreInfoListspam.
 - Restructuration of phonefy package.
 - Change in uriToEntities.py to use an i3visio Browser.
 - Fix in i3visio.location.province icon.
 
 v0.4.0, 2015/01/11 -- Added the usufy package onto OSRFramework.
-- Added Maltego transform: aliasToAllProfiles.py
-- Added Maltego transform: aliasToFamousProfiles.py
+- Added Maltego transform: aliasToAllProfiles.
+- Added Maltego transform: aliasToFamousProfiles.
 - Inclusion of i3visiotools global files as osrframework.utils.
 - Change in old displaying format of usufy entities.
 - Change inheritance of i3visio.uri to i3visio.text (rather than i3visio.object).
 - Change icon of i3visio.platform.
 
 v0.3.0, 2015/01/11 -- Added the extraction of regular expression with entify.
-- Added Maltego transform: textToAllEntities.py
-- Added Maltego transform: uriToAllEntities.py
-- Added Maltego transform: emailToAlias.py
-- Added Maltego transform: emailToDomain.py
+- Added Maltego transform: textToAllEntities.
+- Added Maltego transform: uriToAllEntities.
+- Added Maltego transform: emailToAlias.
+- Added Maltego transform: emailToDomain.
 - Inclusion of a --quiet option.
 - Inclusion of transforms related to the extraction of entities.
 - Minor changes in the name of entify transforms and i3visio.url has been moved to i3visio.uri.
@@ -43,12 +83,12 @@ v0.3.0, 2015/01/11 -- Added the extraction of regular expression with entify.
 - Edit configuration of configure_maltego to update also default paths for the transforms.
 
 v0.2.0, 2015/01/07 -- Added Maltego transforms.
-- Added Maltego transform: aliasToSkypeAccounts.py
-- Added Maltego transform: bitcoinAddressToBlockchainDetails.py
-- Added Maltego transform: emailToBreachedAccounts.py
-- Added Maltego transform: emailToSkypeAccounts.py
-- Added Maltego transform: hashToMD5crackDotCom.py
-- Added Maltego transform: expandPropertiesFromI3visioEntity.py
+- Added Maltego transform: aliasToSkypeAccounts.
+- Added Maltego transform: bitcoinAddressToBlockchainDetails.
+- Added Maltego transform: emailToBreachedAccounts.
+- Added Maltego transform: emailToSkypeAccounts.
+- Added Maltego transform: hashToMD5crackDotCom.
+- Added Maltego transform: expandPropertiesFromI3visioEntity.
 - Added entities and logos for Peercoin and Namecoin addresses.
 - Removed i3visio.bitcoin, i3visio.litecoin, i3visio.dogecoin entities, as the i3visio.bitcoin.address (et al.) will be used.
 - Added entities for i3visio.port, i3visio.domain and i3visio.protocol.
@@ -56,10 +96,10 @@ v0.2.0, 2015/01/07 -- Added Maltego transforms.
 - Added an autoconfiguration file for Maltego Transforms.
 
 v0.1.0, 2014/12/31 -- Initial release.
-- Added a third-party API wrapper for Skype: checkIPDetails.py
-- Added a third-party API wrapper for md5crack.com: checkIPDetails.py
-- Added a third-party API wrapper for ip-api.com: checkIPDetails.py
-- Added a third-party API wrapper for haveibeenpwned.com: checkIfEmailWasHacked.py
-- Added a third-party API wrapper for blockchain.info: getBitcoinAddressDetails.py
+- Added a third-party API wrapper for Skype: checkIPDetails.
+- Added a third-party API wrapper for md5crack.com: checkIPDetails.
+- Added a third-party API wrapper for ip-api.com: checkIPDetails.
+- Added a third-party API wrapper for haveibeenpwned.com: checkIfEmailWasHacked.
+- Added a third-party API wrapper for blockchain.info: getBitcoinAddressDetails.
 - Initial release.
 

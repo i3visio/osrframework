@@ -25,7 +25,7 @@ import zipfile
 import argparse
 import shutil, errno
 
-def copyAnything(src="./i3visio-v0.7.0a[Base]", dst="./i3visio-v0.7.0a[Personal]"):
+def copyAnything(src="./i3visio-[Base]", dst="./i3visio-[Personal]"):
     '''
         :param src: Source folder.
         :param dst: Destination folder.
@@ -100,14 +100,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='configure_maltego.py - A function to automatically generate Maltego configuration files.', prog='configure_maltego.py', epilog="", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
-    parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-v0.7.0a[Base]")            
+    parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-[Base]")            
     parser.add_argument('-i', '--installation_folder', metavar='<path>', action='store', help="path to wherever this framework is installed. By default, this folder.", required=False, default = os.getcwd())
-    parser.add_argument('-p', '--personal', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="i3visio-v0.7.0a[Personal]", required=False)                
+    parser.add_argument('-p', '--personal', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="i3visio-[Personal]", required=False)                
     parser.add_argument('-w', '--working_folder', metavar='<path>', action='store', help="path to the working folder.", default="./osrframework/maltfy/lib/", required=False)                    
     
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.1', help='shows the version of the program and exists.')
     
     args = parser.parse_args()        
     

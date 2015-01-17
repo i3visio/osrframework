@@ -17,7 +17,6 @@
       <Transform name="i3visio.textToPhoneDetails"/>      
       <Transform name="i3visio.phoneToMoreInfoListspam"/>      
       <Transform name="i3visio.textToAllEntities"/>      
-      <Transform name="i3visio.textToDeepWebSearch"/>      
       <Transform name="i3visio.textToGoogleSearchUri"/>      
       <Transform name="i3visio.uriToAllEntities"/> 
       <Transform name="i3visio.uriToBrowser"/> 

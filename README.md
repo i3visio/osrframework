@@ -97,7 +97,7 @@ python configure_maltego.py
 ```
 This will create a .mtz file under: 
 ```
-<INSTALLATION_FOLDER>/osrframework/maltfy/
+<INSTALLATION_FOLDER>/osrframework/maltfy/lib/
 ```
 
 7.- However, to use our Maltego Transforms, you will have to download Maltego from 
@@ -160,7 +160,7 @@ python configure_maltego.py
 ```
 This will create a .mtz file under: 
 ```
-<INSTALLATION_FOLDER>/osrframework/maltfy/
+<INSTALLATION_FOLDER>/osrframework/maltfy/lib/
 ```
 
 5.- However, to use our Maltego Transforms, you will have to download Maltego from 

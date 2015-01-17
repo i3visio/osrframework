@@ -25,19 +25,19 @@ import osrframework.entify.processing as processing
 import osrframework.maltfy.lib.constants as constants
 import osrframework.utils.browser as browser
 from osrframework.maltfy.lib.maltego import *
+import osrframework.entify.config_entify as config
 
-
-def uriToI3visioEntities(argv):
+def uriToI3visioEntities(uri, platform='all'):
     ''' 
         Method that obtains all the entities in a given profile.
 
-        :param argv:    the serialized entity.
+        :param uri:    the uri to be received.
+        :param platform:    a platform string representing the regular expression to be used.
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
     me = MaltegoTransform()
     #me.parseArguments(argv);
-    uri = sys.argv[1]
 
     # Trying to recover all the possible i3visio entities
     found_fields = {}
@@ -47,7 +47,10 @@ def uriToI3visioEntities(argv):
     # Accessing the resources
     data = i3Browser.recoverURL(uri)
 
-    entities = processing.getEntitiesByRegexp(data=data)    
+    # Getting the list of <RegExp> objects from entify
+    lRegexp = config.getRegexpsByName([platform])
+
+    entities = processing.getEntitiesByRegexp(data=data, listRegexp = lRegexp)    
     # This returns a dictionary like the following:
     """
         [{
@@ -81,6 +84,6 @@ def uriToI3visioEntities(argv):
 
 
 if __name__ == "__main__":
-    uriToI3visioEntities(sys.argv)
+    uriToI3visioEntities(sys.argv[2], platform = sys.argv[1])
 
 

@@ -1,4 +1,4 @@
-<TransformSet name="i3visio - Global" description="Set of global transforms from i3visio for OSINT.">
+<TransformSet name="i3visio [Global]" description="Set of global transforms from i3visio for OSINT.">
    <Transforms>
       <Transform name="i3visio.aliasToAllProfiles"/>  
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
@@ -11,7 +11,6 @@
       <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>      
       <Transform name="i3visio.hashToMD5crackDotCom"/> 
       <Transform name="i3visio.textToAllEntities"/>      
-      <Transform name="i3visio.textToDeepWebSearch"/>      
       <Transform name="i3visio.textToGoogleSearchUri"/>      
       <Transform name="i3visio.uriToAllEntities"/> 
       <Transform name="i3visio.uriToBrowser"/> 
