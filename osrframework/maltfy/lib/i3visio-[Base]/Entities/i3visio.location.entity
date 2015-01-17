@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.location" displayName="i3visio - Location" displayNamePlural="i3visio - Locations" description="" category="i3visio" smallIconResource="FixGolden" largeIconResource="FixGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.location" displayName="i3visio - Location" displayNamePlural="i3visio - Locations" description="A location entity." category="i3visio.location" smallIconResource="FixGolden" largeIconResource="FixGolden" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.text</BaseEntity>
    </BaseEntities>

@@ -1,4 +1,4 @@
-<MaltegoEntity id="i3visio.phone.mobile" displayName="i3visio - Mobile" displayNamePlural="i3visio - Mobiles" description="" category="i3visio" smallIconResource="Smartphone" largeIconResource="Smartphone" allowedRoot="true" conversionOrder="2147483647" visible="true">
+<MaltegoEntity id="i3visio.phone.mobile" displayName="i3visio - Mobile" displayNamePlural="i3visio - Mobiles" description="A mobile phone number." category="i3visio.phone" smallIconResource="Smartphone" largeIconResource="Smartphone" allowedRoot="true" conversionOrder="2147483647" visible="true">
    <BaseEntities>
       <BaseEntity>i3visio.phone</BaseEntity>
    </BaseEntities>
