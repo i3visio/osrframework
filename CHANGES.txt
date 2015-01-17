@@ -8,7 +8,10 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Create domainToInfo and IPv4ToInfo transforms using ip-api.com.
 - Update the Skype4py package to try to make it work in new versions of Skype in Windows.
 
-v0.7.0, 2015/01/15 -- Release of v0.7.0.
+v0.7.1, 2015/01/17 -- Release of v0.7.1.
+- Fix in the domainToGoogleSearchUriWithEmails transform which was wrongly coded.
+
+v0.7.0, 2015/01/17 -- Release of v0.7.0.
 - Added Maltego transform: uriToBrowser.
 - Added Maltego transform: uriToBitcoinAddressEntities.
 - Added Maltego transform: uriToDniEntities.
