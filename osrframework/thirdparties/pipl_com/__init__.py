@@ -19,16 +19,7 @@
 #
 ##################################################################################
 
-def returnListOfAPIKeys():
-	'''
-		:return: A dictionary containing the API Keys.
-	'''
-	dictAPIKeys = {}
-	#dictAPIKeys["<platform>"] = "<API_KEY>"
-	#
-	# The platforms that need a username and password are the following. 
-	# Uncomment the lines and change the <API_KEY> where needed.
-	#
-	#dictAPIKeys["md5crack_com"] = "<API_KEY>"
-	#dictAPIKeys["pipl_com"] = "<API_KEY>"
-	return dictAPIKeys
+import osrframework.utils.logger
+
+# Calling the logger when being imported
+osrframework.utils.logger.setupLogger(loggerName="osrframework.thirdparties.pipl_com")

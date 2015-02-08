@@ -26,25 +26,47 @@ import urllib2
 from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.md5crack_com.checkIfHashIsCracked as md5crack
 
-def hashToMD5crackDotCom(hash=None):
+def hashToMD5crackDotCom(query=None):
 	''' 
-		Method that checks if the given email is stored in the md5crack.com.
+		Method that checks if the given hash is stored in the md5crack.com.
 
-		:param email:	email to verify.
+		:param query:	hash to verify.
 
 	'''
 	me = MaltegoTransform()
 
-	jsonData = md5crack.checkIfCrackedInMD5crack(hash=hash)
+	jsonData = md5crack.checkIfCrackedInMD5crack(query=query)
 
 	# This returns a dictionary like:
 	""" 
-	{
-      "phrase": "4d186321c1a7f0f354b297e8914ab240",
-      "code": 6,
-      "parsed": "hola",
-      "response": "The MD5 hash was cracked."
-    }
+        [
+          {
+            "attributes": [
+              {
+                "attributes": [], 
+                "type": "i3visio.text", 
+                "value": "DE"
+              }
+            ], 
+            "type": "i3visio.location.country", 
+            "value": "Germany"
+          }, 
+          {
+            "attributes": [], 
+            "type": "i3visio.text", 
+            "value": "1&1 Internet AG"
+          }, 
+          {
+            "attributes": [], 
+            "type": "i3visio.ipv4", 
+            "value": "217.160.129.99"
+          }, 
+          {
+            "attributes": [], 
+            "type": "i3visio.location.geo", 
+            "value": "51, 9"
+          }
+        ]
     """
 
 	#print json.dumps(entities, indent=2)

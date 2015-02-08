@@ -1,0 +1,8 @@
+<MaltegoEntity id="i3visio.location.geo" displayName="i3visio - Geocoordinates" displayNamePlural="i3visio - Geocoordinates" description="A pair of geocoordinates." category="i3visio.location" smallIconResource="Geography" largeIconResource="Geography" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.location</BaseEntity>
+   </BaseEntities>
+   <Properties>
+      <Fields/>
+   </Properties>
+</MaltegoEntity>
