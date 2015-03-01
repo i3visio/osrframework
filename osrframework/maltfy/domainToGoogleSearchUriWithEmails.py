@@ -24,21 +24,26 @@ import sys
 from osrframework.maltfy.lib.maltego import *
 import osrframework.searchengines.google as google
 
-def domainToGoogleSearchUriWithEmails(params):
+def domainToGoogleSearchUriWithEmails(argv):
     ''' 
         List of URI entities corresponding to the results of a Google Search that tries to find emails from a domain.
 
-        :param params:    the parameters to be searched.
+        :param argv:    the parameters to be searched.
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
     me = MaltegoTransform()
+    me.parseArguments(argv);
 
-    domain = params[1]
 
+    entity = me.getVar("_serialized")
+    jsonData = json.loads(entity) 
+    
+    domain = jsonData["value"]
     query = "\"*@" + domain + "\""
-
-    uriList = google.processSearch(query)
+    
+    # Loading onto the Json data the information
+    jsonData["attributes"] = google.processSearch(query)
     # This returns a dictionary like the following:
     """ 
         [{
@@ -53,13 +58,14 @@ def domainToGoogleSearchUriWithEmails(params):
         ...
         ]
     """
+    me.createAndShowListOfEntities(jsonData)
 
     #print json.dumps(entities, indent=2)
-    for uri in uriList:
-        newEnt = me.addEntity(uri["type"],uri["value"])
-        newEnt.setDisplayInformation("<h3>" + uri["value"] +"</h3><p>"+str(uri["attributes"])+"</p>")        
-        for extraAtt in uri["attributes"]:
-            newEnt.addAdditionalFields(str(extraAtt['type']), str(extraAtt['type']), True, str(extraAtt['value']))    
+    #for uri in uriList:
+    #    newEnt = me.addEntity(uri["type"],uri["value"])
+    #    newEnt.setDisplayInformation("<h3>" + uri["value"] +"</h3><p>"+str(uri["attributes"])+"</p>")        
+    #    for extraAtt in uri["attributes"]:
+    #        newEnt.addAdditionalFields(str(extraAtt['type']), str(extraAtt['type']), True, str(extraAtt['value']))    
 
     # Returning the output text...
     me.returnOutput()

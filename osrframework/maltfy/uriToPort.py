@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -33,10 +35,23 @@ def uriToPort(uri=None):
     '''
     me = MaltegoTransform()
 
+    # Appending a '/' if the URI does not have it...
+    if uri.count("/") < 3:
+        uri += "/"
+
     portRegExp = "(?:https?|s?ftp)://[a-zA-Z0-9\_\.\-]+:([0-9]{1,5})/"
     found = re.findall(portRegExp, uri)
+
+    newEntities = []
+    
     if len(found) > 0:        
-        newEnt = me.addEntity("i3visio.port",found[0])
+        aux = {}
+        aux["type"] = "i3visio.port"
+        aux["value"] = found[0]
+        aux["attributes"] = []
+        newEntities.append(aux)
+        
+        me.addListOfEntities(newEntities)
         
     # Returning the output text...
     me.returnOutput()

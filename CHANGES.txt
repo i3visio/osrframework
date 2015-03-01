@@ -7,18 +7,23 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Inclusion of new usufy platforms which are now in testing mode.
 - Update the Skype4py package to try to make it work in new versions of Skype in Windows.
 
-v0.8.0, 2015/02/08 -- Addition of an extensive ip-api.com support and advanced .
-- Appending a '/' to URL that do not have it when extracting domains or ports.
+v0.8.0, 2015/02/08 -- Addition of an advanced attribute expansion and an extensive ip-api.com support.
+- All transforms have been upgraded.
+[Done]
 - Addition of all the attributes of an entity as fields and store the rest of the information in a new field attributes.
 - Addition of a method to recursively extract the information of the fields and attributes, even when it exceeds the maximum number of queries performed for the free version. 
-[Done]
-- Reorganization of ip-api.com Json objects returned by the API to display i3visio-like objects.
+- Change in the returnOutput methods of MaltegoEntity and MaltegoTransform to make use of an auxiliar getOutputText method.
+- Creation of two new methods in maltfy.lib.maltego to create new entities.
+- Reorganization of ip-api.com json objects returned by the API to display i3visio-like objects.
 - Inclusion of thirdparties.pipl script to perform queries on usernames and emails.
 - Relicensing of the piplcom/piplapis-python code released under Apache License 2.0 making use of the permissive approach of pipl.com. The code has been ammended to match GPLv3+ license.
-- Minor change in the way of grabbing md5crack.com API Key in config_api_keys.py.sample.
 - Added Maltego transform: domainToIp_ApiInfo.
 - Added Maltego transform: ipToIp_ApiInfo.
-- Added a new categories: i3visio.location.geo.
+- Appending a '/' to URL that do not have it when extracting domains or ports.
+- Minor change in the way of grabbing md5crack.com API Key in config_api_keys.py.sample.
+- Reorganization of network transforms onto i3visio.network set.
+- Added a new categories: i3visio.location.geo, i3visio.ipv4.
+- Changed the i3visio.protocol icon and moved the i3visio.breach entity to i3visio.person group.
 
 v0.7.1, 2015/01/17 -- Release of v0.7.1.
 - Fix in the domainToGoogleSearchUriWithEmails transform which was wrongly coded.

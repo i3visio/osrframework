@@ -3,21 +3,14 @@
       <Transform name="i3visio.aliasToAllProfiles"/>  
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
       <Transform name="i3visio.aliasToSkypeAccounts"/>
-      <Transform name="i3visio.domainToIp_ApiInformation"/>         
-      <Transform name="i3visio.domainToTld"/>      
       <Transform name="i3visio.emailToAlias"/>
       <Transform name="i3visio.emailToBreachedAccounts"/>
       <Transform name="i3visio.emailToDomain"/>       
       <Transform name="i3visio.emailToSkypeAccounts"/>
       <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>      
       <Transform name="i3visio.hashToMD5crackDotCom"/> 
-      <Transform name="i3visio.ipToIp_ApiInformation"/>          
       <Transform name="i3visio.textToAllEntities"/>      
       <Transform name="i3visio.textToGoogleSearchUri"/>      
-      <Transform name="i3visio.uriToAllEntities"/> 
-      <Transform name="i3visio.uriToBrowser"/> 
-      <Transform name="i3visio.uriToDomain"/> 
-      <Transform name="i3visio.uriToPort"/>       
-      <Transform name="i3visio.uriToProtocol"/>       
+      <Transform name="i3visio.uriToAllEntities"/>           
    </Transforms>
 </TransformSet>

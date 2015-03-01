@@ -66,10 +66,7 @@ def getIp_ApiInformation(query=None):
         ]     
     """
     for elem in jsonData:
-        newEnt = me.addEntity(elem["type"],elem["value"])
-        newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>" + json.dumps(elem, sort_keys=True, indent=2) + "</p>");
-        for att in elem["attributes"]:
-            newEnt.addAdditionalFields(att["type"],att["type"],True,att["value"])
+        me.createAndAddEntity(elem)
 
     # Returning the output text...
     me.returnOutput()

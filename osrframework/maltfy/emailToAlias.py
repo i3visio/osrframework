@@ -18,9 +18,6 @@
 #
 ##################################################################################
 
-import json
-import sys
-import urllib2
 
 from osrframework.maltfy.lib.maltego import *
 
@@ -28,12 +25,17 @@ def emailToAlias(email=None):
     ''' 
         Method that recovers the alias of the given email.
 
-        :param email:    email to verify.
+        :param email:    email to extract the alias from.
 
     '''
     me = MaltegoTransform()
 
-    newEnt = me.addEntity("i3visio.alias",email.split('@')[0])
+    aux = {}
+    aux["type"] = "i3visio.alias"
+    aux["value"] = email.split('@')[0]
+    aux["attributes"] = []
+        
+    newEnt = me.createAndAddEntity(aux)
 
     # Returning the output text...
     me.returnOutput()

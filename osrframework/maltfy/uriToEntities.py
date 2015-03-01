@@ -37,7 +37,9 @@ def uriToI3visioEntities(uri, platform='all'):
         :return:    Nothing is returned but the code of the entities is created.
     '''
     me = MaltegoTransform()
-    #me.parseArguments(argv);
+    me.parseArguments(argv)
+
+    ent = json.loads(me.getVar("_serialized"))
 
     # Trying to recover all the possible i3visio entities
     found_fields = {}
@@ -50,7 +52,7 @@ def uriToI3visioEntities(uri, platform='all'):
     # Getting the list of <RegExp> objects from entify
     lRegexp = config.getRegexpsByName([platform])
 
-    entities = processing.getEntitiesByRegexp(data=data, listRegexp = lRegexp)    
+    new_entities = processing.getEntitiesByRegexp(data=data, listRegexp = lRegexp)    
     # This returns a dictionary like the following:
     """
         [{

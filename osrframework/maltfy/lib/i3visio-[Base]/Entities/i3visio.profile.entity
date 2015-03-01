@@ -5,10 +5,22 @@
    <Properties value="properties.i3visio-profile">
       <Groups/>
       <Fields>
-         <Field name="properties.i3visio-profile" type="string" nullable="true" hidden="false" readonly="false" description="This field contains the URL of the found profile." displayName="i3visio - Profile">
-            <DefaultValue> </DefaultValue>
-            <SampleValue>http://example.com/i3visio</SampleValue>
+         <Field name="@value" type="string" nullable="true" hidden="False" readonly="False" description="This field contains a generic property that stores the type of the given entity." displayName="@value">
+            <DefaultValue>-</DefaultValue>
+            <SampleValue>-</SampleValue>
          </Field>
+         <Field name="@serialized" type="string" nullable="true" hidden="True" readonly="True" description="This field contains the serialized object." displayName="@pending">
+            <DefaultValue>{'type': 'i3visio.object', 'value':'Default', 'attributes':[]}</DefaultValue>
+            <SampleValue>{'type': 'i3visio.object', 'value':'Sample', 'attributes':[]}</SampleValue>
+         </Field>    
+         <Field name="@number_pending" type="string" nullable="true" hidden="False" readonly="True" description="This field contains the number of pending entities to be shown yet." displayName="@number_pending">
+            <DefaultValue>0</DefaultValue>
+            <SampleValue>0</SampleValue>
+         </Field>
+         <Field name="@pending" type="string" nullable="true" hidden="True" readonly="True" description="This field contains a list of the attributes still to be shown." displayName="@pending">
+            <DefaultValue>[]</DefaultValue>
+            <SampleValue>[]</SampleValue>
+         </Field>                  
       </Fields>
    </Properties>
 </MaltegoEntity>

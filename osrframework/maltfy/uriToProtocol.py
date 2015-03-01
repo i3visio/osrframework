@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -35,8 +37,15 @@ def uriToProtocol(uri=None):
 
     protocolRegExp = "((?:https?|s?ftp|file))://"
     foundProtocol = re.findall(protocolRegExp, uri)
-    if len(foundProtocol) > 0:        
-        newEnt = me.addEntity("i3visio.protocol",foundProtocol[0])
+
+    if len(foundProtocol) > 0:    
+        # Creating the protocol entity. 
+        aux = {}
+        aux["type"] = "i3visio.protocol"
+        aux["value"] = foundProtocol[0]        
+        aux["attributes"] = []
+        
+        me.createAndAddEntity(aux)
         
     # Returning the output text...
     me.returnOutput()
