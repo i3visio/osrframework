@@ -26,31 +26,36 @@ import re
 
 from osrframework.maltfy.lib.maltego import *
 
-def uriToProtocol(uri=None):
+def uriToProtocol(argv=None):
     ''' 
         Method that recovers the protocol from a URI.
 
-        :param uri:    uri to verify.
+        :param argv:    the serialized entity.
 
     '''
-    me = MaltegoTransform()
+    me = MaltegoTransform(argv)
+
+    # Recovering the Uri value
+    uri = me.getValue()
 
     protocolRegExp = "((?:https?|s?ftp|file))://"
-    foundProtocol = re.findall(protocolRegExp, uri)
+    found = re.findall(protocolRegExp, uri)
 
-    if len(foundProtocol) > 0:    
-        # Creating the protocol entity. 
+    newEntities = []
+    
+    if len(found) > 0:        
         aux = {}
         aux["type"] = "i3visio.protocol"
-        aux["value"] = foundProtocol[0]        
+        aux["value"] = found[0]
         aux["attributes"] = []
+        newEntities.append(aux)
         
-        me.createAndAddEntity(aux)
+        me.addListOfEntities(newEntities)
         
     # Returning the output text...
     me.returnOutput()
 
 if __name__ == "__main__":
-    uriToProtocol(uri=sys.argv[1])
+    uriToProtocol(sys.argv)
 
 

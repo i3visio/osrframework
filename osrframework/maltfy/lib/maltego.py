@@ -100,10 +100,16 @@ class MaltegoTransform(object):
     UIMessages = []
     values = {};
     
-    def __init__(self):
-        values = {};
-        value = None;
-    
+    def __init__(self, argv = ""):
+        '''
+            The initialization will automatically perform the parameter parsing.
+            
+            :param argv:    Parameters passed by Maltego.
+        '''
+        values = {}
+        value = None
+        self.parseArguments(argv)
+        
     def parseArguments(self,argv):
         if (argv[1] is not None):
             self.value = argv[1];
@@ -134,18 +140,31 @@ class MaltegoTransform(object):
         '''
             Method that returns the i3visio-like entity
             
+            :param argv:    Parameters transferred,
+            
             :return: An i3visio-like dictionary as the following:
                 {
                     "type": "i3visio.object",
                     "value": "example",
                     "attributes": []                               
                 }
-        '''             
-        # Parsing the current transform
-        self.parseArguments(argv)
-        # Loading the full json object onto a new dictionary
-        temp = json.loads(self.getVar("_serialized"))        
+        '''      
+        try:               
+            # Trying to load the full json object onto a new dictionary
+            temp = json.loads(self.getVar("@serialized"))        
+        except:
+            # If the information is NOT found, it may be because the entity was created by the user...
+            temp = {}
+            # We will have to save the entity type to pass it even when
+            aux = self.getVar("@entity_type")
+            if aux != None:
+                temp["type"] = aux
+            else:
+                # If by any circumsntance, the _entity_type is NOT passed, we will create an i3visio.object
+                temp["type"] = "i3visio.object"
 
+            temp["value"] = self.getValue()
+            temp["attributes"] = []
         return temp
 
     def displayNewEntity(self, ent, pendingEntities=[]):
@@ -158,21 +177,26 @@ class MaltegoTransform(object):
         # Creating the new entity
         newEnt = self.addEntity(str(ent["type"]),str(ent["value"]))
         
+        # Establishing the new entity type.
+        newEnt.addAdditionalFields("@entity_type","@entity_type",True,str(ent["type"]))                          
+        
+        
         # This field will contain the number of entities yet to be shown in the GUI
-        newEnt.addAdditionalFields("_number_pending","_number_pending",True,str(len(pendingEntities)))                  
+        newEnt.addAdditionalFields("@number_pending","@number_pending",True,str(len(pendingEntities)))                  
 
         # This field will contain the entities that have not been shown yet in the GUI in its attribute field.
-        newEnt.addAdditionalFields("_pending","_pending",True,json.dumps(pendingEntities))
+        newEnt.addAdditionalFields("@pending","@pending",True,json.dumps(pendingEntities))
 
         # Creating the _serialized field containing a string representation of the object.
-        newEnt.addAdditionalFields("_serialized","_serialized",True,json.dumps(ent))        
+        newEnt.addAdditionalFields("@serialized","@serialized",True,json.dumps(ent))        
             
         # Iterating to create the new fields based on the attributes. 
         for att in ent["attributes"]:
             newEnt.addAdditionalFields(att["type"], att["type"],True,att["value"])
 
         # Displaying the full information in the tab...
-        newEnt.setDisplayInformation("<h3>" + str(ent["value"]) +"</h3><p>" + json.dumps(ent, indent=2) + "</p>");    
+        #newEnt.setDisplayInformation("<h3>" + str(ent["value"]) +"</h3><p>" + json.dumps(ent, indent=2) + "</p>");    
+        newEnt.setDisplayInformation(json.dumps(ent, indent=2))
         
     def addListOfEntities(self, newEntities):
         '''
@@ -200,8 +224,8 @@ class MaltegoTransform(object):
         
         # Now, we want to collect all those entities which have not been displayed.
         pending = [ x for x in newEntities if x not in addedEntities ]        
-        # These entities will be stored in the father entity which will need to be recreated to store in a new variable "_pending"
-        me.displayNewEntity(fEntity, pendingEntities = pending)  
+        # These entities will be stored in the father entity which will need to be recreated to store in a new variable "@pending"
+        self.displayNewEntity(fatherEnt, pendingEntities = pending)  
             
     
     def addEntityToMessage(self,maltegoEntity):

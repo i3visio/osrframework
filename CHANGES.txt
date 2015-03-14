@@ -7,7 +7,7 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Inclusion of new usufy platforms which are now in testing mode.
 - Update the Skype4py package to try to make it work in new versions of Skype in Windows.
 
-v0.8.0, 2015/02/08 -- Addition of an advanced attribute expansion and an extensive ip-api.com support.
+v0.8.0, 2015/03/01 -- Addition of an advanced attribute expansion and an extensive ip-api.com support.
 - All transforms have been upgraded.
 [Done]
 - Addition of all the attributes of an entity as fields and store the rest of the information in a new field attributes.
@@ -16,9 +16,9 @@ v0.8.0, 2015/02/08 -- Addition of an advanced attribute expansion and an extensi
 - Creation of two new methods in maltfy.lib.maltego to create new entities.
 - Reorganization of ip-api.com json objects returned by the API to display i3visio-like objects.
 - Inclusion of thirdparties.pipl script to perform queries on usernames and emails.
-- Relicensing of the piplcom/piplapis-python code released under Apache License 2.0 making use of the permissive approach of pipl.com. The code has been ammended to match GPLv3+ license.
 - Added Maltego transform: domainToIp_ApiInfo.
 - Added Maltego transform: ipToIp_ApiInfo.
+- Added default fields to every Maltego Entity.
 - Appending a '/' to URL that do not have it when extracting domains or ports.
 - Minor change in the way of grabbing md5crack.com API Key in config_api_keys.py.sample.
 - Reorganization of network transforms onto i3visio.network set.

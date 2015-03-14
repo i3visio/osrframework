@@ -5,13 +5,17 @@
    <Properties  value="properties.i3visio-ipv4">
       <Groups/>
       <Fields>
-         <Field name="@value" type="string" nullable="true" hidden="False" readonly="False" description="This field contains a generic property that stores the type of the given entity." displayName="@value">
+         <Field name="@value" displayName="@value" type="string" nullable="true" hidden="False" readonly="False" description="This field contains the value of the given entity.">
             <DefaultValue>-</DefaultValue>
             <SampleValue>-</SampleValue>
+         </Field>      
+         <Field name="@entity_type" type="string" nullable="true" hidden="True" readonly="True" description="This field contains a generic property that stores the type of the given entity." displayName="@entity_type">
+            <DefaultValue>i3visio.ipv4</DefaultValue>
+            <SampleValue>i3visio.ipv4</SampleValue>
          </Field>
          <Field name="@serialized" type="string" nullable="true" hidden="True" readonly="True" description="This field contains the serialized object." displayName="@pending">
-            <DefaultValue>{'type': 'i3visio.object', 'value':'Default', 'attributes':[]}</DefaultValue>
-            <SampleValue>{'type': 'i3visio.object', 'value':'Sample', 'attributes':[]}</SampleValue>
+            <DefaultValue>{'type': 'i3visio.ipv4', 'value':'Default', 'attributes':[]}</DefaultValue>
+            <SampleValue>{'type': 'i3visio.ipv4', 'value':'Sample', 'attributes':[]}</SampleValue>
          </Field>    
          <Field name="@number_pending" type="string" nullable="true" hidden="False" readonly="True" description="This field contains the number of pending entities to be shown yet." displayName="@number_pending">
             <DefaultValue>0</DefaultValue>

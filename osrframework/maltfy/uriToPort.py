@@ -26,18 +26,17 @@ import re
 
 from osrframework.maltfy.lib.maltego import *
 
-def uriToPort(uri=None):
+def uriToPort(argv=None):
     ''' 
         Method that recovers the port from a URI.
 
-        :param uri:    uri to verify.
+        :param argv:    the serialized entity.
 
     '''
-    me = MaltegoTransform()
+    me = MaltegoTransform(argv)
 
-    # Appending a '/' if the URI does not have it...
-    if uri.count("/") < 3:
-        uri += "/"
+    # Recovering the Uri value
+    uri = me.getValue()
 
     portRegExp = "(?:https?|s?ftp)://[a-zA-Z0-9\_\.\-]+:([0-9]{1,5})/"
     found = re.findall(portRegExp, uri)
@@ -57,6 +56,6 @@ def uriToPort(uri=None):
     me.returnOutput()
 
 if __name__ == "__main__":
-    uriToPort(uri=sys.argv[1])
+    uriToPort(sys.argv)
 
 

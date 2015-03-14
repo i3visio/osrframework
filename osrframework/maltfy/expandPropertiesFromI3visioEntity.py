@@ -32,8 +32,7 @@ def expandPropertiesFromI3visioEntity(argv):
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
-    me = MaltegoTransform()
-    me.parseArguments(argv);
+    me = MaltegoTransform(argv)
 
     try:
         # Trying to recover pending entities if they exist...

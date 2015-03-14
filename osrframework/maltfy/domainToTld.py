@@ -23,21 +23,35 @@ import sys
 
 from osrframework.maltfy.lib.maltego import *
 
-def domainToTld(domain=None):
+def domainToTld(argv=None):
     ''' 
         Method that extract the TLD from a domain.
 
-        :param domain:    domain from which extracting the TLD.
+        :param argv:    the serialized entity.
 
     '''
-    me = MaltegoTransform()
+    me = MaltegoTransform(argv)
 
-    newEnt = me.addEntity("i3visio.tld",domain.split('.')[-1])
+    # Recovering the Uri value
+    domain = me.getValue()
 
+    tld = domain.split('.')[-1]
+    
+    newEntities = []
+    
+    # Creation of a temp entity
+    aux = {}
+    aux["type"] = "i3visio.tld"
+    aux["value"] = tld
+    aux["attributes"] = []
+    newEntities.append(aux)
+    
+    me.addListOfEntities(newEntities)
+    
     # Returning the output text...
     me.returnOutput()
 
 if __name__ == "__main__":
-    domainToTld(domain=sys.argv[1])
+    domainToTld(argv=sys.argv)
 
 

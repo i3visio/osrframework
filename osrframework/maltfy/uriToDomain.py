@@ -26,18 +26,17 @@ import re
 
 from osrframework.maltfy.lib.maltego import *
 
-def uriToDomain(uri=None):
+def uriToDomain(argv=None):
     ''' 
         Method that recovers the domain from a URI.
 
-        :param uri:    uri to verify.
+        :param argv:    the serialized entity.
 
     '''
-    me = MaltegoTransform()
+    me = MaltegoTransform(argv)
 
-    # Appending a '/' if the URI does not have it...
-    if uri.count("/") < 3:
-        uri += "/"
+    # Recovering the Uri value
+    uri = me.getValue()
 
     domainRegExp = "(?:https?|s?ftp)://([a-zA-Z0-9\_\.\-]+)(?:\:|/)"
     found = re.findall(domainRegExp, uri)
@@ -57,6 +56,6 @@ def uriToDomain(uri=None):
     me.returnOutput()
 
 if __name__ == "__main__":
-    uriToDomain(uri=sys.argv[1])
+    uriToDomain(sys.argv)
 
 
