@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -32,18 +34,22 @@ def domainToGoogleSearchUriWithEmails(argv):
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
-    me = MaltegoTransform()
-    me.parseArguments(argv);
+    me = MaltegoTransform(argv)
 
+    """entity = me.getVar("@serialized")
+    jsonData = json.loads(entity) """
 
-    entity = me.getVar("_serialized")
-    jsonData = json.loads(entity) 
+    # Recovering the Uri value
+    try:
+        domain = me.getVar("@value")
+    except:
+        domain = me.getValue()
     
-    domain = jsonData["value"]
     query = "\"*@" + domain + "\""
     
     # Loading onto the Json data the information
-    jsonData["attributes"] = google.processSearch(query)
+    #jsonData["attributes"] = google.processSearch(query)
+    newEntities = google.processSearch(query)
     # This returns a dictionary like the following:
     """ 
         [{
@@ -58,7 +64,8 @@ def domainToGoogleSearchUriWithEmails(argv):
         ...
         ]
     """
-    me.createAndShowListOfEntities(jsonData)
+    me.addListOfEntities(newEntities)
+    #me.createAndShowListOfEntities(jsonData)
 
     #print json.dumps(entities, indent=2)
     #for uri in uriList:
@@ -71,6 +78,6 @@ def domainToGoogleSearchUriWithEmails(argv):
     me.returnOutput()
 
 if __name__ == "__main__":
-    domainToGoogleSearchUriWithEmails(params =sys.argv)
+    domainToGoogleSearchUriWithEmails(argv =sys.argv)
 
 

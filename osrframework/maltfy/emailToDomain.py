@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -33,7 +35,12 @@ def emailToDomain(email=None):
     '''
     me = MaltegoTransform()
 
-    newEnt = me.addEntity("i3visio.domain",email.split('@')[1])
+    aux = {}
+    aux["type"] = "i3visio.domain"
+    aux["value"] = email.split('@')[1]
+    aux["attributes"] = []
+        
+    me.addListOfEntities([aux])
 
     # Returning the output text...
     me.returnOutput()

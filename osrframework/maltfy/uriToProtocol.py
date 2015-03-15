@@ -36,7 +36,14 @@ def uriToProtocol(argv=None):
     me = MaltegoTransform(argv)
 
     # Recovering the Uri value
-    uri = me.getValue()
+    try:
+        uri = me.getVar("@value")
+    except:
+        uri = me.getValue()
+
+    # We add a trailing '/' to the uri if there is not a trailing one
+    if uri.count('/') == 2:
+        uri+='/'
 
     protocolRegExp = "((?:https?|s?ftp|file))://"
     found = re.findall(protocolRegExp, uri)

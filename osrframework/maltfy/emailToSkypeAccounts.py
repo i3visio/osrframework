@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -37,25 +39,40 @@ def emailToSkypeAccount(query=None):
 
     # This returns a dictionary like:
     # [{}]
+    newEntities = []
 
     #print json.dumps(entities, indent=2)
     for user in jsonData:
-        newEnt = me.addEntity("i3visio.profile","Skype - " + str(user["i3visio.alias"]))
-        # From v0.3.1 and ongoing versions, the i3visio.alias is not created directly but appended to the profile.
-        #aliasEnt = me.addEntity("i3visio.alias",user["i3visio.alias"])
+	    # Defining the main entity
+        aux ={}
+        aux["type"] = "i3visio.profile"
+        aux["value"] =  "Skype - " + str(user["i3visio.alias"])
+        aux["attributes"] = []    
 
-        # + json.dumps(user, sort_keys=True, indent=2) + "!</p>");
-        newEnt.setDisplayInformation("<h3>" + user["i3visio.alias"] +"</h3>")
-        newEnt.addAdditionalFields("i3visio.platform","i3visio.platform",True,"Skype")
+        # Defining the attributes recovered
+        att ={}
+        att["type"] = "i3visio.platform"
+        att["value"] =  str("Skype")
+        att["attributes"] = []
+        aux["attributes"].append(att)
+
         for field in user.keys():
             # [TO-DO] Appending all the information from the json:
             if user[field] != None:
                 try:
-                    newEnt.addAdditionalFields(field,field,True,str(user[field]).encode('utf-8'))
+                    att ={}
+                    att["type"] = field
+                    att["value"] =  str(user[field]).encode('utf-8')
+                    att["attributes"] = []
+                    aux["attributes"].append(att)                
                 except:
                     # Something passed...
                     pass
+        # Appending the entity
+        newEntities.append(aux)
 
+    me.addListOfEntities(newEntities)
+        
     # Returning the output text...
     me.returnOutput()
 

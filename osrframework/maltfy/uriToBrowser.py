@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -22,7 +24,7 @@ import webbrowser as wb
 
 from osrframework.maltfy.lib.maltego import *
 
-def uriToPort(uri=None):
+def uriToBrowser(uri=None):
     ''' 
         Method that launches the URI in the default browser of the system. This returns no new entity.
 
@@ -36,6 +38,6 @@ def uriToPort(uri=None):
 
 
 if __name__ == "__main__":
-    uriToPort(uri=sys.argv[1])
+    uriToBrowser(uri=sys.argv[1])
 
 

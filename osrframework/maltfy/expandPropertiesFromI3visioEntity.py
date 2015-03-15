@@ -33,19 +33,39 @@ def expandPropertiesFromI3visioEntity(argv):
         :return:    Nothing is returned but the code of the entities is created.
     '''
     me = MaltegoTransform(argv)
-
+    newEntities = []
     try:
-        # Trying to recover pending entities if they exist...
-        if me.getVar("_number_pending") != "0":
-            entitiesToShow = me.getVar("_pending")
+        # Trying to recover pending entities if they exist.
+        # If so, it means that it is NOT the first time that this info is recovered
+        if str(me.getVar("@number_pending")) != "0":
+            entitiesToShow = me.getVar("@pending")
+            #print entitiesToShow
             newEntities = json.loads(entitiesToShow)        
             me.addListOfEntities(newEntities)            
+        else:
+            # We will try to expand the rest of the attributes
+            for field in constants.I3VISIO_FIELDS:
+                value =  me.getVar(field)
+                if value != None and value != " " and value != "":            
+                    aux = {}
+                    aux["type"] = field
+                    aux["value"] =  value      
+                    aux["attributes"] =  []
+                    newEntities.append(aux)
     except:
-        pass
-
+        # In case of errors, we will try to expand the rest of the attributes
+        for field in constants.I3VISIO_FIELDS:
+            value =  me.getVar(field)
+            if value != None and value != " " and value != "":            
+                aux = {}
+                aux["type"] = field
+                aux["value"] =  value      
+                aux["attributes"] =  []
+                newEntities.append(aux)
+    me.addListOfEntities(newEntities)            
     # Returning the output text...
     me.returnOutput()
-
+    
 if __name__ == "__main__":
     expandPropertiesFromI3visioEntity(sys.argv)
 

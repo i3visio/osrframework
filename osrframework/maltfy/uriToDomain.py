@@ -36,7 +36,14 @@ def uriToDomain(argv=None):
     me = MaltegoTransform(argv)
 
     # Recovering the Uri value
-    uri = me.getValue()
+    try:
+        uri = me.getVar("@value")
+    except:
+        uri = me.getValue()
+
+    # We add a trailing '/' to the uri if there is not a trailing one
+    if uri.count('/') == 2:
+        uri+='/'
 
     domainRegExp = "(?:https?|s?ftp)://([a-zA-Z0-9\_\.\-]+)(?:\:|/)"
     found = re.findall(domainRegExp, uri)

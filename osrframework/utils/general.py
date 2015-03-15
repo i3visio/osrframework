@@ -78,23 +78,23 @@ def listToMaltego(profiles):
     me = MaltegoTransform()
     # A dictionary with the structure:
 
+    newEntities = []
     for profile in profiles:
-        # recovering the nick
-        valueEnt = profile["value"]
-        typeEnt = profile["type"]
-        attributesEnt  = profile["attributes"]
-        newEnt = me.addEntity(str(typeEnt),str(valueEnt))
-        newEnt.setDisplayInformation("<h3>" + valueEnt +"</h3><pre>" + dictToJson(attributesEnt)+ "</pre>")
-    
-        #newEnt.addAdditionalFields("attributes","attributes",True,dictToJson(attributesEnt))
-
-        # Adding platform entity:
-        for att in attributesEnt:
-            newEnt.addAdditionalFields(str(att["type"]),str(att["type"]),True,str(att["value"]))        
-        """newEnt = me.addEntity("i3visio.url",str(url))
-        #newEnt.setDisplayInformation("<h3>" + prof +"</h3><p>" + str(prof) + "\t" + str(plat) + "\t" + profiles[prof][plat]  + "</p>");
-        for attribute in profiles[alias][url].keys():
-            newEnt.addAdditionalFields(attribute,attribute,True,profiles[alias][url][attribute])"""
+	    # Defining the main entity
+        """aux ={}
+        aux["type"] = "i3visio.profile"
+        aux["value"] =  "Skype - " + str(user["i3visio.alias"])
+        aux["attributes"] = []    
+                
+        # Creation of a temp entity
+        aux = {}
+        aux["type"] = profile["value"]
+        aux["value"] = profile["type"]
+        aux["attributes"] = []"""
+        newEntities.append(profile)
+        
+    me.addListOfEntities(newEntities)        
+        
     # Getting the output text
     me.addUIMessage("Process completed!")    
     # Returning the output text...

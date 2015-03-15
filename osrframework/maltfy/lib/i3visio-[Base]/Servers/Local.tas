@@ -7,6 +7,8 @@
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
       <Transform name="i3visio.aliasToSkypeAccounts"/>
       <Transform name="i3visio.bitcoinAddressToBlockchainDetails"/>
+      <Transform name="i3visio.coordinatesToGoogleMapsBrowser"/> 
+      <Transform name="i3visio.coordinatesToTwitterBrowser"/>             
       <Transform name="i3visio.domainToIp_ApiInformation"/>         
       <Transform name="i3visio.domainToTld"/>      
       <Transform name="i3visio.emailToAlias"/>

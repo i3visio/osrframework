@@ -20,50 +20,29 @@
 #
 ##################################################################################
 
-import json
-import sys
+import webbrowser as wb
 
 from osrframework.maltfy.lib.maltego import *
-import osrframework.searchengines.google as google
 
-def textToGoogleSearchUri(argv):
+def coordinatesToTwitterBrowser(coord=None, proximity="20km"):
     ''' 
-        List of URI entities corresponding to the results of a Google Search.
+        Method that launches the URI in the default browser of the system with all the tweets in a given location. This returns no new entity.
 
-        :param argv:    the text to be searched.
-
-        :return:    Nothing is returned but the code of the entities is created.
+        :param coord:    coordinates in which the lookup will be done.
     '''
-    me = MaltegoTransform(argv)
+    me = MaltegoTransform()
 
-    # Recovering the text value
-    try:
-        text = me.getVar("@value")
-    except:
-        text = me.getValue()
+    # Building Google Maps coordinates
+    coord = coord.replace(' ','')
+    coord = coord.replace(',','%2C')
+    uri = "https://twitter.com/search?q=geocode%3A"+coord+"%2C"+proximity+"&src=typd"
 
-    newEntities = google.processSearch(text)
-    # This returns a dictionary like the following:
-    """ 
-        [{
-        'attributes': [],
-        'type': 'i3visio.uri',
-        'value': 'http://foo.com'
-        }, {
-        'attributes': [],
-        'type': 'i3visio.uri',
-        'value': 'http://bar.com'
-        }, 
-        ...
-        ]
-    """
-    # Adding the new entities
-    me.addListOfEntities(newEntities)
+    wb.open(uri, new=2)    
 
-    # Returning the output text...
     me.returnOutput()
 
+
 if __name__ == "__main__":
-    textToGoogleSearchUri(sys.argv)
+    coordinatesToTwitterBrowser(coord=sys.argv[1], proximity="20km")
 
 

@@ -111,9 +111,12 @@ class MaltegoTransform(object):
         self.parseArguments(argv)
         
     def parseArguments(self,argv):
-        if (argv[1] is not None):
-            self.value = argv[1];
-            
+        try:
+            if (argv[1] is not None):
+                self.value = argv[1];
+        except:
+            # If no info was provided
+            self.value = self.getVar("@value")
         if (len(argv) > 2):
             if (argv[2] is not None):
                 vars = argv[2].split('#');
@@ -160,9 +163,9 @@ class MaltegoTransform(object):
             if aux != None:
                 temp["type"] = aux
             else:
-                # If by any circumsntance, the _entity_type is NOT passed, we will create an i3visio.object
+                # If by any circumsntance, the @entity_type is NOT passed, we will create an i3visio.object
                 temp["type"] = "i3visio.object"
-
+                #return {}
             temp["value"] = self.getValue()
             temp["attributes"] = []
         return temp
@@ -176,10 +179,12 @@ class MaltegoTransform(object):
         '''
         # Creating the new entity
         newEnt = self.addEntity(str(ent["type"]),str(ent["value"]))
+
+        # Establishing the new value for the entity..
+        newEnt.addAdditionalFields("@value","@value",True,str(ent["value"]))                          
         
         # Establishing the new entity type.
         newEnt.addAdditionalFields("@entity_type","@entity_type",True,str(ent["type"]))                          
-        
         
         # This field will contain the number of entities yet to be shown in the GUI
         newEnt.addAdditionalFields("@number_pending","@number_pending",True,str(len(pendingEntities)))                  
@@ -195,7 +200,7 @@ class MaltegoTransform(object):
             newEnt.addAdditionalFields(att["type"], att["type"],True,att["value"])
 
         # Displaying the full information in the tab...
-        #newEnt.setDisplayInformation("<h3>" + str(ent["value"]) +"</h3><p>" + json.dumps(ent, indent=2) + "</p>");    
+        newEnt.setDisplayInformation("<h3>" + str(ent["value"]) +"</h3><p>" + json.dumps(ent, indent=2) + "</p>");    
         newEnt.setDisplayInformation(json.dumps(ent, indent=2))
         
     def addListOfEntities(self, newEntities):
@@ -204,14 +209,19 @@ class MaltegoTransform(object):
             
             :param newEntities:    it is always a list containing the dicts representing the new entities to be added.
         '''
+        # Reviewed entities
+        reviewedEntities =[]
         # Defining a list to include the already added entities.
         addedEntities = []
 
         # Generating up to 11 new entities
         for new in newEntities:
-            addedEntities.append(new)            
-            if len(addedEntities) >= 11:
-                # We stop, as Maltego in the Community edition does NOT show more than 12 entities per transform.
+            reviewedEntities.append(new)            
+            # We do this to avoid processing attributes which will start with '@'
+            if new["value"][0] != "@":
+                addedEntities.append(new)            
+            if len(addedEntities) >= 12:
+                # We stop, as Maltego in the Community edition does NOT show more than 12 entities per transform. THIS WILL BE CHANGED IN FUTURE VERSIONS TO LET UPDATE THE PROPERTY NUM_PNEDING OF THE CURRENT ENTITY.
                 break
 
         # Creating the addedEntities
@@ -220,12 +230,12 @@ class MaltegoTransform(object):
 
         # Now, we are updating some information in the father entity. To display these updates, the father entity needs to be recreated to represent these updates
         # First of all, we recover the information of the transform that was called.
-        fatherEnt = self.getFatherEntity()
+        ####fatherEnt = self.getFatherEntity()
         
         # Now, we want to collect all those entities which have not been displayed.
-        pending = [ x for x in newEntities if x not in addedEntities ]        
+        ####pending = [ x for x in newEntities if x not in reviewedEntities ]        
         # These entities will be stored in the father entity which will need to be recreated to store in a new variable "@pending"
-        self.displayNewEntity(fatherEnt, pendingEntities = pending)  
+        ####self.displayNewEntity(fatherEnt, pendingEntities = pending)  
             
     
     def addEntityToMessage(self,maltegoEntity):
@@ -267,7 +277,7 @@ class MaltegoTransform(object):
                         
         maltegoOutput += "<Entities>"
         for i in range(len(self.entities)):
-            self.entities[i].returnEntity();
+            maltegoOutput += self.entities[i].getEntityText();
         maltegoOutput += "</Entities>"
                         
         maltegoOutput += "<UIMessages>"

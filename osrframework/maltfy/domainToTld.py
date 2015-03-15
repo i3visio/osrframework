@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -32,8 +34,11 @@ def domainToTld(argv=None):
     '''
     me = MaltegoTransform(argv)
 
-    # Recovering the Uri value
-    domain = me.getValue()
+    # Recovering the domain value
+    try:
+        domain = me.getVar("@value")
+    except:
+        domain = me.getValue()
 
     tld = domain.split('.')[-1]
     

@@ -37,6 +37,6 @@ class Cafemom(Platform):
 		self.url = "http://www.cafemom.com/home/" + self.NICK_WILDCARD
 		# Add the strings to look for when an error appears
 		#self.notFoundText = ["<title>about.me | your personal homepage</title><style>"]
-		self.notFoundText = ["is not a CafeMom member</span>"]
+		self.notFoundText = ["is not a CafeMom member.</span>"]
 		self.forbiddenList = ['.']
 

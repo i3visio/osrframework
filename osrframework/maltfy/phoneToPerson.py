@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -34,12 +36,16 @@ def phoneToPerson(argv ):
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
-    me = MaltegoTransform()
-    #me.parseArguments(argv);
-    phone = sys.argv[1]
+    me = MaltegoTransform(argv)
 
+    # Recovering the phone value
+    try:
+        phone = me.getVar("@value")
+    except:
+        phone = me.getValue()
+        
     # Trying to recover all the possible i3visio entities    
-    results = infobel_com.checkPhoneDetails(phone)
+    newEntities = infobel_com.checkPhoneDetails(phone)
     # This returns a dictionary like the following:
     """
     [
@@ -81,22 +87,10 @@ def phoneToPerson(argv ):
       }
     ]
     """
+    # Adding the new entities
+    me.addListOfEntities(newEntities)
 
-    # Getting the first and unique object retrieved
-    if len(results) > 0:
-        # Creating the entity
-        newEnt = me.addEntity("i3visio.person",results[0]["value"])    
-        
-        # Writing down the extra information
-        newEnt.setDisplayInformation("<h3>" + results[0]["value"] +"</h3><p>" + json.dumps(results[0], sort_keys=True, indent=2) + "!</p>");                
-        
-        # Selecting the attributes
-        entities = results[0]["attributes"]
-        for elem in entities:
-            # This will create new entities linked to the telephone
-            newEnt.addAdditionalFields(elem["type"],elem["type"],True,elem["value"])
-
-        # Returning the output text...
+    # Returning the output text...
     me.returnOutput()
 
 

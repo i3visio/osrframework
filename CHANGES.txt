@@ -1,29 +1,59 @@
 For more information, check the README.md in http://github.com/i3visio/osrframework
 
+[Known issues]
+- Text to deep web search is broken.
+- Recursive expansion of attributes when the cap is reached.
+- Update the Skype4py package to try to make it work in new versions of Skype in Windows.
+
 [TO-DO] 
 - Generation of aliases from a person.
+- Inclusion of a call to pipl.com API.
 - Creation of different transforms for each and every platform in usufy.
 - Migration from old usufy platforms to newest approach used in phonefy.
 - Inclusion of new usufy platforms which are now in testing mode.
-- Update the Skype4py package to try to make it work in new versions of Skype in Windows.
 
-v0.8.0, 2015/03/01 -- Addition of an advanced attribute expansion and an extensive ip-api.com support.
-- All transforms have been upgraded.
-[Done]
-- Addition of all the attributes of an entity as fields and store the rest of the information in a new field attributes.
+v0.8.0, 2015/03/15 -- Improvements in the entity generation and an extensive ip-api.com support.
+- Added Maltego transform: coordinatesToGoogleMapsBrowser.
+- Added Maltego transform: coordinatesToTwitterBrowser.
+- Added Maltego transform: domainToIp_ApiInfo.
+- Added Maltego transform: ipToIp_ApiInfo.
+- Added default fields to every Maltego Entity.
+- Modified Maltego transform: aliasToAllProfiles.
+- Modified Maltego transform: aliasToFamousPlatforms.
+- Modified Maltego transform: aliasToSkypeAccounts.
+- Modified Maltego transform: bitcoinAddressToBlockchainDetails.
+- Modified Maltego transform: domainToGoogleSearchUriWithEmails.
+- Modified Maltego transform: domainToTld.
+- Modified Maltego transform: emailToAlias.
+- Modified Maltego transform: emailToBreachAccounts.
+- Modified Maltego transform: emailToDomain.
+- Modified Maltego transform: emailToSkypeAccounts.
+- Modified Maltego transform: expandPropertiesFromI3visioEntity.
+- Modified Maltego transform: hashToMD5crackDotCom.
+- Modified Maltego transform: ipToIp_ApiInformation.
+- Modified Maltego transform: phoneToPerson.
+- Modified Maltego transform: phoneToMoreInfo.
+- Modified Maltego transform: textToGoogleSearchUri.
+- Modified Maltego transform: textToEntities.
+- Modified Maltego transform: uriToBrowser.
+- Modified Maltego transform: uriToDomain.
+- Modified Maltego transform: uriToEntities.
+- Modified Maltego transform: uriToPort.
+- Modified Maltego transform: uriToProtocol.
+- Fixed errors in cafemom.com and activerain.trulia.com platforms.
+- Requesting credentials for Pokerstrategy and Flixter platforms.
 - Addition of a method to recursively extract the information of the fields and attributes, even when it exceeds the maximum number of queries performed for the free version. 
 - Change in the returnOutput methods of MaltegoEntity and MaltegoTransform to make use of an auxiliar getOutputText method.
 - Creation of two new methods in maltfy.lib.maltego to create new entities.
 - Reorganization of ip-api.com json objects returned by the API to display i3visio-like objects.
 - Inclusion of thirdparties.pipl script to perform queries on usernames and emails.
-- Added Maltego transform: domainToIp_ApiInfo.
-- Added Maltego transform: ipToIp_ApiInfo.
-- Added default fields to every Maltego Entity.
 - Appending a '/' to URL that do not have it when extracting domains or ports.
 - Minor change in the way of grabbing md5crack.com API Key in config_api_keys.py.sample.
 - Reorganization of network transforms onto i3visio.network set.
-- Added a new categories: i3visio.location.geo, i3visio.ipv4.
+- Added new categories: i3visio.location.geo, i3visio.ipv4.
 - Changed the i3visio.protocol icon and moved the i3visio.breach entity to i3visio.person group.
+- Fixed some issues regarding the way of showing the License on each file.
+- Various identation fixes from 't' to '    '.
 
 v0.7.1, 2015/01/17 -- Release of v0.7.1.
 - Fix in the domainToGoogleSearchUriWithEmails transform which was wrongly coded.

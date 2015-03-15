@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -35,16 +37,18 @@ def phoneToMoreInfo(argv ):
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
-    me = MaltegoTransform()
+    me = MaltegoTransform(argv)
     #me.parseArguments(argv);
-    platform = sys.argv[1]
+    platform = argv[1]
     platforms = config.getPlatformsByName([platform])
 
-    phone = sys.argv[2]
+    phone = argv[2]
     numbers = [phone]        
 
     # Trying to recover all the possible i3visio entities    
     results = processing.processPhoneList(platforms=platforms, numbers=numbers)
+
+    newEntities = []
 
     # Getting the first and unique object retrieved
     if len(results) >0:
@@ -82,6 +86,9 @@ def phoneToMoreInfo(argv ):
 
         #print json.dumps(entities, indent=2)
         for elem in entities:
+            newEntities.append(elem)
+        
+            """       
             newEnt = me.addEntity(elem["type"],elem["value"])
             
             otherIssues = []
@@ -93,7 +100,10 @@ def phoneToMoreInfo(argv ):
                 if att:
                     otherIssues.append(att) 
             
-		    newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>" + json.dumps(elem["attributes"], sort_keys=True, indent=2) + "!</p>");        
+		    newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>" + json.dumps(elem["attributes"], sort_keys=True, indent=2) + "!</p>"); """
+
+    # Adding the new entities
+    me.addListOfEntities(newEntities)
 
     # Returning the output text...
     me.returnOutput()

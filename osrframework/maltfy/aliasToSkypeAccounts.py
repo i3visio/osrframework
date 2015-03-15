@@ -37,33 +37,43 @@ def aliasToSkypeAccounts(query=None):
 
     # This returns a dictionary like:
     # [{}]
+    newEntities = []
 
     #print json.dumps(entities, indent=2)
     for user in jsonData:
-        newEnt = me.addEntity("i3visio.profile","Skype - " +str(user["i3visio.alias"]))
-        aliasEnt = me.addEntity("i3visio.alias",user["i3visio.alias"])
+	    # Defining the main entity
+        aux ={}
+        aux["type"] = "i3visio.profile"
+        aux["value"] =  "Skype - " + str(user["i3visio.alias"])
+        aux["attributes"] = []    
 
-        newEnt.setDisplayInformation("<h3>" + user["i3visio.alias"] +"</h3><p>");# + json.dumps(user, sort_keys=True, indent=2) + "!</p>");
-        newEnt.addAdditionalFields("i3visio.platform","i3visio.platform",True,"Skype")
+        # Defining the attributes recovered
+        att ={}
+        att["type"] = "i3visio.platform"
+        att["value"] =  str("Skype")
+        att["attributes"] = []
+        aux["attributes"].append(att)
+
         for field in user.keys():
-            #if field != "i3visio.alias":
             # [TO-DO] Appending all the information from the json:
-            #if field == "i3visio.aliases":
-            #    listAliases = [user["i3visio.alias"]]
-            #    listAliases += user[field]
-            #    # in this case, this is a list
-            #    for alias in user[field]:
-            #        aliasEnt = me.addEntity("i3visio.alias",alias.encode('utf-8'))
-            #elif user[field] != None:
             if user[field] != None:
                 try:
-                    newEnt.addAdditionalFields(field,field,True,str(user[field]).encode('utf-8'))
+                    att ={}
+                    att["type"] = field
+                    att["value"] =  str(user[field]).encode('utf-8')
+                    att["attributes"] = []
+                    aux["attributes"].append(att)                
                 except:
                     # Something passed...
                     pass
+        # Appending the entity
+        newEntities.append(aux)
 
+    me.addListOfEntities(newEntities)
+        
     # Returning the output text...
     me.returnOutput()
+
 
 if __name__ == "__main__":
     aliasToSkypeAccounts(query=sys.argv[1])

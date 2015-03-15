@@ -1,3 +1,24 @@
+# !/usr/bin/python
+# -*- coding: cp1252 -*-
+#
+##################################################################################
+#
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##################################################################################
 
 import json
 import sys
@@ -8,19 +29,16 @@ from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.blockchain_info.getBitcoinAddressDetails as blockchain
 import osrframework.entify.config_entify as config
 
-def textToI3visioEntities(data, platform='all'):
+def textToI3visioEntities(argv, platform='all'):
     ''' 
         Method that obtains all the entities in a given i3visio.text entity.
 
-        :param uri:    the uri to be received.
+        :param argv:    the uri to be received.
         :param platform:    a platform string representing the regular expression to be used.
 
         :return:    Nothing is returned but the code of the entities is created.
     '''
-    me = MaltegoTransform()
-    #me.parseArguments(argv);
-    #data = me.getVar("i3visio.text")
-    #data = sys.argv[1]
+    me = MaltegoTransform(argv)
 
     # Trying to recover all the possible i3visio entities
     found_fields = {}
@@ -28,7 +46,7 @@ def textToI3visioEntities(data, platform='all'):
     # Getting the list of <RegExp> objects from entify
     lRegexp = config.getRegexpsByName([platform])
 
-    entities = processing.getEntitiesByRegexp(data=data, listRegexp = lRegexp)    
+    newEntities = processing.getEntitiesByRegexp(data=data, listRegexp = lRegexp)    
     # This returns a dictionary like the following:
     """
         [{
@@ -50,17 +68,13 @@ def textToI3visioEntities(data, platform='all'):
         }]
     """
 
-    #print json.dumps(entities, indent=2)
-    for elem in entities:
-        newEnt = me.addEntity(elem["type"],elem["value"])
-        newEnt.setDisplayInformation("<h3>" + elem["value"] +"</h3><p>"+str(elem["attributes"])+"</p>")        
-        for extraAtt in elem["attributes"]:
-            newEnt.addAdditionalFields(str(extraAtt['type']), str(extraAtt['type']), True, str(extraAtt['value']))    
+    # Adding the new entities
+    me.addListOfEntities(newEntities)
 
     # Returning the output text...
     me.returnOutput()
 
 if __name__ == "__main__":
-    textToI3visioEntities(sys.argv[2], platform = sys.argv[1])
+    textToI3visioEntities(argv=sys.argv[2], platform = sys.argv[1])
 
 

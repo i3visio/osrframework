@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -26,15 +28,21 @@ import urllib2
 from osrframework.maltfy.lib.maltego import *
 import osrframework.thirdparties.ip_api_com.checkIpDetails as ip_api
 
-def getIp_ApiInformation(query=None):
+def getIp_ApiInformation(argv=None):
     ''' 
         Method that checks if the given email is stored in the md5crack.com.
 
-        :param query:    query to be executed. Note that if the query is a domain, this will be resolved.
+        :param argv:    query to be executed. Note that if the query is a domain, this will be resolved.
     '''
-    me = MaltegoTransform()
+    me = MaltegoTransform(argv)
+    
+    # Recovering the phone value
+    try:
+        query = me.getVar("@value")
+    except:
+        query = me.getValue()    
 
-    jsonData = ip_api.checkIpDetails(query=query)
+    newEntities = ip_api.checkIpDetails(query=query)
     """
         [
           {
@@ -65,13 +73,13 @@ def getIp_ApiInformation(query=None):
           }
         ]     
     """
-    for elem in jsonData:
-        me.createAndAddEntity(elem)
+    # Adding the new entities
+    me.addListOfEntities(newEntities)
 
     # Returning the output text...
     me.returnOutput()
 
 if __name__ == "__main__":
-    getIp_ApiInformation(query=sys.argv[1])
+    getIp_ApiInformation(argv=sys.argv)
 
 

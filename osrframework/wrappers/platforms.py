@@ -2,6 +2,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -774,7 +776,8 @@ from osrframework.wrappers.ebay import Ebay
 from osrframework.wrappers.echatta import Echatta
 from osrframework.wrappers.elmundo import Elmundo
 from osrframework.wrappers.enfemenino import Enfemenino
-from osrframework.wrappers.epinions import Epinions
+# Omitted in v0.8.0. Seems to be removed
+#from osrframework.wrappers.epinions import Epinions
 from osrframework.wrappers.eqe import Eqe
 from osrframework.wrappers.ethereum import Ethereum
 from osrframework.wrappers.etsy import Etsy
@@ -1020,7 +1023,7 @@ def getAllPlatforms():
     listAll.append(Echatta())
     listAll.append(Elmundo())
     listAll.append(Enfemenino())
-    listAll.append(Epinions())
+    #listAll.append(Epinions())
     listAll.append(Eqe())
     listAll.append(Ethereum())
     listAll.append(Etsy())
