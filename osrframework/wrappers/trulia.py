@@ -33,6 +33,6 @@ class Trulia(Platform):
         self.tags = ["contact", "professional", "social"]
         self.NICK_WILDCARD = "<HERE_GOES_THE_NICK>"
         self.url = "http://activerain.trulia.com/profile/" + self.NICK_WILDCARD
-        self.notFoundText = ["Welcome to the ActiveRain Real Estate Community!]
+        self.notFoundText = ["Welcome to the ActiveRain Real Estate Community!"]
         self.forbiddenList = []
 
