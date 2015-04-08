@@ -36,9 +36,6 @@ class Flixster(Platform):
         self.notFoundText = ["<title>Oops!</title>"]
         self.forbiddenList = []
         # CHANGE: Whenever credentials are needed this value needs to be True.
-        # Any credential (or set of credentials) must be included in the utils/creds.txt file in the following format:
-        #    platform    login    password
-        # (The gaps in between are tabs).
-        # More than one credental can be stored in that file. Usufy.py will choose one randomly.
+        # Any credential (or set of credentials) must be included in the utils/creds.txt file
         self._needsCredentials = True        
 
