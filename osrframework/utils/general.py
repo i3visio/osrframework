@@ -34,7 +34,7 @@ def dictToJson(d):
         :return:    jsonText (string).
     '''
     # creating json
-    jsonText =  json.dumps(d, indent=2)
+    jsonText =  json.dumps(d, indent=2, sort_keys=True)
     return jsonText
 
 def listToMaltego(profiles):
