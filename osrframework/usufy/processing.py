@@ -181,7 +181,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         platforms = config.getPlatforms()
     
     # Defining the output results variable
-    res = {}
+    res = []
     # Processing the whole list of terms...
     for nick in nicks:
         logger.info("Looking for '" + nick + "' in " + str(len(platforms)) + " different platforms:\n" +str( [ str(plat) for plat in platforms ] ) )
@@ -211,7 +211,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
             if r != None:
                 profiles.append(r)
 
-        res[nick] = profiles
+        res+=profiles
         #res = profiles
     return res
 
@@ -360,32 +360,11 @@ For details, run:
             
             logger.info("Listing the results obtained...")
             # We are going to iterate over the results...
-            strResults = "\t"
-            for nick in res.keys():
-                """ 
-                {
-                  "i3visio": [
-                    {
-                      "attributes": [
-                        {
-                          "attributes": [], 
-                          "type": "i3visio.uri", 
-                          "value": "https://github.com/i3visio"
-                        }, 
-                        {
-                          "attributes": [], 
-                          "type": "i3visio.alias", 
-                          "value": "i3visio"
-                        }, 
-                        {
-                          "attributes": [], 
-                          "type": "i3visio.platform", 
-                          "value": "Github"
-                        }
-                      ], 
-                      "type": "i3visio.profile", 
-                      "value": "Github - i3visio"
-                    }, 
+            strResults = "\t"               
+            for r in res:
+                # The format of the results (attribues) for a given nick is a list as follows:
+                """
+                [
                     {
                       "attributes": [
                         {
@@ -407,50 +386,21 @@ For details, run:
                       "type": "i3visio.profile", 
                       "value": "Twitter - i3visio"
                     }
-                  ]
-                }
-                """                
-                for r in res[nick]:
-                    # The format of the results (attribues) for a given nick is a list as follows:
-                    """
-                    [
-                        {
-                          "attributes": [
-                            {
-                              "attributes": [], 
-                              "type": "i3visio.uri", 
-                              "value": "http://twitter.com/i3visio"
-                            }, 
-                            {
-                              "attributes": [], 
-                              "type": "i3visio.alias", 
-                              "value": "i3visio"
-                            }, 
-                            {
-                              "attributes": [], 
-                              "type": "i3visio.platform", 
-                              "value": "Twitter"
-                            }
-                          ], 
-                          "type": "i3visio.profile", 
-                          "value": "Twitter - i3visio"
-                        }
-                        ,
-                        ...
-                    ]                    
-                    """                                
-                    results = "Results for '" + nick + "':\n"
-                    for profile in r["attributes"]:
-                        #p = profile["value"]
-                        # iterating through the attributes
-                        platform = ""
-                        uri = ""
-                        for details in profile["attributes"]:
-                            if details["type"] == "i3visio.platform":
-                                platform = details["value"]
-                            if details["type"] == "i3visio.uri":
-                                uri = details["value"]                                
-                        strResults+= (str(platform) + ":").ljust(16, ' ')+ " "+ str(uri)+"\n\t\t"
+                    ,
+                    ...
+                ]                    
+                """                                
+                for profile in r["attributes"]:
+                    #p = profile["value"]
+                    # iterating through the attributes
+                    platform = ""
+                    uri = ""
+                    for details in profile["attributes"]:
+                        if details["type"] == "i3visio.platform":
+                            platform = details["value"]
+                        if details["type"] == "i3visio.uri":
+                            uri = details["value"]                                
+                    strResults+= (str(platform) + ":").ljust(16, ' ')+ " "+ str(uri)+"\n\t\t"
 
                 logger.info(strResults)
 
@@ -474,15 +424,15 @@ For details, run:
                             oF.write( export_mod.resultsToCSV(res) + "\n" )"""
                     if  "json" in args.extension:
                         logger.info("Writing results to json file.")
-                        with open (os.path.join(args.output_folder, "results_" + nick+ "_" + strTime + ".json"), "w") as oF:
+                        with open (os.path.join(args.output_folder, "results_" + "results_" + strTime + ".json"), "w") as oF:
                             oF.write( general.dictToJson(res) + "\n")    
                     if  "maltego" in args.extension:
                         logger.info("Writing results to maltego file.")
-                        with open (os.path.join(args.output_folder, "results_" + nick+ "_" + strTime + ".maltego"), "w") as oF:                           
+                        with open (os.path.join(args.output_folder, "results_" + "results_" + strTime + ".maltego"), "w") as oF:                           
                             oF.write( general.listToMaltego(profiles) + "\n")    
     
                 if args.maltego:
-                    general.listToMaltego(res[nick])
+                    general.listToMaltego(res)
             # here goes the printing the results
             if not args.quiet:
                 print general.dictToJson(res)
