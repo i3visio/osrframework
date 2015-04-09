@@ -418,17 +418,17 @@ For details, run:
 
                     strTime = general.getCurrentStrDatetime()
                 
-                    """if  "csv" in args.extension:
+                    if  "csv" in args.extension:
                         logger.info("Writing results to csv file.")
                         with open (os.path.join(args.output_folder, "results_" + strTime +".csv"), "w") as oF:
-                            oF.write( export_mod.resultsToCSV(res) + "\n" )"""
+                            oF.write( general.dictToCSV(res) + "\n" )
                     if  "json" in args.extension:
                         logger.info("Writing results to json file.")
-                        with open (os.path.join(args.output_folder, "results_" + "results_" + strTime + ".json"), "w") as oF:
+                        with open (os.path.join(args.output_folder, "results_" + strTime + ".json"), "w") as oF:
                             oF.write( general.dictToJson(res) + "\n")    
                     if  "maltego" in args.extension:
                         logger.info("Writing results to maltego file.")
-                        with open (os.path.join(args.output_folder, "results_" + "results_" + strTime + ".maltego"), "w") as oF:                           
+                        with open (os.path.join(args.output_folder, "results_" + strTime + ".maltego"), "w") as oF:                           
                             oF.write( general.listToMaltego(profiles) + "\n")    
     
                 if args.maltego:
