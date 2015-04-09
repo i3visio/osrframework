@@ -37,9 +37,45 @@ def dictToJson(d):
     jsonText =  json.dumps(d, indent=2, sort_keys=True)
     return jsonText
 
+def dictToCSV(profiles):
+    '''
+        Workaround to convert any dictionary to CSV text.
+        
+        :param d:    Dictionary to convert to json.
+
+        :return:    jsonText (string).
+    '''
+    # We are assuming that we received a list of profiles.
+    values = {}
+    #values['i3visio.profile'] = []
+    values['i3visio.alias'] = []
+    values['i3visio.platform'] = []    
+    values['i3visio.uri'] = []        
+    
+    for p in profiles:
+        #values['i3visio.profile'].append(p['i3visio.profile'])
+        attributes = p["attributes"]
+
+        for a in attributes:
+            values[a["type"]].append(a["value"])
+    
+    csvText = ""
+    # Printing the headers
+    csvText += 'i3visio.alias'+"\t"
+    csvText += 'i3visio.platform'+"\t"
+    csvText += 'i3visio.uri'+"\n"
+    
+    # Printing the values
+    for i in range(len(values['i3visio.alias'])):
+        csvText += values['i3visio.alias'][i]+"\t"
+        csvText += values['i3visio.platform'][i]+"\t"
+        csvText += values['i3visio.uri'][i]+"\n"
+    return csvText
+    
+
 def listToMaltego(profiles):
     """ 
-        Method to generate the text to be appended to a Maltego file.
+        Method to generate the text to be appended to a Maltego file. May need to be revisited.
 
         :param profiles:    a list of dictionaries with the information of the profiles: {"a_nick": [<list_of_results>]}
                     [
@@ -114,7 +150,6 @@ def fileToMD5(filename, block_size=256*128, binary=False):
     if not binary:
         return md5.hexdigest()
     return md5.digest()
-
 
 def getCurrentStrDatetime():
     '''
