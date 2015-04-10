@@ -133,7 +133,7 @@ class Platform():
         
     def getInfo(self, query=None, process = False, mode="phonefy"):
         ''' 
-            Method that checks the presence of a given telephone in listspam.com and recovers the first list of complains.
+            Method that checks the presence of a given query and recovers the first list of complains.
 
             :param query: Phone number to verify.
             :param proces:  Calling the processing function.
@@ -147,7 +147,7 @@ class Platform():
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
             #print "InvalidModeException"
-            return results
+            return json.dumps(results)
         # Creating the query URL for that mode
         qURL = self.createURL(word=query, mode=mode)        
         
@@ -167,7 +167,7 @@ class Platform():
             # No information was found, then we return a null entity
             # TO-DO: i3BrowserException            
             #print "i3BrowserException"
-            return results            
+            return json.dumps(results)            
 
         # Verifying if the platform exists
         if self.somethingFound(data, mode=mode):
@@ -175,6 +175,7 @@ class Platform():
                 results["type"] = "i3visio.phone"
                 results["value"] = self.platformName + " - " + query
             elif mode == "usufy":
+            
                 results["type"] = "i3visio.profile"
                 results["value"] = self.platformName + " - " + query                
             elif mode == "searchfy":
@@ -196,14 +197,16 @@ class Platform():
             aux = {}
             aux["type"] = "i3visio.uri"
             aux["value"] = qURL
+            
             # Iterating if requested to extract more entities from the URI
-            if not process:                
+            if not process:                               
                 aux["attributes"] = []
             else:
-                aux["attributes"] = self.processURI(data=data, mode=mode)
+                # This function returns a json text!
+                aux["attributes"] = json.loads(self.processURI(data=data, mode=mode))
             results["attributes"].append(aux)                
-                
-        return results
+            
+        return json.dumps(results)
 
     def modeIsValid(self, mode):
         ''' 
@@ -228,16 +231,26 @@ class Platform():
                         
             :return:    A list of the entities found.
         '''
+        print uri 
+
         if data == None:
             # Accessing the resource
             data = i3Browser.recoverURL(uri)        
 
         info = []
+        print data
         
         # Iterating through all the type of fields
         for field in self.fieldsRegExp[mode].keys():
-            # Recovering all the matching expressions
-            values = re.findall(self.fieldsRegExp[mode][field], data)
+            # Recovering the RegularExpression
+            try:
+                # Using the old approach of "Start" + "End"
+                regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
+            except:
+                # Using the compact approach if start and end tags do not exist.
+                regexp = fieldsRegExp[mode][field]
+                
+            values = re.findall(regexp, data)
             
             for val in values:
                 aux = {}
@@ -246,7 +259,7 @@ class Platform():
                 aux["attributes"] = []                
                 if aux not in info:
                     info.append(aux)        
-        return info
+        return json.dumps(info)
     
     def somethingFound(self,data,mode="phonefy"):
         ''' 

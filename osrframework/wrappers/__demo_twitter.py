@@ -30,24 +30,22 @@ import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 class <DEMO>(Platform):
-	""" 
-		A <Platform> object for Demo.
-	"""
+    '''
+    '''
     def __init__(self):
         '''
-            Constructor...
         '''
-        self.platformName = "<DEMO>"        
+        self.platformName = "Twitter"   
         # These tags will be the one used to label this platform
-        self.tags = ["demo", "test"]
+        self.tags = ["contact", "opinions", "social"]
         
         ########################
         # Defining valid modes #
         ########################
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
-        self.isValidMode["usufy"] = False
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["usufy"] = True
+        self.isValidMode["searchfy"] = True
         
         ######################################
         # Search URL for the different modes #
@@ -55,16 +53,16 @@ class <DEMO>(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        #self.url["usufy"] = "http://anyurl.com/user/" + "<usufy>"
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "http://anyurl.com/user/" + "<usufy>"
+        self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
         # Whether the user needs credentials #
         ######################################
         self.needsCredentials = {}        
         #self.needsCredentials["phonefy"] = False
-        #self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        self.needsCredentials["usufy"] = False
+        self.needsCredentials["searchfy"] = False 
         
         ###################
         # Valid queries #
@@ -73,8 +71,8 @@ class <DEMO>(Platform):
         self.validQuery = {}
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        #self.validQuery["usufy"] = re.compile(".*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["usufy"] = re.compile("[a-zA-Z0-9_]+")   
+        self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
         # Not_found clues #
@@ -82,8 +80,8 @@ class <DEMO>(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        #self.notFoundText["usufy"] = []   
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["usufy"] = ["<form class=\"search-404\""]   
+        self.notFoundText["searchfy"] = []        
         
         #########################
         # Fields to be searched #
@@ -96,17 +94,24 @@ class <DEMO>(Platform):
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
         
         # Definition of regular expressions to be searched in usufy mode
-        #self.fieldsRegExp["usufy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"] = {}
+        # Examples (do NOT forget to escape the quoting marks inside any string: \"):
+		self.fieldsRegExp["usufy"]["data-screen-name"] = {"start": "        data-screen-name=", "end": "\" data-name"}
+		self.fieldsRegExp["usufy"]["data-name"] = {"start": "\" data-name=", "end": "\" data-protected"}
+		self.fieldsRegExp["usufy"]["ProfileHeaderCard-bio"] = {"start": "<p class=\"ProfileHeaderCard-bio u-dir\"\n    \n    dir=\"ltr\">", "end": "</p>"}
+		self.fieldsRegExp["usufy"]["location"] = {"start": "<span class=\"ProfileHeaderCard-locationText u-dir\" dir=\"ltr\">", "end": "</span>"}
+		self.fieldsRegExp["usufy"]["ProfileHeaderCard-joinDate"] = {"start": "<span class=\"ProfileHeaderCard-joinDateText js-tooltip u-dir\" dir=\"ltr\" title=\"", "end": "\">"}
+		self.fieldsRegExp["usufy"]["ProfileHeaderCard-url"] = {"start": "<span class=\"ProfileHeaderCard-urlText u-dir\" dir=\"ltr\"><a class=\"u-textUserColor\" target=\"_blank\" rel=\"me nofollow\" href=\"", "end": "\""}
+		self.fieldsRegExp["usufy"]["PhotoRail-headingText"] = {"start": "class=\"js-nav\">\n                \n                ", "end": "             </a>"}
         
         # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
+        self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
+        self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
 		self.foundFields = {}
+

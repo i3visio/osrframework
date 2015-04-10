@@ -3,6 +3,8 @@
 #
 ##################################################################################
 #
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +20,7 @@
 #
 ##################################################################################
 
+import json
 import urllib2
 import os
 import time
@@ -26,7 +29,7 @@ import time
 from multiprocessing import Process, Queue, Pool
 
 # configuration and utils
-import osrframework.usufy.config_usufy as config
+import osrframework.utils.platform_selection as platform_selection
 #import lib.attributes as attributes
 import osrframework.utils.benchmark as benchmark
 import osrframework.utils.export as export_mod
@@ -124,10 +127,10 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
         
 def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
     ''' 
-        Method that wraps the call to the getUserPage.
+        Method that wraps the call to the getInfo. Before it was getUserPage.
 
         List of parameters that the method receives:
-        :param p:        platform where the information is stored.
+        :param pName:        platform where the information is stored. It is a string.
         :param nick:        nick to be searched.
         :param rutaDescarga:    local file where saving the obtained information.
         :param avoidProcessing:boolean var that defines whether the profiles will NOT be processed (stored in this version).
@@ -141,11 +144,12 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
     logger = logging.getLogger("osrframework.usufy")
     
     logger.debug("\tLooking for profiles in " + str(p) + "...")
-    res = p.getUserPage(nick, rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)            
+    #res = p.getUserPage(nick, rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)    
+    
+    res = p.getInfo(query=nick, mode="usufy", process=True)#rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)            
 
-    
-    
-    if res != None:
+    #if res != None:
+    if res != {}:
         if outQueue != None:
             #logger.info("\t" + (str(p) +" - User profile found: ").ljust(40, ' ') + url)
             # Storing in the output queue the values
@@ -178,7 +182,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
     logger = logging.getLogger("osrframework.usufy")
     
     if platforms == None:
-        platforms = config.getPlatforms()
+        platforms = platform_selection.getAllPlatformNames("usufy")
     
     # Defining the output results variable
     res = []
@@ -192,11 +196,14 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         # Using threads in a pool if we are not running the program in main
         args = []
         # We need to create all the arguments that will be needed
+        #print platforms
         for plat in platforms:
             args.append (( plat, nick, rutaDescarga, avoidProcessing, avoidDownload))
         logger.info("Launching " + str(nThreads) + " different threads...")
         # We define the pool
         pool = Pool(nThreads)
+
+        #print json.dumps(args, indent=2)
         # We call the wrapping function with all the args previously generated
 
         #poolResults = pool.apply_async(multi_run_wrapper,(args))
@@ -205,11 +212,11 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         pool.close()
         
         profiles = []
-        #print general.dictToJson(poolResults)
+
         for r in poolResults:
             # We need to recover the results and check if they are not None
             if r != None:
-                profiles.append(r)
+                profiles.append(json.loads(r))
 
         res+=profiles
         #res = profiles
@@ -259,7 +266,7 @@ For details, run:
     else:
         logger.debug("Recovering the list of platforms to be processed...")
         # Recovering the list of platforms to be launched
-        listPlatforms = config.getPlatforms(sites=args.platforms, tags=args.tags, fileCreds=args.credentials)
+        listPlatforms = platform_selection.getPlatformsByName(platformNames=args.platforms, tags=args.tags, mode="usufy")
         logger.debug("Platforms recovered.")
 
         if args.info:
@@ -293,7 +300,7 @@ For details, run:
         elif args.benchmark:
             logger.warning("The benchmark mode may last some minutes as it will be performing similar queries to the ones performed by the program in production. ")
             logger.info("Launching the benchmarking tests...")
-            platforms = config.getPlatforms()
+            platforms = platform_selection.getAllPlatformNames("usufy")
             res = benchmark.doBenchmark(platforms)
             strTimes = ""
             for e in sorted(res.keys()):
@@ -360,42 +367,44 @@ For details, run:
             
             logger.info("Listing the results obtained...")
             # We are going to iterate over the results...
-            strResults = "\t"               
-            for r in res:
-                # The format of the results (attribues) for a given nick is a list as follows:
-                """
-                [
+            strResults = "\t"   
+            
+            # Structure returned 
+            """
+            [
+                {
+                  "attributes": [
                     {
-                      "attributes": [
-                        {
-                          "attributes": [], 
-                          "type": "i3visio.uri", 
-                          "value": "http://twitter.com/i3visio"
-                        }, 
-                        {
-                          "attributes": [], 
-                          "type": "i3visio.alias", 
-                          "value": "i3visio"
-                        }, 
-                        {
-                          "attributes": [], 
-                          "type": "i3visio.platform", 
-                          "value": "Twitter"
-                        }
-                      ], 
-                      "type": "i3visio.profile", 
-                      "value": "Twitter - i3visio"
+                      "attributes": [], 
+                      "type": "i3visio.uri", 
+                      "value": "http://twitter.com/i3visio"
+                    }, 
+                    {
+                      "attributes": [], 
+                      "type": "i3visio.alias", 
+                      "value": "i3visio"
+                    }, 
+                    {
+                      "attributes": [], 
+                      "type": "i3visio.platform", 
+                      "value": "Twitter"
                     }
-                    ,
-                    ...
-                ]                    
-                """                                
-                for profile in r["attributes"]:
+                  ], 
+                  "type": "i3visio.profile", 
+                  "value": "Twitter - i3visio"
+                }
+                ,
+                ...
+            ]                    
+            """    
+            for r in res:
+                # The format of the results (attributes) for a given nick is a list as follows:
+                for att in r["attributes"]:
                     #p = profile["value"]
                     # iterating through the attributes
                     platform = ""
                     uri = ""
-                    for details in profile["attributes"]:
+                    for details in att["attributes"]:
                         if details["type"] == "i3visio.platform":
                             platform = details["value"]
                         if details["type"] == "i3visio.uri":

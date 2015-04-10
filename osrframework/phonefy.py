@@ -54,9 +54,10 @@ def processPhoneList(platforms=[], numbers=[]):
     results = []
     for num in numbers:
         for pla in platforms:
+            # This returns a json.txt!
             entities = pla.getInfo(query=num, process = True, mode="phonefy")
             if entities != {}:
-                results.append(entities)
+                results.append(json.loads(entities))
     return results
 
 def phonefy_main(args):

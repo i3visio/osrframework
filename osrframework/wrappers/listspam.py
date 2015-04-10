@@ -102,4 +102,8 @@ class Listspam(Platform):
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""               
         
-
+        ################
+        # Fields found #
+        ################
+        # This attribute will be feeded when running the program.
+        self.foundFields = {}

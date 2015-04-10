@@ -22,7 +22,7 @@
 import os
 import logging
 
-import osrframework.wrappers.platforms as platforms
+import osrframework.utils.platforms as platforms
 import osrframework.utils.credentials as credentials
 
 def getPlatforms(sites=["all"], tags=[], fileCreds="./creds.txt"):

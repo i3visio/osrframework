@@ -3,7 +3,9 @@
 #
 ##################################################################################
 #
-#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -36,10 +38,10 @@ __email__ = "contacto@i3visio.com"
 
 import argparse
 
-import osrframework.usufy.config_usufy as config
+#import osrframework.usufy.config_usufy as config
 import osrframework.usufy.processing as processing
 
-import osrframework.utils.platforms as platforms
+import osrframework.utils.platform_selection as platform_selection
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='usufy-launcher.py - Piece of software that checks the existence of a profile for a given user in a bunch of different platforms.', prog='usufy-launcher.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
@@ -55,7 +57,7 @@ if __name__ == "__main__":
 	general.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
 	general.add_argument('-n', '--nicks', metavar='<nick>', nargs='+', action='store', help = 'the list of nicks to process (at least one is required).')
 
-	platOptions = platforms.getAllPlatformNames("usufy")
+	platOptions = platform_selection.getAllPlatformNames("usufy")
 
 	
 	# Selecting the platforms where performing the search

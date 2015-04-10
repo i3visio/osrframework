@@ -21,9 +21,12 @@
 
 import osrframework.utils.credentials as credentials
 
+##################################################
+##################################################
 from osrframework.wrappers.listspam import Listspam
-
-#############################################################################################
+from osrframework.wrappers.twitter import Twitter
+##################################################
+##################################################
 
 
 def getAllPlatformNames(mode):
@@ -53,17 +56,18 @@ def getAllPlatformNames(mode):
     return platOptions
 
 
-def getPlatformsByName(platformNames = ['all'], mode = None):
+def getPlatformsByName(platformNames = ['all'], mode = None, tags = []):
     ''' 
         Method that recovers the names of the <Platforms> in a given list.
         
         :param platformNames:    list of strings containing the possible platforms.
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
-        
+        :param tags:    Just in case the method to select the candidates is a series of tags.
         :return:    Array of <Platforms> classes.
     '''
 
     allPlatformsList = getAllPlatformObjects(mode)
+    
     if 'all' in platformNames:
         return allPlatformsList
 
@@ -71,8 +75,18 @@ def getPlatformsByName(platformNames = ['all'], mode = None):
     # going through the regexpList 
     for name in platformNames:
         for plat in allPlatformsList:
-            if name == str.lower(plat.platformName):
+            added = False
+            # Verifying if the parameter was provided
+            if name == str(plat.platformName).lower():
                 platformList.append(plat)
+                added = True
+                break	
+            # Verifying if any of the platform tags match the original tag
+            if not added:
+                for t in plat.tags:
+                    if t in tags:
+                        platformList.append(plat)
+                        break	                
     return platformList      
 
 
@@ -85,9 +99,12 @@ def getAllPlatformObjects(mode = None):
         :return:    Returns a list [] of <Platform> objects.
     '''
     listAll = []
-
+    ##################################################
+    ##################################################
     listAll.append(Listspam())
-    # Add any additional import here
+    listAll.append(Twitter())
+    ##################################################
+    ##################################################
 
     creds = credentials.getCredentials()
 
