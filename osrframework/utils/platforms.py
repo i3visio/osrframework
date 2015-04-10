@@ -1,9 +1,10 @@
-# !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
 ##################################################################################
 #
-#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -20,37 +21,100 @@
 
 import argparse
 import json
+import os
+import random
 import re
 import sys
 import urllib2
 
 import osrframework.utils.browser as browser
+from osrframework.utils.credentials import Credential
+import osrframework.utils.general as general
+import osrframework.entify.processing as entify
+
+# logging imports
+import logging
 
 class Platform():
+    ''' 
+        <Platform> class.
+    '''
     def __init__(self):
+        ''' 
+            Constructor without parameters...
         '''
+        pass    
+    def __init__(self, pName, tags):
+        ''' 
+            Constructor with parameters. This method permits the developer to instantiate dinamically Platform objects.
         '''
-        self.platformName = "Platform"
+        self.platformName = pName
+        # These tags will be the one used to label this platform
+        self.tags = tags
+
+        ########################
+        # Defining valid modes #
+        ########################
+        self.isValidMode = {}        
+        self.isValidMode["phonefy"] = True
+        self.isValidMode["usufy"] = False
+        self.isValidMode["searchfy"] = False      
         
+        ######################################
+        # Search URL for the different modes #
+        ######################################
         # Strings with the URL for each and every mode
         self.url = {}        
-        self.url["phonefy"] = "http://anyurl.com/" + "<phonefy>"
+        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
+        #self.url["usufy"] = "http://anyurl.com/user/" + "<usufy>"
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+
+        ######################################
+        # Whether the user needs credentials #
+        ######################################
+        self.needsCredentials = {}        
+        self.needsCredentials["phonefy"] = False
+        self.needsCredentials["usufy"] = False
+        self.needsCredentials["searchfy"] = False 
         
-        # Strings that will imply that the phone number is not appearing
+        ###################
+        # Valid queries #
+        ###################
+        # Strings that will imply that the query number is not appearing
+        self.validQuery = {}
+        # The regular expression '.*' will match any query.
+        self.validQuery["phonefy"] = re.compile(".*")
+        self.validQuery["usufy"] = re.compile(".*")   
+        self.validQuery["searchfy"] = re.compile(".*")
+        
+        ###################
+        # Not_found clues #
+        ###################
+        # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
-        # List of strings that appear when the phone IS NOT found
-        self.notFoundText["phonefy"] = []
-        # List of strings that appear when the user IS NOT found
-        #self.notFoundText["usufy"] = []        
+        #self.notFoundText["phonefy"] = []
+        #self.notFoundText["usufy"] = []   
+        #self.notFoundText["searchfy"] = []        
         
-        # Strings to be searched
+        #########################
+        # Fields to be searched #
+        #########################
         self.fieldsRegExp = {}
-        # Definition of regualr expressions to be searched in phonefy mode
-        self.fieldsRegExp["phonefy"] = {}
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        # Definition of regualr expressions to be searched in usufy mode
+        
+        # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
+        # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
+        
+        # Definition of regular expressions to be searched in usufy mode
+        #self.fieldsRegExp["usufy"] = {}
+        # Example of fields:
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        
+        # Definition of regular expressions to be searched in searchfy mode
+        #self.fieldsRegExp["searchfy"] = {}
+        # Example of fields:
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
     def createURL(self, word, mode="phonefy"):
         ''' 
@@ -84,12 +148,21 @@ class Platform():
             # TO-DO: InvalidModeException
             #print "InvalidModeException"
             return results
-            
+        # Creating the query URL for that mode
+        qURL = self.createURL(word=query, mode=mode)        
+        
+        i3Browser = browser.Browser()            
+        
         try:
-            i3Browser = browser.Browser()
-            qURL = self.createURL(word=query, mode=mode)
-            # Accessing the resources
-            data = i3Browser.recoverURL(qURL)
+            # check if it needs creds
+            if self.needsCredentials[mode]:
+                authenticated = self._getAuthenticated(i3Browser)
+                if authenticated:
+                    # Accessing the resources
+                    data = i3Browser.recoverURL(qURL)
+            else:
+                # Accessing the resources
+                data = i3Browser.recoverURL(qURL)
         except:
             # No information was found, then we return a null entity
             # TO-DO: i3BrowserException            
@@ -101,6 +174,12 @@ class Platform():
             if mode == "phonefy":
                 results["type"] = "i3visio.phone"
                 results["value"] = self.platformName + " - " + query
+            elif mode == "usufy":
+                results["type"] = "i3visio.profile"
+                results["value"] = self.platformName + " - " + query                
+            elif mode == "searchfy":
+                results["type"] = "i3visio.phone"
+                results["value"] = self.platformName + " - " + query                
             #else:
             #    results["type"] = "i3visio.phone"
             #    results["value"] = self.platformName + " - " + query
@@ -113,7 +192,7 @@ class Platform():
             aux["attributes"] = []
             results["attributes"].append(aux)
             
-            # Appending platform name
+            # Appending platform URI
             aux = {}
             aux["type"] = "i3visio.uri"
             aux["value"] = qURL
@@ -134,9 +213,8 @@ class Platform():
             
             :return:    True if the mode exists in the three main folders.
         '''
-        if mode in self.url.keys():
-            if mode in self.notFoundText.keys():
-                #if mode in self.fieldsRegexp.keys():
+        if mode in self.isValidMode.keys():
+            if mode in self.isValidMode.keys():
                 return True
         return False
         
@@ -186,5 +264,46 @@ class Platform():
             return True
         except:
             pass
-            # TO-DO: Throw notFoundText not found for thid mode.        
+            # TO-DO: Throw notFoundText not found for this mode.        
             
+    def __str__(self):
+        ''' 
+            Function to represent the text when printing the object
+            
+            :return:    self.platformName
+        '''
+        return self.platformName    
+
+    def _getAuthenticated(self, browser):
+        ''' 
+            Getting authenticated. This method will be overwritten.
+            
+            :param browser: The browser in which the user will be authenticated.
+        '''
+        # check if we have creds
+        if len(self.creds) > 0:
+            # choosing a cred
+            c = random.choice(self.creds)
+            # adding the credential
+            browser.setNewPassword(url, c.user, c.password)
+            return True
+        else:
+            logger.debug("No credentials have been added and this platform needs them.")
+            return False
+        
+    def _isValidQuery(self, query, mode="phonefy"):
+        '''    
+            Method to verify if a given query is processable by the platform. The system looks for the forbidden characters in self.Forbidden list.
+            
+            :param query:
+            :param mode:    To be chosen amongst phonefy, usufy and searchfy.
+            :return:    True | False
+        '''
+        # Verifying if the mode supports such a query
+        if  self.validQuery[mode].match(query):
+            return True                
+        else:
+            return False
+            
+           
+  

@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.8.2"
+__version__ = "v0.9.0a"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -39,7 +39,7 @@ import argparse
 import osrframework.usufy.config_usufy as config
 import osrframework.usufy.processing as processing
 
-import osrframework.wrappers.platforms as platforms
+import osrframework.utils.platforms as platforms
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='usufy-launcher.py - Piece of software that checks the existence of a profile for a given user in a bunch of different platforms.', prog='usufy-launcher.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
@@ -55,7 +55,7 @@ if __name__ == "__main__":
 	general.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
 	general.add_argument('-n', '--nicks', metavar='<nick>', nargs='+', action='store', help = 'the list of nicks to process (at least one is required).')
 
-	platOptions = platforms.getAllPlatformParametersByMode("usufy")
+	platOptions = platforms.getAllPlatformNames("usufy")
 
 	
 	# Selecting the platforms where performing the search
