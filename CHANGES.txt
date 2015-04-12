@@ -11,12 +11,15 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Creation of different transforms for each and every platform in usufy.
 - Migration from old usufy platforms to newest approach used in phonefy.
 - Inclusion of new usufy platforms which are now in testing mode.
+- Update transforms using the old -launchers.
+- Move external api calls to the main folder.
 
 v0.9.0, 2015/04/** -- Major restructuration of the internal tool.
 - Moved platforms to wrappers and changed platforms.py to utils.
 - Inclusion of regular expression rules to choose valid names.
 - Inclusion of all the variables to include phonefy, usufy and searchfy search in all platforms.
-- Removed phonefy folder for structural simplicity.
+- Removed phonefy and usufy folders for structural simplicity.
+- Changed usufy-launcher.py and phonefy-launcher.py to usufy.py and phonefy.py.
 
 v0.8.3, 2015/04/09 -- Changed the structure of the returned csv files.
 - Adding the possibility of creating a csv output file.

@@ -197,14 +197,13 @@ class Platform():
             aux = {}
             aux["type"] = "i3visio.uri"
             aux["value"] = qURL
+            aux["attributes"] = []           
+            results["attributes"].append(aux)             
             
             # Iterating if requested to extract more entities from the URI
-            if not process:                               
-                aux["attributes"] = []
-            else:
+            if process:                               
                 # This function returns a json text!
-                aux["attributes"] = json.loads(self.processURI(data=data, mode=mode))
-            results["attributes"].append(aux)                
+                results["attributes"] += json.loads(self.processURI(data=data, mode=mode))
             
         return json.dumps(results)
 
@@ -231,14 +230,12 @@ class Platform():
                         
             :return:    A list of the entities found.
         '''
-        print uri 
 
         if data == None:
             # Accessing the resource
             data = i3Browser.recoverURL(uri)        
 
         info = []
-        print data
         
         # Iterating through all the type of fields
         for field in self.fieldsRegExp[mode].keys():
@@ -246,11 +243,23 @@ class Platform():
             try:
                 # Using the old approach of "Start" + "End"
                 regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
+                
+                tmp = re.findall(regexp, data)
+                
+                # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
+                values = []
+                for t in tmp:
+                    if self.fieldsRegExp[mode][field]["end"] in t:
+
+                        values.append(t.split(self.fieldsRegExp[mode][field]["end"])[0])
+                    else:
+                        values.append(t)
+                        
             except:
                 # Using the compact approach if start and end tags do not exist.
                 regexp = fieldsRegExp[mode][field]
                 
-            values = re.findall(regexp, data)
+                values = re.findall(regexp, data)
             
             for val in values:
                 aux = {}
