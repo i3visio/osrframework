@@ -1,0 +1,8 @@
+<TransformSettings enabled="true" disclaimerAccepted="false" showHelp="true">
+   <Properties>
+      <Property name="transform.local.command" type="string" popup="false">python</Property>
+      <Property name="transform.local.parameters" type="string" popup="false">uriToEntities.py i3visio.dogecoin.address </Property>
+      <Property name="transform.local.working-directory" type="string" popup="false"><CUSTOM_WORKING_DIRECTORY>/osrframework/transforms</Property>
+      <Property name="transform.local.debug" type="boolean" popup="false">true</Property>
+   </Properties>
+</TransformSettings>
