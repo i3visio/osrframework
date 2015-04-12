@@ -2,9 +2,9 @@
 #
 ##################################################################################
 #
-#	This file is part of OSRFramework.
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
-#	OSRFramework is free software: you can redistribute it and/or modify
+#    This program is part of OSRFramework. You can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -20,11 +20,11 @@
 ##################################################################################
 
 
-from osrframework.entify.patterns.regexp import RegexpObject
+from osrframework.utils.regexp import RegexpObject
 
-class BitcoinAddress(RegexpObject):
+class MD5(RegexpObject):
     ''' 
-        <BitcoinAddress> class.
+        <MD5> class.
     '''
     def __init__(self):
         ''' 
@@ -35,7 +35,7 @@ class BitcoinAddress(RegexpObject):
             :param reg_exp:    string containing the regular expresion.
         '''
         # This is the tag of the regexp
-        self.name = "i3visio.bitcoin.address"
+        self.name = "i3visio.md5"
         # This is the string containing the reg_exp to be seeked
-        self.reg_exp = ["[^a-zA-Z0-9]" + "([13][a-km-zA-HJ-NP-Z1-9]{26,33})" + "[^a-zA-Z0-9]"]
+        self.reg_exp = ["[^a-zA-Z0-9]" + "([a-z0-9]{32}|[A-Z0-9]{32})" + "[^a-zA-Z0-9]"]
         

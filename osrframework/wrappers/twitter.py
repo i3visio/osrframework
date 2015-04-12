@@ -109,7 +109,7 @@ class Twitter(Platform):
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
         ################
         # Fields found #

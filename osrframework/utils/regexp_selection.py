@@ -2,9 +2,9 @@
 #
 ##################################################################################
 #
-#	This file is part of OSRFramework.
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
-#	OSRFramework is free software: you can redistribute it and/or modify
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
 #	the Free Software Foundation, either version 3 of the License, or
 #	(at your option) any later version.
@@ -25,18 +25,18 @@ import logging
 # Importing Classes of <RegexpObject> objects that will be used in the script. The files are stored in the regexp folder.
 # For demo only
 #from regexp.demo import Demo
-from osrframework.entify.patterns.bitcoinaddress import BitcoinAddress
-from osrframework.entify.patterns.dni import DNI
-from osrframework.entify.patterns.dogecoinaddress import DogecoinAddress
-from osrframework.entify.patterns.email import Email
-from osrframework.entify.patterns.ipv4 import IPv4
-from osrframework.entify.patterns.litecoinaddress import LitecoinAddress
-from osrframework.entify.patterns.md5 import MD5
-from osrframework.entify.patterns.namecoinaddress import NamecoinAddress
-from osrframework.entify.patterns.peercoinaddress import PeercoinAddress
-from osrframework.entify.patterns.sha1 import SHA1
-from osrframework.entify.patterns.sha256 import SHA256
-from osrframework.entify.patterns.uri import URI
+from osrframework.patterns.bitcoinaddress import BitcoinAddress
+from osrframework.patterns.dni import DNI
+from osrframework.patterns.dogecoinaddress import DogecoinAddress
+from osrframework.patterns.email import Email
+from osrframework.patterns.ipv4 import IPv4
+from osrframework.patterns.litecoinaddress import LitecoinAddress
+from osrframework.patterns.md5 import MD5
+from osrframework.patterns.namecoinaddress import NamecoinAddress
+from osrframework.patterns.peercoinaddress import PeercoinAddress
+from osrframework.patterns.sha1 import SHA1
+from osrframework.patterns.sha256 import SHA256
+from osrframework.patterns.uri import URI
 # Add any additional import here
 #from regexp.anynewregexp import AnyNewRegexp
 # <ADD_NEW_REGEXP_IMPORT_BELOW>
