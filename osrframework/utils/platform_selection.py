@@ -63,11 +63,62 @@ from osrframework.wrappers.burbuja import Burbuja
 from osrframework.wrappers.burdastyle import Burdastyle
 from osrframework.wrappers.buzznet import Buzznet
 
+# C
+from osrframework.wrappers.cafemom import Cafemom
+from osrframework.wrappers.carbonmade import Carbonmade
+from osrframework.wrappers.cardomain import Cardomain
+from osrframework.wrappers.care2 import Care2
+from osrframework.wrappers.castroller import Castroller
+from osrframework.wrappers.causes import Causes
+from osrframework.wrappers.ccsinfo import Ccsinfo
+from osrframework.wrappers.chess import Chess
+from osrframework.wrappers.cockos import Cockos
+from osrframework.wrappers.connectingsingles import Connectingsingles
+from osrframework.wrappers.couchsurfing import Couchsurfing
+
+# D
+
+# E
+
+# F
+
+# G
+
+# H
+
+# I
+
+# J
+
+# K
+
 # L
 from osrframework.wrappers.listspam import Listspam
 
+# M
+
+# N
+
+# O
+
+# P
+
+# Q
+
+# R
+
+# S
+
 # T
 from osrframework.wrappers.twitter import Twitter
+
+# U
+
+# V
+
+# W
+
+# X
 
 # Y
 from osrframework.wrappers.youku import Youku
@@ -192,12 +243,63 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Burdastyle())
     listAll.append(Buzznet())
     
+    # C
+    listAll.append(Cafemom())
+    listAll.append(Carbonmade())
+    listAll.append(Cardomain())
+    listAll.append(Care2())
+    listAll.append(Castroller())
+    listAll.append(Causes())
+    listAll.append(Ccsinfo())
+    listAll.append(Chess())
+    listAll.append(Cockos())
+    listAll.append(Connectingsingles())
+    listAll.append(Couchsurfing())    
+
+    # D
+
+    # E
+
+    # F
+
+    # G
+
+    # H
+
+    # I
+
+    # J
+
+    # K
+
     # L
     listAll.append(Listspam())
     
+    # M
+
+    # N
+
+    # O
+
+    # P
+
+    # Q
+
+    # R
+
+    # S
+
     # T
     listAll.append(Twitter())
-    
+
+    # U
+
+    # V
+
+    # W
+
+    # X
+
     # Y
     listAll.append(Youku())
     listAll.append(Youtube())
