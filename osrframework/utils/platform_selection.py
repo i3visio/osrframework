@@ -77,6 +77,16 @@ from osrframework.wrappers.connectingsingles import Connectingsingles
 from osrframework.wrappers.couchsurfing import Couchsurfing
 
 # D
+from osrframework.wrappers.dailymail import Dailymail
+from osrframework.wrappers.dailymotion import Dailymotion
+from osrframework.wrappers.deviantart import Deviantart
+from osrframework.wrappers.digitalspy import Digitalspy
+from osrframework.wrappers.disqus import Disqus
+from osrframework.wrappers.doodle import Doodle
+from osrframework.wrappers.douban import Douban
+from osrframework.wrappers.dribbble import Dribbble
+from osrframework.wrappers.drugbuyersforum import Drugbuyersforum
+from osrframework.wrappers.drupal import Drupal
 
 # E
 
@@ -257,7 +267,17 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Couchsurfing())    
 
     # D
-
+    listAll.append(Dailymail())   
+    listAll.append(Dailymotion())   
+    listAll.append(Deviantart())   
+    listAll.append(Digitalspy())   
+    listAll.append(Disqus())   
+    listAll.append(Doodle())   
+    listAll.append(Douban())   
+    listAll.append(Dribbble())   
+    listAll.append(Drugbuyersforum())   
+    listAll.append(Drupal())   
+    
     # E
 
     # F
