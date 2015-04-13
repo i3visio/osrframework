@@ -38,7 +38,6 @@ class <DEMO>(Platform):
             Constructor...
         '''
         self.platformName = "<DEMO>"        
-        # These tags will be the one used to label this platform
         self.tags = ["demo", "test"]
         
         ########################

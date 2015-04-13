@@ -31,12 +31,13 @@ from osrframework.utils.platforms import Platform
 
 class Listspam(Platform):
     '''
+        A <Platform> object for ListSpam.    
     '''
     def __init__(self):
         '''
+            Consstructor...
         '''
         self.platformName = "Listspam"        
-        # These tags will be the one used to label this platform
         self.tags = ["phone"]
         
         ########################
@@ -63,9 +64,9 @@ class Listspam(Platform):
         self.needsCredentials["usufy"] = False
         self.needsCredentials["searchfy"] = False         
 
-        ###################
+        #################
         # Valid queries #
-        ###################
+        #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.*' will match any query.

@@ -30,7 +30,7 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.credentials import Credential
 import osrframework.utils.general as general
-import osrframework.entify.processing as entify
+import osrframework.entify as entify
 
 # logging imports
 import logging
@@ -56,7 +56,7 @@ class Platform():
         # Defining valid modes #
         ########################
         self.isValidMode = {}        
-        self.isValidMode["phonefy"] = True
+        self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = False
         self.isValidMode["searchfy"] = False      
         

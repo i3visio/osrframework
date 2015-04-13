@@ -38,7 +38,6 @@ class Twitter(Platform):
             Constructor...
         '''
         self.platformName = "Twitter"   
-        # These tags will be the one used to label this platform
         self.tags = ["contact", "opinions", "social"]
         
         ########################
@@ -66,9 +65,9 @@ class Twitter(Platform):
         self.needsCredentials["usufy"] = False
         self.needsCredentials["searchfy"] = False 
         
-        ###################
+        #################
         # Valid queries #
-        ###################
+        #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.*' will match any query.
@@ -98,13 +97,13 @@ class Twitter(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Examples (do NOT forget to escape the quoting marks inside any string: \"):
-        self.fieldsRegExp["usufy"]["@data-protected"] = {"start": "data-protected=\"", "end": "\">\n      <span class=\"UserActions"}
+        self.fieldsRegExp["usufy"]["@protected"] = {"start": "data-protected=\"", "end": "\">\n      <span class=\"UserActions"}
         self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "\" data-name=\"", "end": "\" data-protected"}
         #self.fieldsRegExp["usufy"]["ProfileHeaderCard-bio"] = {"start": "<p class=\"ProfileHeaderCard-bio u-dir\"\n    \n    dir=\"ltr\">", "end": "</p>"}
         self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<span class=\"ProfileHeaderCard-locationText u-dir\" dir=\"ltr\">", "end": "</span>\n      </div>\n\n    <div class=\"ProfileHeaderCard-url \">\n"}
         self.fieldsRegExp["usufy"]["i3visio.date"] = {"start": "<span class=\"ProfileHeaderCard-joinDateText js-tooltip u-dir\" dir=\"ltr\" title=\"", "end": "\">Se uni"}
         self.fieldsRegExp["usufy"]["i3visio.uri"] = {"start": "<span class=\"ProfileHeaderCard-urlText u-dir\" dir=\"ltr\"><a class=\"u-textUserColor\" target=\"_blank\" rel=\"me nofollow\" href=\"[^\"]*\" title=\"", "end": "\">"}
-        self.fieldsRegExp["usufy"]["PhotoRail-headingText"] = {"start": "class=\"js-nav\">\n                \n                ", "end": "             </a>"}
+        #self.fieldsRegExp["usufy"]["PhotoRail-headingText"] = {"start": "class=\"js-nav\">\n                \n                ", "end": "             </a>"}
         
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}

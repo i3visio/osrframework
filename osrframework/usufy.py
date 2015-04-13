@@ -229,10 +229,9 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         profiles = []
 
         for r in poolResults:
-            # We need to recover the results and check if they are not None
-            if r != None:
+            # We need to recover the results and check if they are not an empty json
+            if r != "{}":
                 profiles.append(json.loads(r))
-
         res+=profiles
         #res = profiles
     return res
@@ -412,7 +411,7 @@ For details, run:
                 ...
             ]                    
             """    
-            for r in res:
+            for r in res:               
                 # The format of the results (attributes) for a given nick is a list as follows:
                 for att in r["attributes"]:
                     # iterating through the attributes

@@ -23,8 +23,27 @@ import osrframework.utils.credentials as credentials
 
 ##################################################
 ##################################################
+from osrframework.wrappers.adtriboo import Adtriboo
+from osrframework.wrappers.anarchy101 import Anarchy101
+from osrframework.wrappers.aporrealos import Aporrealos
+from osrframework.wrappers.apsense import Apsense
+from osrframework.wrappers.arduino import Arduino
+from osrframework.wrappers.ariva import Ariva
+from osrframework.wrappers.armorgames import Armorgames
+from osrframework.wrappers.artbreak import Artbreak
+from osrframework.wrappers.artician import Artician
+from osrframework.wrappers.arto import Arto
+from osrframework.wrappers.askfm import Askfm
+from osrframework.wrappers.audiob import Audiob
+from osrframework.wrappers.audioboo import Audioboo
+from osrframework.wrappers.authorstream import Authorstream
+from osrframework.wrappers.autospies import Autospies
 from osrframework.wrappers.listspam import Listspam
 from osrframework.wrappers.twitter import Twitter
+from osrframework.wrappers.youku import Youku
+from osrframework.wrappers.youtube import Youtube
+from osrframework.wrappers.zabbix import Zabbix
+from osrframework.wrappers.zentyal import Zentyal
 ##################################################
 ##################################################
 
@@ -80,13 +99,13 @@ def getPlatformsByName(platformNames = ['all'], mode = None, tags = []):
             if name == str(plat.platformName).lower():
                 platformList.append(plat)
                 added = True
-                break	
+                break    
             # Verifying if any of the platform tags match the original tag
             if not added:
                 for t in plat.tags:
                     if t in tags:
                         platformList.append(plat)
-                        break	                
+                        break                    
     return platformList      
 
 
@@ -101,8 +120,27 @@ def getAllPlatformObjects(mode = None):
     listAll = []
     ##################################################
     ##################################################
+    listAll.append(Adtriboo())
+    listAll.append(Anarchy101())
+    listAll.append(Aporrealos())
+    listAll.append(Apsense())
+    listAll.append(Arduino())
+    listAll.append(Ariva())
+    listAll.append(Armorgames())
+    #listAll.append(Artbreak())
+    listAll.append(Artician())
+    listAll.append(Arto())
+    listAll.append(Askfm())
+    listAll.append(Audiob())
+    listAll.append(Audioboo())
+    listAll.append(Authorstream())
+    listAll.append(Autospies())
     listAll.append(Listspam())
     listAll.append(Twitter())
+    listAll.append(Youku())
+    listAll.append(Youtube())
+    listAll.append(Zabbix())
+    listAll.append(Zentyal())    
     ##################################################
     ##################################################
 
