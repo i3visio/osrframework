@@ -140,6 +140,10 @@ from osrframework.wrappers.twitter import Twitter
 # W
 
 # X
+from osrframework.wrappers.xanga import Xanga
+from osrframework.wrappers.xat import Xat
+from osrframework.wrappers.xing import Xing
+from osrframework.wrappers.xtube import Xtube
 
 # Y
 from osrframework.wrappers.youku import Youku
@@ -339,6 +343,10 @@ def getAllPlatformObjects(mode = None):
     # W
 
     # X
+    listAll.append(Xanga())
+    listAll.append(Xat())
+    listAll.append(Xing())
+    listAll.append(Xtube())    
 
     # Y
     listAll.append(Youku())
