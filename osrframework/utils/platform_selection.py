@@ -23,6 +23,7 @@ import osrframework.utils.credentials as credentials
 
 ##################################################
 ##################################################
+# A
 from osrframework.wrappers.adtriboo import Adtriboo
 from osrframework.wrappers.anarchy101 import Anarchy101
 from osrframework.wrappers.aporrealos import Aporrealos
@@ -38,10 +39,41 @@ from osrframework.wrappers.audiob import Audiob
 from osrframework.wrappers.audioboo import Audioboo
 from osrframework.wrappers.authorstream import Authorstream
 from osrframework.wrappers.autospies import Autospies
+
+# B
+from osrframework.wrappers.backyardchickens import Backyardchickens
+from osrframework.wrappers.badoo import Badoo
+from osrframework.wrappers.behance import Behance
+from osrframework.wrappers.bennugd import Bennugd
+from osrframework.wrappers.bitbucket import Bitbucket
+from osrframework.wrappers.bitcointalk import Bitcointalk
+from osrframework.wrappers.bitly import Bitly
+from osrframework.wrappers.blackplanet import Blackplanet
+from osrframework.wrappers.bladna import Bladna
+from osrframework.wrappers.blip import Blip
+from osrframework.wrappers.blogspot import Blogspot
+from osrframework.wrappers.bookmarky import Bookmarky
+from osrframework.wrappers.bookofmatches import Bookofmatches
+from osrframework.wrappers.boonex import Boonex
+from osrframework.wrappers.bordom import Bordom
+from osrframework.wrappers.boxedup import Boxedup
+from osrframework.wrappers.breakcom import Breakcom
+from osrframework.wrappers.bucketlistly import Bucketlistly
+from osrframework.wrappers.burbuja import Burbuja
+from osrframework.wrappers.burdastyle import Burdastyle
+from osrframework.wrappers.buzznet import Buzznet
+
+# L
 from osrframework.wrappers.listspam import Listspam
+
+# T
 from osrframework.wrappers.twitter import Twitter
+
+# Y
 from osrframework.wrappers.youku import Youku
 from osrframework.wrappers.youtube import Youtube
+
+# Z
 from osrframework.wrappers.zabbix import Zabbix
 from osrframework.wrappers.zentyal import Zentyal
 ##################################################
@@ -120,6 +152,7 @@ def getAllPlatformObjects(mode = None):
     listAll = []
     ##################################################
     ##################################################
+    # A
     listAll.append(Adtriboo())
     listAll.append(Anarchy101())
     listAll.append(Aporrealos())
@@ -135,10 +168,41 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Audioboo())
     listAll.append(Authorstream())
     listAll.append(Autospies())
+    
+    # B
+    listAll.append(Backyardchickens())
+    listAll.append(Badoo())
+    listAll.append(Behance())
+    listAll.append(Bennugd())
+    listAll.append(Bitbucket())
+    listAll.append(Bitcointalk())    
+    listAll.append(Bitly())
+    listAll.append(Blackplanet())
+    listAll.append(Bladna())
+    listAll.append(Blip())
+    listAll.append(Blogspot())
+    listAll.append(Bookmarky())
+    listAll.append(Bookofmatches())
+    listAll.append(Boonex())
+    listAll.append(Bordom())
+    listAll.append(Boxedup())
+    listAll.append(Breakcom())
+    listAll.append(Bucketlistly())
+    listAll.append(Burbuja())
+    listAll.append(Burdastyle())
+    listAll.append(Buzznet())
+    
+    # L
     listAll.append(Listspam())
+    
+    # T
     listAll.append(Twitter())
+    
+    # Y
     listAll.append(Youku())
     listAll.append(Youtube())
+    
+    # Z
     listAll.append(Zabbix())
     listAll.append(Zentyal())    
     ##################################################
