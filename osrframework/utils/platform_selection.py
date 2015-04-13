@@ -31,7 +31,7 @@ from osrframework.wrappers.apsense import Apsense
 from osrframework.wrappers.arduino import Arduino
 from osrframework.wrappers.ariva import Ariva
 from osrframework.wrappers.armorgames import Armorgames
-from osrframework.wrappers.artbreak import Artbreak
+#from osrframework.wrappers.artbreak import Artbreak
 from osrframework.wrappers.artician import Artician
 from osrframework.wrappers.arto import Arto
 from osrframework.wrappers.askfm import Askfm
@@ -89,6 +89,17 @@ from osrframework.wrappers.drugbuyersforum import Drugbuyersforum
 from osrframework.wrappers.drupal import Drupal
 
 # E
+from osrframework.wrappers.ebay import Ebay
+from osrframework.wrappers.echatta import Echatta
+from osrframework.wrappers.elmundo import Elmundo
+from osrframework.wrappers.enfemenino import Enfemenino
+# Credentials needed?
+#from osrframework.wrappers.epinions import Epinions
+#from osrframework.wrappers.eqe import Eqe
+from osrframework.wrappers.ethereum import Ethereum
+from osrframework.wrappers.etsy import Etsy
+from osrframework.wrappers.evilzone import Evilzone
+
 
 # F
 
@@ -279,6 +290,15 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Drupal())   
     
     # E
+    listAll.append(Ebay())
+    listAll.append(Echatta())
+    listAll.append(Elmundo())
+    listAll.append(Enfemenino())
+    #listAll.append(Epinions())
+    #listAll.append(Eqe())
+    listAll.append(Ethereum())
+    listAll.append(Etsy())
+    listAll.append(Evilzone())
 
     # F
 
