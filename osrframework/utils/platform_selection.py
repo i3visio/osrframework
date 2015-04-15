@@ -117,6 +117,19 @@ from osrframework.wrappers.freerepublic import Freerepublic
 from osrframework.wrappers.friendfeed import Friendfeed
 
 # G
+from osrframework.wrappers.gametracker import Gametracker
+from osrframework.wrappers.gapyear import Gapyear
+from osrframework.wrappers.garage4hackers import Garage4hackers
+from osrframework.wrappers.gather import Gather
+from osrframework.wrappers.geeksphone import Geeksphone
+from osrframework.wrappers.genspot import Genspot
+from osrframework.wrappers.getsatisfaction import Getsatisfaction
+from osrframework.wrappers.github import Github
+from osrframework.wrappers.gitorious import Gitorious
+from osrframework.wrappers.gogobot import Gogobot
+from osrframework.wrappers.goodreads import Goodreads
+from osrframework.wrappers.googleplus import GooglePlus
+from osrframework.wrappers.gsmspain import Gsmspain
 
 # H
 
@@ -334,6 +347,19 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Friendfeed())
 
     # G
+    listAll.append(Gametracker())
+    listAll.append(Gapyear())
+    listAll.append(Garage4hackers())
+    listAll.append(Gather())
+    listAll.append(Geeksphone())
+    listAll.append(Genspot())
+    listAll.append(Getsatisfaction())
+    listAll.append(Github())
+    listAll.append(Gitorious())
+    listAll.append(Gogobot())
+    listAll.append(Goodreads())
+    listAll.append(GooglePlus())
+    listAll.append(Gsmspain())
 
     # H
 
