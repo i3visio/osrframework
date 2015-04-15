@@ -100,8 +100,21 @@ from osrframework.wrappers.ethereum import Ethereum
 from osrframework.wrappers.etsy import Etsy
 from osrframework.wrappers.evilzone import Evilzone
 
-
 # F
+from osrframework.wrappers.facebook import Facebook
+from osrframework.wrappers.fanpop import Fanpop
+from osrframework.wrappers.fark import Fark
+from osrframework.wrappers.favstar import Favstar
+from osrframework.wrappers.flickr import Flickr
+from osrframework.wrappers.flixster import Flixster
+from osrframework.wrappers.foodspotting import Foodspotting
+from osrframework.wrappers.forobtc import Forobtc
+from osrframework.wrappers.forocoches import Forocoches
+#from osrframework.wrappers.forosperu import Forosperu
+from osrframework.wrappers.foursquare import Foursquare
+from osrframework.wrappers.freebase import Freebase
+from osrframework.wrappers.freerepublic import Freerepublic
+from osrframework.wrappers.friendfeed import Friendfeed
 
 # G
 
@@ -305,6 +318,20 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Evilzone())
 
     # F
+    listAll.append(Facebook())
+    listAll.append(Fanpop())
+    listAll.append(Fark())
+    listAll.append(Favstar())
+    listAll.append(Flickr())
+    listAll.append(Flixster())
+    listAll.append(Foodspotting())
+    listAll.append(Forobtc())
+    listAll.append(Forocoches())
+    #listAll.append(Forosperu())
+    listAll.append(Foursquare())
+    listAll.append(Freebase())
+    listAll.append(Freerepublic())
+    listAll.append(Friendfeed())
 
     # G
 

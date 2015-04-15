@@ -38,7 +38,7 @@ class Twitter(Platform):
             Constructor...
         '''
         self.platformName = "Twitter"   
-        self.tags = ["contact", "opinions", "social"]
+        self.tags = ["contact", "microblogging", "social"]
         
         ########################
         # Defining valid modes #
