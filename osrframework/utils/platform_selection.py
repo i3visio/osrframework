@@ -132,8 +132,25 @@ from osrframework.wrappers.googleplus import GooglePlus
 from osrframework.wrappers.gsmspain import Gsmspain
 
 # H
+from osrframework.wrappers.hellboundhackers import Hellboundhackers
+from osrframework.wrappers.hi5 import Hi5
 
 # I
+from osrframework.wrappers.ibosocial import Ibosocial
+from osrframework.wrappers.identica import Identica
+from osrframework.wrappers.imgur import Imgur
+from osrframework.wrappers.instagram import Instagram
+from osrframework.wrappers.instructables import Instructables
+# Seems to have problems
+#from osrframework.wrappers.interracialmatch import Interracialmatch
+from osrframework.wrappers.intersect import Intersect
+from osrframework.wrappers.intfiction import Intfiction
+from osrframework.wrappers.islamicawakening import Islamicawakening
+from osrframework.wrappers.issuu import Issuu
+# Not implemented
+#from osrframework.wrappers.ivoox import Ivoox
+from osrframework.wrappers.ixgames import Ixgames
+
 
 # J
 
@@ -362,8 +379,22 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Gsmspain())
 
     # H
+    listAll.append(Hellboundhackers())
+    listAll.append(Hi5())
 
     # I
+    listAll.append(Ibosocial())
+    listAll.append(Identica())
+    listAll.append(Imgur())
+    listAll.append(Instagram())
+    listAll.append(Instructables())
+    #listAll.append(Interracialmatch())
+    listAll.append(Intersect())
+    listAll.append(Intfiction())
+    listAll.append(Islamicawakening())
+    listAll.append(Issuu())
+    #listAll.append(Ivoox())
+    listAll.append(Ixgames())
 
     # J
 
