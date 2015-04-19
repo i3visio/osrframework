@@ -469,7 +469,10 @@ For details, run:
         
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='usufy.py - Piece of software that checks the existence of a profile for a given user in a bunch of different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
+    # Recovering all the possible options
+    platOptions = platform_selection.getAllPlatformNames("usufy")
+
+    parser = argparse.ArgumentParser(description='usufy.py - Piece of software that checks the existence of a profile for a given user in up to ' + str(len(platOptions)-1)+ ' different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options
@@ -481,9 +484,6 @@ if __name__ == "__main__":
     groupMainOptions.add_argument('-f', '--fuzz', metavar='<path_to_fuzzing_list>', action='store', type=argparse.FileType('r'), help='this option will try to find usufy-like URLs. The list of fuzzing platforms in the file should be (one per line): <BASE_URL>\t<VALID_NICK>')
     groupMainOptions.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
     groupMainOptions.add_argument('-n', '--nicks', metavar='<nick>', nargs='+', action='store', help = 'the list of nicks to process (at least one is required).')
-
-    platOptions = platform_selection.getAllPlatformNames("usufy")
-
     
     # Selecting the platforms where performing the search
     groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')

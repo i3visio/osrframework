@@ -153,13 +153,38 @@ from osrframework.wrappers.ixgames import Ixgames
 
 
 # J
+from osrframework.wrappers.jamiiforums import Jamiiforums
 
 # K
+from osrframework.wrappers.kaboodle import Kaboodle
+from osrframework.wrappers.kali import Kali
+from osrframework.wrappers.karmacracy import Karmacracy
+from osrframework.wrappers.kickstarter import Kickstarter
+from osrframework.wrappers.kinja import Kinja
+from osrframework.wrappers.klout import Klout
+from osrframework.wrappers.kongregate import Kongregate
+from osrframework.wrappers.kupika import Kupika
 
 # L
+from osrframework.wrappers.lastfm import Lastfm
+from osrframework.wrappers.linkedin import Linkedin
 from osrframework.wrappers.listspam import Listspam
+from osrframework.wrappers.livejournal import Livejournal
+from osrframework.wrappers.looki import Looki
 
 # M
+from osrframework.wrappers.marca import Marca
+from osrframework.wrappers.matchdoctor import Matchdoctor
+from osrframework.wrappers.mcneel import Mcneel
+from osrframework.wrappers.mediavida import Mediavida
+from osrframework.wrappers.medium import Medium
+from osrframework.wrappers.meneame import Meneame
+from osrframework.wrappers.metacafe import Metacafe
+from osrframework.wrappers.migente import Migente
+from osrframework.wrappers.minecraft import Minecraft
+from osrframework.wrappers.musicasacra import Musicasacra
+from osrframework.wrappers.myeloma import Myeloma
+from osrframework.wrappers.myspace import Myspace
 
 # N
 
@@ -397,13 +422,38 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Ixgames())
 
     # J
+    listAll.append(Jamiiforums())
 
     # K
+    listAll.append(Kaboodle())
+    listAll.append(Kali())
+    listAll.append(Karmacracy())
+    listAll.append(Kickstarter())
+    listAll.append(Kinja())
+    listAll.append(Klout())
+    listAll.append(Kongregate())
+    listAll.append(Kupika())
 
     # L
+    listAll.append(Lastfm())
+    listAll.append(Linkedin())
     listAll.append(Listspam())
+    listAll.append(Livejournal())
+    listAll.append(Looki())
     
     # M
+    listAll.append(Marca())
+    listAll.append(Matchdoctor())
+    listAll.append(Mcneel())
+    listAll.append(Mediavida())
+    listAll.append(Medium())
+    listAll.append(Meneame())
+    listAll.append(Metacafe())
+    listAll.append(Migente())
+    listAll.append(Minecraft())
+    listAll.append(Musicasacra())
+    listAll.append(Myeloma())
+    listAll.append(Myspace())
 
     # N
 
