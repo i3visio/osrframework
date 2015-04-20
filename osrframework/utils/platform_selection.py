@@ -218,17 +218,85 @@ from osrframework.wrappers.qq import Qq
 from osrframework.wrappers.quartermoonsaloon import Quartermoonsaloon
 
 # R
+from osrframework.wrappers.rankia import Rankia
+from osrframework.wrappers.rapid import Rapid
+from osrframework.wrappers.ratemypoo import Ratemypoo
+from osrframework.wrappers.rawtherapee import Rawtherapee
+from osrframework.wrappers.rebelmouse import Rebelmouse
+from osrframework.wrappers.redtube import Redtube
+from osrframework.wrappers.relatious import Relatious
+from osrframework.wrappers.researchgate import Researchgate
+from osrframework.wrappers.rojadirecta import Rojadirecta
+from osrframework.wrappers.ruby import Ruby
 
 # S
+from osrframework.wrappers.scribd import Scribd
+from osrframework.wrappers.sencha import Sencha
+from osrframework.wrappers.skype import Skype
+from osrframework.wrappers.slashdot import Slashdot
+from osrframework.wrappers.slideshare import Slideshare
+from osrframework.wrappers.smartcitizen import Smartcitizen
+from osrframework.wrappers.sokule import Sokule
+from osrframework.wrappers.soundcloud import Soundcloud
+from osrframework.wrappers.sourceforge import Sourceforge
+from osrframework.wrappers.spaniards import Spaniards
+from osrframework.wrappers.spoj import Spoj
+from osrframework.wrappers.spotify import Spotify
+from osrframework.wrappers.squidoo import Squidoo
+from osrframework.wrappers.steamcommunity import Steamcommunity
+from osrframework.wrappers.steinberg import Steinberg
+from osrframework.wrappers.streakgaming import Streakgaming
+from osrframework.wrappers.stuff import Stuff
+from osrframework.wrappers.stumbleupon import Stumbleupon
 
 # T
+from osrframework.wrappers.teamtreehouse import Teamtreehouse
+from osrframework.wrappers.techcrunch import Techcrunch
+from osrframework.wrappers.thecarcommunity import Thecarcommunity
+from osrframework.wrappers.theguardian import Theguardian
+from osrframework.wrappers.thehoodup import Thehoodup
+from osrframework.wrappers.thesims import Thesims
+from osrframework.wrappers.thestudentroom import Thestudentroom
+from osrframework.wrappers.tradimo import Tradimo
+from osrframework.wrappers.travian import Travian
+from osrframework.wrappers.tripadvisor import Tripadvisor
+from osrframework.wrappers.tripit import Tripit
+from osrframework.wrappers.trulia import Trulia
+from osrframework.wrappers.tumblr import Tumblr
+from osrframework.wrappers.tuporno import Tuporno
+from osrframework.wrappers.tvtag import Tvtag
+from osrframework.wrappers.twicsy import Twicsy
+from osrframework.wrappers.twitch import Twitch
+from osrframework.wrappers.twitpic import Twitpic
 from osrframework.wrappers.twitter import Twitter
+from osrframework.wrappers.twoplustwo import Twoplustwo
 
 # U
+from osrframework.wrappers.ukdebate import Ukdebate
+from osrframework.wrappers.ummahforum import Ummahforum
+from osrframework.wrappers.unsystem import Unsystem
+from osrframework.wrappers.ustream import Ustream
+
 
 # V
+from osrframework.wrappers.vexforum import Vexforum
+from osrframework.wrappers.videohelp import Videohelp
+from osrframework.wrappers.vimeo import Vimeo
+from osrframework.wrappers.virustotal import Virustotal
+from osrframework.wrappers.vk import Vk
 
 # W
+from osrframework.wrappers.wefollow import Wefollow
+from osrframework.wrappers.wikipediaar import WikipediaAr
+from osrframework.wrappers.wikipediaca import WikipediaCa
+from osrframework.wrappers.wikipediade import WikipediaDe
+from osrframework.wrappers.wikipediaen import WikipediaEn
+from osrframework.wrappers.wikipediaes import WikipediaEs
+from osrframework.wrappers.wikipediaeu import WikipediaEu
+from osrframework.wrappers.winamp import Winamp
+from osrframework.wrappers.wishlistr import Wishlistr
+from osrframework.wrappers.wordpress import Wordpress
+from osrframework.wrappers.wykop import Wykop
 
 # X
 from osrframework.wrappers.xanga import Xanga
@@ -510,17 +578,84 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Quartermoonsaloon())
 
     # R
+    listAll.append(Rankia())
+    listAll.append(Rapid())
+    listAll.append(Ratemypoo())
+    listAll.append(Rawtherapee())
+    listAll.append(Rebelmouse())
+    listAll.append(Redtube())
+    listAll.append(Relatious())
+    listAll.append(Researchgate())
+    listAll.append(Rojadirecta())
+    listAll.append(Ruby())    
 
     # S
+    listAll.append(Scribd())
+    listAll.append(Sencha())
+    #listAll.append(Skype())
+    listAll.append(Slashdot())
+    listAll.append(Slideshare())
+    listAll.append(Smartcitizen())
+    listAll.append(Sokule())
+    listAll.append(Soundcloud())
+    listAll.append(Sourceforge())
+    listAll.append(Spaniards())
+    listAll.append(Spoj())
+    listAll.append(Spotify())
+    listAll.append(Squidoo())
+    listAll.append(Steamcommunity())
+    listAll.append(Steinberg())
+    listAll.append(Streakgaming())
+    listAll.append(Stuff())
+    listAll.append(Stumbleupon())
 
     # T
+    listAll.append(Teamtreehouse())
+    listAll.append(Techcrunch())
+    listAll.append(Thecarcommunity())
+    listAll.append(Theguardian())
+    listAll.append(Thehoodup())
+    listAll.append(Thesims())
+    listAll.append(Thestudentroom())
+    listAll.append(Tradimo())
+    listAll.append(Travian())
+    listAll.append(Tripadvisor())
+    listAll.append(Tripit())
+    listAll.append(Trulia())
+    listAll.append(Tumblr())
+    listAll.append(Tuporno())
+    listAll.append(Tvtag())
+    listAll.append(Twicsy())
+    listAll.append(Twitch())
+    listAll.append(Twitpic())
     listAll.append(Twitter())
+    listAll.append(Twoplustwo())    
 
     # U
-
+    listAll.append(Ukdebate())
+    listAll.append(Ummahforum())
+    listAll.append(Unsystem())
+    listAll.append(Ustream())
+    
     # V
-
+    listAll.append(Vexforum())
+    listAll.append(Videohelp())
+    listAll.append(Vimeo())
+    listAll.append(Virustotal())
+    listAll.append(Vk())
+    
     # W
+    listAll.append(Wefollow())
+    listAll.append(WikipediaAr())
+    listAll.append(WikipediaCa())
+    listAll.append(WikipediaDe())
+    listAll.append(WikipediaEn())
+    listAll.append(WikipediaEs())
+    listAll.append(WikipediaEu())
+    listAll.append(Winamp())
+    listAll.append(Wishlistr())
+    listAll.append(Wordpress())
+    listAll.append(Wykop())
 
     # X
     listAll.append(Xanga())

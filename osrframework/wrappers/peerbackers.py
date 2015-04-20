@@ -29,7 +29,6 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-
 class Peerbackers(Platform):
     """ 
         A <Platform> object for Peerbackers.

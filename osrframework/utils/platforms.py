@@ -294,7 +294,10 @@ class Platform():
             
             :return:    self.platformName
         '''
-        return self.platformName    
+        try:
+            return self.parameterName        
+        except:
+            return self.platformName    
 
     def _getAuthenticated(self, browser):
         ''' 
