@@ -32,8 +32,12 @@ def uriToBrowser(uri=None):
     '''
     me = MaltegoTransform()
 
-    wb.open(uri, new=2)    
-
+    # Opening the Tor URI using onion.cab proxy
+    if ".onion" in uri:
+        wb.open(uri.replace(".onion", ".onion.cab"), new=2)    
+    else:
+        wb.open(uri, new=2)
+            
     me.returnOutput()
 
 

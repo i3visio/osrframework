@@ -187,12 +187,35 @@ from osrframework.wrappers.myeloma import Myeloma
 from osrframework.wrappers.myspace import Myspace
 
 # N
+from osrframework.wrappers.naver import Naver
+from osrframework.wrappers.netlog import Netlog
+from osrframework.wrappers.netvibes import Netvibes
 
 # O
+from osrframework.wrappers.occupywallst import Occupywallst
+from osrframework.wrappers.odnoklassniki import Odnoklassniki
+from osrframework.wrappers.openframeworks import Openframeworks
+from osrframework.wrappers.oroom import Oroom
 
 # P
+from osrframework.wrappers.pastebin import Pastebin
+from osrframework.wrappers.pearltrees import Pearltrees
+from osrframework.wrappers.peerbackers import Peerbackers
+from osrframework.wrappers.photobucket import Photobucket
+from osrframework.wrappers.pinterest import Pinterest
+from osrframework.wrappers.pixinsight import Pixinsight
+from osrframework.wrappers.pjrc import Pjrc
+from osrframework.wrappers.plancast import Plancast
+from osrframework.wrappers.pokerred import Pokerred
+from osrframework.wrappers.pokerstrategy import Pokerstrategy
+from osrframework.wrappers.pornhub import Pornhub
+from osrframework.wrappers.proboards import Proboards
+from osrframework.wrappers.px500 import Px500
+from osrframework.wrappers.pz import Pz
 
 # Q
+from osrframework.wrappers.qq import Qq
+from osrframework.wrappers.quartermoonsaloon import Quartermoonsaloon
 
 # R
 
@@ -456,12 +479,35 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Myspace())
 
     # N
+    listAll.append(Naver())
+    listAll.append(Netlog())
+    listAll.append(Netvibes())
 
     # O
+    listAll.append(Occupywallst())
+    listAll.append(Odnoklassniki())
+    listAll.append(Openframeworks())
+    listAll.append(Oroom())
 
     # P
+    listAll.append(Pastebin())
+    listAll.append(Pearltrees())
+    listAll.append(Peerbackers())
+    listAll.append(Photobucket())
+    listAll.append(Pinterest())
+    listAll.append(Pixinsight())
+    listAll.append(Pjrc())
+    listAll.append(Plancast())
+    listAll.append(Pokerred())
+    listAll.append(Pokerstrategy())
+    listAll.append(Pornhub())
+    listAll.append(Proboards())
+    listAll.append(Px500())
+    listAll.append(Pz())
 
     # Q
+    listAll.append(Qq())
+    listAll.append(Quartermoonsaloon())
 
     # R
 
