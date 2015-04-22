@@ -135,7 +135,7 @@ class Platform():
         ''' 
             Method that checks the presence of a given query and recovers the first list of complains.
 
-            :param query: Phone number to verify.
+            :param query:   Query to verify.
             :param proces:  Calling the processing function.
             :param mode:    Mode to be executed.            
 
@@ -175,12 +175,11 @@ class Platform():
                 results["type"] = "i3visio.phone"
                 results["value"] = self.platformName + " - " + query
             elif mode == "usufy":
-            
                 results["type"] = "i3visio.profile"
                 results["value"] = self.platformName + " - " + query                
             elif mode == "searchfy":
-                results["type"] = "i3visio.phone"
-                results["value"] = self.platformName + " - " + query                
+                results["type"] = "i3visio.search"
+                results["value"] = self.platformName + " Search - " + query                
             #else:
             #    results["type"] = "i3visio.phone"
             #    results["value"] = self.platformName + " - " + query
@@ -203,7 +202,7 @@ class Platform():
             # Iterating if requested to extract more entities from the URI
             if process:                               
                 # This function returns a json text!
-                results["attributes"] += json.loads(self.processURI(data=data, mode=mode))
+                results["attributes"] += json.loads(self.processData(data=data, mode=mode))
             
         return json.dumps(results)
 
@@ -220,7 +219,7 @@ class Platform():
                 return True
         return False
         
-    def processURI(self, uri=None, data = None, mode=None):
+    def processData(self, uri=None, data = None, mode=None):
         ''' 
             Method to process and extract the entities of a URL of this type.
            
@@ -257,7 +256,7 @@ class Platform():
                         
             except:
                 # Using the compact approach if start and end tags do not exist.
-                regexp = fieldsRegExp[mode][field]
+                regexp = self.fieldsRegExp[mode][field]
                 
                 values = re.findall(regexp, data)
             

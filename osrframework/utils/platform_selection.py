@@ -592,7 +592,7 @@ def getAllPlatformObjects(mode = None):
     # S
     listAll.append(Scribd())
     listAll.append(Sencha())
-    #listAll.append(Skype())
+    listAll.append(Skype())
     listAll.append(Slashdot())
     listAll.append(Slideshare())
     listAll.append(Smartcitizen())
