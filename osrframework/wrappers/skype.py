@@ -233,7 +233,7 @@ class Skype(Platform):
             results["value"] = self.platformName + " Search - " + query
             results["attributes"] = []                 
             for user in data:
-                results["attributes"].append(self.processSKypeUser(user, handle=query))
+                results["attributes"].append(self.processSkypeUser(user, handle=query))
                
         return json.dumps(results)
 
