@@ -16,6 +16,8 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Inclusion of new usufy platforms which are now in testing mode.
 - Update transforms using the old -launchers.
 - Move external api calls to the main folder.
+- Known issue in the extraction of fullname in Twitter platform.
+- Full normalization of fields.
 
 v0.9.0, 2015/04/** -- Major restructuration of the internal tool.
 - Moved platforms to wrappers and changed platforms.py to utils.

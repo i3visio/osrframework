@@ -40,7 +40,14 @@ import argparse
 import json
 
 import osrframework.utils.platform_selection as platform_selection
+# From emailahoy code
 import emailahoy
+
+# For the manual checkout
+import DNS, smtplib, socket
+
+# For the timeout function
+from osrframework.utils.timeout import timeout
 
 def getMoreInfo(email):
     '''
@@ -56,32 +63,88 @@ def getMoreInfo(email):
     
     return attributes
 
+# TO-DO:
+# Needs verification and further work.
+"""@timeout(5)
+def manualEmailCheck(mail):
+    """
+        Manually checking whether a mail is being sent.
+        
+        :param mail:    Email to check.
+        
+        :result:
+    """
+    DNS.DiscoverNameServers()
+    #print "checking %s..."%(mail)
+    hostname = mail[mail.find('@')+1:]
+    mx_hosts = DNS.mxlookup(hostname)
+    failed_mx = True
+    for mx in mx_hosts:
+            smtp = smtplib.SMTP()
+            try:
+                    smtp.connect(mx[1])
+                    # print "Stage 1 (MX lookup & connect) successful."
+                    failed_mx = False
+                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    s.connect((mx[1], 25))
+                    s.recv(1024)
+                    s.send("HELO %s\n"%(mx[1]))
+                    s.recv(1024)
+                    s.send("MAIL FROM:< test@test.com>\n")
+                    s.recv(1024)
+                    s.send("RCPT TO:<%s>\n"%(mail))
+                    result = s.recv(1024)
+                    #print result
+                    if result.find('Recipient address rejected') > 0:
+                            #print "Failed at stage 2 (recipient does not exist)"
+                            pass
+                    else:
+                            #print "Adress valid."
+                            failed_mx = False
+                    s.send("QUIT\n")
+                    break
+            except smtplib.SMTPConnectError:
+                    continue
+    if failed_mx:
+            #print "Failed at stage 1 (MX lookup & connect)."
+            pass
+    #print ""
+    if not failed_mx:
+            return True
+    return False
+"""
 
-def performSearch(emails=[]:
+def performSearch(emails=[]):
     ''' 
         Method to perform the mail verification process.
         
         :param emails: List of emails.
         
         :return:
-    '''
-    # Grabbing the <Platform> objects
-    platforms = platform_selection.getPlatformsByName(platformNames, mode="mailfy")    
-    
+    '''   
     results = []
 
     for e in emails:
-        if emailahoy.verify_email_address(e):
-            aux = {}
-            aux["type"] = "i3visio.email"
-            aux["value"] = e
-            aux["attributes"] = getMoreInfo(e)
+            if emailahoy.verify_email_address(e):
+                aux = {}
+                aux["type"] = "i3visio.email"
+                aux["value"] = e
+                aux["attributes"] = getMoreInfo(e)
 
-            results.append(aux)
-        else:
-            # Perform additional verifications
-            pass
+                results.append(aux)
+            else:
+                pass
+                """ try:
+                    if not "gmail.com" in e and manualEmailCheck(e):
+                        aux = {}
+                        aux["type"] = "i3visio.email"
+                        aux["value"] = e
+                        aux["attributes"] = getMoreInfo(e)
 
+                        results.append(aux)
+                except:
+                    # Probably a Timeout exception
+                    pass"""
     return results
 
 def mailfy_main(args):
@@ -122,7 +185,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
-    emailDomains = ["google"]
+    emailDomains = ["gmail.com"]
 
     # Defining the mutually exclusive group for the main options
     general = parser.add_mutually_exclusive_group(required=True)
