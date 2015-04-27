@@ -21,17 +21,17 @@
 ##################################################################################
 
 ''' 
-phonefy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
 For details, run:
-    python phonefy.py --license
+    python mailfy.py --license
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.0b"
+__version__ = "v0.1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -40,36 +40,74 @@ import argparse
 import json
 
 import osrframework.utils.platform_selection as platform_selection
+import emailahoy
 
-
-def processPhoneList(platformNames=[], numbers=[]):
-    ''' 
-        Method to perform the phone list.
+def getMoreInfo(email):
+    '''
+        Method that calls different third party API.
         
-        :param platformNames: List of names fr the platforms.
-        :param numbers: List of numbers to be queried.
+        :param email:   Email to verify.
+        
+        :result:    
+    '''
+    attributes = []
+    
+    # TO-DO
+    
+    return attributes
+
+
+def performSearch(emails=[]:
+    ''' 
+        Method to perform the mail verification process.
+        
+        :param emails: List of emails.
         
         :return:
     '''
     # Grabbing the <Platform> objects
-    platforms = platform_selection.getPlatformsByName(platformNames, mode="phonefy")    
+    platforms = platform_selection.getPlatformsByName(platformNames, mode="mailfy")    
     
     results = []
-    for num in numbers:
-        for pla in platforms:
-            # This returns a json.txt!
-            entities = pla.getInfo(query=num, process = True, mode="phonefy")
-            if entities != {}:
-                results.append(json.loads(entities))
+
+    for e in emails:
+        if emailahoy.verify_email_address(e):
+            aux = {}
+            aux["type"] = "i3visio.email"
+            aux["value"] = e
+            aux["attributes"] = getMoreInfo(e)
+
+            results.append(aux)
+        else:
+            # Perform additional verifications
+            pass
+
     return results
 
-def phonefy_main(args):
+def mailfy_main(args):
     ''' 
         Main program.
         
-        :param args: Arguments received by parameter
+        :param args: Arguments received in the command line.
     '''
-    results = processPhoneList(platformNames=args.platforms, numbers=args.numbers)
+    emails = []
+    if args.emails != None:
+        emails = args.emails
+    elif args.emails_file != None:
+        with open(args.emails_file, "r") as iF:
+            emails = iF.read().splitlines()
+    elif args.nicks != None:
+        for n in args.nicks:
+            for d in args.domains:
+                emails.append(n+"@"+d)
+    elif args.nicks_file != None:
+        with open(args.emails_file, "r") as iF:
+            nicks = iF.read().splitlines()    
+            for n in nicks:
+                for d in args.domains:
+                    emails.append(n+"@"+d)
+                    
+    results = performSearch(emails=emails)
 
     # Printing the results
     if not args.quiet:
@@ -81,22 +119,25 @@ def phonefy_main(args):
             oF.write(json.dumps(results, indent=2) )
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='phonefy.py - Piece of software that checks the existence of a given series of phones in a bunch of phone number lists associated to malicious activities.', prog='phonefy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
+    parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
     parser._optionals.title = "Input options (one required)"
+
+    emailDomains = ["google"]
 
     # Defining the mutually exclusive group for the main options
     general = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
     general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
-    general.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
-
-    listAll = platform_selection.getAllPlatformNames("phonefy")
+    general.add_argument('-e', '--emails', metavar='<emails>', nargs='+', action='store', help = 'the list of emails to be checked.')
+    general.add_argument('-E', '--emails_file', metavar='<emails_file>', nargs='+', action='store', help = 'the file with the list of emails.')    
+    general.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the following platforms: ' +str(emailDomains))
+    general.add_argument('-N', '--nicks_file', metavar='<nicks_file>', nargs='+', action='store', help = 'the file with the list of nicks to be checked in the following platforms: '+str(emailDomains))    
 
     # Configuring the processing options
-    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')
+    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
     groupProcessing.add_argument('-o', '--output_file',  metavar='<path_to_output_file>',  action='store', help='path to the output file where the results will be stored in json format.', required=False)
-    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')    
+    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>>',  action='store', help='list of domains where the nick will be looked for.', required=False, default = emailDomains)    
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')        
 
     # About options
@@ -108,4 +149,4 @@ if __name__ == "__main__":
     args = parser.parse_args()    
 
     # Calling the main function
-    phonefy_main(args)
+    mailfy_main(args)

@@ -94,7 +94,9 @@ setup(    name="osrframework",
     "Skype4Py",
     "argparse",
     "requests",
-#    "pypandoc",
+    "python-emailahoy",
+    #"validate_email",
+    #"pypandoc",
     ],
 )
 
