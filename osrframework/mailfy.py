@@ -67,13 +67,13 @@ def getMoreInfo(email):
 # Needs verification and further work.
 """@timeout(5)
 def manualEmailCheck(mail):
-    """
+    '''
         Manually checking whether a mail is being sent.
         
         :param mail:    Email to check.
         
         :result:
-    """
+    '''
     DNS.DiscoverNameServers()
     #print "checking %s..."%(mail)
     hostname = mail[mail.find('@')+1:]
@@ -147,30 +147,44 @@ def performSearch(emails=[]):
                     pass"""
     return results
 
+def grabEmails(emails=None, emails_file=None, nicks=None, nicks_file=None, domains = ["google"]):
+    '''
+        Method that globally permits to grab the emails.
+        
+        :param emails:  list of emails.
+        :param emails_file: filepath to the emails file.
+        :param nicks:   list of aliases.
+        :param nicks_file:  filepath to the aliases file.
+        :param domains: domains where the aliases will be tested.
+        
+        :result:    list of emails to check,
+        
+    '''
+    email_candidates = []
+    if emails != None:
+        email_candidates = emails
+    elif emails_file != None:
+        with open(emails_file, "r") as iF:
+            email_candidates = iF.read().splitlines()
+    elif nicks != None:
+        for n in nicks:
+            for d in domains:
+                email_candidates.append(n+"@"+d)
+    elif nicks_file != None:
+        with open(emails_file, "r") as iF:
+            nicks = iF.read().splitlines()    
+            for n in nicks:
+                for d in domains:
+                    email_candidates.append(n+"@"+d)
+    return email_candidates
+
 def mailfy_main(args):
     ''' 
         Main program.
         
         :param args: Arguments received in the command line.
-    '''
-    emails = []
-    if args.emails != None:
-        emails = args.emails
-    elif args.emails_file != None:
-        with open(args.emails_file, "r") as iF:
-            emails = iF.read().splitlines()
-    elif args.nicks != None:
-        for n in args.nicks:
-            for d in args.domains:
-                emails.append(n+"@"+d)
-    elif args.nicks_file != None:
-        with open(args.emails_file, "r") as iF:
-            nicks = iF.read().splitlines()    
-            for n in nicks:
-                for d in args.domains:
-                    emails.append(n+"@"+d)
-                    
-    results = performSearch(emails=emails)
+    '''                   
+    results = performSearch(emails=args.emails, emails_file = args.emails_file, nicks=args.nicks, nicks_file = args.nicks_file, domains = args.domains)
 
     # Printing the results
     if not args.quiet:

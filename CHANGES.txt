@@ -12,7 +12,6 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Inclusions of searchfy transforms.
 - Generation of aliases from a person.
 - Inclusion of a call to pipl.com API.
-- Migration from old usufy platforms to newest approach used in phonefy.
 - Inclusion of new usufy platforms which are now in testing mode.
 - Update transforms using the old -launchers.
 - Move external api calls to the main folder.
@@ -25,6 +24,7 @@ v0.9.0, 2015/04/** -- Major restructuration of the internal tool.
 - Inclusion of a new mailfy.py app that verifies whether an email is known as a valid email using emailahoy.
 - Inclusion of a new searchfy.py app that recovers the URL of a search in different platforms.
 - Inclusion of all the variables to include phonefy, usufy and searchfy search in all platforms.
+- Inclusion of plain calls to the different third party API in the main folder.
 - Removed phonefy and usufy folders for structural simplicity.
 - Changed usufy-launcher.py and phonefy-launcher.py to usufy.py and phonefy.py.
 - Changed maltfy folder to transforms.
