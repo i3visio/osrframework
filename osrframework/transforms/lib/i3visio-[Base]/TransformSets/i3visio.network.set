@@ -5,6 +5,7 @@
       <Transform name="i3visio.ipToIp_ApiInformation"/>             
       <Transform name="i3visio.uriToBrowser"/> 
       <Transform name="i3visio.uriToDomain"/> 
+      <Transform name="i3visio.uriToGoogleCacheUri"/>
       <Transform name="i3visio.uriToPort"/>       
       <Transform name="i3visio.uriToProtocol"/>   
    </Transforms>

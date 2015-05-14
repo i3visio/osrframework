@@ -29,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class <DEMO>(Platform):
-	""" 
-		A <Platform> object for Demo.
-	"""
+class Torsearch(Platform):
+    """ 
+        A <Platform> object for Torsearch.
+    """
     def __init__(self):
         '''
             Constructor...
         '''
-        self.platformName = "<DEMO>"        
-        self.tags = ["demo", "test"]
+        self.platformName = "Torsearch"        
+        self.tags = ["tor", "search"]
         
         ########################
         # Defining valid modes #
@@ -46,7 +46,7 @@ class <DEMO>(Platform):
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = False
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = True      
         
         ######################################
         # Search URL for the different modes #
@@ -55,7 +55,7 @@ class <DEMO>(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         #self.url["usufy"] = "http://anyurl.com/user/" + "<usufy>"
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["searchfy"] = "https://torsearch.es/en/search?q=" + "<searchfy>"       
 
         ######################################
         # Whether the user needs credentials #
@@ -63,7 +63,7 @@ class <DEMO>(Platform):
         self.needsCredentials = {}        
         #self.needsCredentials["phonefy"] = False
         #self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        self.needsCredentials["searchfy"] = True
         
         ###################
         # Valid queries #
@@ -73,7 +73,7 @@ class <DEMO>(Platform):
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
         #self.validQuery["usufy"] = re.compile(".*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
         # Not_found clues #
@@ -82,7 +82,7 @@ class <DEMO>(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         #self.notFoundText["usufy"] = []   
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["searchfy"] = []        
         
         #########################
         # Fields to be searched #
@@ -100,15 +100,19 @@ class <DEMO>(Platform):
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         
         # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
-		# These two fields are REQUIRED to grab the results
-		#self.searchfyDelimiterStart = "<div class='page-listing col-sm-12'>"
-		#self.searchfyDelimiterEnd = "<div class='row'>"        
-		# These rest of fields to extract
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
+        self.fieldsRegExp["searchfy"] = {}
+        # Example of fields:
+        self.delimiters = {}
+        # These two fields are REQUIRED to grab the results
+        self.searchfyDelimiterStart = "<div class='page-listing col-sm-12'>"
+        self.searchfyDelimiterEnd = "<div class='row'>"        
+        # These rest of fields to extract
+        self.fieldsRegExp["searchfy"]["i3visio.uri"] = {"start": "<span class='path'>", "end": "</span>"}       
+        self.fieldsRegExp["searchfy"]["i3visio.text"] = {"start": "<div class='description'>", "end": "</div>"}
+        self.fieldsRegExp["searchfy"]["i3visio.title"] = {"start": "<div class='title'>", "end": "</a>"}
         
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
-		self.foundFields = {}
+        self.foundFields = {}

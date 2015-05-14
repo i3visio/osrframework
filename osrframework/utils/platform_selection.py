@@ -25,6 +25,7 @@ import osrframework.utils.credentials as credentials
 ##################################################
 # A
 from osrframework.wrappers.adtriboo import Adtriboo
+from osrframework.wrappers.ahmia import Ahmia
 from osrframework.wrappers.anarchy101 import Anarchy101
 from osrframework.wrappers.aporrealos import Aporrealos
 from osrframework.wrappers.apsense import Apsense
@@ -257,6 +258,7 @@ from osrframework.wrappers.theguardian import Theguardian
 from osrframework.wrappers.thehoodup import Thehoodup
 from osrframework.wrappers.thesims import Thesims
 from osrframework.wrappers.thestudentroom import Thestudentroom
+from osrframework.wrappers.torsearch import Torsearch
 from osrframework.wrappers.tradimo import Tradimo
 from osrframework.wrappers.travian import Travian
 from osrframework.wrappers.tripadvisor import Tripadvisor
@@ -389,6 +391,7 @@ def getAllPlatformObjects(mode = None):
     ##################################################
     # A
     listAll.append(Adtriboo())
+    listAll.append(Ahmia())    
     listAll.append(Anarchy101())
     listAll.append(Aporrealos())
     listAll.append(Apsense())
@@ -617,6 +620,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Thehoodup())
     listAll.append(Thesims())
     listAll.append(Thestudentroom())
+    listAll.append(Torsearch())    
     listAll.append(Tradimo())
     listAll.append(Travian())
     listAll.append(Tripadvisor())

@@ -130,6 +130,7 @@ class Platform():
         except:
             pass
             # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.
+
         
     def getInfo(self, query=None, process = False, mode="phonefy"):
         ''' 
@@ -174,17 +175,16 @@ class Platform():
             if mode == "phonefy":
                 results["type"] = "i3visio.phone"
                 results["value"] = self.platformName + " - " + query
+                results["attributes"] = []                
             elif mode == "usufy":
                 results["type"] = "i3visio.profile"
                 results["value"] = self.platformName + " - " + query                
+                results["attributes"] = []                
             elif mode == "searchfy":
                 results["type"] = "i3visio.search"
                 results["value"] = self.platformName + " Search - " + query                
-            #else:
-            #    results["type"] = "i3visio.phone"
-            #    results["value"] = self.platformName + " - " + query
-            results["attributes"] = []
-            
+                results["attributes"] = []
+
             # Appending platform name
             aux = {}
             aux["type"] = "i3visio.platform"
@@ -235,38 +235,78 @@ class Platform():
             data = i3Browser.recoverURL(uri)        
 
         info = []
-        
-        # Iterating through all the type of fields
-        for field in self.fieldsRegExp[mode].keys():
-            # Recovering the RegularExpression
-            try:
-                # Using the old approach of "Start" + "End"
-                regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
-                
-                tmp = re.findall(regexp, data)
-                
-                # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
-                values = []
-                for t in tmp:
-                    if self.fieldsRegExp[mode][field]["end"] in t:
+        # Searchfy needs an special treatment to recover the results
+        if mode == "searchfy":
+            # Iterating through all the type of fields
+            for field in self.fieldsRegExp[mode].keys():
+                # Recovering the RegularExpression
+                try:
+                    # Using the old approach of "Start" + "End"
+                    regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
+                    
+                    tmp = re.findall(regexp, data)
+                    
+                    # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
+                    values = []
+                    for t in tmp:
+                        if self.fieldsRegExp[mode][field]["end"] in t:
 
-                        values.append(t.split(self.fieldsRegExp[mode][field]["end"])[0])
-                    else:
-                        values.append(t)
-                        
-            except:
-                # Using the compact approach if start and end tags do not exist.
-                regexp = self.fieldsRegExp[mode][field]
+                            values.append(t.split(self.fieldsRegExp[mode][field]["end"])[0])
+                        else:
+                            values.append(t)
+                            
+                except:
+                    # Using the compact approach if start and end tags do not exist.
+                    regexp = self.fieldsRegExp[mode][field]
+                    
+                    values = re.findall(regexp, data)
                 
-                values = re.findall(regexp, data)
+                for val in values:
+                    aux = {}
+                    aux["type"] = field
+                    aux["value"] = val
+                    aux["attributes"] = []                
+                    if aux not in info:
+                        info.append(aux)        
+        # Searchfy results        
+        else:
+            # Grabbing the results for the search
+            results = re.findall(self.searchfyDelimiterStart + "(.*?)" + self.searchfyDelimiterEnd, data, re.DOTALL)
             
-            for val in values:
-                aux = {}
-                aux["type"] = field
-                aux["value"] = val
-                aux["attributes"] = []                
-                if aux not in info:
-                    info.append(aux)        
+            # Analysing each and every result to parse it...        
+            for res in results:
+                # Iterating through all the type of fields
+                for field in self.fieldsRegExp[mode].keys():
+                    # Building the regular expression if the format is a "start" and "end" approach... Easier to understand but less compact.
+                    try:
+                        # Using the old approach of "Start" + "End"
+                        regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
+                        
+                        # Parsing the result for the text
+                        tmp = re.findall(regexp, res)
+                        
+                        # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
+                        values = []
+                        for t in tmp:
+                            if self.fieldsRegExp[mode][field]["end"] in t:
+
+                                values.append(t.split(self.fieldsRegExp[mode][field]["end"])[0])
+                            else:
+                                values.append(t)
+                    # In the case of a compact approach being used. This would happen if start and end tags do not exist, but the expected behaviour is the same.
+                    except:
+                        regexp = self.fieldsRegExp[mode][field]
+                        
+                        values = re.findall(regexp, data)
+                    
+                    for val in values:
+                        aux = {}
+                        aux["type"] = field
+                        aux["value"] = val
+                        aux["attributes"] = []                
+                        if aux not in info:
+                            info.append(aux)               
+            
         return json.dumps(info)
     
     def somethingFound(self,data,mode="phonefy"):
