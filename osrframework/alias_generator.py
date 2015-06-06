@@ -20,6 +20,22 @@
 #
 ##################################################################################
 
+''' 
+alias_generator.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions.
+For details, run:
+    python alias_generator.py --license
+'''
+__author__ = "Felix Brezo, Yaiza Rubio "
+__copyright__ = "Copyright 2015, i3visio"
+__credits__ = ["Felix Brezo", "Yaiza Rubio"]
+__license__ = "GPLv3+"
+__version__ = "v0.1.1"
+__maintainer__ = "Felix Brezo, Yaiza Rubio"
+__email__ = "contacto@i3visio.com"
+
+
 import argparse
 
 def main(name = None, surname1 = None, surname2 = None, city = None, country = None, year = None):
@@ -3807,7 +3823,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--outputFile', metavar='<path_to_output_file>', default="./output.txt", action='store', help='Path to the output file.', required=False)            
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s '+__version__, help='shows the version of the program and exists.')
 
     args = parser.parse_args()    
 
@@ -3821,14 +3837,16 @@ if __name__ == "__main__":
 
     lista=[]
 
+    print
+    print "-----------"
     print "Input data:"
     print "-----------"
-    print args.name
-    print args.surname1
-    print args.surname2
-    print args.city
-    print args.country
-    print args.year
+    if args.name != "": print args.name
+    if args.surname1 != "": print args.surname1
+    if args.surname2 != "": print args.surname2
+    if args.city != "": print args.city
+    if args.country != "": print args.country
+    if args.year != "": print args.year
     print 
     
     main(name = args.name, surname1 = args.surname1, surname2 = args.surname2, city = args.city, country = args.country, year= args.year)
