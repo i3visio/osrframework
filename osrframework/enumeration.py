@@ -105,15 +105,15 @@ if __name__ == "__main__":
     # Defining the mutually exclusive group for the main options
     general = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
-    general.add_argument('-u', '--url', metavar='<URL>', action='store', help = 'the URL address to test. The place where the index will be updated should be indicated as <INDEX> in the URL. For example: http://example.com/user/<INDEX> to match http://example.com/user/1, http://example.com/user/2, etc. Only those platforms receiving a valid response will be loaded, so NO filter by not-found-tags is permitted in this mode.')
+    general.add_argument('-u', '--url', metavar='<URL>', action='store', help = 'the URL address to test. The place where the index will be updated should be indicated as <INDEX> in the URL. For example: http://example.com/user/<INDEX> would match "http://example.com/user/1", "http://example.com/user/2", etc. Only those platforms receiving a valid response will be loaded, so NO filter by not-found-tags is permitted in this mode.')
     general.add_argument('-p', '--platforms', metavar='<platform>', nargs='+', action='store', help = 'Selection of a domain found in the configuration file.')
 
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     groupProcessing.add_argument('-o', '--output_folder',  metavar='<path_to_output_folder>',  action='store', help='path to the output folder where the results will be stored in raw. The name of the files will be their index.', required=False, default = "./results")
-    groupProcessing.add_argument('--config', metavar='<url>',  action='store', default="./utils/enumeration_config.txt", help = 'the file with the list of URL to test. The format should be: "platform_name\thttp://example.com/user/<INDEX>\tNOT_FOUND_TEXT".')        
-    groupProcessing.add_argument('--max_errors',  metavar='<max_errors>',  action='store', help='maximum number of consecutive errors.', required=False, default = 100, type = int)    
-    groupProcessing.add_argument('--start_index',  metavar='<start_index>',  action='store', help='starting index.', required=False, default = 0, type = int)    
+    groupProcessing.add_argument('--config', metavar='<url>',  action='store', default="./utils/enumeration_config.txt", help = 'the file with the list of URL to test. The format should be: "platform_name\\thttp://example.com/user/<INDEX>\\tNOT_FOUND_TEXT".')        
+    groupProcessing.add_argument('--max_errors',  metavar='<max_errors>',  action='store', help='maximum number of consecutive errors tolerated until finishing the crawling process.', required=False, default = 100, type = int)    
+    groupProcessing.add_argument('--start_index',  metavar='<start_index>',  action='store', help='starting user index for the crawling process.', required=False, default = 0, type = int)    
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
