@@ -29,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Ahmia(Platform):
+class Facesaerch(Platform):
     """ 
-        A <Platform> object for Ahmia.
+        A <Platform> object for Facesaerch.
     """
     def __init__(self):
         '''
             Constructor...
         '''
-        self.platformName = "Ahmia"        
-        self.tags = ["tor", "search"]
+        self.platformName = "Facesaerch"        
+        self.tags = ["image", "search"]
         
         ########################
         # Defining valid modes #
@@ -55,7 +55,7 @@ class Ahmia(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         #self.url["usufy"] = "http://anyurl.com/user/" + "<usufy>"
-        self.url["searchfy"] = "https://ahmia.fi/search/?q=" + "<searchfy>"       
+        self.url["searchfy"] = "https://facesaerch.com/f/" + "<searchfy>"       
 
         ######################################
         # Whether the user needs credentials #
@@ -104,14 +104,13 @@ class Ahmia(Platform):
         # Example of fields:
         self.delimiters = {}
         # These two fields are REQUIRED to grab the results
-        self.searchfyDelimiterStart = "<li class=\"hs_site\">"
-        self.searchfyDelimiterEnd = "</li>"  
+        self.searchfyDelimiterStart = "<a class=\"facelink\""
+        self.searchfyDelimiterEnd = "class=\"faceimage\""#  style="display:none" ></a>'        
         # These rest of fields to extract
-        self.fieldsRegExp["searchfy"]["i3visio.date"] = {"start": "<p class=\"urlinfo\">", "end": "</p>"}
-        self.fieldsRegExp["searchfy"]["i3visio.text"] = {"start": "<div class=\"urltext\">", "end": "</div>"}
-        self.fieldsRegExp["searchfy"]["i3visio.title"] = {"start": "<h3><a[^\<]+>", "end": "</a></h3>"}
-        #self.fieldsRegExp["searchfy"]["i3visio.uri"] = {"start": "<p class=\"links\">Access without Tor Browser: <a href=\\\"/redirect?redirect_url=", "end": "\">"}
-        self.fieldsRegExp["searchfy"]["i3visio.uri"] = {"start": "redirect_url=", "end": "\">"}
+        self.fieldsRegExp["searchfy"]["i3visio.uri"] = {"start": '" href="', "end": '"'}       
+        self.fieldsRegExp["searchfy"]["i3visio.text"] = {"start": 'alt="', "end": '"'}
+        self.fieldsRegExp["searchfy"]["i3visio.image"] = {"start": 'src="', "end": '"'}
+        
         ################
         # Fields found #
         ################

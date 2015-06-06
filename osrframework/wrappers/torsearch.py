@@ -63,7 +63,7 @@ class Torsearch(Platform):
         self.needsCredentials = {}        
         #self.needsCredentials["phonefy"] = False
         #self.needsCredentials["usufy"] = False
-        self.needsCredentials["searchfy"] = True
+        self.needsCredentials["searchfy"] = False
         
         ###################
         # Valid queries #

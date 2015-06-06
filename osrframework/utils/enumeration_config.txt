@@ -1,0 +1,15 @@
+stackoverflow	http://stackoverflow.com/users/<INDEX>	No se pudo encontrar la página
+stackexchange	http://stackexchange.com/users/<INDEX>	Page Not Found
+processhacker	http://processhacker.sourceforge.net/forums/memberlist.php?mode=viewprofile&u=<INDEX>	The requested user does not exist.
+irekia	http://www.irekia.euskadi.net/en/users/<INDEX>	">HIS ACTIVITY</a>
+hacker	http://www.hacker.org/forum/profile.php?mode=viewprofile&u=<INDEX>	Sorry, but that user does not exist.
+hack4you	http://www.hack4you.eu/profile.php?id=<INDEX>	Erreur. Le lien que vous avez suivi est incorrect ou périmé.
+gsmspain	http://www.gsmspain.com/foros/member.php?action=getinfo&userid=<INDEX>	Invalid user specified
+garage4hackers	http://www.garage4hackers.com/member.php?u=<INDEX>	Invalid User specified. If you followed a valid link, please notify the
+forocoches	http://www.forocoches.com/foro/member.php?u=<INDEX>	Usuario especificado inv
+forobtc	http://forobtc.com/index.php?action=profile;u=<INDEX>	Un error ha ocurrido!
+forobitcoin	http://forobitco.in/user-<INDEX>	El miembro que especificaste es inválido o no existe
+facebook	https://www.facebook.com/<INDEX>	No se pudo encontrar la página
+digitalspy	http://forums.digitalspy.co.uk/member.php?u=<INDEX>	Invalid $idname specified.
+bitstackexchange	http://bitcoin.stackexchange.com/users/<INDEX>	We&#39;re sorry, we couldn&#39;t find the page you requested"
+ukbusinessforums	http://www.ukbusinessforums.co.uk/members/<INDEX>	The user whose profile you are trying to view does not exist

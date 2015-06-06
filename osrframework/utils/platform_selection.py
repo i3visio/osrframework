@@ -103,6 +103,7 @@ from osrframework.wrappers.evilzone import Evilzone
 
 # F
 from osrframework.wrappers.facebook import Facebook
+from osrframework.wrappers.facesaerch import Facesaerch
 from osrframework.wrappers.fanpop import Fanpop
 from osrframework.wrappers.fark import Fark
 from osrframework.wrappers.favstar import Favstar
@@ -133,7 +134,7 @@ from osrframework.wrappers.googleplus import GooglePlus
 from osrframework.wrappers.gsmspain import Gsmspain
 
 # H
-from osrframework.wrappers.hellboundhackers import Hellboundhackers
+#from osrframework.wrappers.hellboundhackers import Hellboundhackers
 from osrframework.wrappers.hi5 import Hi5
 
 # I
@@ -258,7 +259,7 @@ from osrframework.wrappers.theguardian import Theguardian
 from osrframework.wrappers.thehoodup import Thehoodup
 from osrframework.wrappers.thesims import Thesims
 from osrframework.wrappers.thestudentroom import Thestudentroom
-from osrframework.wrappers.torsearch import Torsearch
+#from osrframework.wrappers.torsearch import Torsearch
 from osrframework.wrappers.tradimo import Tradimo
 from osrframework.wrappers.travian import Travian
 from osrframework.wrappers.tripadvisor import Tripadvisor
@@ -468,6 +469,7 @@ def getAllPlatformObjects(mode = None):
 
     # F
     listAll.append(Facebook())
+    listAll.append(Facesaerch())
     listAll.append(Fanpop())
     listAll.append(Fark())
     listAll.append(Favstar())
@@ -498,7 +500,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Gsmspain())
 
     # H
-    listAll.append(Hellboundhackers())
+    #listAll.append(Hellboundhackers())
     listAll.append(Hi5())
 
     # I
@@ -620,7 +622,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Thehoodup())
     listAll.append(Thesims())
     listAll.append(Thestudentroom())
-    listAll.append(Torsearch())    
+    #listAll.append(Torsearch())    
     listAll.append(Tradimo())
     listAll.append(Travian())
     listAll.append(Tripadvisor())

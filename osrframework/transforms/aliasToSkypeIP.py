@@ -20,28 +20,34 @@
 #
 ##################################################################################
 
-from functools import wraps
-import errno
-import os
-import signal
 
-class TimeoutError(Exception):
-    pass
+import sys
+import json
+from osrframework.transforms.lib.maltego import *
+import osrframework.thirdparties.resolvethem_com.processing as resolvethem_com
 
-"""def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
-    def decorator(func):
-        def _handle_timeout(signum, frame):
-            raise TimeoutError(error_message)
+def aliasToSkypeIP(query=None):
+    ''' 
+        Method that checks if a given alias appears in Skype.
 
-        def wrapper(*args, **kwargs):
-            signal.signal(signal.SIGALRM, _handle_timeout)
-            signal.alarm(seconds)
-            try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-            return result
+        :param query:    query to verify.
 
-        return wraps(func)(wrapper)
+    '''
+    me = MaltegoTransform()
 
-    return decorator"""
+    jsonData = resolvethem_com.checkIPFromAlias(alias=query)
+
+    newEntities = []
+
+    # Checking if something has been found
+    if jsonData != {}:
+        newEntities.append(jsonData)
+
+    me.addListOfEntities(newEntities)
+        
+    # Returning the output text...
+    me.returnOutput()
+
+if __name__ == "__main__":
+    aliasToSkypeIP(query=sys.argv[1])
+

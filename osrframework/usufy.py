@@ -111,7 +111,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     # Going through all the lines
     for l in lines:
         domain = l.split('\t')[0]
-        logger.info("Performing tests for" + domain + "...")
+        print "Performing tests for" + domain + "..."
         
         # selecting the number of nicks to be tested in this domain
         nick = l.split('\t')[1]
@@ -126,18 +126,21 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
             # initiating list
             urlToTry = struct.replace("<DOMAIN>", domain)
             test = urlToTry.replace("<USERNAME>", nick.lower())
-            logger.debug("Processing "+ test + "...")
+            print "Processing "+ test + "..."
             i3Browser = browser.Browser()
             try:
                 html = i3Browser.recoverURL(test)
-            
                 if nick in html:
-                    possibleURL.append(test)
+                    possibleURL.append(test)      
+                    print "Usufy found!!!\n"
+                    break
             except:
-                logger.error("An error took place when downloading the webpage...")
+                logger.error("The resource could not be downloaded.")
+               
         #print possibleURL                
         res[domain] = possibleURL
 
+    print json.dumps(res, indent = 2)
     return res
         
 def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
@@ -481,7 +484,7 @@ if __name__ == "__main__":
     groupMainOptions.add_argument('--info', metavar='<action>', choices=['list_platforms', 'list_tags'], action='store', help='select the action to be performed amongst the following: list_platforms (list the details of the selected platforms), list_tags (list the tags of the selected platforms). Afterwards, it exists.')
     groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
     groupMainOptions.add_argument('-b', '--benchmark',  action='store_true', default=False, help='perform the benchmarking tasks.')
-    groupMainOptions.add_argument('-f', '--fuzz', metavar='<path_to_fuzzing_list>', action='store', type=argparse.FileType('r'), help='this option will try to find usufy-like URLs. The list of fuzzing platforms in the file should be (one per line): <BASE_URL>\t<VALID_NICK>')
+    groupMainOptions.add_argument('-f', '--fuzz', metavar='<path_to_fuzzing_list>', action='store', type=argparse.FileType('r'), help='this option will try to find usufy-like URLs. The list of fuzzing platforms in the file should be (one per line): <BASE_DOMAIN>\t<VALID_NICK>')
     groupMainOptions.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
     groupMainOptions.add_argument('-n', '--nicks', metavar='<nick>', nargs='+', action='store', help = 'the list of nicks to process (at least one is required).')
     

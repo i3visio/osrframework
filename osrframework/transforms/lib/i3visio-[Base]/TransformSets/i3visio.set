@@ -4,6 +4,7 @@
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
       <Transform name="i3visio.aliasToKnownEmails"/>                
       <Transform name="i3visio.aliasToSkypeAccounts"/>
+      <Transform name="i3visio.aliasToSkypeIP"/>      
       <Transform name="i3visio.emailToAlias"/>
       <Transform name="i3visio.emailToBreachedAccounts"/>
       <Transform name="i3visio.emailToDomain"/>       

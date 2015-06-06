@@ -107,6 +107,8 @@ class Twitter(Platform):
         
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
+        self.searchfyDelimiterStart = "<li class=\"hs_site\">"
+        self.searchfyDelimiterEnd = "</li>"           
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         

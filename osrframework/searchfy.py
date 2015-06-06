@@ -59,9 +59,7 @@ def performSearch(platformNames=[], queries=[]):
         for pla in platforms:
             # This returns a json.txt!
             entities = pla.getInfo(query=q, process = True, mode="searchfy")
-            if entities != {}:
-                print "-------"
-                print entities
+            if entities != "{}":
                 results.append(json.loads(entities))
     return results
 

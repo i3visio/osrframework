@@ -24,8 +24,6 @@
 mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
-For details, run:
-    python mailfy.py --license
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
@@ -44,10 +42,10 @@ import osrframework.utils.platform_selection as platform_selection
 import emailahoy
 
 # For the manual checkout
-import DNS, smtplib, socket
+#import DNS, smtplib, socket
 
 # For the timeout function
-from osrframework.utils.timeout import timeout
+#from osrframework.utils.timeout import timeout
 
 def getMoreInfo(email):
     '''
@@ -125,36 +123,37 @@ def performSearch(emails=[]):
     results = []
 
     for e in emails:
-            if emailahoy.verify_email_address(e):
-                aux = {}
-                aux["type"] = "i3visio.email"
-                aux["value"] = e
-                aux["attributes"] = getMoreInfo(e)
+        #print e
+        if emailahoy.verify_email_address(e):
+            aux = {}
+            aux["type"] = "i3visio.email"
+            aux["value"] = e
+            aux["attributes"] = getMoreInfo(e)
 
-                results.append(aux)
-            else:
-                pass
-                """ try:
-                    if not "gmail.com" in e and manualEmailCheck(e):
-                        aux = {}
-                        aux["type"] = "i3visio.email"
-                        aux["value"] = e
-                        aux["attributes"] = getMoreInfo(e)
+            results.append(aux)
+        else:
+            pass
+            """ try:
+                if not "gmail.com" in e and manualEmailCheck(e):
+                    aux = {}
+                    aux["type"] = "i3visio.email"
+                    aux["value"] = e
+                    aux["attributes"] = getMoreInfo(e)
 
-                        results.append(aux)
-                except:
-                    # Probably a Timeout exception
-                    pass"""
+                    results.append(aux)
+            except:
+                # Probably a Timeout exception
+                pass"""
     return results
 
-def grabEmails(emails=None, emails_file=None, nicks=None, nicks_file=None, domains = ["google"]):
+def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = ["google"]):
     '''
         Method that globally permits to grab the emails.
         
         :param emails:  list of emails.
-        :param emails_file: filepath to the emails file.
+        :param emailsFile: filepath to the emails file.
         :param nicks:   list of aliases.
-        :param nicks_file:  filepath to the aliases file.
+        :param nicksFile:  filepath to the aliases file.
         :param domains: domains where the aliases will be tested.
         
         :result:    list of emails to check,
@@ -163,15 +162,15 @@ def grabEmails(emails=None, emails_file=None, nicks=None, nicks_file=None, domai
     email_candidates = []
     if emails != None:
         email_candidates = emails
-    elif emails_file != None:
-        with open(emails_file, "r") as iF:
+    elif emailsFile != None:
+        with open(emailsFile, "r") as iF:
             email_candidates = iF.read().splitlines()
     elif nicks != None:
         for n in nicks:
             for d in domains:
                 email_candidates.append(n+"@"+d)
-    elif nicks_file != None:
-        with open(emails_file, "r") as iF:
+    elif nicksFile != None:
+        with open(nicksFile, "r") as iF:
             nicks = iF.read().splitlines()    
             for n in nicks:
                 for d in domains:
@@ -183,17 +182,24 @@ def mailfy_main(args):
         Main program.
         
         :param args: Arguments received in the command line.
-    '''                   
-    results = performSearch(emails=args.emails, emails_file = args.emails_file, nicks=args.nicks, nicks_file = args.nicks_file, domains = args.domains)
+    ''' 
+    if args.create_emails:
+        results = grabEmails(nicksFile = args.create_emails, domains = ["gmail.com"])
+    else:
+        emails = grabEmails(emails=args.emails, emailsFile = args.emails_file, nicks=args.nicks, nicksFile = args.nicks_file, domains = args.domains)
 
+        results = performSearch(emails)
+        
     # Printing the results
     if not args.quiet:
         print json.dumps(results, indent=2) 
 
     # Writing the results onto a file
     if args.output_file != None:
-        with open(output_file, "w") as oF:
-            oF.write(json.dumps(results, indent=2) )
+        with open(args.output_file, "w") as oF:
+            #oF.write(json.dumps(results, indent=2) )
+            for r in results:
+                oF.write(r+"\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
@@ -209,7 +215,7 @@ if __name__ == "__main__":
     general.add_argument('-E', '--emails_file', metavar='<emails_file>', nargs='+', action='store', help = 'the file with the list of emails.')    
     general.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the following platforms: ' +str(emailDomains))
     general.add_argument('-N', '--nicks_file', metavar='<nicks_file>', nargs='+', action='store', help = 'the file with the list of nicks to be checked in the following platforms: '+str(emailDomains))    
-
+    general.add_argument('--create_emails', metavar='<nicks_file>',  action='store', help = 'the file with the list of nicks to be created in the following domains: '+str(emailDomains))    
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        

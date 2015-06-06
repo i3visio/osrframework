@@ -147,11 +147,9 @@ class Platform():
         data = ""
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
-            #print "InvalidModeException"
             return json.dumps(results)
         # Creating the query URL for that mode
         qURL = self.createURL(word=query, mode=mode)        
-        
         i3Browser = browser.Browser()            
         
         try:
@@ -167,11 +165,11 @@ class Platform():
         except:
             # No information was found, then we return a null entity
             # TO-DO: i3BrowserException            
-            #print "i3BrowserException"
             return json.dumps(results)            
 
         # Verifying if the platform exists
         if self.somethingFound(data, mode=mode):
+
             if mode == "phonefy":
                 results["type"] = "i3visio.phone"
                 results["value"] = self.platformName + " - " + query
@@ -198,7 +196,6 @@ class Platform():
             aux["value"] = qURL
             aux["attributes"] = []           
             results["attributes"].append(aux)             
-            
             # Iterating if requested to extract more entities from the URI
             if process:                               
                 # This function returns a json text!
@@ -229,14 +226,15 @@ class Platform():
                         
             :return:    A list of the entities found.
         '''
-
         if data == None:
             # Accessing the resource
             data = i3Browser.recoverURL(uri)        
-
+        else:
+            return json.dumps({})
         info = []
+
         # Searchfy needs an special treatment to recover the results
-        if mode == "searchfy":
+        if mode != "searchfy":
             # Iterating through all the type of fields
             for field in self.fieldsRegExp[mode].keys():
                 # Recovering the RegularExpression
@@ -270,11 +268,18 @@ class Platform():
                         info.append(aux)        
         # Searchfy results        
         else:
+            print "here"
             # Grabbing the results for the search
-            results = re.findall(self.searchfyDelimiterStart + "(.*?)" + self.searchfyDelimiterEnd, data, re.DOTALL)
-            
+            resultText = re.findall(self.searchfyDelimiterStart + "(.*?)" + self.searchfyDelimiterEnd, data, re.DOTALL)
+            print "resultText..."
             # Analysing each and every result to parse it...        
-            for res in results:
+            for res in resultText:
+                print res
+                raw_input("-----")
+                r = {}
+                r["type"] = "i3visio.uri"
+                r["value"] = ""
+                r["attributes"] = []
                 # Iterating through all the type of fields
                 for field in self.fieldsRegExp[mode].keys():
                     # Building the regular expression if the format is a "start" and "end" approach... Easier to understand but less compact.
@@ -299,14 +304,19 @@ class Platform():
                         
                         values = re.findall(regexp, data)
                     
-                    for val in values:
-                        aux = {}
-                        aux["type"] = field
-                        aux["value"] = val
-                        aux["attributes"] = []                
-                        if aux not in info:
-                            info.append(aux)               
-            
+                    if field == "i3visio.uri":
+                        for val in values:
+                            r["value"] =  val
+                    else:
+                        for val in values:
+                            aux = {}
+                            aux["type"] = field
+                            aux["value"] = val
+                            aux["attributes"] = []                
+                            if aux not in r["attributes"]:
+                                r["attributes"].append(aux)               
+                                print json.dumps(r["attributes"], indent =2)
+                info.append(r)
         return json.dumps(info)
     
     def somethingFound(self,data,mode="phonefy"):
@@ -318,14 +328,14 @@ class Platform():
             
             :return: Returns True if exists.
         '''
-        try:
-            for text in self.notFoundText[mode]:
-                if text in data:
-                    return False
-            return True
-        except:
-            pass
-            # TO-DO: Throw notFoundText not found for this mode.        
+        #try:
+        for text in self.notFoundText[mode]:
+            if text in data:
+                return False
+        return True
+        #except:
+        #    pass
+        #    # TO-DO: Throw notFoundText not found for this mode.        
             
     def __str__(self):
         ''' 
