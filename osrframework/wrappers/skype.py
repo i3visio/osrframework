@@ -136,26 +136,6 @@ class Skype(Platform):
             info.append(aux)
         return json.dumps(info)
 
-    def processSkypeUser(self, user, handle=None):
-        '''
-        '''
-        aux = {}
-        aux["type"] = "i3visio.profile"
-        if handle==None:
-            handle = str(user.Handle)
-        aux["value"] = self.platformName + " - " + handle       
-        #info = "Username:"#Aliases;Nombre Completo;País;Provincia;Ciudad;Página web;Tfno.Casa;Tfno.Móvil;TfnoOficina;OnlineStatus;MoodText\n"
-        #info += user.Handle + ";" #+ str(user.Aliases) +";" + user.FullName + ";" + user.Country + ";" + user.Province + ";" + user.City + ";" + user.Homepage + ";"  + user.PhoneHome +";" + user.PhoneMobile + ";" + user.PhoneOffice  +  ";" + user.OnlineStatus + ";" + user.MoodText +'\n'
-        info = ""
-        try:
-            info += "i3visio.aliases:" + str(user.Aliases)+";i3visio.fullname:" + str(user.FullName) + ";i3visio.location:" + str(user.Country)
-            aux["attributes"] = self.processData(data=info, mode=mode)
-            
-        except:
-            # Capturing exception in case any kind of special character was found
-            aux["attributes"] = []                          
-
-        return aux 
     def getInfo(self, query=None, process = False, mode="usufy"):
         ''' 
             Method that checks the presence of a given query and recovers the first list of complains.
@@ -183,7 +163,6 @@ class Skype(Platform):
                 logger.warning("A Skype client must be set up... Note that the program will need a valid session of Skype having been started. If you were performing too many searches, the server may block or ban your account depending on the ToS. Please run this program under your own responsibility.")
                 # Instantiate Skype object, all further actions are done
                 # using this object.
-                
 
                 # Dealing with UTF8
                 import codecs

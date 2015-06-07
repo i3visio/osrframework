@@ -75,19 +75,19 @@ def checkInSkype(query=None):
             userData ["attributes"] = []
             atts = {}	
             try:
-                atts ["i3visio.aliases"] = user.Aliases
-                atts ["i3visio.person"] = user.FullName
-                atts ["i3visio.location.country"] = user.Country
-                atts ["i3visio.location.province"] =  user.Province
-                atts ["i3visio.location.city"] = user.City
-                atts ["i3visio.uri"] = user.Homepage
-                atts ["i3visio.birthday"] = user.Birthday
-                atts ["i3visio.phone.home"] = user.PhoneHome
-                atts ["i3visio.phone.mobile"] = user.PhoneMobile
-                atts ["i3visio.phone.office"] = user.PhoneOffice
-                atts ["i3visio.lastonline"] = user.LastOnline
-                atts ["i3visio.online"] = user.OnlineStatus
-                atts ["i3visio.text"] = user.MoodText
+                atts ["i3visio.aliases"] = str(user.Aliases)
+                atts ["i3visio.person"] = str(user.FullName)
+                atts ["i3visio.location.country"] = str(user.Country)
+                atts ["i3visio.location.province"] =  str(user.Province)
+                atts ["i3visio.location.city"] = str(user.City)
+                atts ["i3visio.uri"] = str(user.Homepage)
+                atts ["i3visio.birthday"] = str(user.Birthday)
+                atts ["i3visio.phone.home"] = str(user.PhoneHome)
+                atts ["i3visio.phone.mobile"] = str(user.PhoneMobile)
+                atts ["i3visio.phone.office"] = str(user.PhoneOffice)
+                atts ["i3visio.lastonline"] = str(user.LastOnline)
+                atts ["i3visio.online"] = str(user.OnlineStatus)
+                atts ["i3visio.text"] = str(user.MoodText)
             except:
                 # Sth happened when parsing
                 print "ERROR: something happened when parsing the attributes."
