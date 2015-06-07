@@ -184,7 +184,6 @@ class Skype(Platform):
                 # Instantiate Skype object, all further actions are done
                 # using this object.
                 
- 
 
                 # Dealing with UTF8
                 import codecs
@@ -204,15 +203,11 @@ class Skype(Platform):
         if mode == "usufy":
             for user in data:
                 if user["value"] == query.lower():            
-                    results = self.processSkypeUser(user)
+                    results = user
         elif mode == "searchfy":
             results["type"] = "i3visio.search"
             results["value"] = self.platformName + " Search - " + query
             results["attributes"] = data
-            """for user in data:
-                #print json.dumps(user, indent=2)
-                results["attributes"].append(user)
-                #results["attributes"].append(self.processSkypeUser(user, handle=query))"""
                
         return json.dumps(results)
 
