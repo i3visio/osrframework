@@ -205,14 +205,14 @@ class Skype(Platform):
             for user in data:
                 if user["value"] == query.lower():            
                     results = self.processSkypeUser(user)
-             
         elif mode == "searchfy":
             results["type"] = "i3visio.search"
             results["value"] = self.platformName + " Search - " + query
-            results["attributes"] = []                 
-            for user in data:
+            results["attributes"] = data
+            """for user in data:
+                #print json.dumps(user, indent=2)
                 results["attributes"].append(user)
-                #results["attributes"].append(self.processSkypeUser(user, handle=query))
+                #results["attributes"].append(self.processSkypeUser(user, handle=query))"""
                
         return json.dumps(results)
 
