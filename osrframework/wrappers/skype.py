@@ -28,6 +28,7 @@ import sys
 import urllib2
 
 import osrframework.utils.browser as browser
+import osrframework.thirdparties.skype.checkInSkype as skype
 from osrframework.utils.platforms import Platform
 
 import Skype4Py
@@ -57,8 +58,8 @@ class Skype(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.instagram.com/" + "<usufy>"       
-        self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = ""
+        self.url["searchfy"] = ""
 
         ######################################
         # Whether the user needs credentials #
@@ -182,31 +183,8 @@ class Skype(Platform):
                 logger.warning("A Skype client must be set up... Note that the program will need a valid session of Skype having been started. If you were performing too many searches, the server may block or ban your account depending on the ToS. Please run this program under your own responsibility.")
                 # Instantiate Skype object, all further actions are done
                 # using this object.
-
-                skype = Skype4Py.Skype()
-
-                # Start Skype if it's not already running.
-                if not skype.Client.IsRunning:
-                    skype.Client.Start()
-                    if not skype.Client.IsRunning:
-                        logger.error("The Skype application could NOT be started...")
-                        return None
-            
-                # Set our application name.
-                skype.FriendlyName = 'i3visio - OSRFramework'
-
-
-                # Attach to Skype. This may cause Skype to open a confirmation
-                # dialog.
-                skype.Attach()
-
-                # Set up an event handler.
-                def new_skype_status(status):
-                    # If Skype is closed and reopened, it informs us about it
-                    # so we can reattach.
-                    if status == Skype4Py.apiAttachAvailable:
-                        skype.Attach()
-                skype.OnAttachmentStatus = new_skype_status        
+                
+ 
 
                 # Dealing with UTF8
                 import codecs
@@ -217,7 +195,7 @@ class Skype(Platform):
    
                 # Search for users and display their Skype name, full name
                 # and country.
-                data = skype.SearchForUsers(query)
+                data = skype.checkInSkype(query)
         except:
             # No information was found, then we return a null entity
             return json.dumps(results)            
@@ -225,7 +203,7 @@ class Skype(Platform):
         # Verifying if the platform exists
         if mode == "usufy":
             for user in data:
-                if user.Handle.lower() == query.lower():            
+                if user["value"] == query.lower():            
                     results = self.processSkypeUser(user)
              
         elif mode == "searchfy":
@@ -233,7 +211,8 @@ class Skype(Platform):
             results["value"] = self.platformName + " Search - " + query
             results["attributes"] = []                 
             for user in data:
-                results["attributes"].append(self.processSkypeUser(user, handle=query))
+                results["attributes"].append(user)
+                #results["attributes"].append(self.processSkypeUser(user, handle=query))
                
         return json.dumps(results)
 

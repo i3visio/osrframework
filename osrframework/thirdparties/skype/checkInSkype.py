@@ -56,7 +56,11 @@ def checkInSkype(query=None):
             if status == Skype4Py.apiAttachAvailable:
                 skype.Attach()
         skype.OnAttachmentStatus = new_skype_status
-    
+    except:
+        print "ERROR: something happened when trying to link to Skype."
+        return {}
+
+    try:    
         # Search for users and display their Skype name, full name
         # and country.
 
@@ -66,29 +70,37 @@ def checkInSkype(query=None):
         for user in resultados:
             userData = {}
         
-            userData ["i3visio.alias"] = user.Handle
+            userData ["type"] = "i3visio.alias"
+            userData ["value"] = user.Handle
+            userData ["attributes"] = []
+            atts = {}	
             try:
-                userData ["i3visio.aliases"] = user.Aliases
-                userData ["i3visio.person"] = user.FullName
-                userData ["i3visio.location.country"] = user.Country
-                userData ["i3visio.location.province"] =  user.Province
-                userData ["i3visio.location.city"] = user.City
-                userData ["i3visio.uri"] = user.Homepage
-                userData ["i3visio.birthday"] = user.Birthday
-                userData ["i3visio.phone.home"] = user.PhoneHome
-                userData ["i3visio.phone.mobile"] = user.PhoneMobile
-                userData ["i3visio.phone.office"] = user.PhoneOffice
-                userData ["i3visio.lastonline"] = user.LastOnline
-                userData ["i3visio.online"] = user.OnlineStatus
-                userData ["i3visio.text"] = user.MoodText
+                atts ["i3visio.aliases"] = user.Aliases
+                atts ["i3visio.person"] = user.FullName
+                atts ["i3visio.location.country"] = user.Country
+                atts ["i3visio.location.province"] =  user.Province
+                atts ["i3visio.location.city"] = user.City
+                atts ["i3visio.uri"] = user.Homepage
+                atts ["i3visio.birthday"] = user.Birthday
+                atts ["i3visio.phone.home"] = user.PhoneHome
+                atts ["i3visio.phone.mobile"] = user.PhoneMobile
+                atts ["i3visio.phone.office"] = user.PhoneOffice
+                atts ["i3visio.lastonline"] = user.LastOnline
+                atts ["i3visio.online"] = user.OnlineStatus
+                atts ["i3visio.text"] = user.MoodText
             except:
                 # Sth happened when parsing
-                pass    
+                print "ERROR: something happened when parsing the attributes."
+            for key in atts.keys():
+                aux = {}
+                aux["type"] = key
+                aux["value"] = atts[key]
+                aux["attributes"] = []
+                userData ["attributes"].append(aux)
             jsonData.append(userData)
-
         return jsonData
     except:
-        print "ERROR: something happened when trying to link to Skype."
+        print "ERROR: something happened when searching in Skype."
         return {}
     
 if __name__ == "__main__":

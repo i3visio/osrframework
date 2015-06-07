@@ -105,7 +105,7 @@ class Facesaerch(Platform):
         self.delimiters = {}
         # These two fields are REQUIRED to grab the results
         self.searchfyDelimiterStart = "<a class=\"facelink\""
-        self.searchfyDelimiterEnd = "class=\"faceimage\""#  style="display:none" ></a>'        
+        self.searchfyDelimiterEnd = 'style="display:none" ></a>'#"class=\"faceimage\""#  style="display:none" ></a>'        
         # These rest of fields to extract
         self.fieldsRegExp["searchfy"]["i3visio.uri"] = {"start": '" href="', "end": '"'}       
         self.fieldsRegExp["searchfy"]["i3visio.text"] = {"start": 'alt="', "end": '"'}
