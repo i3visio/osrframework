@@ -181,7 +181,7 @@ class Skype(Platform):
         # Verifying if the platform exists
         if mode == "usufy":
             for user in data:
-                if user["value"] == query.lower():            
+                if user["value"] == "Skype - " + query.lower():            
                     results = user
         elif mode == "searchfy":
             results["type"] = "i3visio.search"

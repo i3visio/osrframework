@@ -70,11 +70,12 @@ def checkInSkype(query=None):
         for user in resultados:
             userData = {}
         
-            userData ["type"] = "i3visio.alias"
-            userData ["value"] = user.Handle
+            userData ["type"] = "i3visio.profile"
+            userData ["value"] = "Skype - " + user.Handle
             userData ["attributes"] = []
             atts = {}	
             try:
+                atts ["i3visio.alias"] = str(user.Handle)
                 atts ["i3visio.aliases"] = str(user.Aliases)
                 atts ["i3visio.person"] = str(user.FullName)
                 atts ["i3visio.location.country"] = str(user.Country)

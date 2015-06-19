@@ -124,13 +124,16 @@ def performSearch(emails=[]):
 
     for e in emails:
         #print e
-        if emailahoy.verify_email_address(e):
-            aux = {}
-            aux["type"] = "i3visio.email"
-            aux["value"] = e
-            aux["attributes"] = getMoreInfo(e)
+        if '_' not in e and "-" not in e:
+            if emailahoy.verify_email_address(e):
+                aux = {}
+                aux["type"] = "i3visio.email"
+                aux["value"] = e
+                aux["attributes"] = getMoreInfo(e)
 
-            results.append(aux)
+                results.append(aux)
+            else:
+                pass
         else:
             pass
             """ try:

@@ -15,7 +15,7 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Full normalization of fields.
 - Create Facesaerch and Tor search transforms in Maltego.
 
-v0.9.0b, 2015/06/10 -- Major restructuration of the internal tool. Addition of new platforms and links.
+v0.9.0b, 2015/06/24 -- Major restructuration of the internal tool. Addition of new platforms and links.
 - Moved platforms to wrappers and changed platforms.py to utils.
 - Inclusion of old darkfy searches to look for information in Tor platforms.
 - Inclusion of regular expression rules to choose valid names.
@@ -33,6 +33,7 @@ v0.9.0b, 2015/06/10 -- Major restructuration of the internal tool. Addition of n
 - Changed maltfy folder to transforms.
 - Opening .onion URI using onion.cab service.
 - Updated transforms to match the new distribution.
+- Added BeautifulSoup as a needed llibrary for the installation.
 
 v0.8.3, 2015/04/09 -- Changed the structure of the returned csv files.
 - Adding the possibility of creating a csv output file.
