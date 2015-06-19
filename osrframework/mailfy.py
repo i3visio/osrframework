@@ -215,9 +215,9 @@ if __name__ == "__main__":
     # Adding the main options
     general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
     general.add_argument('-e', '--emails', metavar='<emails>', nargs='+', action='store', help = 'the list of emails to be checked.')
-    general.add_argument('-E', '--emails_file', metavar='<emails_file>', nargs='+', action='store', help = 'the file with the list of emails.')    
+    general.add_argument('-E', '--emails_file', metavar='<emails_file>', action='store', help = 'the file with the list of emails.')    
     general.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the following platforms: ' +str(emailDomains))
-    general.add_argument('-N', '--nicks_file', metavar='<nicks_file>', nargs='+', action='store', help = 'the file with the list of nicks to be checked in the following platforms: '+str(emailDomains))    
+    general.add_argument('-N', '--nicks_file', metavar='<nicks_file>', action='store', help = 'the file with the list of nicks to be checked in the following platforms: '+str(emailDomains))    
     general.add_argument('--create_emails', metavar='<nicks_file>',  action='store', help = 'the file with the list of nicks to be created in the following domains: '+str(emailDomains))    
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
