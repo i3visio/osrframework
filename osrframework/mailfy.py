@@ -112,6 +112,23 @@ def manualEmailCheck(mail):
     return False
 """
 
+def weCanCheckTheseDomains(email):
+    '''
+    '''
+    notWorking = ["@yahoo.", "@ymail", "@gmx.", "@inbox.", "@mail.ru", "@gandhi.net"]
+    for n in notWorking:
+        if n in email:
+            return False
+    emailDomains = ["gmail.com", "hushmail.com"]
+    safe = False
+    for e in emailDomains:
+        if e in email:
+            safe =  True
+            break
+    if not safe:
+        print "WARNING: the domain of '" + email + "' will not be safely verified."
+    return True
+
 def performSearch(emails=[]):
     ''' 
         Method to perform the mail verification process.
@@ -123,30 +140,30 @@ def performSearch(emails=[]):
     results = []
 
     for e in emails:
-        #print e
-        if '_' not in e and "-" not in e:
-            if emailahoy.verify_email_address(e):
-                aux = {}
-                aux["type"] = "i3visio.email"
-                aux["value"] = e
-                aux["attributes"] = getMoreInfo(e)
+	    if weCanCheckTheseDomains(e):
+	        if '_' not in e and "-" not in e:
+	            if emailahoy.verify_email_address(e):
+	                aux = {}
+	                aux["type"] = "i3visio.email"
+	                aux["value"] = e
+	                aux["attributes"] = getMoreInfo(e)
 
-                results.append(aux)
-            else:
-                pass
-        else:
-            pass
-            """ try:
-                if not "gmail.com" in e and manualEmailCheck(e):
-                    aux = {}
-                    aux["type"] = "i3visio.email"
-                    aux["value"] = e
-                    aux["attributes"] = getMoreInfo(e)
+	                results.append(aux)
+	            else:
+	                pass
+	        else:
+	            pass
+	            """ try:
+	                if not "gmail.com" in e and manualEmailCheck(e):
+	                    aux = {}
+	                    aux["type"] = "i3visio.email"
+	                    aux["value"] = e
+	                    aux["attributes"] = getMoreInfo(e)
 
-                    results.append(aux)
-            except:
-                # Probably a Timeout exception
-                pass"""
+	                    results.append(aux)
+	            except:
+	                # Probably a Timeout exception
+	                pass"""
     return results
 
 def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = ["google"]):
@@ -208,7 +225,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
-    emailDomains = ["gmail.com"]
+    emailDomains = ["gmail.com", "hushmail.com"]
 
     # Defining the mutually exclusive group for the main options
     general = parser.add_mutually_exclusive_group(required=True)
