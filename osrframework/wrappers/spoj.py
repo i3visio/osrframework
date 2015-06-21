@@ -110,14 +110,23 @@ class Spoj(Platform):
         self.foundFields = {}
     
 
-    def _doesTheUserExist(self, html):
+    def somethingFound(self,data,mode="phonefy"):
         ''' 
-            Method that performs the verification of the existence or not of a given profile. This method may be rewrritten.
+            Verifying if something was found. Note that this method needed to be rewritten as in Spoj we need to look for a text which APPEARS instead of looking for a text that does NOT appear.
             
-            :param html:    The html text in which the self.notFoundText
-            :return :   None if the user was not found in the html text and the html text if the user DOES exist.            
+            :param data:    Data where the self.notFoundText will be searched.
+            :param mode:    Mode to be executed.            
+            
+            :return: Returns True if exists.
         '''
-        for t in self.foundText:
-            if t in html:
-                return html
-        return None
+        #try:
+        for text in self.notFoundText[mode]:
+            if text in data:
+                # This is the change with regards to the standard behaviour!
+                return True
+        return False
+        #except:
+        #    pass
+        #    # TO-DO: Throw notFoundText not found for this mode.        
+            
+

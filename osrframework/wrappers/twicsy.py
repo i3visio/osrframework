@@ -81,7 +81,7 @@ class Twicsy(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>User Deleted"]
+        self.notFoundText["usufy"] = ["No pics found!"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

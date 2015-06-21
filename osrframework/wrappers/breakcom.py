@@ -81,7 +81,7 @@ class Breakcom(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Funny Videos, Funny Clips & Funny Pictures | Break.com</title>"]
+        self.notFoundText["usufy"] = ["<title>Funny Videos, Funny Clips &amp; Funny Pictures | Break.com</title>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

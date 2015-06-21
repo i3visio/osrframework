@@ -54,7 +54,7 @@ class Twitch(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.twitch.tv/" + "<usufy>"       
+        self.url["usufy"] = "http://www.twitch.tv/" + "<usufy>" + "/profile"      
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Twitch(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = []
+        self.notFoundText["usufy"] = ["<title>Twitch</title>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -110,15 +110,4 @@ class Twitch(Platform):
         self.foundFields = {}
         
                 
-    def _doesTheUserExist(self, html):
-        '''
-            Method that performs the verification of the existence or not of a given profile. This method may be rewrritten.
-        '''
-        # this platform requires a special treatment, as we have been able to identify only characterized text that appears when a user exists
-        userExistsText = ["http://secure.twitch.tv/swflibs/TwitchPlayer.swf?channel="]
-        # the traditional function is rewritten...
-        for t in userExistsText:
-            if t in html:
-                return html
-        return None
         

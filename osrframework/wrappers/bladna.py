@@ -81,7 +81,7 @@ class Bladna(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Meest actieve leden | Marokko community forums</title>"]
+        self.notFoundText["usufy"] = ["Het gespecificeerde lid kan niet gevonden worden."]
         #self.notFoundText["searchfy"] = []        
         
         #########################

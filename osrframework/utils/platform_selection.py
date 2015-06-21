@@ -116,7 +116,8 @@ from osrframework.wrappers.forocoches import Forocoches
 from osrframework.wrappers.foursquare import Foursquare
 from osrframework.wrappers.freebase import Freebase
 from osrframework.wrappers.freerepublic import Freerepublic
-from osrframework.wrappers.friendfeed import Friendfeed
+# Project discontinued on 9th April, 2015
+#from osrframework.wrappers.friendfeed import Friendfeed
 
 # G
 from osrframework.wrappers.gametracker import Gametracker
@@ -269,13 +270,15 @@ from osrframework.wrappers.tumblr import Tumblr
 from osrframework.wrappers.tuporno import Tuporno
 from osrframework.wrappers.tvtag import Tvtag
 from osrframework.wrappers.twicsy import Twicsy
+# Temporarily deactivated: 2015-06-21
 from osrframework.wrappers.twitch import Twitch
 from osrframework.wrappers.twitpic import Twitpic
 from osrframework.wrappers.twitter import Twitter
 from osrframework.wrappers.twoplustwo import Twoplustwo
 
 # U
-from osrframework.wrappers.ukdebate import Ukdebate
+# Seems to be down: 2015-06-21
+#from osrframework.wrappers.ukdebate import Ukdebate
 from osrframework.wrappers.ummahforum import Ummahforum
 from osrframework.wrappers.unsystem import Unsystem
 from osrframework.wrappers.ustream import Ustream
@@ -482,7 +485,8 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Foursquare())
     listAll.append(Freebase())
     listAll.append(Freerepublic())
-    listAll.append(Friendfeed())
+    # Project discontinued on 9th April, 2015    
+    #listAll.append(Friendfeed())
 
     # G
     listAll.append(Gametracker())
@@ -632,13 +636,15 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Tuporno())
     listAll.append(Tvtag())
     listAll.append(Twicsy())
-    listAll.append(Twitch())
+    # Temporarily deactivated: 2015-06-21
+    #listAll.append(Twitch())
     listAll.append(Twitpic())
     listAll.append(Twitter())
     listAll.append(Twoplustwo())    
 
     # U
-    listAll.append(Ukdebate())
+    # Seems to be down: 2015-06-21
+    #listAll.append(Ukdebate())
     listAll.append(Ummahforum())
     listAll.append(Unsystem())
     listAll.append(Ustream())
