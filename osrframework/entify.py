@@ -45,6 +45,7 @@ from os import listdir
 from os.path import isfile, join, isdir
 
 # Imports
+from osrframework.utils.regexp import RegexpObject
 import osrframework.utils.general as general
 import osrframework.utils.logger as logSet
 import osrframework.utils.regexp_selection as regexp_selection
@@ -221,7 +222,7 @@ if __name__ == "__main__":
     groupMainOptions = parser.add_mutually_exclusive_group(required=True)
     listAll = regexp_selection.getAllRegexpNames()
     groupMainOptions.add_argument('-r', '--regexp', metavar='<name>', choices=listAll, action='store', nargs='+', help='select the regular expressions to be looked for amongst the following: ' + str(listAll))
-    groupMainOptions.add_argument('-R', '--new_regexp', metavar='<regular_expression>', action='store', nargs='+', help='add a new regular expression, for example, for testing purposes.')    
+    groupMainOptions.add_argument('-R', '--new_regexp', metavar='<regular_expression>', action='store', help='add a new regular expression, for example, for testing purposes.')    
 
     # Adding the main options
     # Defining the mutually exclusive group for the main options
