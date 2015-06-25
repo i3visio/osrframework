@@ -1,0 +1,12 @@
+<TransformSet name="i3visio - Network operations" description="Set of transforms from i3visio to perform common operations with network-related entities.">
+   <Transforms>
+      <Transform name="i3visio.domainToIp_ApiInformation"/>         
+      <Transform name="i3visio.domainToTld"/>        
+      <Transform name="i3visio.ipToIp_ApiInformation"/>             
+      <Transform name="i3visio.uriToBrowser"/> 
+      <Transform name="i3visio.uriToDomain"/> 
+      <Transform name="i3visio.uriToGoogleCacheUri"/>
+      <Transform name="i3visio.uriToPort"/>       
+      <Transform name="i3visio.uriToProtocol"/>   
+   </Transforms>
+</TransformSet>

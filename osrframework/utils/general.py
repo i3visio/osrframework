@@ -1,8 +1,11 @@
+# !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
 ##################################################################################
 #
-#    OSRFramework is free software: you can redistribute it and/or modify
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -21,7 +24,7 @@
 import hashlib
 import json
 import datetime
-from osrframework.maltfy.lib.maltego import MaltegoEntity, MaltegoTransform
+from osrframework.transforms.lib.maltego import MaltegoEntity, MaltegoTransform
 
 import logging
 
@@ -43,33 +46,44 @@ def dictToCSV(profiles):
         
         :param d:    Dictionary to convert to json.
 
-        :return:    jsonText (string).
+        :return:    csvText (string).
     '''
-    # We are assuming that we received a list of profiles.
+    # Dictionary of profiles found found
     values = {}
-    #values['i3visio.profile'] = []
-    values['i3visio.alias'] = []
-    values['i3visio.platform'] = []    
-    values['i3visio.uri'] = []        
-    
-    for p in profiles:
-        #values['i3visio.profile'].append(p['i3visio.profile'])
-        attributes = p["attributes"]
+    # List of columns
+    columns = ["i3visio.alias"]
 
+    # We are assuming that we received a list of profiles.
+    for p in profiles:    
+        alias = p["value"].split(' - ')[-1]
+        # Creating the dictionaries
+        values[p["value"]] = {}
+        values[p["value"]]["i3visio.alias"] = alias
+                
+        attributes = p["attributes"]
+        # Processing all the attributes found
         for a in attributes:
-            values[a["type"]].append(a["value"])
-    
+            values[p["value"]][a["type"]] = a["value"]
+            # Appending the column if not already included
+            if a["type"] not in columns:
+                columns.append(a["type"])
+    # Generating output   
     csvText = ""
     # Printing the headers
-    csvText += 'i3visio.alias'+"\t"
-    csvText += 'i3visio.platform'+"\t"
-    csvText += 'i3visio.uri'+"\n"
-    
-    # Printing the values
-    for i in range(len(values['i3visio.alias'])):
-        csvText += values['i3visio.alias'][i]+"\t"
-        csvText += values['i3visio.platform'][i]+"\t"
-        csvText += values['i3visio.uri'][i]+"\n"
+    for col in columns:    
+        csvText += col+"\t"
+    csvText += "\n"
+        
+    for prof in values.keys():
+        #csvText += alias + "\t"
+        for col in columns:
+            try:
+                csvText += values[prof][col] + "\t"
+            except:
+                # Printing a Not Applicable value
+                #print col
+                csvText += "[N/A]\t"
+        csvText += "\n"
     return csvText
     
 
