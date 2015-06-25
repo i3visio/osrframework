@@ -1,3 +1,25 @@
+# !/usr/bin/python
+# -*- coding: cp1252 -*-
+#
+##################################################################################
+#
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##################################################################################
+
 #from distutils.core import setup
 import os
 
@@ -37,7 +59,7 @@ except:
     sys.exit()
  
 setup(    name="osrframework",
-    version="v0.8.3",
+    version="v0.9.0a",
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
     author="Felix Brezo and Yaiza Rubio",
     author_email="contacto@i3visio.com",
@@ -53,18 +75,14 @@ setup(    name="osrframework",
         "osrframework.thirdparties.md5crack_com", 
         "osrframework.thirdparties.pipl_com",         
         "osrframework.thirdparties.pipl_com.lib",                 
+        "osrframework.thirdparties.resolvethem_com",  
         "osrframework.thirdparties.skype",         
         "osrframework.utils",         
-        "osrframework.maltfy", 
-        "osrframework.maltfy.lib",         
-        "osrframework.entify", 
-        "osrframework.entify.patterns", 
-        "osrframework.usufy", 
-        "osrframework.phonefy", 
-        # The objects here will be moved when stable to main osrframework.wrappers
-        "osrframework.phonefy.wrappers", 
+        "osrframework.transforms", 
+        "osrframework.transforms.lib",         
+        "osrframework.patterns", 
         "osrframework.wrappers", 
-        "osrframework.searchengines", 
+        "osrframework.searchengines",         
         #"osrframework.darkfy",
         #"osrframework.darkfy.lib",
         #"osrframework.darkfy.lib.wrappers",
@@ -77,7 +95,10 @@ setup(    name="osrframework",
     "Skype4Py",
     "argparse",
     "requests",
-#    "pypandoc",
+    "python-emailahoy",
+    "BeautifulSoup",
+    #"validate_email",
+    #"pypandoc",
     ],
 )
 

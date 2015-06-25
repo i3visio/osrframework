@@ -12,3 +12,8 @@ _new*
 config_api_keys.py
 config_credentials.py
 bin*
+_toinclude*
+output*
+fichero.txt
+test*
+setuptools*

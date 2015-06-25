@@ -7,8 +7,8 @@ Description:
 OSRFramework is a GPLv3+ set of libraries developed by i3visio to perform Open Source
 Intelligence tasks. They include references to a bunch of different applications 
 related to username checking, information leaks research, deep web search, regular
-expressions extraction and many others. At the same time, by means of maltfy, several
-Maltego transforms can be used to exploit these tools.
+expressions extraction and many others. At the same time, by means of ad-hoc Maltego 
+Maltego transforms, OSRFramework provides a way of making these queries graphically.
 
 
 License: GPLv3+
@@ -97,7 +97,7 @@ python configure_maltego.py
 ```
 This will create a .mtz file under: 
 ```
-<INSTALLATION_FOLDER>/osrframework/maltfy/lib/
+<INSTALLATION_FOLDER>/osrframework/transforms/lib/
 ```
 
 7.- However, to use our Maltego Transforms, you will have to download Maltego from 
@@ -160,7 +160,7 @@ python configure_maltego.py
 ```
 This will create a .mtz file under: 
 ```
-<INSTALLATION_FOLDER>/osrframework/maltfy/lib/
+<INSTALLATION_FOLDER>/osrframework/transforms/lib/
 ```
 
 5.- However, to use our Maltego Transforms, you will have to download Maltego from 

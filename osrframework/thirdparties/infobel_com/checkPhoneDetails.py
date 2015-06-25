@@ -84,7 +84,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps a search onto infobel.com via Google.', prog='checkPhoneDetails.py', add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
-    parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to md5crack.com.', required=True)        
+    parser.add_argument('-q', '--query', metavar='<query>', action='store', help='query to be performed to infobel.com.', required=True)        
     
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')

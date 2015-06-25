@@ -6,11 +6,36 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Update the Skype4py package to try to make it work in new versions of Skype in Windows.
 
 [TO-DO] 
-- Generation of aliases from a person.
+- Usage of mashape.com API linked to email verification.
+- Usage of mashape.com API linked to image verification.
+- Inclusions of email verification transforms.
+- Inclusions of searchfy transforms.
 - Inclusion of a call to pipl.com API.
-- Creation of different transforms for each and every platform in usufy.
-- Migration from old usufy platforms to newest approach used in phonefy.
 - Inclusion of new usufy platforms which are now in testing mode.
+- Full normalization of fields.
+- Create Facesaerch and Tor search transforms in Maltego.
+
+v0.9.0b, 2015/06/24 -- Major restructuration of the internal tool. Addition of new platforms and links.
+- Moved platforms to wrappers and changed platforms.py to utils.
+- Inclusion of old darkfy searches to look for information in Tor platforms.
+- Inclusion of regular expression rules to choose valid names.
+- Inclusion of a new mailfy.py app that verifies whether an email is known as a valid email using emailahoy.
+- Inclusion of a new searchfy.py app that recovers the URL of a search in different platforms.
+- Generation of aliases from a person using alias_generator.py
+- Inclusion of all the variables to include phonefy, usufy and searchfy search in all platforms.
+- Inclusion of plain calls to the different third party API in the main folder.
+- Removed phonefy and usufy folders for structural simplicity.
+- Added a proof of concept option to access all the users of a given platform.
+- Added a facesaerch.py module to look for images.
+- Added an alias to IP platform that tries to resolve the location of a user in Skype.
+- Added a uriToGoogleCacheUri transform.
+- Changed usufy-launcher.py and phonefy-launcher.py to usufy.py and phonefy.py.
+- Changed maltfy folder to transforms.
+- Opening .onion URI using onion.cab service.
+- Updated transforms to match the new distribution.
+- Added BeautifulSoup as a needed llibrary for the installation.
+- Fixed bladna, breakcom, twicsy, spotify, spoj.
+- Deactivating friendsfeed, hellboundhackers and ukdebate (services unavailable for different reasons) and twitch.
 
 v0.8.3, 2015/04/09 -- Changed the structure of the returned csv files.
 - Adding the possibility of creating a csv output file.
