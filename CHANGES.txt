@@ -32,6 +32,7 @@ v0.9.0b, 2015/06/24 -- Major restructuration of the internal tool. Addition of n
 - Changed usufy-launcher.py and phonefy-launcher.py to usufy.py and phonefy.py.
 - Changed maltfy folder to transforms.
 - Fixed an error in the generation of the .csv for usufy.
+- New export formats included in usufy: .ods, text, .xls, .xlsx.
 - Opening .onion URI using onion.cab service.
 - Updated transforms to match the new distribution.
 - Added BeautifulSoup as a needed llibrary for the installation.
