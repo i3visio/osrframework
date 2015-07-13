@@ -34,7 +34,70 @@ For more details on this issue, check the COPYING file.
 
 Installation:
 =============
-The instructions may vary in the different OS. 
+The instructions may vary in the different OS but we encourage to run this program under Linux as some utilities may behave unstably.
+
+Under Linux
+-----------
+As Python is alrady installed, the rest of the installation under Python 2.7 is as 
+follows:
+
+1.- Download the repository. You have several options:
+```
+# Cloning the repository if you have git installed
+git clone http://github.com/i3visio/osrframework osrframework-master
+# Navigate to the destiny's folder
+cd osrframework-master
+```
+or
+```
+# Download
+wget http://github.com/i3visio/osrframework/archive/master.zip
+# Unzip
+unzip osrframework-master.zip
+# Navigate to the destiny's folder
+cd osrframework-master
+```
+
+2.- Then, you might have to COPY the sample files in the osrframework folder to add your  
+own API Keys. You might edit them with your preferred text editor.
+```
+cp config_api_keys.py.sample config_api_keys.py
+nano config_api_keys.py
+cd ..
+```
+If you skip this step, OSRFramework will create files without any credentials. This is not a
+major issue as you will be able to provide them as a parameter. 
+
+3.- Then you can resume the installation.
+```
+# Superuser privileges are required so as to complete the installation.
+sudo python setup.py build
+sudo python setup.py install	
+```
+Afterwards, the module will be importable from any python code. You can check this by typing:
+```
+python -c "import osrframework"
+```
+If no error is displayed, the installation would have been performed correctly.
+
+4.- To configure the Maltego Entities, launch the built-in configurator:
+```
+python configure_maltego.py
+```
+This will create a .mtz file under: 
+```
+<INSTALLATION_FOLDER>/osrframework/transforms/lib/
+```
+
+5.- However, to use our Maltego Transforms, you will have to download Maltego from 
+Paterva's site: 
+```
+http://www.paterva.com/web6/products/download2.php
+```
+Follow the instructions there. Afterwards, you may launch the application.
+
+6.- You will have to import the recently created .mtz configuration file. Select 
+all the groups and click next. You may use the new i3visio entities now.
 
 Under Windows
 -----------
@@ -110,65 +173,3 @@ Follow the instructions there. Afterwards, you may launch the application.
 8.- Finally, you will have to import the recently created .mtz configuration file. 
 Select all the groups and click next. You may use the new i3visio entities now.
 
-Under Linux
------------
-As Python is alrady installed, the rest of the installation under Python 2.7 is as 
-follows:
-
-1.- Download the repository. You have several options:
-```
-# Cloning the repository if you have git installed
-git clone http://github.com/i3visio/osrframework osrframework-master
-# Navigate to the destiny's folder
-cd osrframework-master
-```
-or
-```
-# Download
-wget http://github.com/i3visio/osrframework/archive/master.zip
-# Unzip
-unzip osrframework-master.zip
-# Navigate to the destiny's folder
-cd osrframework-master
-```
-
-2.- Then, you might have to COPY the sample files in the osrframework folder to add your  
-own API Keys. You might edit them with your preferred text editor.
-```
-cp config_api_keys.py.sample config_api_keys.py
-nano config_api_keys.py
-cd ..
-```
-If you skip this step, OSRFramework will create files without any credentials. This is not a
-major issue as you will be able to provide them as a parameter. 
-
-3.- Then you can resume the installation.
-```
-# Superuser privileges are required so as to complete the installation.
-sudo python setup.py build
-sudo python setup.py install	
-```
-Afterwards, the module will be importable from any python code. You can check this by typing:
-```
-python -c "import osrframework"
-```
-If no error is displayed, the installation would have been performed correctly.
-
-4.- To configure the Maltego Entities, launch the built-in configurator:
-```
-python configure_maltego.py
-```
-This will create a .mtz file under: 
-```
-<INSTALLATION_FOLDER>/osrframework/transforms/lib/
-```
-
-5.- However, to use our Maltego Transforms, you will have to download Maltego from 
-Paterva's site: 
-```
-http://www.paterva.com/web6/products/download2.php
-```
-Follow the instructions there. Afterwards, you may launch the application.
-
-6.- You will have to import the recently created .mtz configuration file. Select 
-all the groups and click next. You may use the new i3visio entities now.

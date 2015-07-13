@@ -80,14 +80,6 @@ def checkInSkype(query=None):
                     atts ["i3visio.alias"] = str(user.Handle)
                 if str(user.Aliases) != "[]":                    
                     atts ["i3visio.aliases"] = str(user.Aliases)
-                if str(user.FullName) != "":                    
-                    atts ["i3visio.person"] = str(user.FullName)
-                if str(user.Country) != "":                    
-                    atts ["i3visio.location.country"] = str(user.Country)
-                if str(user.Province) != "":                    
-                    atts ["i3visio.location.province"] =  str(user.Province)
-                if str(user.City) != "":                    
-                    atts ["i3visio.location.city"] = str(user.City)
                 if str(user.Homepage) != "":
                     atts ["i3visio.uri"] = str(user.Homepage)
                 if str(user.Birthday) != "None":
@@ -104,9 +96,18 @@ def checkInSkype(query=None):
                     atts ["i3visio.online"] = str(user.OnlineStatus)
                 if str(user.MoodText) != "":
                     atts ["i3visio.text"] = str(user.MoodText)
+                if str(user.FullName) != "":
+                    atts ["i3visio.fullname"] = str(user.FullName)
+                if str(user.Country) != "":
+                    atts ["i3visio.location.country"] = str(user.Country)
+                if str(user.Province) != "":
+                    atts ["i3visio.location.province"] =  str(user.Province)
+                if str(user.City) != "":
+                    atts ["i3visio.location.city"] = str(user.City)
+
             except:
                 # Sth happened when parsing
-                print "WARNING: something happened when parsing the attributes in Skype. The program will continue with the execution..."
+                print "WARNING: something happened when parsing the attributes in Skype. A problem with The program will continue with the execution..."
             for key in atts.keys():
                 aux = {}
                 aux["type"] = key

@@ -61,7 +61,7 @@ def usufyToJsonExport(d, fPath):
     with open (fPath, "w") as oF:
         oF.write(jsonText)
 
-def _generateTabularData(res):
+def _generateTabularData(res, isTerminal=False):
     '''
         Method that recovers the values and columns from the current structure
         This method is used by:
@@ -70,10 +70,13 @@ def _generateTabularData(res):
             - usufyToXlsExport
             - usufyToXlsxExport            
         :param res:    the data to export.
+        :param isTerminal:    if isTerminal is activated, only information related to i3visio.alias, i3visio.platform and i3visio.uri will be displayed in the terminal.    
         :return:
             values, a dictionary containing all the information stored.
             headers, a list containing the headers used for the rows.
     '''
+    # Entities allowed for the output in terminal
+    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname"]
     # Dictionary of profiles found found
     values = {}
     headers = ["i3visio.alias"]
@@ -88,11 +91,19 @@ def _generateTabularData(res):
         attributes = p["attributes"]
         # Processing all the attributes found
         for a in attributes:
-            values[p["value"]][a["type"]] = a["value"]
-            # Appending the column if not already included
-            if a["type"] not in headers:
-                headers.append(a["type"])
-
+            # Default behaviour for the output methods
+            if not isTerminal:
+                values[p["value"]][a["type"]] = a["value"]
+                # Appending the column if not already included
+                if a["type"] not in headers:
+                    headers.append(a["type"])
+            # Specific table construction for the terminal output
+            else:
+                if a["type"] in allowedInTerminal:
+                    values[p["value"]][a["type"]] = a["value"]
+                    # Appending the column if not already included
+                    if a["type"] not in headers:
+                        headers.append(a["type"])                
     # The information is stored as:
     """
         {
@@ -232,7 +243,11 @@ def usufyToTextExport(d, fPath=None):
         :param d: Data to export.
         :param fPath: File path. If None was provided, it will assume that it has to print it.
     '''
-    tabularData = _generateTabularData(d)["Usufy sheet"]
+    if fPath == None:
+        isTerminal = True
+    else:
+        isTerminal = False
+    tabularData = _generateTabularData(d, isTerminal)["Usufy sheet"]
     
     import pyexcel as pe
     import pyexcel.ext.text as text
