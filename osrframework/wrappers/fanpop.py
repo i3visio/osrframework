@@ -81,7 +81,7 @@ class Fanpop(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Fanpop - Fan clubs for everything. What are you a fan of?</title>"]  
+        self.notFoundText["usufy"] = ["<title> Fanpop - Fan clubs for everything. What are you a fan of?</title>", "<h2 class=\"module-heading\">Browse Content</h2>"]  
         #self.notFoundText["searchfy"] = []        
         
         #########################

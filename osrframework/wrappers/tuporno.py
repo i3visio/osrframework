@@ -81,7 +81,7 @@ class Tuporno(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>tuporno.tv - Tus videos porno en internet</title>"]
+        self.notFoundText["usufy"] = ["<title>Tuporno.tv - Videos Porno"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
