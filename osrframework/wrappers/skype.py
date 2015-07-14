@@ -147,7 +147,7 @@ class Skype(Platform):
             :return:    Python structure for the html processed.
         '''
         # Defining variables for this process
-        results = {}
+        results = []
         data = ""
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
@@ -182,11 +182,9 @@ class Skype(Platform):
         if mode == "usufy":
             for user in data:
                 if user["value"] == "Skype - " + query.lower():            
-                    results = user
+                    results.append(user)
         elif mode == "searchfy":
-            results["type"] = "i3visio.search"
-            results["value"] = self.platformName + " Search - " + query
-            results["attributes"] = data
+            results = data
                
         return json.dumps(results)
 

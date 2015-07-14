@@ -25,6 +25,7 @@ import os
 import random
 import re
 import sys
+import urllib
 import urllib2
 
 import osrframework.utils.browser as browser
@@ -126,7 +127,7 @@ class Platform():
             :return:    The URL to be queried.
         '''
         try:
-            return self.url[mode].replace("<"+mode+">", word)
+            return self.url[mode].replace("<"+mode+">", word.replace(' ', '+'))
         except:
             pass
             # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.
@@ -143,7 +144,7 @@ class Platform():
             :return:    Python structure for the html processed.
         '''
         # Defining variables for this process
-        results = {}
+        results = []
         data = ""
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
@@ -151,7 +152,6 @@ class Platform():
         # Creating the query URL for that mode
         qURL = self.createURL(word=query, mode=mode)        
         i3Browser = browser.Browser()            
-        
         try:
             # check if it needs creds
             if self.needsCredentials[mode]:
@@ -164,43 +164,117 @@ class Platform():
                 data = i3Browser.recoverURL(qURL)
         except:
             # No information was found, then we return a null entity
-            # TO-DO: i3BrowserException            
+            # TO-DO: i3BrowserException         
             return json.dumps(results)            
 
         # Verifying if the platform exists
         if self.somethingFound(data, mode=mode):
 
             if mode == "phonefy":
-                results["type"] = "i3visio.phone"
-                results["value"] = self.platformName + " - " + query
-                results["attributes"] = []                
-            elif mode == "usufy":
-                results["type"] = "i3visio.profile"
-                results["value"] = self.platformName + " - " + query                
-                results["attributes"] = []                
-            elif mode == "searchfy":
-                results["type"] = "i3visio.search"
-                results["value"] = self.platformName + " Search - " + query                
-                results["attributes"] = []
+                r = {}
+                r["type"] = "i3visio.phone"
+                r["value"] = self.platformName + " - " + query
+                r["attributes"] = []      
 
-            # Appending platform name
-            aux = {}
-            aux["type"] = "i3visio.platform"
-            aux["value"] = self.platformName
-            aux["attributes"] = []
-            results["attributes"].append(aux)
+                # Appending platform URI
+                aux = {}
+                aux["type"] = "i3visio.uri"
+                aux["value"] = qURL
+                aux["attributes"] = []           
+                r["attributes"].append(aux)   
+                
+                # Appending platform name
+                aux = {}
+                aux["type"] = "i3visio.platform"
+                aux["value"] = self.platformName
+                aux["attributes"] = []
+                r["attributes"].append(aux)
+                              
+                # Iterating if requested to extract more entities from the URI
+                if process:                               
+                    # This function returns a json text!
+                    r["attributes"] += json.loads(self.processData(data=data, mode=mode))
+                # Appending the result to results: in this case only one profile will be grabbed
+                results.append(r)    
+                                                          
+            elif mode == "usufy":
+                r = {}            
+                r["type"] = "i3visio.profile"
+                r["value"] = self.platformName + " - " + query                
+                r["attributes"] = []   
+                
+                # Appending platform URI
+                aux = {}
+                aux["type"] = "i3visio.uri"
+                aux["value"] = qURL
+                aux["attributes"] = []           
+                r["attributes"].append(aux)  
+                # Appending the alias
+                aux = {}
+                aux["type"] = "i3visio.alias"
+                aux["value"] = query
+                aux["attributes"] = []           
+                r["attributes"].append(aux)                    
+                # Appending platform name
+                aux = {}
+                aux["type"] = "i3visio.platform"
+                aux["value"] = self.platformName
+                aux["attributes"] = []
+                r["attributes"].append(aux)
+                
+              
+                # Iterating if requested to extract more entities from the URI
+                if process:                               
+                    # This function returns a json text!
+                    r["attributes"] += json.loads(self.processData(data=data, mode=mode))
             
-            # Appending platform URI
-            aux = {}
-            aux["type"] = "i3visio.uri"
-            aux["value"] = qURL
-            aux["attributes"] = []           
-            results["attributes"].append(aux)             
-            # Iterating if requested to extract more entities from the URI
-            if process:                               
-                # This function returns a json text!
-                results["attributes"] += json.loads(self.processData(data=data, mode=mode))
-            
+                # Appending the result to results: in this case only one profile will be grabbed
+                results.append(r)                
+                                              
+            elif mode == "searchfy":
+                # Recovering all the found aliases...
+                ids = re.findall(self.searchfyAliasRegexp, data, re.DOTALL)
+                
+                for i in ids:
+                    r = {}            
+                    r["type"] = "i3visio.profile"
+                    r["value"] = self.platformName + " - " + i            
+                    r["attributes"] = []   
+                    
+                    # Appending platform URI
+                    aux = {}
+                    aux["type"] = "i3visio.uri"
+                    # Creating a usufy URI...
+                    aux["value"] = self.createURL(word=i, mode="usufy")
+                    aux["attributes"] = []           
+                    r["attributes"].append(aux)  
+                    # Appending the alias
+                    aux = {}
+                    aux["type"] = "i3visio.alias"
+                    aux["value"] = i
+                    aux["attributes"] = []           
+                    r["attributes"].append(aux)                      
+                    # Appending platform name
+                    aux = {}
+                    aux["type"] = "i3visio.platform"
+                    aux["value"] = self.platformName
+                    aux["attributes"] = []
+                    r["attributes"].append(aux)
+                    # Appending the query performed to grab this items
+                    aux = {}
+                    aux["type"] = "i3visio.search"
+                    aux["value"] = query
+                    aux["attributes"] = []
+                    r["attributes"].append(aux)
+                    
+                    # TO-DO:
+                    # Perform additional procesing
+                    # Iterating the requested profiles to extract more entities from the URI would be slow!
+                    if process:                               
+                        # This function returns a json text in usufy format for the returned objects.
+                        r["attributes"] += json.loads(self.processData(data=data, mode="usufy"))                    
+                    # Appending the result to results: in this case only one profile will be grabbed
+                    results.append(r)  
         return json.dumps(results)
 
     def modeIsValid(self, mode):
@@ -268,14 +342,10 @@ class Platform():
                         info.append(aux)        
         # Searchfy results        
         else:
-            print "here"
             # Grabbing the results for the search
-            resultText = re.findall(self.searchfyDelimiterStart + "(.*?)" + self.searchfyDelimiterEnd, data, re.DOTALL)
-            print "resultText..."
+            resultText = re.findall(searchfyAliasRegexp, data)
             # Analysing each and every result to parse it...        
             for res in resultText:
-                print res
-                raw_input("-----")
                 r = {}
                 r["type"] = "i3visio.uri"
                 r["value"] = ""
@@ -315,7 +385,7 @@ class Platform():
                             aux["attributes"] = []                
                             if aux not in r["attributes"]:
                                 r["attributes"].append(aux)               
-                                print json.dumps(r["attributes"], indent =2)
+                                #print json.dumps(r["attributes"], indent =2)
                 info.append(r)
         return json.dumps(info)
     

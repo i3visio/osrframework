@@ -31,16 +31,17 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.2.0"
+__version__ = "v0.4.0b"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 
 import argparse
 import json
+import os
 
 import osrframework.utils.platform_selection as platform_selection
-
+import osrframework.utils.general as general
 
 def performSearch(platformNames=[], queries=[]):
     ''' 
@@ -59,8 +60,8 @@ def performSearch(platformNames=[], queries=[]):
         for pla in platforms:
             # This returns a json.txt!
             entities = pla.getInfo(query=q, process = True, mode="searchfy")
-            if entities != "{}":
-                results.append(json.loads(entities))
+            if entities != "[]":
+                results += json.loads(entities)
     return results
 
 def searchfy_main(args):
@@ -69,38 +70,65 @@ def searchfy_main(args):
         
         :param args: Arguments received in the command line.
     '''
-
-    
     results = performSearch(platformNames=args.platforms, queries=args.queries)
 
-    # Printing the results
-    if not args.quiet:
-        print json.dumps(results, indent=2) 
+    # Generating summary files for each ...
+    if args.extension:
+        # Storing the file...
+        #logger.info("Creating output files as requested.")
+        if not args.output_folder:
+            args.output_folder = "./"
+        else:
+            # Verifying if the outputPath exists
+            if not os.path.exists (args.output_folder):
+                #logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
+                os.makedirs(args.output_folder)
+                
+        # Grabbing the results 
+        fileHeader = os.path.join(args.output_folder, args.file_header + general.getCurrentStrDatetime())
 
-    # Writing the results onto a file
-    if args.output_file != None:
-        with open(output_file, "w") as oF:
-            oF.write(json.dumps(results, indent=2) )
+        # Iterating through the given extensions to print its values
+        for ext in args.extension:
+            # Generating output files
+            general.exportUsufy(results, ext, fileHeader)
+            
+    # Generating the Maltego output    
+    if args.maltego:
+        general.listToMaltego(results)
+
+    # Printing the results if requested
+    if not args.maltego:
+        print "A summary of the results obtained are listed in the following table:"
+        print general.usufyToTextExport(results)
+        print "You will find all the information collected in the following files:"                                                     
+        for ext in args.extension:
+            # Generating output files
+            print "\t-" + fileHeader + "." + ext
+    return results
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='searchfy.py - Piece of software that performs a query on the platforms in OSRFramework.', prog='searchfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options
-    general = parser.add_mutually_exclusive_group(required=True)
+    groupMain = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
-    general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
-    general.add_argument('-q', '--queries', metavar='<searches>', nargs='+', action='store', help = 'the list of queries to be performed).')
+    groupMain.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
+    groupMain.add_argument('-q', '--queries', metavar='<searches>', nargs='+', action='store', help = 'the list of queries to be performed).')
 
     listAll = platform_selection.getAllPlatformNames("searchfy")
 
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which searchfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
-    groupProcessing.add_argument('-o', '--output_file',  metavar='<path_to_output_file>',  action='store', help='path to the output file where the results will be stored in json format.', required=False)
-    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')    
-    groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')        
+    # Getting a sample header for the output files
 
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['csv'], action='store', help='output extension for the summary files. Default: csv.')    
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "output_", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: results_' )          
+    groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')    
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')    
+    
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')

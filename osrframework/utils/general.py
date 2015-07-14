@@ -80,13 +80,11 @@ def _generateTabularData(res, isTerminal=False):
     # Dictionary of profiles found found
     values = {}
     headers = ["i3visio.alias"]
-
-    # We are assuming that we received a list of profiles.
+    # We are assuming that we received a list of profiles. 
     for p in res:    
-        alias = p["value"].split(' - ')[-1]
+        #print json.dumps(p, indent=2) 
         # Creating the dictionaries
         values[p["value"]] = {}
-        values[p["value"]]["i3visio.alias"] = alias
                 
         attributes = p["attributes"]
         # Processing all the attributes found
@@ -253,7 +251,7 @@ def usufyToTextExport(d, fPath=None):
     import pyexcel.ext.text as text
     
     sheet = pe.Sheet(tabularData)
-    sheet.name = "Usufy results (" + getCurrentStrDatetime() +")."
+    sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."
     # Defining the headers
     sheet.name_columns_by_row(0)
     text.TABLEFMT = "grid" 

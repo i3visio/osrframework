@@ -58,7 +58,7 @@ def checkInSkype(query=None):
         skype.OnAttachmentStatus = new_skype_status
     except:
         print "ERROR: something happened when trying to link to Skype."
-        return {}
+        return []
 
     try:    
         # Search for users and display their Skype name, full name
@@ -75,6 +75,7 @@ def checkInSkype(query=None):
             userData ["attributes"] = []
             atts = {}	            
             atts ["i3visio.platform"] = "Skype"
+            atts ["i3visio.search"] = query
             try:
                 if str(user.Handle) != "":
                     atts ["i3visio.alias"] = str(user.Handle)
@@ -118,7 +119,7 @@ def checkInSkype(query=None):
         return jsonData
     except:
         print "ERROR: something happened when searching in Skype."
-        return {}
+        return []
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps a search onto Skype4Py.', prog='checkInSkype.py', epilog="NOTE: you must be logged in into Skype to use this program.", add_help=False)

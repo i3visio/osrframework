@@ -46,7 +46,7 @@ class Ahmia(Platform):
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = False
-        self.isValidMode["searchfy"] = True      
+        self.isValidMode["searchfy"] = False      
         
         ######################################
         # Search URL for the different modes #

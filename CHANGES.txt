@@ -17,6 +17,12 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Recursive expansion of attributes when the cap is reached in Maltego.
 - Mailfy seems not to be working properly in Windows systems, but it does in Linux.
 
+v0.9.0b5, 2015/07/15 -- Added searchfy platforms for skype, facebook and twitter.
+- Added the searchfy functionality.
+- Fixed the returned objects in usufy (now, it's always a list).
+- Facesaerch and ahmia have been temporally deactivated.
+- The generated output now does not override the file if it already exists. Instead, it reads the previous data and reorders it.
+
 v0.9.0b4, 2015/07/13 -- Fixed the output when too much information is displayed.
 - The printed table appearing in the terminal will only show values linked to i3visio.alias, i3visio.platform, i3visio.uri and i3visio.fullname. The rest of the information will be printed to the output files.
 - Minor change in the Skype entity previously returned as i3visio.person which now is returned as i3visio.fullname.

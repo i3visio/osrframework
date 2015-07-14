@@ -55,7 +55,7 @@ class Twitter(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "http://twitter.com/" + "<usufy>"
-        self.url["searchfy"] = "https://twitter.com/search?q=" + "<searchfy>"       
+        self.url["searchfy"] = "https://twitter.com/search?q=" + "<searchfy>"  + "&f=users"    
 
         ######################################
         # Whether the user needs credentials #
@@ -107,8 +107,7 @@ class Twitter(Platform):
         
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyDelimiterStart = "<li class=\"hs_site\">"
-        self.searchfyDelimiterEnd = "</li>"           
+        self.searchfyAliasRegexp = "data-screen-name=\"([^\"]+)\""        
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         

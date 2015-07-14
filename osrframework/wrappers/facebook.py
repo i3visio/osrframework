@@ -46,7 +46,7 @@ class Facebook(Platform):
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = True      
         
         ######################################
         # Search URL for the different modes #
@@ -55,7 +55,7 @@ class Facebook(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "https://www.facebook.com/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["searchfy"] = "https://www.facebook.com/public?query=" + "<searchfy>"       
 
         ######################################
         # Whether the user needs credentials #
@@ -63,7 +63,7 @@ class Facebook(Platform):
         self.needsCredentials = {}        
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        self.needsCredentials["searchfy"] = False 
         
         #################
         # Valid queries #
@@ -73,7 +73,7 @@ class Facebook(Platform):
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
         self.validQuery["usufy"] = re.compile(".*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
         # Not_found clues #
@@ -82,7 +82,7 @@ class Facebook(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = ["Esta página no está disponible", "This content is currently unavailable", "Sorry, this page isn't available"]
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["searchfy"] = []        
         
         #########################
         # Fields to be searched #
@@ -99,7 +99,8 @@ class Facebook(Platform):
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
+        self.fieldsRegExp["searchfy"] = {}
+        self.searchfyAliasRegexp = "lfloat _ohe\" href=\"https://www.facebook.com/([^\"]+)\" onclick=\"if"
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
