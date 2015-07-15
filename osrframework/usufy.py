@@ -447,7 +447,7 @@ For details, run:
                             os.makedirs(args.output_folder)
                             
                     # Grabbing the results 
-                    fileHeader = os.path.join(args.output_folder, args.file_header + general.getCurrentStrDatetime())
+                    fileHeader = os.path.join(args.output_folder, args.file_header)
 
                     # Iterating through the given extensions to print its values
                     for ext in args.extension:
@@ -503,7 +503,7 @@ if __name__ == "__main__":
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "output_", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: results_' )    
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )    
     # [TO-DO]: to be revisited
     groupProcessing.add_argument('-s', '--squatting', metavar='<level>',  nargs='+', choices=['basic', 'l33t', 'local', 'years', 'words', 'all'], required=False, default=[], action='store', help="select the level of profilesquatting to be looked for (in order of execution): words (for adding sensitive words such as 'real', 'home', 'news', etc.); l33t (l33t m0d3);  years (ending in numbers); local (looking for localized endings: '_es', '_en', '_fr', etc.); basic (changing '-', '.' and ' '); and all.")
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=32, type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')

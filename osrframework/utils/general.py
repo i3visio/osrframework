@@ -61,7 +61,43 @@ def usufyToJsonExport(d, fPath):
     with open (fPath, "w") as oF:
         oF.write(jsonText)
 
-def _generateTabularData(res, isTerminal=False):
+def usufyToTextExport(d, fPath=None):
+    '''
+        Workaround to export to a .txt file.
+        :param d: Data to export.
+        :param fPath: File path. If None was provided, it will assume that it has to print it.
+    '''
+    import pyexcel as pe
+    import pyexcel.ext.text as text    
+
+    if fPath == None:
+        isTerminal = True
+    else:
+        isTerminal = False
+        
+    try:
+        oldData = get_data(fPath)
+    except:
+        # No information has been recovered
+        oldData = {"Usufy sheet":[]}
+
+    # Generating the new tabular data
+    tabularData = _generateTabularData(d, {"Usufy sheet":[[]]}, True)
+    # The tabular data contains a dict representing the whole book and we need only the sheet!!
+    sheet = pe.Sheet(tabularData["Usufy sheet"])
+    sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."
+    # Defining the headers
+    sheet.name_columns_by_row(0)
+    text.TABLEFMT = "grid" 
+    try:
+        with open(fPath, "w") as oF:
+            oF.write(str(sheet))
+    except:
+        # If a fPath was not provided... We will only print the info:
+        return sheet    
+
+
+def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
     '''
         Method that recovers the values and columns from the current structure
         This method is used by:
@@ -69,20 +105,69 @@ def _generateTabularData(res, isTerminal=False):
             - usufyToOdsExport
             - usufyToXlsExport
             - usufyToXlsxExport            
-        :param res:    the data to export.
+        :param res:    new data to export.
+        :param oldTabularData:    the previous data stored.     
+            {
+              "Usufy sheet": [
+                [
+                  "i3visio.alias", 
+                  "i3visio.platform", 
+                  "i3visio.uri"
+                ], 
+                [
+                  "i3visio", 
+                  "Twitter", 
+                  "https://twitter.com/i3visio", 
+                ]
+              ]
+            }           
         :param isTerminal:    if isTerminal is activated, only information related to i3visio.alias, i3visio.platform and i3visio.uri will be displayed in the terminal.    
         :return:
             values, a dictionary containing all the information stored.
             headers, a list containing the headers used for the rows.
+            Values is like:            
+            {
+              "Usufy sheet": [
+                [
+                  "i3visio.alias", 
+                  "i3visio.platform", 
+                  "i3visio.uri"
+                ], 
+                [
+                  "i3visio", 
+                  "Twitter", 
+                  "https://twitter.com/i3visio", 
+                ],
+                [
+                  "i3visio", 
+                  "Github", 
+                  "https://github.com/i3visio", 
+                ]                
+              ]
+            }
+            
     '''
     # Entities allowed for the output in terminal
     allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname"]
     # Dictionary of profiles found found
     values = {}
-    headers = ["i3visio.alias"]
+    try:
+        if not isTerminal:
+            # Recovering the headers in the first line of the old Data
+            headers = oldTabularData["Usufy sheet"][0]
+        else:
+            # Recovering only the printable headers if in Terminal mode
+            oldHeaders = oldTabularData["Usufy sheet"][0]
+            headers = []
+            for h in oldHeaders:
+                if h in allowedInTerminal:
+                    headers.append(h)
+    except:
+        # No previous files... Easy...
+        headers = []
+
     # We are assuming that we received a list of profiles. 
     for p in res:    
-        #print json.dumps(p, indent=2) 
         # Creating the dictionaries
         values[p["value"]] = {}
                 
@@ -100,22 +185,9 @@ def _generateTabularData(res, isTerminal=False):
                 if a["type"] in allowedInTerminal:
                     values[p["value"]][a["type"]] = a["value"]
                     # Appending the column if not already included
-                    if a["type"] not in headers:
-                        headers.append(a["type"])                
-    # The information is stored as:
-    """
-        {
-            "Sheet 1" : [
-                ["value at row 1 col A", "value at row 1 col B"], 
-                ["value at row 2 col A", "value at row 2 col B"]
-            ],
-            "Sheet 2" : [
-                ["value at row 1 col A", "value at row 1 col B"], 
-                ["value at row 2 col A", "value at row 2 col B"],
-                ["value at row 3 col A", "value at row 3 col B"]                
-            ]            
-        }
-    """
+                    if str(a["type"]) not in headers:
+                        headers.append(str(a["type"]))
+
     data = {}    
     # Note that each row should be a list!
     workingSheet = []
@@ -123,21 +195,41 @@ def _generateTabularData(res, isTerminal=False):
     # Appending the headers
     workingSheet.append(headers)
 
+    # First, we will iterate through the previously stored values
+    try:
+        for dataRow in oldTabularData["Usufy sheet"][1:]:
+            # Recovering the previous data
+            newRow = []
+            for cell in dataRow:
+                newRow.append(cell)
+            
+            # Now, we will fill the rest of the cells with "N/A" values
+            for i in range(len(headers)-len(dataRow)):
+                # Printing a Not Applicable value
+                newRow.append("N/A")
+                
+            # Appending the newRow to the data structure
+            workingSheet.append(newRow)
+    except:
+        # No previous value found!
+        pass
+
+    # After having all the previous data stored an updated... We will go through the rest:
     for prof in values.keys():
         # Creating an empty structure
         newRow = []
         for col in headers:
             try:
-                newRow.append(values[prof][col])
+                newRow.append(str(values[prof][col]))
             except:
                 # Printing a Not Applicable value
                 newRow.append("N/A")
         # Appending the newRow to the data structure
         workingSheet.append(newRow)
-        
+
     # Storing the workingSheet onto the data structure to be stored
     data.update({"Usufy sheet": workingSheet})
-                
+
     return data
 
 
@@ -208,7 +300,16 @@ def usufyToOdsExport(d, fPath):
         :param d: Data to export.
         :param fPath: File path.
     '''
-    tabularData = _generateTabularData(d)
+    from pyexcel_ods import get_data
+    try:
+        oldData = get_data(fPath)
+    except:
+        # No information has been recovered
+        oldData = {"Usufy sheet":[]}
+    
+    # Generating the new tabular data
+    tabularData = _generateTabularData(d, oldData)
+
     from pyexcel_ods import save_data
     # Storing the file        
     save_data(fPath, tabularData)    
@@ -219,7 +320,15 @@ def usufyToXlsExport(d, fPath):
         :param d: Data to export.
         :param fPath: File path.
     '''
-    tabularData = _generateTabularData(d)
+    from pyexcel_xls import get_data
+    try:
+        oldData = get_data(fPath)
+    except:
+        # No information has been recovered
+        oldData = {"Usufy sheet":[]}
+    
+    # Generating the new tabular data
+    tabularData = _generateTabularData(d, oldData)
     from pyexcel_xls import save_data
     # Storing the file        
     save_data(fPath, tabularData)
@@ -230,38 +339,19 @@ def usufyToXlsxExport(d, fPath):
         :param d: Data to export.
         :param fPath: File path.
     '''
-    tabularData = _generateTabularData(d)
+    from pyexcel_xlsx import get_data
+    try:
+        oldData = get_data(fPath)
+    except:
+        # No information has been recovered
+        oldData = {"Usufy sheet":[]}
+    
+    # Generating the new tabular data
+    tabularData = _generateTabularData(d, oldData)
+    
     from pyexcel_xlsx import save_data
     # Storing the file        
     save_data(fPath, tabularData)
-
-def usufyToTextExport(d, fPath=None):
-    '''
-        Workaround to export to a .txt file.
-        :param d: Data to export.
-        :param fPath: File path. If None was provided, it will assume that it has to print it.
-    '''
-    if fPath == None:
-        isTerminal = True
-    else:
-        isTerminal = False
-    tabularData = _generateTabularData(d, isTerminal)["Usufy sheet"]
-    
-    import pyexcel as pe
-    import pyexcel.ext.text as text
-    
-    sheet = pe.Sheet(tabularData)
-    sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."
-    # Defining the headers
-    sheet.name_columns_by_row(0)
-    text.TABLEFMT = "grid" 
-  
-    try:
-        with open(fPath, "w") as oF:
-            oF.write(str(sheet))
-    except:
-        # If a fPath was not provided... We will only print the info:
-        return sheet    
 
 def usufyToMaltegoExport(profiles, fPath):
     '''
@@ -459,3 +549,83 @@ def dictToCSV(profiles):
         csvText += values['i3visio.platform'][i]+"\t"
         csvText += values['i3visio.uri'][i]+"\n"
     return csvText
+    
+    
+def _generateTabularDataOld(res, isTerminal=False):
+    '''
+        Method that recovers the values and columns from the current structure
+        This method is used by:
+            - usufyToCsvExport
+            - usufyToOdsExport
+            - usufyToXlsExport
+            - usufyToXlsxExport            
+        :param res:    the data to export.
+        :param isTerminal:    if isTerminal is activated, only information related to i3visio.alias, i3visio.platform and i3visio.uri will be displayed in the terminal.    
+        :return:
+            values, a dictionary containing all the information stored.
+            headers, a list containing the headers used for the rows.
+    '''
+    # Entities allowed for the output in terminal
+    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname"]
+    # Dictionary of profiles found found
+    values = {}
+    headers = ["i3visio.alias"]
+    # We are assuming that we received a list of profiles. 
+    for p in res:    
+        #print json.dumps(p, indent=2) 
+        # Creating the dictionaries
+        values[p["value"]] = {}
+                
+        attributes = p["attributes"]
+        # Processing all the attributes found
+        for a in attributes:
+            # Default behaviour for the output methods
+            if not isTerminal:
+                values[p["value"]][a["type"]] = a["value"]
+                # Appending the column if not already included
+                if a["type"] not in headers:
+                    headers.append(a["type"])
+            # Specific table construction for the terminal output
+            else:
+                if a["type"] in allowedInTerminal:
+                    values[p["value"]][a["type"]] = a["value"]
+                    # Appending the column if not already included
+                    if a["type"] not in headers:
+                        headers.append(a["type"])                
+    # The information is stored as:
+    """
+        {
+            "Sheet 1" : [
+                ["value at row 1 col A", "value at row 1 col B"], 
+                ["value at row 2 col A", "value at row 2 col B"]
+            ],
+            "Sheet 2" : [
+                ["value at row 1 col A", "value at row 1 col B"], 
+                ["value at row 2 col A", "value at row 2 col B"],
+                ["value at row 3 col A", "value at row 3 col B"]                
+            ]            
+        }
+    """
+    data = {}    
+    # Note that each row should be a list!
+    workingSheet = []
+
+    # Appending the headers
+    workingSheet.append(headers)
+
+    for prof in values.keys():
+        # Creating an empty structure
+        newRow = []
+        for col in headers:
+            try:
+                newRow.append(values[prof][col])
+            except:
+                # Printing a Not Applicable value
+                newRow.append("N/A")
+        # Appending the newRow to the data structure
+        workingSheet.append(newRow)
+        
+    # Storing the workingSheet onto the data structure to be stored
+    data.update({"Usufy sheet": workingSheet})
+                
+    return data    
