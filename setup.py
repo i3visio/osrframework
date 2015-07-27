@@ -20,6 +20,8 @@
 #
 ##################################################################################
 
+__version__ = "v0.9.0b6"
+
 #from distutils.core import setup
 import os
 
@@ -59,7 +61,7 @@ except:
     sys.exit()
  
 setup(    name="osrframework",
-    version="v0.9.0b5",
+    version=__version__,
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
     author="Felix Brezo and Yaiza Rubio",
     author_email="contacto@i3visio.com",

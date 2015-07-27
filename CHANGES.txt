@@ -17,6 +17,9 @@ For more information, check the README.md in http://github.com/i3visio/osrframew
 - Recursive expansion of attributes when the cap is reached in Maltego.
 - Mailfy seems not to be working properly in Windows systems, but it does in Linux.
 
+v0.9.0b6, 2015/07/15 -- Minor fix in hi5 that needs credentials right now.
+- Hi5 wrapper has been modified to request credentials.
+
 v0.9.0b5, 2015/07/15 -- Added searchfy platforms for skype, facebook and twitter.
 - Added the searchfy functionality.
 - Fixed the returned objects in usufy (now, it's always a list).
