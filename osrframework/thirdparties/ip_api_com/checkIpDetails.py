@@ -94,7 +94,7 @@ def checkIpDetails(query=None):
                 if value != "":
                     aux = {}
                     if key == "city":
-                        aux["type"] = "i3visio." + key
+                        aux["type"] = "i3visio.location." + key
                         aux["value"] = value
                         aux["attributes"] = []
                         # Appending to the list of results                        

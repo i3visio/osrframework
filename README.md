@@ -73,6 +73,8 @@ major issue as you will be able to provide them as a parameter.
 # Superuser privileges are required so as to complete the installation.
 sudo python setup.py build
 sudo python setup.py install	
+# Installing other packages from PyPI that osrframework needs
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```
@@ -146,7 +148,9 @@ cd osrframework-master
 5.- In the osrframework-master folder, build and install the modules in your system:
 ```
 python setup.py build
-python setup.py install	
+python setup.py install
+# Installing other packages from PyPI that osrframework needs
+pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```

@@ -1,21 +1,16 @@
-For more information, check the README.md in http://github.com/i3visio/osrframework
+For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-[TO-DO] 
-- Fix searchfy wrappers to let them work with basic contextual information.
-- Verify the field extraction in usufy platforms.
-- Usage of mashape.com API linked to email verification.
-- Usage of mashape.com API linked to image verification.
-- Inclusions of email verification transforms.
-- Inclusions of searchfy transforms.
-- Inclusion of a call to pipl.com API.
-- Inclusion of new usufy platforms which are now in testing mode.
-- Full normalization of fields.
-- Create Facesaerch and Tor search transforms in Maltego.
-
-[Known issues]
-- Text to deep web search is broken.
-- Recursive expansion of attributes when the cap is reached in Maltego.
-- Mailfy seems not to be working properly in Windows systems, but it does in Linux.
+0.9.0rc1, 2015/08/15 -- Fixes in the Maltego transforms.
+- Added Maltego transform: searchfy on Twitter.
+- Added Maltego transform: searchfy on Facebook.
+- Added Maltego transform: searchfy on Skype.
+- Modified Maltego transform: aliasToKnownMails is now operative.
+- The i3visio.location.city entity is extracted correctly when calling ip-api.com API.
+- If the number of entities returned are too many a message will be displayed in the Transform output tab.
+- Debug windows are not shown in production thanks to a new utility included in configure_maltego.py.
+- Fix in Skype wrapper to avoid showing errors messages that make Maltego crash. 
+- Remove PIP dependencies: only pip will be required. The other dependencies will be checked when installed and included to be manually installed by the user.
+- Update on the version number from v0.9.0 to 0.9.0 format (without the 'v').
 
 v0.9.0b6, 2015/07/15 -- Minor fix in hi5 that needs credentials right now.
 - Hi5 wrapper has been modified to request credentials.
@@ -217,4 +212,30 @@ v0.1.0, 2014/12/31 -- Initial release.
 - Added a third-party API wrapper for haveibeenpwned.com: checkIfEmailWasHacked.
 - Added a third-party API wrapper for blockchain.info: getBitcoinAddressDetails.
 - Initial release.
+
+
+[TO-DO] 
+Short term:
+- Verify the field extraction in usufy platforms.
+- Update wefollow wrapper.
+- Update redtube wrapper.
+
+Long term:
+- Addition of GML visualization.
+- Fix searchfy wrappers to let them work with basic contextual information.
+- Usage of mashape.com API linked to email verification.
+- Usage of mashape.com API linked to image verification.
+- Inclusions of email verification transforms.
+- Inclusions of searchfy transforms.
+- Inclusion of a call to pipl.com API.
+- Inclusion of new usufy platforms which are now in testing mode.
+- Full normalization of fields.
+- Create Facesaerch and Tor search transforms in Maltego.
+- bzr integration?
+
+[Known issues]
+- Text to deep web search is broken.
+- Recursive expansion of attributes when the cap is reached in Maltego.
+- Mailfy seems not to be working properly in Windows systems, but it does in Linux.
+- There is an issue in Maltego Chlorine CE when exporting a transform with the transform.local.parameters popup marked as True: <Property name="transform.local.parameters" type="string" popup="true"></Property>. However, when importing the created .mtz file the popup attribute is not correctly updated not requesting the user who imported the transform the value unless he/she clicks on configure and manually update this value, something which may not be trivial for some users. This issue affects the transform aliasToSelectedPlatforms which will throw an error if not manually configured by the user instead of asking the user to insert the deliberately missing parameters. This is not an OSRFramework issue and has conveniently be notified to Paterva with date of 2015/08/12.
 

@@ -34,11 +34,9 @@ def aliasToKnownEmails(query=None):
 
     '''
     me = MaltegoTransform()
+    emails = mailfy.grabEmails(nicks = [query])
 
-    jsonData = mailfy.performSearch(emails=mailfy.grabEmails(nicks = [query]))
-
-    # This returns a dictionary like:
-    # [{}]
+    jsonData = mailfy.performSearch(emails)
 
     me.addListOfEntities(jsonData)
 

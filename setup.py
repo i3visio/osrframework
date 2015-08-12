@@ -93,19 +93,26 @@ setup(    name="osrframework",
     long_description=read_md("README.md"),
 #    long_description=open('README.md').read(),
     install_requires=[
-    "mechanize",
-    "Skype4Py",
-    "argparse",
-    "requests",
-    "python-emailahoy",
-    "BeautifulSoup",
-    #"validate_email",
-    #"pypandoc",
-    "pyexcel",
-    "pyexcel_ods",    
-    "pyexcel_xls",
-    "pyexcel_xlsx",
-    "pyexcel_text",
-    ],
+        "pip"
+    ], 
 )
+
+""""
+    Packages to be installed via pip
+        "mechanize",
+        "Skype4Py",
+        "argparse",
+        "requests",
+        "python-emailahoy",
+        "BeautifulSoup",
+        "pyexcel",
+        "pyexcel_ods",    
+        "pyexcel_xls",
+        "pyexcel_xlsx",
+        "pyexcel_text",
+"""    
+
+
+
+
 

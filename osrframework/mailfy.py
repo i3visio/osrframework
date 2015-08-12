@@ -166,7 +166,7 @@ def performSearch(emails=[]):
 	                pass"""
     return results
 
-def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = ["google"]):
+def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = ["gmail.com", "hushmail.com"]):
     '''
         Method that globally permits to grab the emails.
         

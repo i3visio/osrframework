@@ -214,8 +214,11 @@ class MaltegoTransform(object):
         # Defining a list to include the already added entities.
         addedEntities = []
 
+        nextID = 0
         # Generating up to 11 new entities
         for new in newEntities:
+            # Increasing the iterating factor of the NEXT entity
+            nextID+=1
             reviewedEntities.append(new)            
             # We do this to avoid processing attributes which will start with '@'
             if new["value"][0] != "@":
@@ -227,7 +230,13 @@ class MaltegoTransform(object):
         # Creating the addedEntities
         for ent in addedEntities:
             self.displayNewEntity(ent)
-
+        
+        if len(addedEntities) <= len(newEntities):
+            self.addUIMessage("All the entities have been displayed!")
+        else:
+            self.addUIMessage("Ooops! Too many entities to display!")
+            self.addUIMessage("The following entities could not be added because of the limits in Maltego Community Edition:\n"+json.dumps(json.dumps(newEntities, indent=2)))
+            
         # Now, we are updating some information in the father entity. To display these updates, the father entity needs to be recreated to represent these updates
         # First of all, we recover the information of the transform that was called.
         ####fatherEnt = self.getFatherEntity()
@@ -242,8 +251,13 @@ class MaltegoTransform(object):
         self.entities.append(maltegoEntity);
         
     def addUIMessage(self,message,messageType="Inform"):
-        self.UIMessages.append([messageType,message]);
-    
+        # changed added to avoid problems when displaying messages that last more than one line
+        lines = message.splitlines()
+        for line in lines:
+            # we add a just to make the texts more readable
+            self.UIMessages.append([messageType,line.ljust(80,".")]);
+
+        
     def addException(self,exceptionString):
         self.exceptions.append(exceptionString);
         

@@ -443,7 +443,13 @@ def listToMaltego(profiles):
     me.addListOfEntities(newEntities)        
         
     # Getting the output text
-    me.addUIMessage("Process completed!")    
+    me.addUIMessage("Process completed!")   
+    if len(newEntities)<=11:
+        me.addUIMessage("All the entities have been displayed!")
+    else:
+        me.addUIMessage("Ooops! Too many entities to display!")
+        me.addUIMessage("The following entities could not be added because of the limits in Maltego Community Edition:\n"+json.dumps(newEntities, indent=2))
+            
     # Returning the output text...
     me.returnOutput()
     return me.getOutput()

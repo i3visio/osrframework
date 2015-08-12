@@ -5,6 +5,8 @@
    <Transforms>
       <Transform name="i3visio.aliasToAllProfiles"/>  
       <Transform name="i3visio.aliasToFamousPlatforms"/>          
+      <Transform name="i3visio.aliasToSelectedPlatforms"/>        
+      <Transform name="i3visio.aliasToKnownEmails"/>           
       <Transform name="i3visio.aliasToSkypeAccounts"/>
       <Transform name="i3visio.aliasToSkypeIP"/>           
       <Transform name="i3visio.bitcoinAddressToBlockchainDetails"/>
@@ -23,6 +25,9 @@
       <Transform name="i3visio.phoneToMoreInfoListspam"/>      
       <Transform name="i3visio.textToAllEntities"/>      
       <Transform name="i3visio.textToGoogleSearchUri"/>      
+      <Transform name="i3visio.textToTwitterProfiles"/>           
+      <Transform name="i3visio.textToFacebookProfiles"/>                 
+      <Transform name="i3visio.textToSkypeProfiles"/>                 
       <Transform name="i3visio.uriToAllEntities"/> 
       <Transform name="i3visio.uriToBrowser"/> 
       <Transform name="i3visio.uriToDomain"/> 

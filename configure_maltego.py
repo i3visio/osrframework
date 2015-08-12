@@ -63,6 +63,24 @@ def setNewPath(iPath=None, dst=None):
             with open(os.path.join(pathFolder, file), "w") as oF:
                 oF.write(cont)
 
+def setDebugMode(dst=None, debug="false"):
+    '''
+        :param dst:     Path where the files have being copied.
+        :param debug:     Whether the transforms will be launched in debug mode.
+    '''
+    pathFolder = dst + "/TransformRepositories/Local"
+    for file in os.listdir( pathFolder):
+        if file.endswith("transformsettings") or file.endswith("transform"):
+            cont = ""
+            # reading the contents of such file
+            with open(os.path.join(pathFolder, file), "r") as iF:
+                cont = iF.read()
+            # replacing the working directory
+            cont = cont.replace('<Property name="transform.local.debug" type="boolean" popup="false"><DEBUG_MODE></Property>','<Property name="transform.local.debug" type="boolean" popup="false">'+ debug + '</Property>')
+            # Writing the output
+            with open(os.path.join(pathFolder, file), "w") as oF:
+                oF.write(cont)
+
 def zip(pathFolder=None):
     '''
         Zipping a file onto a mtz file.
@@ -86,7 +104,7 @@ def zip(pathFolder=None):
     except:
         pass
 
-def configureMaltego(base=None, iPath=None, personal=None, wFolder=None):
+def configureMaltego(base=None, iPath=None, personal=None, wFolder=None, debug=False):
     '''
     '''
     # copying anything in the config folder
@@ -94,6 +112,9 @@ def configureMaltego(base=None, iPath=None, personal=None, wFolder=None):
     
     # Setting the new path for 
     setNewPath(iPath = iPath, dst=os.path.join(wFolder,personal))
+
+    # Setting the new path for 
+    setDebugMode(dst=os.path.join(wFolder,personal), debug=str(debug).lower())    
     
     # Zipping the new configuration
     zip(pathFolder=wFolder+personal)
@@ -105,6 +126,7 @@ if __name__ == "__main__":
     parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-[Base]")            
     parser.add_argument('-i', '--installation_folder', metavar='<path>', action='store', help="path to wherever this framework is installed. By default, this folder.", required=False, default = os.getcwd())
     parser.add_argument('-p', '--personal', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="i3visio-[Personal]", required=False)                
+    parser.add_argument('-d', '--debug', action='store_true', help="storing the value of whether the transforms will be displaying a debug window when launched.", default=False, required=False)        
     parser.add_argument('-w', '--working_folder', metavar='<path>', action='store', help="path to the working folder.", default="./osrframework/transforms/lib/", required=False)                    
     
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
@@ -113,4 +135,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()        
     
-    configureMaltego(base=args.base, iPath = args.installation_folder, personal = args.personal, wFolder = args.working_folder)
+    configureMaltego(base=args.base, iPath = args.installation_folder, personal = args.personal, wFolder = args.working_folder, debug = args.debug)

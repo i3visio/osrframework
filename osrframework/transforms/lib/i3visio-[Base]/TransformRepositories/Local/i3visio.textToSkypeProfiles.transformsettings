@@ -1,7 +1,7 @@
 <TransformSettings enabled="true" disclaimerAccepted="false" showHelp="true">
    <Properties>
       <Property name="transform.local.command" type="string" popup="false">python</Property>
-      <Property name="transform.local.parameters" type="string" popup="false">usufy.py -p all --maltego -n </Property>
+      <Property name="transform.local.parameters" type="string" popup="false">searchfy.py -p skype --maltego -q </Property>
       <Property name="transform.local.working-directory" type="string" popup="false"><CUSTOM_WORKING_DIRECTORY>/osrframework</Property>
       <Property name="transform.local.debug" type="boolean" popup="false"><DEBUG_MODE></Property>
    </Properties>
