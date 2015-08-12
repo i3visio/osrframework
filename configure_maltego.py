@@ -123,9 +123,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='configure_maltego.py - A function to automatically generate Maltego configuration files.', prog='configure_maltego.py', epilog="", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
-    parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-[Base]")            
+    parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-transforms[Base]")            
     parser.add_argument('-i', '--installation_folder', metavar='<path>', action='store', help="path to wherever this framework is installed. By default, this folder.", required=False, default = os.getcwd())
-    parser.add_argument('-p', '--personal', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="i3visio-[Personal]", required=False)                
+    parser.add_argument('-c', '--configuration', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="configuration", required=False)                
     parser.add_argument('-d', '--debug', action='store_true', help="storing the value of whether the transforms will be displaying a debug window when launched.", default=False, required=False)        
     parser.add_argument('-w', '--working_folder', metavar='<path>', action='store', help="path to the working folder.", default="./osrframework/transforms/lib/", required=False)                    
     
@@ -135,4 +135,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()        
     
-    configureMaltego(base=args.base, iPath = args.installation_folder, personal = args.personal, wFolder = args.working_folder, debug = args.debug)
+    configureMaltego(base=args.base, iPath = args.installation_folder, personal = "i3visio-transforms["+args.configuration+"]", wFolder = args.working_folder, debug = args.debug)

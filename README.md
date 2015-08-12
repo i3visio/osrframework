@@ -36,9 +36,10 @@ Installation:
 =============
 The instructions may vary in the different OS but we encourage to run this program under Linux as some utilities may behave unstably.
 
-Under Linux
------------
-As Python is alrady installed, the rest of the installation under Python 2.7 is as 
+Under Linux (ALL)
+-----------------
+
+As Python is already installed, the rest of the installation under Python 2.7 is as 
 follows:
 
 1.- Download the repository. You have several options:
@@ -100,6 +101,15 @@ Follow the instructions there. Afterwards, you may launch the application.
 
 6.- You will have to import the recently created .mtz configuration file. Select 
 all the groups and click next. You may use the new i3visio entities now.
+
+Under Linux (Debian based, including Ubuntu)
+-------------------------------------------
+
+Using the .deb file provided.
+```
+sudo dpkg -i python-osrframework.XXXXXX.deb
+```
+The .deb file is not available yet via apt-get.
 
 Under Windows
 -----------
@@ -177,3 +187,11 @@ Follow the instructions there. Afterwards, you may launch the application.
 8.- Finally, you will have to import the recently created .mtz configuration file. 
 Select all the groups and click next. You may use the new i3visio entities now.
 
+EXTRA: creating the binary packages
+===================================
+```
+# First updating the .mtz file
+python configure_maltego.py -i /usr/bin
+python setup.py --command-packages=stdeb.command bdist_deb
+python setup.py bdist --format=zip
+```

@@ -6,6 +6,7 @@ logs*
 creds.txt
 build*
 dist*
+deb_dist*
 *egg*
 _lab*
 _new*

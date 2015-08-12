@@ -3,3 +3,4 @@ include CHANGES.txt
 include README.md
 include COPYING
 include *sample
+include osrframework/transforms/lib/*mtz

@@ -1,6 +1,11 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.9.0b7, 2015/08/15 -- Fixes in the Maltego transforms.
+
+0.9.0rc1, 2015/08/13 -- First DEB, RPM, compiled version of 0.9.0.
+- Updating setup.py to include some data files in /usr/bin/.
+- Creation of .deb, .rpm packages.
+
+0.9.0b7, 2015/08/12 -- Fixes in the Maltego transforms.
 - Added Maltego transform: searchfy on Twitter.
 - Added Maltego transform: searchfy on Facebook.
 - Added Maltego transform: searchfy on Skype.

@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__version__ = "0.9.0b7"
+__version__ = "0.9.0rc"
 
 #from distutils.core import setup
 import os
@@ -95,6 +95,54 @@ setup(    name="osrframework",
     install_requires=[
         "pip"
     ], 
+    data_files=[
+        ("/usr/bin/",
+            [
+            "osrframework/alias_generator.py",            
+            "osrframework/entify.py",
+            "osrframework/mailfy.py",              
+            "osrframework/phonefy.py",             
+            "osrframework/searchfy.py",
+            "osrframework/usufy.py",            
+            ]
+        ),
+        ("/usr/share/osrframework",
+            [
+                "osrframework/transforms/lib/i3visio-transforms[configuration].mtz",            
+            ]
+        ),
+        ("/usr/share/osrframework/transforms",
+            [
+                "osrframework/transforms/aliasToKnownEmails.py",
+                "osrframework/transforms/aliasToSkypeAccounts.py",
+                "osrframework/transforms/aliasToSkypeIP.py",
+                "osrframework/transforms/bitcoinAddressToBlockchainDetails.py",
+                "osrframework/transforms/coordinatesToGoogleMapsBrowser.py",
+                "osrframework/transforms/coordinatesToTwitterBrowser.py",
+                "osrframework/transforms/domainToGoogleSearchUriWithEmails.py",
+                "osrframework/transforms/domainToTld.py",
+                "osrframework/transforms/emailToAlias.py",
+                "osrframework/transforms/emailToBreachedAccounts.py",
+                "osrframework/transforms/emailToDomain.py",
+                "osrframework/transforms/emailToSkypeAccounts.py",
+                "osrframework/transforms/expandPropertiesFromI3visioEntity.py",
+                "osrframework/transforms/hashToMD5crackDotCom.py",
+                "osrframework/transforms/ipToIp_ApiInformation.py",
+                "osrframework/transforms/phoneToMoreInfo.py",
+                "osrframework/transforms/phoneToPerson.py",
+                "osrframework/transforms/textToEntities.py",
+                "osrframework/transforms/textToGoogleSearchUri.py",
+                "osrframework/transforms/textToPlatformSearch.py",
+                "osrframework/transforms/textToProfiles.py",
+                "osrframework/transforms/uriToBrowser.py",
+                "osrframework/transforms/uriToDomain.py",
+                "osrframework/transforms/uriToEntities.py",
+                "osrframework/transforms/uriToGoogleCacheUri.py",
+                "osrframework/transforms/uriToPort.py",
+                "osrframework/transforms/uriToProtocol.py",   
+            ]
+        ),      
+    ],    
 )
 
 """
