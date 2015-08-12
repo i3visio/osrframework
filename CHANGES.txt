@@ -7,6 +7,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Creation of .deb, .rpm packages.
 - Updating the README.
 - Creation of .ods output files by default.
+- Addition of icons and desktop launchers for Linux systems (.desktop files).
 
 0.9.0b7, 2015/08/12 -- Fixes in the Maltego transforms.
 - Added Maltego transform: searchfy on Twitter.
