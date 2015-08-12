@@ -108,7 +108,8 @@ def checkInSkype(query=None):
 
             except:
                 # Sth happened when parsing
-                print "WARNING: something happened when parsing the attributes in Skype. A problem with The program will continue with the execution..."
+                #print "WARNING: something happened when parsing the attributes in Skype. A problem with The program will continue with the execution..."
+                pass
             for key in atts.keys():
                 aux = {}
                 aux["type"] = key
@@ -118,7 +119,7 @@ def checkInSkype(query=None):
             jsonData.append(userData)
         return jsonData
     except:
-        print "ERROR: something happened when searching in Skype."
+        #print "ERROR: something happened when searching in Skype."
         return []
     
 if __name__ == "__main__":

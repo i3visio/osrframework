@@ -292,7 +292,10 @@ def usufyToCsvExport(data, fPath):
         
     # Storing the file        
     with open (fPath, "w") as oF:
-        oF.write(csvText)    
+        try:
+            oF.write(csvText)    
+        except Exception as e:
+            oF.write(str(e))
 
 def usufyToOdsExport(d, fPath):
     '''
