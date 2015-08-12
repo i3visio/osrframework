@@ -3,7 +3,10 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 
 0.9.0rc1, 2015/08/13 -- First DEB, RPM, compiled version of 0.9.0.
 - Updating setup.py to include some data files in /usr/bin/.
+- Accomdation of the .mtz Maltego file.
 - Creation of .deb, .rpm packages.
+- Updating the README.
+- Creation of .ods output files by default.
 
 0.9.0b7, 2015/08/12 -- Fixes in the Maltego transforms.
 - Added Maltego transform: searchfy on Twitter.

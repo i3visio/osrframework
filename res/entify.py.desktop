@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Entify
+GenericName=OSINT tools
+Exec=pantheon-terminal -e "entify.py -h"
+Icon=/usr/share/osrframework/logo.png
+Categories=i3visio;
+Terminal=true
+Type=Application
+Version=1.0

@@ -106,13 +106,29 @@ setup(    name="osrframework",
             "osrframework/usufy.py",            
             ]
         ),
+        ("/usr/share/applications/",
+            [
+            "res/alias_generator.py.desktop",            
+            "res/entify.py.desktop",
+            "res/mailfy.py.desktop",              
+            "res/phonefy.py.desktop",             
+            "res/searchfy.py.desktop",
+            "res/usufy.py.desktop",                
+            ]
+        ),        
         ("/usr/share/osrframework",
             [
-                "osrframework/transforms/lib/i3visio-transforms[configuration].mtz",            
+                "osrframework/transforms/lib/i3visio-transforms[linux].mtz",            
+                "osrframework/alias_generator.py",            
+                "osrframework/entify.py",
+                "osrframework/mailfy.py",              
+                "osrframework/phonefy.py",             
+                "osrframework/searchfy.py",
+                "osrframework/usufy.py",                                
+                "res/logo.png",                   
             ]
         ),
-        ("/usr/share/osrframework/transforms",
-            [
+        ("/usr/share/osrframework/transforms",  [                
                 "osrframework/transforms/aliasToKnownEmails.py",
                 "osrframework/transforms/aliasToSkypeAccounts.py",
                 "osrframework/transforms/aliasToSkypeIP.py",
@@ -139,9 +155,9 @@ setup(    name="osrframework",
                 "osrframework/transforms/uriToEntities.py",
                 "osrframework/transforms/uriToGoogleCacheUri.py",
                 "osrframework/transforms/uriToPort.py",
-                "osrframework/transforms/uriToProtocol.py",   
+                "osrframework/transforms/uriToProtocol.py",                
             ]
-        ),      
+        ),        
     ],    
 )
 

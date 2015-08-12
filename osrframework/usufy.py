@@ -374,9 +374,10 @@ For details, run:
             if args.output_folder != None:    
                 # if Verifying an output folder was selected
                 logger.debug("Preparing the output folder...")
-                if not os.path.exists(args.output_folder):
-                    logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
-                    os.makedirs(args.output_folder)
+                if not args.maltego:
+                    if not os.path.exists(args.output_folder):
+                        logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
+                        os.makedirs(args.output_folder)
                 # Launching the process...
                 res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
             else:
@@ -438,9 +439,7 @@ For details, run:
                 if args.extension:
                     # Storing the file...
                     logger.info("Creating output files as requested.")
-                    if not args.output_folder:
-                        args.output_folder = "./"
-                    else:
+                    if not args.maltego:
                         # Verifying if the outputPath exists
                         if not os.path.exists (args.output_folder):
                             logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
@@ -450,9 +449,10 @@ For details, run:
                     fileHeader = os.path.join(args.output_folder, args.file_header)
 
                     # Iterating through the given extensions to print its values
-                    for ext in args.extension:
-                        # Generating output files
-                        general.exportUsufy(res, ext, fileHeader)
+                    if not args.maltego:
+                        for ext in args.extension:
+                            # Generating output files
+                            general.exportUsufy(res, ext, fileHeader)
                         
                 # Generating the Maltego output    
                 if args.maltego:
@@ -498,7 +498,7 @@ if __name__ == "__main__":
     groupProcessing.add_argument('--fuzz_config',  metavar='<path_to_fuzz_list>', action='store', type=argparse.FileType('r'), help='path to the fuzzing config details. Wildcards such as the domains or the nicknames should come as: <DOMAIN>, <USERNAME>.')
     groupProcessing.add_argument('--nonvalid', metavar='<not_valid_characters>', required=False, default = '\\|<>=', action='store', help="string containing the characters considered as not valid for nicknames." )
     groupProcessing.add_argument('-c', '--credentials', metavar='<path_to_credentials_file', required=False, default = './creds.txt', action='store', help='path to the credentials file. If none was provided, ./creds.txt is assumed.')    
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['csv'], action='store', help='output extension for the summary files. Default: csv.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['ods'], action='store', help='output extension for the summary files. Default: ods.')
     groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')

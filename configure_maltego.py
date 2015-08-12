@@ -48,7 +48,7 @@ def copyAnything(src="./i3visio-[Base]", dst="./i3visio-[Personal]"):
 def setNewPath(iPath=None, dst=None):
     '''
         :param iPath:   The new installation path where the transforms will be searched.
-        :param dst:     Path where the files have being copied.
+        :param dst:     Path where the files have been copied.
     '''
     pathFolder = dst + "/TransformRepositories/Local"
     for file in os.listdir( pathFolder):
@@ -65,7 +65,7 @@ def setNewPath(iPath=None, dst=None):
 
 def setDebugMode(dst=None, debug="false"):
     '''
-        :param dst:     Path where the files have being copied.
+        :param dst:     Path where the files have been copied.
         :param debug:     Whether the transforms will be launched in debug mode.
     '''
     pathFolder = dst + "/TransformRepositories/Local"
@@ -104,14 +104,27 @@ def zip(pathFolder=None):
     except:
         pass
 
-def configureMaltego(base=None, iPath=None, personal=None, wFolder=None, debug=False):
+def configureMaltego(base=None, iPath=None, operating_system=None, wFolder=None, debug=False):
     '''
     '''
-    # copying anything in the config folder
-    copyAnything(src=os.path.join(wFolder,base), dst=os.path.join(wFolder,personal))
+    # Defining the name of the output file
+    personal = "i3visio-transforms["+args.operating_system+"]"
     
+    # Defining the full path to the folder in which the configuration files will be created
+    dst=os.path.join(wFolder,personal)    
+    
+    # copying anything in the config folder
+    copyAnything(src=os.path.join(wFolder,base), dst=dst)
+
+    
+    if operating_system == "windows":
+        # The provided installation path, usually the installation root
+        installationPath = iPath
+    elif operating_system == "linux":
+        # The home folder of the user
+        installationPath="/usr/share/"
     # Setting the new path for 
-    setNewPath(iPath = iPath, dst=os.path.join(wFolder,personal))
+    setNewPath(iPath = installationPath, dst=dst)
 
     # Setting the new path for 
     setDebugMode(dst=os.path.join(wFolder,personal), debug=str(debug).lower())    
@@ -125,7 +138,7 @@ if __name__ == "__main__":
     # Defining the mutually exclusive group for the main options
     parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="i3visio-transforms[Base]")            
     parser.add_argument('-i', '--installation_folder', metavar='<path>', action='store', help="path to wherever this framework is installed. By default, this folder.", required=False, default = os.getcwd())
-    parser.add_argument('-c', '--configuration', metavar='<name>', action='store', help="name of the destiny's name for the configuration file.", default="configuration", required=False)                
+    parser.add_argument('-o', '--operating_system', metavar='<name>', action='store', choices=["windows","linux"], help="name of the destiny's name for the configuration file.", default="configuration", required=False)                
     parser.add_argument('-d', '--debug', action='store_true', help="storing the value of whether the transforms will be displaying a debug window when launched.", default=False, required=False)        
     parser.add_argument('-w', '--working_folder', metavar='<path>', action='store', help="path to the working folder.", default="./osrframework/transforms/lib/", required=False)                    
     
@@ -135,4 +148,4 @@ if __name__ == "__main__":
     
     args = parser.parse_args()        
     
-    configureMaltego(base=args.base, iPath = args.installation_folder, personal = "i3visio-transforms["+args.configuration+"]", wFolder = args.working_folder, debug = args.debug)
+    configureMaltego(base=args.base, iPath = args.installation_folder, operating_system =args.operating_system, wFolder = args.working_folder, debug = args.debug)

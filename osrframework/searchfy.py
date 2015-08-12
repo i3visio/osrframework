@@ -76,9 +76,7 @@ def searchfy_main(args):
     if args.extension:
         # Storing the file...
         #logger.info("Creating output files as requested.")
-        if not args.output_folder:
-            args.output_folder = "./"
-        else:
+        if not args.maltego:
             # Verifying if the outputPath exists
             if not os.path.exists (args.output_folder):
                 #logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
@@ -86,12 +84,13 @@ def searchfy_main(args):
                 
         # Grabbing the results 
         fileHeader = os.path.join(args.output_folder, args.file_header)
-
-        # Iterating through the given extensions to print its values
-        for ext in args.extension:
-            # Generating output files
-            general.exportUsufy(results, ext, fileHeader)
-            
+        
+        if not args.maltego:
+            # Iterating through the given extensions to print its values
+            for ext in args.extension:
+                # Generating output files
+                general.exportUsufy(results, ext, fileHeader)
+                
     # Generating the Maltego output    
     if args.maltego:
         general.listToMaltego(results)
@@ -123,7 +122,7 @@ if __name__ == "__main__":
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
     # Getting a sample header for the output files
 
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['csv'], action='store', help='output extension for the summary files. Default: csv.')    
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['ods'], action='store', help='output extension for the summary files. Default: ods.')    
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>' )          
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')    
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')

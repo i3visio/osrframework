@@ -87,7 +87,7 @@ If no error is displayed, the installation would have been performed correctly.
 ```
 python configure_maltego.py
 ```
-This will create a .mtz file under: 
+This will create a new .mtz file under: 
 ```
 <INSTALLATION_FOLDER>/osrframework/transforms/lib/
 ```
@@ -105,11 +105,16 @@ all the groups and click next. You may use the new i3visio entities now.
 Under Linux (Debian based, including Ubuntu)
 -------------------------------------------
 
-Using the .deb file provided.
+1.- Using the .deb file provided, install it with dpkg:
 ```
 sudo dpkg -i python-osrframework.XXXXXX.deb
 ```
 The .deb file is not available yet via apt-get.
+
+2.- You will have to import the recently created .mtz configuration file under:
+```
+/usr/share/osrframework
+```
 
 Under Windows
 -----------
@@ -191,7 +196,9 @@ EXTRA: creating the binary packages
 ===================================
 ```
 # First updating the .mtz file
-python configure_maltego.py -i /usr/bin
+python configure_maltego.py -i /usr/bin -o linux
 python setup.py --command-packages=stdeb.command bdist_deb
+# The deb file is under ./deb_dist
 python setup.py bdist --format=zip
+# The zip file is under ./dist
 ```

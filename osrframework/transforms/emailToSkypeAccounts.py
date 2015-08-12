@@ -41,20 +41,12 @@ def emailToSkypeAccount(query=None):
     # [{}]
     newEntities = []
 
-    #print json.dumps(entities, indent=2)
     for user in jsonData:
 	    # Defining the main entity
         aux ={}
-        aux["type"] = "i3visio.profile"
-        aux["value"] =  "Skype - " + str(user["i3visio.alias"])
+        aux["type"] = user["type"]
+        aux["value"] =  user["value"]
         aux["attributes"] = []    
-
-        # Defining the attributes recovered
-        att ={}
-        att["type"] = "i3visio.platform"
-        att["value"] =  str("Skype")
-        att["attributes"] = []
-        aux["attributes"].append(att)
 
         for field in user.keys():
             # [TO-DO] Appending all the information from the json:
