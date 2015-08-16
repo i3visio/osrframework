@@ -3,6 +3,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 0.9.0rc2, 2015/08/13 -- Minor changes to be shown.
 - Updating the help texts to include the references to the official repository.
 - The .desktop files do not include now a reference to pantheon-terminal.
+- Updating signing keys for the ppa.
 
 0.9.0rc1, 2015/08/13 -- First DEB, RPM, compiled version of 0.9.0.
 - Updating setup.py to include some data files in /usr/bin/.
