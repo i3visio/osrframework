@@ -1,0 +1,17 @@
+<TransformSet name="i3visio [Global]" description="Set of global transforms from i3visio for OSINT.">
+   <Transforms>       
+      <Transform name="i3visio.aliasToKnownEmails"/>                
+      <Transform name="i3visio.aliasToSkypeAccounts"/>
+      <Transform name="i3visio.aliasToSkypeIP"/>      
+      <Transform name="i3visio.emailToAlias"/>
+      <Transform name="i3visio.emailToBreachedAccounts"/>
+      <Transform name="i3visio.emailToDomain"/>       
+      <Transform name="i3visio.emailToSkypeAccounts"/>
+      <Transform name="i3visio.expandPropertiesFromI3visioEntity"/>      
+      <Transform name="i3visio.hashToMD5crackDotCom"/> 
+      <Transform name="i3visio.textToAllEntities"/>      
+      <Transform name="i3visio.textToGoogleSearchUri"/>
+      <Transform name="i3visio.textToPlatformSearch"/>         
+      <Transform name="i3visio.uriToAllEntities"/>           
+   </Transforms>
+</TransformSet>

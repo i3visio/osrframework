@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Phonefy
+GenericName=OSINT tools
+Exec=phonefy.py -h
+Icon=/usr/share/osrframework/logo.png
+Categories=i3visio;
+Terminal=true
+Type=Application
+Version=1.0

@@ -1,0 +1,29 @@
+<TransformSet name="i3visio - Entities extraction" description="Set of transforms from i3visio to extract entities using entify package and its regular expressions.">
+   <Transforms>
+      <Transform name="i3visio.textToBitcoinAddressEntities"/>
+      <Transform name="i3visio.textToDniEntities"/>
+      <Transform name="i3visio.textToDogecoinAddressEntities"/>
+      <Transform name="i3visio.textToEmailEntities"/>
+      <Transform name="i3visio.textToIPv4Entities"/>
+      <Transform name="i3visio.textToLitecoinAddressEntities"/>
+      <Transform name="i3visio.textToMD5Entities"/>
+      <Transform name="i3visio.textToNamecoinAddressEntities"/>
+      <Transform name="i3visio.textToPeercoinAddressEntities"/>
+      <Transform name="i3visio.textToSHA1Entities"/>
+      <Transform name="i3visio.textToSHA256Entities"/>
+      <Transform name="i3visio.textToUriEntities"/>
+
+      <Transform name="i3visio.uriToBitcoinAddressEntities"/>
+      <Transform name="i3visio.uriToDniEntities"/>
+      <Transform name="i3visio.uriToDogecoinAddressEntities"/>
+      <Transform name="i3visio.uriToEmailEntities"/>
+      <Transform name="i3visio.uriToIPv4Entities"/>
+      <Transform name="i3visio.uriToLitecoinAddressEntities"/>
+      <Transform name="i3visio.uriToMD5Entities"/>
+      <Transform name="i3visio.uriToNamecoinAddressEntities"/>
+      <Transform name="i3visio.uriToPeercoinAddressEntities"/>
+      <Transform name="i3visio.uriToSHA1Entities"/>
+      <Transform name="i3visio.uriToSHA256Entities"/>
+      <Transform name="i3visio.uriToUriEntities"/>
+   </Transforms>
+</TransformSet>

@@ -1,0 +1,261 @@
+ dpkg-buildpackage -rfakeroot -d -us -uc -S -sa
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-buildpackage: source package osrframework
+dpkg-buildpackage: source version 0.9.0rc-1
+dpkg-buildpackage: source distribution trusty
+dpkg-buildpackage: source changed by Felix Brezo and Yaiza Rubio <contacto@i3visio.com>
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+ dpkg-source --before-build osrframework-0.9.0rc
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-source: info: using options from osrframework-0.9.0rc/debian/source/options: --extend-diff-ignore=\.egg-info
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+ fakeroot debian/rules clean
+dh clean --with python2 --buildsystem=python_distutils
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+   dh_testdir -O--buildsystem=python_distutils
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+   dh_auto_clean -O--buildsystem=python_distutils
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+pyversions: missing X(S)-Python-Version in control file, fall back to debian/pyversions
+pyversions: missing debian/pyversions file, fall back to supported versions
+warning: pypandoc module not found, could not convert Markdown to RST
+running clean
+'build/lib.linux-x86_64-2.7' does not exist -- can't clean it
+'build/bdist.linux-x86_64' does not exist -- can't clean it
+'build/scripts-2.7' does not exist -- can't clean it
+   dh_clean -O--buildsystem=python_distutils
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+ dpkg-source -b osrframework-0.9.0rc
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-source: info: using options from osrframework-0.9.0rc/debian/source/options: --extend-diff-ignore=\.egg-info
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-source: info: using source format `3.0 (quilt)'
+dpkg-source: info: building osrframework using existing ./osrframework_0.9.0rc.orig.tar.gz
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-source: info: building osrframework in osrframework_0.9.0rc-1.debian.tar.gz
+dpkg-source: info: building osrframework in osrframework_0.9.0rc-1.dsc
+ dpkg-genchanges -S -sa >../osrframework_0.9.0rc-1_source.changes
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-genchanges: including full source code in upload
+ dpkg-source --after-build osrframework-0.9.0rc
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-source: info: using options from osrframework-0.9.0rc/debian/source/options: --extend-diff-ignore=\.egg-info
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+dpkg-buildpackage: full upload (original source is included)
+Now running lintian...
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_TIME = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+W: osrframework source: rc-version-greater-than-expected-version 0.9.0rc > 0.9.0 (consider using 0.9.0~rc)
+W: osrframework source: no-debian-copyright
+W: osrframework source: ancient-standards-version 3.9.1 (current is 3.9.5)
+Finished running lintian.
+Now signing changes and any dsc files...
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "es_ES.UTF-8",
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+ signfile osrframework_0.9.0rc-1.dsc Felix Brezo and Yaiza Rubio <contacto@i3visio.com>
+
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "es_ES.UTF-8",
+	LC_MONETARY = "es_ES.UTF-8",
+	LC_MEASUREMENT = "es_ES.UTF-8",
+	LC_NUMERIC = "es_ES.UTF-8",
+	LANG = "en"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+ signfile osrframework_0.9.0rc-1_source.changes Felix Brezo and Yaiza Rubio <contacto@i3visio.com>
+
+Successfully signed dsc and changes files
