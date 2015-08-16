@@ -36,6 +36,41 @@ Installation:
 =============
 The instructions may vary in the different OS but we encourage to run this program under Linux as some utilities may behave unstably.
 
+Under Linux (Debian based, including Ubuntu)
+-------------------------------------------
+As of August 16th, 2015, a ppa repository has been added to let users keep track of updates using the packaging utilities provided by Debian/Ubuntu systems.
+1.- Adding the i3visio repository and updating the package list
+```
+# Adding the repository
+sudo add-apt-repository ppa:i3visio
+# Updating the package list
+sudo apt-get update
+```
+
+2.- Installing the application and the corresponding dependencies:
+```
+# Official package
+sudo apt-get install python-osrframework
+# Dependencies
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text
+```
+Whenever a new version is released, the following command will upgrade the package:
+```
+sudo apt-get upgrade
+```
+You should be able to launch usufy.py, entify.py and so on from a terminal by typing:
+```
+usufy.py -h
+searchfy.py -h
+entify.py -h
+...
+```
+
+3.- You will be able to import the .mtz configuration for Maltego from the file under:
+```
+/usr/share/osrframework
+```
+
 Under Linux (ALL)
 -----------------
 
@@ -101,20 +136,6 @@ Follow the instructions there. Afterwards, you may launch the application.
 
 6.- You will have to import the recently created .mtz configuration file. Select 
 all the groups and click next. You may use the new i3visio entities now.
-
-Under Linux (Debian based, including Ubuntu)
--------------------------------------------
-
-1.- Using the .deb file provided, install it with dpkg:
-```
-sudo dpkg -i python-osrframework.XXXXXX.deb
-```
-The .deb file is not available yet via apt-get.
-
-2.- You will have to import the recently created .mtz configuration file under:
-```
-/usr/share/osrframework
-```
 
 Under Windows
 -----------

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Phonefy
 GenericName=OSINT tools
-Exec=pantheon-terminal -e "phonefy.py -h"
+Exec=phonefy.py -h
 Icon=/usr/share/osrframework/logo.png
 Categories=i3visio;
 Terminal=true

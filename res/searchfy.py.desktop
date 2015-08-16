@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Searchfy
 GenericName=OSINT tools
-Exec=pantheon-terminal -e "searchfy.py -h"
+Exec=searchfy.py -h
 Icon=/usr/share/osrframework/logo.png
 Categories=i3visio;
 Terminal=true
