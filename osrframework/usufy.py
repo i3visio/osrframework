@@ -473,7 +473,7 @@ if __name__ == "__main__":
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
 
-    parser = argparse.ArgumentParser(description='usufy.py - Piece of software that checks the existence of a profile for a given user in up to ' + str(len(platOptions)-1)+ ' different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
+    parser = argparse.ArgumentParser(description='usufy.py - Piece of software that checks the existence of a profile for a given user in up to ' + str(len(platOptions)-1)+ ' different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options

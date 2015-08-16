@@ -39,6 +39,7 @@ The instructions may vary in the different OS but we encourage to run this progr
 Under Linux (Debian based, including Ubuntu)
 -------------------------------------------
 As of August 16th, 2015, a ppa repository has been added to let users keep track of updates using the packaging utilities provided by Debian/Ubuntu systems.
+
 1.- Adding the i3visio repository and updating the package list
 ```
 # Adding the repository

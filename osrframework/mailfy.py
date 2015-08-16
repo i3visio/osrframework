@@ -222,7 +222,7 @@ def mailfy_main(args):
                 oF.write(r+"\n")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
+    parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>..', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     emailDomains = ["gmail.com", "hushmail.com"]

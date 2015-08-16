@@ -29,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Buzznet(Platform):
+class About(Platform):
     """ 
-        A <Platform> object for Buzznet.
+        A <Platform> object for About.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Buzznet"
-        self.tags = ["audio"]
+        self.platformName = "About"
+        self.tags = ["social", "news"]
 
         ########################
         # Defining valid modes #
@@ -54,7 +54,7 @@ class Buzznet(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://" + "<usufy>" + ".buzznet.com/user/"
+        self.url["usufy"] = "https://about.me/search/name:" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -72,7 +72,7 @@ class Buzznet(Platform):
         self.validQuery = {}
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile("[^\.]*")
+        self.validQuery["usufy"] = re.compile(".*")   
         #self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
@@ -81,7 +81,7 @@ class Buzznet(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Sorry, the page you requested was not found.</div>"]
+        self.notFoundText["usufy"] = ["There are no people matching your search. Try removing one or more terms to see more matches."]
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -98,7 +98,6 @@ class Buzznet(Platform):
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-        
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
@@ -109,4 +108,5 @@ class Buzznet(Platform):
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-
+        
+        

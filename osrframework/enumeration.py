@@ -99,7 +99,7 @@ def enumeration_main(args):
     enumerateURL(urlDict, args.output_folder, startIndex = args.start_index, maxErrors = args.max_errors)
     
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='enumeration.py - Checking the existence of a possible enumeration.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program.', add_help=False)
+    parser = argparse.ArgumentParser(description='enumeration.py - Checking the existence of a possible enumeration.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options

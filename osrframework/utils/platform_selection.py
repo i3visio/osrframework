@@ -24,6 +24,7 @@ import osrframework.utils.credentials as credentials
 ##################################################
 ##################################################
 # A
+from osrframework.wrappers.about import About
 from osrframework.wrappers.adtriboo import Adtriboo
 from osrframework.wrappers.ahmia import Ahmia
 from osrframework.wrappers.anarchy101 import Anarchy101
@@ -394,6 +395,7 @@ def getAllPlatformObjects(mode = None):
     ##################################################
     ##################################################
     # A
+    listAll.append(About())    
     listAll.append(Adtriboo())
     listAll.append(Ahmia())    
     listAll.append(Anarchy101())
@@ -657,7 +659,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Vk())
     
     # W
-    listAll.append(Wefollow())
+    #listAll.append(Wefollow())
     listAll.append(WikipediaAr())
     listAll.append(WikipediaCa())
     listAll.append(WikipediaDe())

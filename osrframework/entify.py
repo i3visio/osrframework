@@ -214,7 +214,7 @@ For details, run:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='entify.py - entify.py is a program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify.py', epilog="", add_help=False)
+    parser = argparse.ArgumentParser(description='entify.py - entify.py is a program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify.py', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Adding the main options
