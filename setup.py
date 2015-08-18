@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__version__ = "0.9.0rc3"
+__version__ = "0.9.0rc4"
 
 #from distutils.core import setup
 import os
@@ -60,42 +60,11 @@ except:
     import sys
     sys.exit()
  
-setup(    name="osrframework",
-    version=__version__,
-    description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
-    author="Felix Brezo and Yaiza Rubio",
-    author_email="contacto@i3visio.com",
-    url="http://github.com/i3visio/osrframework",
-    license="COPYING",
-    packages=[
-        "osrframework", 
-        "osrframework.thirdparties", 
-        "osrframework.thirdparties.blockchain_info", 
-        "osrframework.thirdparties.haveibeenpwned_com", 
-        "osrframework.thirdparties.infobel_com", 
-        "osrframework.thirdparties.ip_api_com", 
-        "osrframework.thirdparties.md5crack_com", 
-        "osrframework.thirdparties.pipl_com",         
-        "osrframework.thirdparties.pipl_com.lib",                 
-        "osrframework.thirdparties.resolvethem_com",  
-        "osrframework.thirdparties.skype",         
-        "osrframework.utils",         
-        "osrframework.transforms", 
-        "osrframework.transforms.lib",         
-        "osrframework.patterns", 
-        "osrframework.wrappers", 
-        "osrframework.searchengines",         
-        #"osrframework.darkfy",
-        #"osrframework.darkfy.lib",
-        #"osrframework.darkfy.lib.wrappers",                                 
-    ],
-#    scripts=[""],
-    long_description=read_md("README.md"),
-#    long_description=open('README.md').read(),
-    install_requires=[
-        "pip"
-    ], 
-    data_files=[
+import sys
+if sys.platform == 'win32':
+    files_to_copy=[]
+else:
+    files_to_copy=[
         ("/usr/bin/",
             [
             "osrframework/alias_generator.py",            
@@ -158,7 +127,45 @@ setup(    name="osrframework",
                 "osrframework/transforms/uriToProtocol.py",                
             ]
         ),        
-    ],    
+    ]
+
+# Launching the setup
+setup(    name="osrframework",
+    version=__version__,
+    description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
+    author="Felix Brezo and Yaiza Rubio",
+    author_email="contacto@i3visio.com",
+    url="http://github.com/i3visio/osrframework",
+    license="COPYING",
+    packages=[
+        "osrframework", 
+        "osrframework.thirdparties", 
+        "osrframework.thirdparties.blockchain_info", 
+        "osrframework.thirdparties.haveibeenpwned_com", 
+        "osrframework.thirdparties.infobel_com", 
+        "osrframework.thirdparties.ip_api_com", 
+        "osrframework.thirdparties.md5crack_com", 
+        "osrframework.thirdparties.pipl_com",         
+        "osrframework.thirdparties.pipl_com.lib",                 
+        "osrframework.thirdparties.resolvethem_com",  
+        "osrframework.thirdparties.skype",         
+        "osrframework.utils",         
+        "osrframework.transforms", 
+        "osrframework.transforms.lib",         
+        "osrframework.patterns", 
+        "osrframework.wrappers", 
+        "osrframework.searchengines",         
+        #"osrframework.darkfy",
+        #"osrframework.darkfy.lib",
+        #"osrframework.darkfy.lib.wrappers",                                 
+    ],
+#    scripts=[""],
+    long_description=read_md("README.md"),
+#    long_description=open('README.md').read(),
+    install_requires=[
+        "pip"
+    ], 
+    data_files=files_to_copy
 )
 
 """
@@ -174,9 +181,4 @@ setup(    name="osrframework",
         "pyexcel_xls",
         "pyexcel_xlsx",
         "pyexcel_text",
-"""    
-
-
-
-
-
+"""
