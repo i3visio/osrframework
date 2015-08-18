@@ -1,11 +1,9 @@
 [Desktop Entry]
-Name=usufy.py
-GenericName=OSINT tool
-Comment=usufy is a GPLv3+ piece of software that checks the existence of a profile for a given user in a bunch of different platforms. It uses the error messages displayed by most platforms when a user profile has not been found as the evidence of the existence or not of a given profile. 
+Name=Usufy
+GenericName=OSINT tools
 Exec=usufy.py -h
-Terminal=True
+Icon=/usr/share/osrframework/logo.png
+Categories=i3visio;
+Terminal=true
 Type=Application
-StartupNotify=false
-Categories=i3visio;Analysis;
-
-
+Version=1.0
