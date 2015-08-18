@@ -575,7 +575,7 @@ def _generateTabularDataOld(res, isTerminal=False):
             headers, a list containing the headers used for the rows.
     '''
     # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname"]
+    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform"]
     # Dictionary of profiles found found
     values = {}
     headers = ["i3visio.alias"]
