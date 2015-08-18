@@ -302,9 +302,23 @@ class Platform():
         '''
         if data == None:
             # Accessing the resource
-            data = i3Browser.recoverURL(uri)        
-        else:
-            return json.dumps({})
+            i3Browser = browser.Browser()            
+            try:
+                # check if it needs creds
+                if self.needsCredentials[mode]:
+                    authenticated = self._getAuthenticated(i3Browser)
+                    if authenticated:
+                        # Accessing the resources
+                        data = i3Browser.recoverURL(uri)
+                else:
+                    # Accessing the resources
+                    data = i3Browser.recoverURL(uri)   
+            except:
+                # No information was found, then we return a null entity
+                # TO-DO: i3BrowserException         
+                return json.dumps({})                        
+        #else:
+        #    return json.dumps({})
         info = []
 
         # Searchfy needs an special treatment to recover the results
