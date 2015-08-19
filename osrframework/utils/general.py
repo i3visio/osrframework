@@ -160,7 +160,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
             # Now, we will fill the rest of the cells with "N/A" values
             for i in range(len(headers)-len(dataRow)):
                 # Printing a Not Applicable value
-                newRow.append("N/A")
+                newRow.append("[N/A]")
                 
             # Appending the newRow to the data structure
             workingSheet.append(newRow)
@@ -177,8 +177,8 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
                 #newRow.append(unicode(values[prof][col]))
                 newRow.append(str(values[prof][col]))
             except:
-                # Printing a Not Applicable value
-                newRow.append("N/A")
+                # Printing that an error was found
+                newRow.append("[ERROR]")
         # Appending the newRow to the data structure
         workingSheet.append(newRow)
 
