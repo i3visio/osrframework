@@ -54,7 +54,7 @@ class Instructables(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] =         self.url = "http://www.instructables.com/member/"  + "<usufy>"       
+        self.url["usufy"] = "http://www.instructables.com/member/"  + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################

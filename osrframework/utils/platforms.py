@@ -383,7 +383,6 @@ class Platform():
                 r["type"] = "i3visio.uri"
                 r["value"] = resURI
                 r["attributes"] = []
-                print resURI
                 """# Iterating through all the type of fields
                 i3Browser = browser.Browser()            
                 try:

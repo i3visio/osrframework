@@ -132,8 +132,8 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
             if not isTerminal:
                 values[p["value"]][a["type"]] = a["value"]
                 # Appending the column if not already included
-                if a["type"] not in headers:
-                    headers.append(a["type"])
+                if str(a["type"]) not in headers:
+                    headers.append(str(a["type"]))
             # Specific table construction for the terminal output
             else:
                 if a["type"] in allowedInTerminal:
@@ -176,15 +176,17 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
             try:
                 #newRow.append(unicode(values[prof][col]))
                 newRow.append(str(values[prof][col]))
-            except:
+            except UnicodeEncodeError as e:
                 # Printing that an error was found
-                newRow.append("[ERROR]")
+                newRow.append("[ERROR: Unicode Encode]")  
+            except:
+                # Printing that this is not applicable value
+                newRow.append("[N/A]")               
         # Appending the newRow to the data structure
         workingSheet.append(newRow)
 
     # Storing the workingSheet onto the data structure to be stored
     data.update({"Usufy sheet": workingSheet})
-
     return data
 
 def usufyToJsonExport(d, fPath):

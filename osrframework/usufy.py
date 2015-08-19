@@ -39,7 +39,8 @@ __email__ = "contacto@i3visio.com"
 import argparse
 import json
 import os
-import time
+import datetime as dt
+
 
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
@@ -162,22 +163,24 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
     
     logger.debug("\tLooking for profiles in " + str(p) + "...")
     #res = p.getUserPage(nick, rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)    
-    
-    res = p.getInfo(query=nick, mode="usufy", process=True)#rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)            
-
-    #if res != None:
-    if res != []:
-        if outQueue != None:
-            #logger.info("\t" + (str(p) +" - User profile found: ").ljust(40, ' ') + url)
-            # Storing in the output queue the values
-            outQueue.put((res))
-        else:
-            # If no queue was given, return the value normally
-            return res
-    else: 
-        logger.debug("\t" + str(p) +" - User profile not found...")
-
-
+    try:      
+        res = p.getInfo(query=nick, mode="usufy", process=True)#rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)  
+        
+        if res != []:
+            if outQueue != None:
+                #logger.info("\t" + (str(p) +" - User profile found: ").ljust(40, ' ') + url)
+                # Storing in the output queue the values
+                outQueue.put((res))
+            else:
+                # If no queue was given, return the value normally
+                return res
+        else: 
+            logger.debug("\t" + str(p) +" - User profile not found...")
+        return []
+    except:
+        print "ERROR: something happened when processing " + str(p) +". You may like to deactivate this wrapper if the error persist."
+        return []
+        
 def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, maltego=False, verbosity=1, logFolder="./logs"):
     ''' 
         Method that receives as a parameter a series of nicks and verifies whether those nicks have a profile associated in different social networks.
@@ -220,9 +223,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         # We define the pool
         pool = Pool(nThreads)
 
-        #print json.dumps(args, indent=2)
         # We call the wrapping function with all the args previously generated
-
         #poolResults = pool.apply_async(multi_run_wrapper,(args))
         poolResults = pool.map(multi_run_wrapper,args)
         
@@ -258,14 +259,15 @@ def usufy_main(args):
     osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=args.verbose, logFolder=args.logfolder)    
     # From now on, the logger can be recovered like this:
     logger = logging.getLogger("osrframework.usufy")
-
-    logger.info("""usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+    # Printing the results if requested
+    if not args.maltego:
+        sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.
-For details, run:
-\tpython usufy.py --license""")
-    
-    logger.info("Starting usufy.py...")
+This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+        logger.info(sayingHello)
+        print sayingHello
+        print
+        logger.info("Starting usufy.py...")
 
     if args.license:
         logger.info("Looking for the license...")
@@ -276,7 +278,14 @@ For details, run:
                 for linea in contenido:    
                     print linea
         except Exception:
-            logger.error("ERROR: there has been an error when opening the COPYING file.\n\tThe file contains the terms of the GPLv3 under which this software is distributed.\n\tIn case of doubts, verify the integrity of the files or contact contacto@i3visio.com.")
+            try:
+                # Trying to recover the COPYING file...
+                with open ("/usr/share/osrframework/COPYING", "r") as iF:
+                    contenido = iF.read().splitlines()
+                    for linea in contenido:    
+                        print linea            
+            except:
+                logger.error("ERROR: there has been an error when opening the COPYING file.\n\tThe file contains the terms of the GPLv3 under which this software is distributed.\n\tIn case of doubts, verify the integrity of the files or contact contacto@i3visio.com.")
     elif args.fuzz:
         logger.info("Performing the fuzzing tasks...")
         res = fuzzUsufy(args.fuzz, args.fuzz_config)
@@ -327,6 +336,11 @@ For details, run:
             return strTimes
         # Executing the corresponding process...
         else:
+            # Showing the execution time...
+            if not args.maltego:
+                startTime= dt.datetime.now()
+                print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Be patient!\n"        
+                
             # Defining the list of users to monitor
             nicks = []
             logger.debug("Recovering nicknames to be processed...")
@@ -460,14 +474,27 @@ For details, run:
 
                 # Printing the results if requested
                 if not args.maltego:
-                    print "A summary of the results obtained are the following table:"
+                    print "A summary of the results obtained are shown in the following table:"
                     print general.usufyToTextExport(res)
+                    
+                    print
+
                     print "You can find all the information collected in the following files:"                                                     
                     for ext in args.extension:
                         # Generating output files
                         print "\t-" + fileHeader + "." + ext
-                return res
-        
+
+                # Showing the execution time...
+                if not args.maltego:
+                    print
+                    endTime= dt.datetime.now()
+                    print str(endTime) +"\tFinishing execution..."                    
+                    print 
+                    print "Total time used:\t" + str(endTime-startTime) 
+                    print "Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(listPlatforms)) +" seconds"
+                    print     
+
+                return res                        
 
 if __name__ == "__main__":
     # Recovering all the possible options

@@ -1,10 +1,11 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.9.0rc5, 2015/08/19 -- Extraction of attributes reconfigured.
+0.9.0rc5, 2015/08/20 -- Extraction of attributes reconfigured.
 - Added youtube and github to searchfy.
 - The searchfy file now operates using uri and parsing them.
 - Added a new global variable to be able to apply different types of URLs for the profiles in a platform.
-- Fix in the csv export. Using pyexcel_io now. Could not fix an issue linked to the export of Unicode characters in this library.
+- Fix in the csv export. Using pyexcel_io now. Could not fix an issue linked to the export of Unicode characters in this library. Temporally, an error message will be stored whenever this happens.
+- Usufy will display now additional details when being launched: start and end messages as well as time consumed.
 
 0.9.0rc4, 2015/08/18 -- Extraction of attributes reconfigured.
 - Fix in the extraction of Twitter fields.
@@ -246,6 +247,8 @@ v0.1.0, 2014/12/31 -- Initial release.
 
 
 [TO-DO] 
+Short term:
+
 Long term:
 - Addition of GML visualization.
 - Fix searchfy wrappers to let them work with basic contextual information.
@@ -256,9 +259,12 @@ Long term:
 - Inclusion of new usufy platforms which are now in testing mode.
 - Full normalization of fields.
 - Create Facesaerch and Tor search transforms in Maltego.
+- Recover the logging functions.
+- Include a globla function to recover the license.
 - bzr integration?
 
 [Known issues]
+- Export of Unicode characters. Depends on an update of pyexcel modules.
 - Text to deep web search is broken.
 - Recursive expansion of attributes when the cap is reached in Maltego.
 - Mailfy seems not to be working properly in Windows systems, but it does in Linux.

@@ -38,7 +38,7 @@ def setupLogger(loggerName="osrframework", logFolder="./logs", verbosity=0):
     logger = logging.getLogger(loggerName)
 
     # create a logging format
-    loginFormat = '%(asctime)s - %(filename)s - %(levelname)s:\n\t %(message)s\n'
+    loginFormat = '%(asctime)s [%(filename)s] - %(levelname)s:\n\t%(message)s\n'
 
     formatter = logging.Formatter(loginFormat)
 

@@ -95,6 +95,7 @@ else:
                 "osrframework/searchfy.py",
                 "osrframework/usufy.py",                                
                 "res/logo.png",                   
+                "COPYING",                                   
             ]
         ),
         ("/usr/share/osrframework/transforms",  [                
