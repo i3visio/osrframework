@@ -49,53 +49,7 @@ def exportUsufy(data, ext, fileH):
     elif ext == "xls":
         usufyToXlsExport(data, fileH+"."+ext)
     elif ext == "xlsx":
-        usufyToXlsxExport(data, fileH+"."+ext)
-                
-def usufyToJsonExport(d, fPath):
-    '''
-        Workaround to export to a json file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
-    jsonText =  json.dumps(d, indent=2, sort_keys=True)
-    with open (fPath, "w") as oF:
-        oF.write(jsonText)
-
-def usufyToTextExport(d, fPath=None):
-    '''
-        Workaround to export to a .txt file.
-        :param d: Data to export.
-        :param fPath: File path. If None was provided, it will assume that it has to print it.
-    '''
-    import pyexcel as pe
-    import pyexcel.ext.text as text    
-
-    if fPath == None:
-        isTerminal = True
-    else:
-        isTerminal = False
-        
-    try:
-        oldData = get_data(fPath)
-    except:
-        # No information has been recovered
-        oldData = {"Usufy sheet":[]}
-
-    # Generating the new tabular data
-    tabularData = _generateTabularData(d, {"Usufy sheet":[[]]}, True)
-    # The tabular data contains a dict representing the whole book and we need only the sheet!!
-    sheet = pe.Sheet(tabularData["Usufy sheet"])
-    sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."
-    # Defining the headers
-    sheet.name_columns_by_row(0)
-    text.TABLEFMT = "grid" 
-    try:
-        with open(fPath, "w") as oF:
-            oF.write(str(sheet))
-    except:
-        # If a fPath was not provided... We will only print the info:
-        return sheet    
-
+        usufyToXlsxExport(data, fileH+"."+ext)     
 
 def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
     '''
@@ -220,6 +174,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
         newRow = []
         for col in headers:
             try:
+                #newRow.append(unicode(values[prof][col]))
                 newRow.append(str(values[prof][col]))
             except:
                 # Printing a Not Applicable value
@@ -232,70 +187,73 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
 
     return data
 
-
-def usufyToCsvExport(data, fPath):
+def usufyToJsonExport(d, fPath):
     '''
-        Workaround to export to a CSV file.
-        :param data: Data to export.
+        Workaround to export to a json file.
+        :param d: Data to export.
         :param fPath: File path.
     '''
-    # Dictionary of profiles found found
-    values = {}
-    headers = ["i3visio.alias"]
-
-    # We are assuming that we received a list of profiles.
-    for p in data:    
-        alias = p["value"].split(' - ')[-1]
-        # Creating the dictionaries
-        values[p["value"]] = {}
-        values[p["value"]]["i3visio.alias"] = alias
-                
-        attributes = p["attributes"]
-        # Processing all the attributes found
-        for a in attributes:
-            values[p["value"]][a["type"]] = a["value"]
-            # Appending the column if not already included
-            if a["type"] not in headers:
-                headers.append(a["type"])
-
-    # We are assuming that we received a list of profiles.
-    for p in data:    
-        alias = p["value"].split(' - ')[-1]
-        # Creating the dictionaries
-        values[p["value"]] = {}
-        values[p["value"]]["i3visio.alias"] = alias
-                
-        attributes = p["attributes"]
-        # Processing all the attributes found
-        for a in attributes:
-            values[p["value"]][a["type"]] = a["value"]
-            # Appending the column if not already included
-            if a["type"] not in headers:
-                headers.append(a["type"])
-    # Generating output   
-    csvText = ""
-    # Printing the headers
-    for col in headers:    
-        csvText += col+"\t"
-    csvText += "\n"
-        
-    for prof in values.keys():
-        #csvText += alias + "\t"
-        for col in headers:
-            try:
-                csvText += values[prof][col] + "\t"
-            except:
-                # Printing a Not Applicable value
-                #print col
-                csvText += "[N/A]\t"
-        csvText += "\n"
-        
-    # Storing the file        
+    jsonText =  json.dumps(d, indent=2, sort_keys=True)
     with open (fPath, "w") as oF:
-        try:
-            oF.write(csvText)    
-        except Exception as e:
-            oF.write(str(e))
+        oF.write(jsonText)
+        
+def usufyToTextExport(d, fPath=None):
+    '''
+        Workaround to export to a .txt file.
+        :param d: Data to export.
+        :param fPath: File path. If None was provided, it will assume that it has to print it.
+    '''
+    import pyexcel as pe
+    import pyexcel.ext.text as text    
+
+    if fPath == None:
+        isTerminal = True
+    else:
+        isTerminal = False
+        
+    try:
+        oldData = get_data(fPath)
+    except:
+        # No information has been recovered
+        oldData = {"Usufy sheet":[]}
+
+    # Generating the new tabular data
+    tabularData = _generateTabularData(d, {"Usufy sheet":[[]]}, True)
+    # The tabular data contains a dict representing the whole book and we need only the sheet!!
+    sheet = pe.Sheet(tabularData["Usufy sheet"])
+    sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."
+    # Defining the headers
+    sheet.name_columns_by_row(0)
+    text.TABLEFMT = "grid" 
+    try:
+        with open(fPath, "w") as oF:
+            oF.write(str(sheet))
+    except:
+        # If a fPath was not provided... We will only print the info:
+        return sheet    
+
+
+def usufyToCsvExport(d, fPath):
+    '''
+        Workaround to export to a CSV file.
+        :param d: Data to export.
+        :param fPath: File path.
+    '''
+
+    from pyexcel_io import get_data
+    try:
+        oldData = {"Usufy sheet": get_data(fPath) }
+    except:
+        # No information has been recovered
+        oldData = {"Usufy sheet":[]}
+
+    # Generating the new tabular data
+    tabularData = _generateTabularData(d, oldData)
+
+    from pyexcel_io import save_data
+    # Storing the file
+    # NOTE: when working with CSV files it is no longer a dict because it is a one-sheet-format
+    save_data(fPath, tabularData["Usufy sheet"]) 
 
 def usufyToOdsExport(d, fPath):
     '''
@@ -312,7 +270,7 @@ def usufyToOdsExport(d, fPath):
     
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
-
+    
     from pyexcel_ods import save_data
     # Storing the file        
     save_data(fPath, tabularData)    
@@ -558,83 +516,3 @@ def dictToCSV(profiles):
         csvText += values['i3visio.platform'][i]+"\t"
         csvText += values['i3visio.uri'][i]+"\n"
     return csvText
-    
-    
-def _generateTabularDataOld(res, isTerminal=False):
-    '''
-        Method that recovers the values and columns from the current structure
-        This method is used by:
-            - usufyToCsvExport
-            - usufyToOdsExport
-            - usufyToXlsExport
-            - usufyToXlsxExport            
-        :param res:    the data to export.
-        :param isTerminal:    if isTerminal is activated, only information related to i3visio.alias, i3visio.platform and i3visio.uri will be displayed in the terminal.    
-        :return:
-            values, a dictionary containing all the information stored.
-            headers, a list containing the headers used for the rows.
-    '''
-    # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform"]
-    # Dictionary of profiles found found
-    values = {}
-    headers = ["i3visio.alias"]
-    # We are assuming that we received a list of profiles. 
-    for p in res:    
-        #print json.dumps(p, indent=2) 
-        # Creating the dictionaries
-        values[p["value"]] = {}
-                
-        attributes = p["attributes"]
-        # Processing all the attributes found
-        for a in attributes:
-            # Default behaviour for the output methods
-            if not isTerminal:
-                values[p["value"]][a["type"]] = a["value"]
-                # Appending the column if not already included
-                if a["type"] not in headers:
-                    headers.append(a["type"])
-            # Specific table construction for the terminal output
-            else:
-                if a["type"] in allowedInTerminal:
-                    values[p["value"]][a["type"]] = a["value"]
-                    # Appending the column if not already included
-                    if a["type"] not in headers:
-                        headers.append(a["type"])                
-    # The information is stored as:
-    """
-        {
-            "Sheet 1" : [
-                ["value at row 1 col A", "value at row 1 col B"], 
-                ["value at row 2 col A", "value at row 2 col B"]
-            ],
-            "Sheet 2" : [
-                ["value at row 1 col A", "value at row 1 col B"], 
-                ["value at row 2 col A", "value at row 2 col B"],
-                ["value at row 3 col A", "value at row 3 col B"]                
-            ]            
-        }
-    """
-    data = {}    
-    # Note that each row should be a list!
-    workingSheet = []
-
-    # Appending the headers
-    workingSheet.append(headers)
-
-    for prof in values.keys():
-        # Creating an empty structure
-        newRow = []
-        for col in headers:
-            try:
-                newRow.append(values[prof][col])
-            except:
-                # Printing a Not Applicable value
-                newRow.append("N/A")
-        # Appending the newRow to the data structure
-        workingSheet.append(newRow)
-        
-    # Storing the workingSheet onto the data structure to be stored
-    data.update({"Usufy sheet": workingSheet})
-                
-    return data    

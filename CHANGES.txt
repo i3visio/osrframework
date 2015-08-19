@@ -1,5 +1,15 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.0rc5, 2015/08/19 -- Extraction of attributes reconfigured.
+- Added youtube and github to searchfy.
+- The searchfy file now operates using uri and parsing them.
+- Added a new global variable to be able to apply different types of URLs for the profiles in a platform.
+- Fix in the csv export. Using pyexcel_io now. Could not fix an issue linked to the export of Unicode characters in this library.
+
+0.9.0rc4, 2015/08/18 -- Extraction of attributes reconfigured.
+- Fix in the extraction of Twitter fields.
+- Fix in Twitter and Skype wrappers to return an i3visio.uri.homepage entity for the URIs found in the profiles. Previous approach overrode the profile's URI.
+
 0.9.0rc3, 2015/08/18 -- Extraction of attributes reconfigured.
 - The extraction of attributes from the profiles has been reincluded.
 - The Twitter wrapper recovers now the i3visio.location of a user in usufy mode even when the profile is locked.

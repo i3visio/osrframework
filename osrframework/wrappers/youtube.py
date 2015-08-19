@@ -40,13 +40,16 @@ class Youtube(Platform):
         self.platformName = "Youtube"
         self.tags = ["social", "video"]
 
+        # Base URL
+        self.baseURL = "http://youtube.com"
+
         ########################
         # Defining valid modes #
         ########################
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = True      
         
         ######################################
         # Search URL for the different modes #
@@ -55,7 +58,7 @@ class Youtube(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "https://www.youtube.com/user/" + "<usufy>" + "/about" 
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["searchfy"] = "https://www.youtube.com/results?filters=channel&lclk=channel&search_query=" + "<searchfy>"       
 
         ######################################
         # Whether the user needs credentials #
@@ -63,7 +66,7 @@ class Youtube(Platform):
         self.needsCredentials = {}        
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        self.needsCredentials["searchfy"] = False 
         
         #################
         # Valid queries #
@@ -73,7 +76,7 @@ class Youtube(Platform):
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
         self.validQuery["usufy"] = re.compile("[^@, ]*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
         # Not_found clues #
@@ -82,7 +85,7 @@ class Youtube(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = ["Este canal no existe.", "channel-empty-message banner-message"] 
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["searchfy"] = []        
         
         #########################
         # Fields to be searched #
@@ -104,12 +107,15 @@ class Youtube(Platform):
         self.fieldsRegExp["usufy"]["i3visio.profile.facebook"] = {"start": "alt=\"https://www.facebook.com/", "end": "\""}
         self.fieldsRegExp["usufy"]["i3visio.profile.twitter"] = {"start": "alt=\"http://www.twitter.com/#!/", "end": "\""}
         self.fieldsRegExp["usufy"]["i3visio.profile.instagram"] = {"start": "alt=\"http://instagram.com/", "end": "\""}
+        self.fieldsRegExp["usufy"]["i3visio.alias"] = '<meta itemprop="name" content="([^\"]+)\"'
+        
         # Description
         self.fieldsRegExp["usufy"]["i3visio.text"] = {"start": "<div class=\"about-description branded-page-box-padding\" >", "end": "</div>"}
                 
         
         # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
+        self.fieldsRegExp["searchfy"] = {}
+        self.searchfyAliasRegexp = '<div class="yt-lockup-thumbnail"><a aria-hidden="true" href="([^\"]+)\" class=\"yt-uix-sessionlink  g-hovercard'
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
@@ -119,6 +125,33 @@ class Youtube(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
 
-        
-        
+    def createURL(self, word, mode="phonefy"):
+        ''' 
+            Method to create the URL replacing the word in the appropriate URL.
+            
+            :param word:   Word to be searched.
+            :param mode:    Mode to be executed.
+            
+            :return:    The URL to be queried.
+        '''
+        # Youtube has two different types of profiles: channels and users
+        if "/user/" in word:
+            alias = word[6:]
+        else:
+            alias = word        
+        try:
+            if mode == "base":
+                if word[0] == "/":
+                    return self.baseURL+word, alias
+                else:
+                    return self.baseURL+"/"+word, alias
+            else:
+                try:
+                    return self.url[mode].replace("<"+mode+">", word.replace(' ', '+')), alias
+                except:
+                    pass   
+        except:
+            pass
+            # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.        
+         
 
