@@ -1,6 +1,6 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.9.0rc5, 2015/08/20 -- Fix in the export using experimental versions of pyexcel.
+0.9.0, 2015/08/20 -- Fixes in the export using experimental versions of pyexcel. Release version.
 - Fix an issue linked to the export of Unicode characters in this library. It needs to install an experimental library though.
 - Usufy will display now additional details when being launched: start and end messages as well as time consumed.
 
