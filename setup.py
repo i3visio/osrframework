@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__version__ = "0.9.0rc4"
+__version__ = "0.9.0rc5"
 
 #from distutils.core import setup
 import os
@@ -177,6 +177,7 @@ setup(    name="osrframework",
         "python-emailahoy",
         "BeautifulSoup",
         "pyexcel",
+        "pyexcel_io",           
         "pyexcel_ods",    
         "pyexcel_xls",
         "pyexcel_xlsx",

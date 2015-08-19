@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.4.0b"
+__version__ = "v0.5.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -43,12 +43,13 @@ import os
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.general as general
 
-def performSearch(platformNames=[], queries=[]):
+def performSearch(platformNames=[], queries=[], process=False):
     ''' 
         Method to perform the phone list.
         
         :param platforms: List of <Platform> objects.
         :param queries: List of queries to be performed.
+        :param process: Whether to process all the profiles... SLOW!
         
         :return:
     '''
@@ -59,7 +60,7 @@ def performSearch(platformNames=[], queries=[]):
     for q in queries:
         for pla in platforms:
             # This returns a json.txt!
-            entities = pla.getInfo(query=q, process = True, mode="searchfy")
+            entities = pla.getInfo(query=q, process = process, mode="searchfy")
             if entities != "[]":
                 results += json.loads(entities)
     return results
@@ -70,7 +71,7 @@ def searchfy_main(args):
         
         :param args: Arguments received in the command line.
     '''
-    results = performSearch(platformNames=args.platforms, queries=args.queries)
+    results = performSearch(platformNames=args.platforms, queries=args.queries, process = args.process)
 
     # Generating summary files for each ...
     if args.extension:
@@ -127,7 +128,8 @@ if __name__ == "__main__":
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')    
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')    
-    
+    groupProcessing.add_argument('--process', required=False, default =False ,action='store_true', help='whether to process the info in the profiles recovered. NOTE: this would be much slower.')    
+        
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')

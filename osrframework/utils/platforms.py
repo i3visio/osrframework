@@ -52,6 +52,9 @@ class Platform():
         self.platformName = pName
         # These tags will be the one used to label this platform
         self.tags = tags
+        
+        # Base URL
+        self.baseURL = "http://plataform.com"        
 
         ########################
         # Defining valid modes #
@@ -127,19 +130,28 @@ class Platform():
             :return:    The URL to be queried.
         '''
         try:
-            return self.url[mode].replace("<"+mode+">", word.replace(' ', '+'))
+            if mode == "base":
+                if word[0] == "/":
+                    return self.baseURL+word, word
+                else:
+                    return self.baseURL+"/"+word, word
+            else:
+                try:
+                    return self.url[mode].replace("<"+mode+">", word.replace(' ', '+')), word
+                except:
+                    pass   
         except:
             pass
             # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.
 
-        
-    def getInfo(self, query=None, process = False, mode="phonefy"):
+    def getInfo(self, query=None, process = False, mode="phonefy", qURI=None):
         ''' 
             Method that checks the presence of a given query and recovers the first list of complains.
 
             :param query:   Query to verify.
             :param proces:  Calling the processing function.
-            :param mode:    Mode to be executed.            
+            :param mode:    Mode to be executed.   
+            :param qURI:    A query to be checked         
 
             :return:    Python structure for the html processed.
         '''
@@ -150,7 +162,10 @@ class Platform():
             # TO-DO: InvalidModeException
             return json.dumps(results)
         # Creating the query URL for that mode
-        qURL = self.createURL(word=query, mode=mode)        
+        if qURI != None:
+            qURL = qURI
+        else:
+            qURL, query = self.createURL(word=query, mode=mode)                
         i3Browser = browser.Browser()            
         try:
             # check if it needs creds
@@ -234,24 +249,28 @@ class Platform():
             elif mode == "searchfy":
                 # Recovering all the found aliases...
                 ids = re.findall(self.searchfyAliasRegexp, data, re.DOTALL)
-                
-                for i in ids:
+
+                for j, i in enumerate(ids):
                     r = {}            
                     r["type"] = "i3visio.profile"
                     r["value"] = self.platformName + " - " + i            
                     r["attributes"] = []   
-                    
+
                     # Appending platform URI
                     aux = {}
                     aux["type"] = "i3visio.uri"
-                    # Creating a usufy URI...
-                    aux["value"] = self.createURL(word=i, mode="usufy")
+                    # Creating the URI based on the base URL for the new profiles...
+                    uri, alias = self.createURL(word=i, mode="base")
+                    #uri=self.baseURL+i
+
+                    aux["value"] = uri                    
+
                     aux["attributes"] = []           
                     r["attributes"].append(aux)  
                     # Appending the alias
                     aux = {}
                     aux["type"] = "i3visio.alias"
-                    aux["value"] = i
+                    aux["value"] = alias
                     aux["attributes"] = []           
                     r["attributes"].append(aux)                      
                     # Appending platform name
@@ -270,10 +289,10 @@ class Platform():
                     # TO-DO:
                     # Perform additional procesing
                     # Iterating the requested profiles to extract more entities from the URI would be slow!
-                    if process:                               
+                    """if process:                               
                         # This function returns a json text in usufy format for the returned objects.
-                        r["attributes"] += json.loads(self.processData(data=data, mode="usufy"))                    
-                    # Appending the result to results: in this case only one profile will be grabbed
+                        r["attributes"] += json.loads(self.getInfo(process = True, mode="usufy", qURI=uri, query=i))                    
+                    # Appending the result to results: in this case only one profile will be grabbed"""
                     results.append(r)  
         return json.dumps(results)
 
@@ -359,32 +378,46 @@ class Platform():
             # Grabbing the results for the search
             resultText = re.findall(searchfyAliasRegexp, data)
             # Analysing each and every result to parse it...        
-            for res in resultText:
+            for resURI in resultText:
                 r = {}
                 r["type"] = "i3visio.uri"
-                r["value"] = ""
+                r["value"] = resURI
                 r["attributes"] = []
-                # Iterating through all the type of fields
-                for field in self.fieldsRegExp[mode].keys():
+                print resURI
+                """# Iterating through all the type of fields
+                i3Browser = browser.Browser()            
+                try:
+                    # check if the profile needs credentials in usufy mode
+                    if self.needsCredentials["usufy"]:
+                        authenticated = self._getAuthenticated(i3Browser)
+                        if authenticated:
+                            # Accessing the resources
+                            data = i3Browser.recoverURL(resURI)
+                    else:
+                        # Accessing the resources
+                        data = i3Browser.recoverURL(resURI)                
+                except:
+                    data = ""
+                for field in self.fieldsRegExp["usufy"].keys():
                     # Building the regular expression if the format is a "start" and "end" approach... Easier to understand but less compact.
                     try:
                         # Using the old approach of "Start" + "End"
-                        regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
+                        regexp = self.fieldsRegExp["usufy"][field]["start"]+"([^\)]+)"+self.fieldsRegExp["usufy"][field]["end"]
                         
                         # Parsing the result for the text
-                        tmp = re.findall(regexp, res)
+                        tmp = re.findall(regexp, data)
                         
                         # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
                         values = []
                         for t in tmp:
-                            if self.fieldsRegExp[mode][field]["end"] in t:
+                            if self.fieldsRegExp["usufy"][field]["end"] in t:
 
-                                values.append(t.split(self.fieldsRegExp[mode][field]["end"])[0])
+                                values.append(t.split(self.fieldsRegExp["usufy"][field]["end"])[0])
                             else:
                                 values.append(t)
                     # In the case of a compact approach being used. This would happen if start and end tags do not exist, but the expected behaviour is the same.
                     except:
-                        regexp = self.fieldsRegExp[mode][field]
+                        regexp = self.fieldsRegExp["usufy"][field]
                         
                         values = re.findall(regexp, data)
                     
@@ -398,8 +431,8 @@ class Platform():
                             aux["value"] = val
                             aux["attributes"] = []                
                             if aux not in r["attributes"]:
-                                r["attributes"].append(aux)               
-                                #print json.dumps(r["attributes"], indent =2)
+                                r["attributes"].append(aux) """             
+                r["attributes"] = json.loads(self.getInfo(process = True, mode="usufy", qURI=resURI))   
                 info.append(r)
         return json.dumps(info)
     

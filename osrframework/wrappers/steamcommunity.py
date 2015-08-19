@@ -39,6 +39,9 @@ class Steamcommunity(Platform):
         """
         self.platformName = "Steamcommunity"
         self.tags = ["social", "news"]
+
+        # Base URL
+        self.baseURL = "https://steamcommunity.com"
         
         ########################
         # Defining valid modes #
@@ -46,7 +49,7 @@ class Steamcommunity(Platform):
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = False
         
         ######################################
         # Search URL for the different modes #
@@ -55,7 +58,7 @@ class Steamcommunity(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "http://steamcommunity.com/id/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        #self.url["searchfy"] = "http://steamcommunity.com/search/?text=" + "<searchfy>" + "&x=0&y=0#filter=users&text=" + "<searchfy>"       
 
         ######################################
         # Whether the user needs credentials #
@@ -97,9 +100,11 @@ class Steamcommunity(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "<bci>", "end": "</bci>"}#\n\t\t\t\t\t\t\t\t\t\t\t"}#\t<span class=\"namehistory"}#{"start": "<span class=\"actual_persona_name\">", "end": "r</span>"}#\n\t\t\t\t\t\t\t\t\t\t\t"}#\t<span class=\"namehistory"}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<img class=\"profile_flag\" src=\"http://steamcommunity-a.akamaihd.net/public/images/countryflags/be.gif\">\t\t\t\t\t\t\t\t\t\t\t\t\t", "end": "\t\t\t\t\t</div>\t\t\t\t\t\t\t\t\t\t</div>"}        
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
+        #self.searchfyAliasRegexp = '<a class="searchPersonaName" href="([^\"]+)\"'
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         

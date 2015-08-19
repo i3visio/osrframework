@@ -41,13 +41,16 @@ class Github(Platform):
         self.platformName = "Github"
         self.tags = ["development"]
 
+        # Base URL
+        self.baseURL = "http://github.com/"
+
         ########################
         # Defining valid modes #
         ########################
         self.isValidMode = {}        
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = True      
         
         ######################################
         # Search URL for the different modes #
@@ -56,7 +59,7 @@ class Github(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "https://github.com/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["searchfy"] = "https://github.com/search?utf8=%E2%9C%93&q=<searchfy>&type=Users&ref=searchresults"       
 
         ######################################
         # Whether the user needs credentials #
@@ -64,7 +67,7 @@ class Github(Platform):
         self.needsCredentials = {}        
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        self.needsCredentials["searchfy"] = False 
         
         #################
         # Valid queries #
@@ -74,7 +77,7 @@ class Github(Platform):
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
         self.validQuery["usufy"] = re.compile(".*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
         # Not_found clues #
@@ -83,7 +86,7 @@ class Github(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = ["This is not the web page you are looking for"]
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["searchfy"] = []        
         
         #########################
         # Fields to be searched #
@@ -100,7 +103,8 @@ class Github(Platform):
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
+        self.fieldsRegExp["searchfy"] = {}
+        self.searchfyAliasRegexp = "<img alt=\"@([^\"]+)\""                
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
