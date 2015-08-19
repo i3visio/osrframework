@@ -475,7 +475,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                 # Printing the results if requested
                 if not args.maltego:
                     print "A summary of the results obtained are shown in the following table:"
-                    print general.usufyToTextExport(res)
+                    print unicode(general.usufyToTextExport(res))
                     
                     print
 

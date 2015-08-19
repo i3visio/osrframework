@@ -53,7 +53,7 @@ sudo apt-get update
 # Official package
 sudo apt-get install python-osrframework
 # Dependencies
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io git+https://github.com/chfw/pyexcel-ods.git
 ```
 Whenever a new version is released, the following command will upgrade the package:
 ```
@@ -111,7 +111,7 @@ major issue as you will be able to provide them as a parameter.
 sudo python setup.py build
 sudo python setup.py install	
 # Installing other packages from PyPI that osrframework needs
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io git+https://github.com/chfw/pyexcel-ods.git
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```
@@ -187,7 +187,7 @@ cd osrframework-master
 python setup.py build
 python setup.py install
 # Installing other packages from PyPI that osrframework needs
-pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io git+https://github.com/chfw/pyexcel-ods.git
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```

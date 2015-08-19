@@ -174,8 +174,10 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
         newRow = []
         for col in headers:
             try:
-                #newRow.append(unicode(values[prof][col]))
-                newRow.append(str(values[prof][col]))
+                #if canUnicode:
+                newRow.append(unicode(values[prof][col]))
+                #else:
+                #    newRow.append(str(values[prof][col]))
             except UnicodeEncodeError as e:
                 # Printing that an error was found
                 newRow.append("[ERROR: Unicode Encode]")  
@@ -249,7 +251,7 @@ def usufyToCsvExport(d, fPath):
         # No information has been recovered
         oldData = {"Usufy sheet":[]}
 
-    # Generating the new tabular data
+    # Generating the new tabular data.
     tabularData = _generateTabularData(d, oldData)
 
     from pyexcel_io import save_data

@@ -97,7 +97,7 @@ def searchfy_main(args):
     # Printing the results if requested
     if not args.maltego:
         print "A summary of the results obtained are listed in the following table:"
-        print general.usufyToTextExport(results)
+        print unicode(general.usufyToTextExport(results))
         print "You will find all the information collected in the following files:"                                                     
         for ext in args.extension:
             # Generating output files
