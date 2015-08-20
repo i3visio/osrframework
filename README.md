@@ -52,8 +52,8 @@ sudo apt-get update
 ```
 # Official package
 sudo apt-get install python-osrframework
-# Dependencies
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io https://github.com/chfw/pyexcel-ods/zipball/master
+# Installing dependencies manually
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io
 ```
 Whenever a new version is released, the following command will upgrade the package:
 ```
@@ -72,8 +72,8 @@ entify.py -h
 /usr/share/osrframework
 ```
 
-Under Linux (ALL)
------------------
+Under Linux (for developers and other systems)
+-----------------------------------------
 
 As Python is already installed, the rest of the installation under Python 2.7 is as 
 follows:
@@ -110,8 +110,8 @@ major issue as you will be able to provide them as a parameter.
 # Superuser privileges are required so as to complete the installation.
 sudo python setup.py build
 sudo python setup.py install	
-# Installing other packages from PyPI that osrframework needs
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io https://github.com/chfw/pyexcel-ods/zipball/master
+# Installing other packages from PyPI that osrframework needs using the requirements.txt file
+sudo pip install -r requirements.txt
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```
@@ -186,8 +186,8 @@ cd osrframework-master
 ```
 python setup.py build
 python setup.py install
-# Installing other packages from PyPI that osrframework needs
-pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io https://github.com/chfw/pyexcel-ods/zipball/master
+# Installing other packages from PyPI that osrframework needs using the requirements.txt file
+pip install -r requirements.txt
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```
