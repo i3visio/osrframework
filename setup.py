@@ -138,6 +138,24 @@ setup(    name="osrframework",
     author_email="contacto@i3visio.com",
     url="http://github.com/i3visio/osrframework",
     license="COPYING",
+    keywords = "python osint harvesting profiling maltego username socialmedia forums",
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Topic :: Software Development :: Libraries',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)', 
+        'Programming Language :: Python :: 2 :: Only',
+        'Programming Language :: Python :: 2.7',
+        'Intended Audience :: Developers',   
+        'Intended Audience :: Information Technology',      
+        'Intended Audience :: Science/Research',
+        'Intended Audience :: Telecommunications Industry',
+        'Natural Language :: English',
+        'Topic :: Communications',   
+        'Topic :: Internet :: WWW/HTTP :: Indexing/Search',  
+        'Topic :: Scientific/Engineering :: Information Analysis',
+        'Topic :: Scientific/Engineering :: Visualization',  
+        'Topic :: Text Processing :: Markup :: HTML'                                 
+    ],    
     packages=[
         "osrframework", 
         "osrframework.thirdparties", 
@@ -166,7 +184,7 @@ setup(    name="osrframework",
     install_requires=[
         "pip"
     ], 
-    data_files=files_to_copy
+    data_files=files_to_copy,
 )
 
 """
