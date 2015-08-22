@@ -179,7 +179,7 @@ setup(    name="osrframework",
         #"osrframework.darkfy.lib.wrappers",                                 
     ],
 #    scripts=[""],
-    long_description=read_md("README.md"),
+    long_description=read_md("./README.md"),
 #    long_description=open('README.md').read(),
     install_requires=[
         "pip"
