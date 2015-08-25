@@ -158,6 +158,7 @@ setup(    name="osrframework",
     ],    
     packages=[
         "osrframework", 
+        "osrframework.api", 
         "osrframework.thirdparties", 
         "osrframework.thirdparties.blockchain_info", 
         "osrframework.thirdparties.haveibeenpwned_com", 

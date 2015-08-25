@@ -1,0 +1,68 @@
+<MaltegoEntity id="i3visio.person" displayName="i3visio - Person" displayNamePlural="i3visio - Persons" description="Any person." category="i3visio.person" smallIconResource="Person" largeIconResource="Person" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.object</BaseEntity>
+   </BaseEntities>
+   
+   <Properties value="properties.i3visio-person">
+      <Groups/>
+      <Fields>
+         <Field name="@value" displayName="@value" type="string" nullable="true" hidden="False" readonly="False" description="This field contains the value of the given entity.">
+            <DefaultValue>-</DefaultValue>
+            <SampleValue>-</SampleValue>
+         </Field>      
+         <Field name="@entity_type" type="string" nullable="true" hidden="True" readonly="True" description="This field contains a generic property that stores the type of the given entity."  displayName="@entity_type">
+            <DefaultValue>i3visio.person</DefaultValue>
+            <SampleValue>i3visio.person</SampleValue>
+         </Field>
+         <Field name="@serialized" type="string" nullable="true" hidden="True" readonly="True" description="This field contains the serialized object." displayName="@pending">
+            <DefaultValue>{'type': 'i3visio.person', 'value':'Default', 'attributes':[]}</DefaultValue>
+            <SampleValue>{'type': 'i3visio.person', 'value':'Sample', 'attributes':[]}</SampleValue>
+         </Field>    
+         <Field name="@number_pending" type="string" nullable="true" hidden="False" readonly="True" description="This field contains the number of pending entities to be shown yet." displayName="@number_pending">
+            <DefaultValue>0</DefaultValue>
+            <SampleValue>0</SampleValue>
+         </Field>
+         <Field name="@pending" type="string" nullable="true" hidden="True" readonly="True" description="This field contains a list of the attributes still to be shown." displayName="@pending">
+            <DefaultValue>[]</DefaultValue>
+            <SampleValue>[]</SampleValue>
+         </Field>                  
+         <Field name="i3visio.fullname" type="string" nullable="true" hidden="false" readonly="false" description="The fullname of the target person." displayName="i3visio - Fullname">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Alicia Álvarez Abad</SampleValue>
+         </Field>
+         <Field name="i3visio.name" type="string" nullable="true" hidden="false" readonly="false" description="The first name of the target person." displayName="i3visio - Name">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Alicia</SampleValue>
+         </Field>
+         <Field name="i3visio.surname1" type="string" nullable="true" hidden="false" readonly="false" description="The first surname of the target person." displayName="i3visio - 1st surname">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Álvarez</SampleValue>
+         </Field>        
+         <Field name="i3visio.surname2" type="string" nullable="true" hidden="false" readonly="false" description="The second surname of the target person." displayName="i3visio - 2nd surname">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Abad</SampleValue>
+         </Field>           
+         <Field name="i3visio.location.address" type="string" nullable="true" hidden="false" readonly="false" description="The address of the target person." displayName="i3visio - Address">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Gran Vía 1</SampleValue>
+         </Field>         
+         <Field name="i3visio.location.postalcode" type="string" nullable="true" hidden="false" readonly="false" description="The postalcode of the target person." displayName="i3visio - Postalcode">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>28001</SampleValue>
+         </Field>                                            
+         <Field name="i3visio.location.city" type="string" nullable="true" hidden="false" readonly="false" description="The city of the target person." displayName="i3visio - City">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Madrid</SampleValue>
+         </Field>                    
+         <Field name="i3visio.location.province" type="string" nullable="true" hidden="false" readonly="false" description="The province of the target person." displayName="i3visio - Province">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Madrid</SampleValue>
+         </Field>             
+         <Field name="i3visio.location.country" type="string" nullable="true" hidden="false" readonly="false" description="The country of the target person." displayName="i3visio - Country">
+            <DefaultValue> </DefaultValue>
+            <SampleValue>Spain</SampleValue>
+         </Field>  
+      </Fields>
+   </Properties>   
+   
+</MaltegoEntity>

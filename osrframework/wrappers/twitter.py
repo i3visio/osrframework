@@ -28,6 +28,8 @@ import urllib2
 
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
+# Importing the API Wrapper
+from osrframework.api.twitter_api import TwitterAPIWrapper as TwitterAPIWrapper
 
 class Twitter(Platform):
     """ 
@@ -42,6 +44,12 @@ class Twitter(Platform):
 
         # Base URL
         self.baseURL = "http://twitter.com/"
+        
+        # Trying to find an API... This line should be added in every  platform for which we have defined an API. 
+        # DO NOT FORGET TO IMPORT THE APIWRAPPER, i. e.:
+        # from osrframework.api import TwitterAPIWrapper as TwitterAPIWrapper
+        self.wrapperAPI = TwitterAPIWrapper()
+
         
         ########################
         # Defining valid modes #
@@ -104,7 +112,7 @@ class Twitter(Platform):
         self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "\" data-name=\"", "end": "\" data-protected"}
         #self.fieldsRegExp["usufy"]["ProfileHeaderCard-bio"] = {"start": "<p class=\"ProfileHeaderCard-bio u-dir\"\n    \n    dir=\"ltr\">", "end": "</p>"}
         self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<span class=\"ProfileHeaderCard-locationText u-dir\" dir=\"ltr\">\n            ", "end": "\n        </span>\n      </div>\n\n    <div class=\"ProfileHeaderCard-url"}
-        self.fieldsRegExp["usufy"]["i3visio.date"] = {"start": "<span class=\"ProfileHeaderCard-joinDateText js-tooltip u-dir\" dir=\"ltr\" title=\"", "end": "\">Se uni"}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": "<span class=\"ProfileHeaderCard-joinDateText js-tooltip u-dir\" dir=\"ltr\" title=\"", "end": "\">Se uni"}
         self.fieldsRegExp["usufy"]["i3visio.uri.homepage"] = {"start": "<span class=\"ProfileHeaderCard-urlText u-dir\" dir=\"ltr\"><a class=\"u-textUserColor\" target=\"_blank\" rel=\"me nofollow\" href=\"[^\"]*\" title=\"", "end": "\">"}
         #self.fieldsRegExp["usufy"]["PhotoRail-headingText"] = {"start": "class=\"js-nav\">\n                \n                ", "end": "             </a>"}
         

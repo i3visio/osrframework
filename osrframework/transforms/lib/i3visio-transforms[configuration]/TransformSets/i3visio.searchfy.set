@@ -1,0 +1,8 @@
+<TransformSet name="i3visio - searchfy.py" description="Searching for profiles in different platforms using searchfy.py utility.">
+   <Transforms>
+      <Transform name="i3visio.textToTwitterProfiles"/>           
+      <Transform name="i3visio.textToFacebookProfiles"/>                 
+      <Transform name="i3visio.textToSkypeProfiles"/> 
+   </Transforms>
+</TransformSet>
+

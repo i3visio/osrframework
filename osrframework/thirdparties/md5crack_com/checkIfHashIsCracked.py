@@ -44,7 +44,8 @@ def checkIfHashIsCracked(hash=None, api_key=None):
 		#api_key = raw_input("Insert the API KEY here:\t")
 		allKeys = config_api_keys.returnListOfAPIKeys()
 		try: 
-			api_key = allKeys["md5crack_com"]
+			api_key_data = allKeys["md5crack_com"]
+			api_key = api_key_data["api_key"]
 		except:
 			# API_Key not found
 			return {}			
