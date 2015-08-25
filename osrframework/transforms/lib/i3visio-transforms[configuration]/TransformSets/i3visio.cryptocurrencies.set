@@ -1,0 +1,5 @@
+<TransformSet name="i3visio - Cryptocurrencies" description="Set of transforms to look for information about the cryptocurrencies.">
+   <Transforms>
+      <Transform name="i3visio.bitcoinAddressToBlockchainDetails"/>
+   </Transforms>
+</TransformSet>

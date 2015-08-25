@@ -1,0 +1,30 @@
+<MaltegoEntity id="i3visio.phone.mobile" displayName="i3visio - Mobile" displayNamePlural="i3visio - Mobiles" description="A mobile phone number." category="i3visio.phone" smallIconResource="Smartphone" largeIconResource="Smartphone" allowedRoot="true" conversionOrder="2147483647" visible="true">
+   <BaseEntities>
+      <BaseEntity>i3visio.phone</BaseEntity>
+   </BaseEntities>
+   <Properties value="properties.i3visio-phone-mobile">
+      <Groups/>
+      <Fields>
+         <Field name="@value" displayName="@value" type="string" nullable="true" hidden="False" readonly="False" description="This field contains the value of the given entity.">
+            <DefaultValue>-</DefaultValue>
+            <SampleValue>-</SampleValue>
+         </Field>      
+         <Field name="@entity_type" type="string" nullable="true" hidden="True" readonly="True" description="This field contains a generic property that stores the type of the given entity." displayName="@entity_type">
+            <DefaultValue>i3visio.phone.mobile</DefaultValue>
+            <SampleValue>i3visio.phone.mobile</SampleValue>
+         </Field>
+         <Field name="@serialized" type="string" nullable="true" hidden="True" readonly="True" description="This field contains the serialized object." displayName="@pending">
+            <DefaultValue>{'type': 'i3visio.phone.mobile', 'value':'Default', 'attributes':[]}</DefaultValue>
+            <SampleValue>{'type': 'i3visio.phone.mobile', 'value':'Sample', 'attributes':[]}</SampleValue>
+         </Field>    
+         <Field name="@number_pending" type="string" nullable="true" hidden="False" readonly="True" description="This field contains the number of pending entities to be shown yet." displayName="@number_pending">
+            <DefaultValue>0</DefaultValue>
+            <SampleValue>0</SampleValue>
+         </Field>
+         <Field name="@pending" type="string" nullable="true" hidden="True" readonly="True" description="This field contains a list of the attributes still to be shown." displayName="@pending">
+            <DefaultValue>[]</DefaultValue>
+            <SampleValue>[]</SampleValue>
+         </Field>                  
+      </Fields>
+   </Properties>
+</MaltegoEntity>

@@ -2,7 +2,7 @@
 #
 ##################################################################################
 #
-#	This file is part of OSRFramework.
+#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #	OSRFramework is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -19,21 +19,7 @@
 #
 ##################################################################################
 
-def returnListOfAPIKeys():
-	'''
-		:return: A dictionary containing the API Keys stored in a dictionary depending on the information required by each platform
-	'''
-	dictAPIKeys = {}
-	#dictAPIKeys["<platform>"] = {"api_key"= "abcdfghijklmnopqrstuvwxyz"}
-	#dictAPIKeys["twitter>"] = {
-    #    "consumer_key": "abcdefghijkl01234", 
-    #    "consumer_secret": "abcdefghijkl01234", 
-    #    "access_key": "abcdefghijkl01234", 
-    #    "access_secret": "abcdefghijkl01234",                         
-    #}	
-	#
-	# Uncomment the lines and change the <API_KEY> where needed.
-	#
-	#dictAPIKeys["md5crack_com"] = {"api_key"= "abcdfghijklmnopqrstuvwxyz"}
-	#dictAPIKeys["pipl_com"] = {"api_key"= "abcdfghijklmnopqrstuvwxyz"}
-	return dictAPIKeys
+import osrframework.utils.logger
+
+# Calling the logger when being imported
+osrframework.utils.logger.setupLogger(loggerName="osrframework.api")

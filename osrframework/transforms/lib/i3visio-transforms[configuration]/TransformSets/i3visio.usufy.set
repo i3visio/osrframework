@@ -1,0 +1,7 @@
+<TransformSet name="i3visio - usufy.py" description="Set of transforms to check the existence of usernames in different platforms using usufy.py utility.">
+   <Transforms>
+      <Transform name="i3visio.aliasToAllProfiles"/>  
+      <Transform name="i3visio.aliasToFamousPlatforms"/>          
+      <Transform name="i3visio.aliasToSelectedPlatforms"/>     
+   </Transforms>
+</TransformSet>

@@ -1,0 +1,10 @@
+<TransformSet name="i3visio - Search engines" description="Set of transforms from i3visio to perform searches using different types of search engines.">
+   <Transforms>
+      <Transform name="i3visio.coordinatesToGoogleMapsBrowser"/>   
+      <Transform name="i3visio.coordinatesToTwitterBrowser"/>         
+      <Transform name="i3visio.domainToGoogleSearchUriWithEmails"/>
+      <Transform name="i3visio.textToGoogleSearchUri"/>
+      <Transform name="i3visio.textToDeepWebSearch"/>
+      <Transform name="i3visio.textToPhoneDetails"/>      
+   </Transforms>
+</TransformSet>
