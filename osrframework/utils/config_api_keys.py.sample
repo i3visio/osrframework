@@ -25,6 +25,12 @@ def returnListOfAPIKeys():
 	'''
 	dictAPIKeys = {}
 	#dictAPIKeys["<platform>"] = {"api_key"= "abcdfghijklmnopqrstuvwxyz"}
+	#dictAPIKeys["twitter"] = {
+    #    "consumer_key": "abcd1234567890abcd", 
+    #    "consumer_secret": "abcd1234567890abcd", 
+    #    "access_key": "abcd1234567890abcd", 
+    #    "access_secret": "abcd1234567890abcd",                         
+    #}		
 	#dictAPIKeys["twitter>"] = {
     #    "consumer_key": "abcdefghijkl01234", 
     #    "consumer_secret": "abcdefghijkl01234", 
