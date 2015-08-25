@@ -51,7 +51,7 @@ def exportUsufy(data, ext, fileH):
     elif ext == "xlsx":
         usufyToXlsxExport(data, fileH+"."+ext)     
 
-def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
+def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=True):
     '''
         Method that recovers the values and columns from the current structure
         This method is used by:
@@ -76,6 +76,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
               ]
             }           
         :param isTerminal:    if isTerminal is activated, only information related to i3visio.alias, i3visio.platform and i3visio.uri will be displayed in the terminal.    
+        :param canUnicode:      Variable that stores if the printed output can deal with Unicode characters. 
         :return:
             values, a dictionary containing all the information stored.
             headers, a list containing the headers used for the rows.
@@ -174,13 +175,13 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False):
         newRow = []
         for col in headers:
             try:
-                #if canUnicode:
-                newRow.append(unicode(values[prof][col]))
-                #else:
-                #    newRow.append(str(values[prof][col]))
+                if canUnicode:
+                    newRow.append(unicode(values[prof][col]))
+                else:
+                    newRow.append(str(values[prof][col]))
             except UnicodeEncodeError as e:
                 # Printing that an error was found
-                newRow.append("[ERROR: Unicode Encode]")  
+                newRow.append("[WARNING: Unicode Encode]")  
             except:
                 # Printing that this is not applicable value
                 newRow.append("[N/A]")               
@@ -222,7 +223,7 @@ def usufyToTextExport(d, fPath=None):
         oldData = {"Usufy sheet":[]}
 
     # Generating the new tabular data
-    tabularData = _generateTabularData(d, {"Usufy sheet":[[]]}, True)
+    tabularData = _generateTabularData(d, {"Usufy sheet":[[]]}, True, canUnicode=False)
     # The tabular data contains a dict representing the whole book and we need only the sheet!!
     sheet = pe.Sheet(tabularData["Usufy sheet"])
     sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."

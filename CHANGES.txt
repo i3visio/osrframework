@@ -1,5 +1,10 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.2, 2015/08/20 -- Dealing with export issues linked to localization.
+- Dealling with an issue when printing unicode characters in the terminal (specially, in right-to-left languages). A message error will be displayed in the terminal though the information will be stored safely).
+- Back to creation of .xls output files by default. An issue has been detected when creating .ods using Unicode characters. We will wait to test the utility.
+- About.me platform temporally deactivated as it requires javascript.
+
 0.9.1, 2015/08/20 -- Fixes in the export using experimental versions of pyexcel. Release version.
 - Fix an issue linked to the export of Unicode characters in this library. It needs to install an experimental library though.
 - Usufy will display now additional details when being launched: start and end messages as well as time consumed.
