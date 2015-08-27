@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.0.0"
+__version__ = "v3.0.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -263,7 +263,7 @@ def usufy_main(args):
     if not args.maltego:
         sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
         logger.info(sayingHello)
         print sayingHello
         print

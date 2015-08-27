@@ -10,3 +10,4 @@ pyexcel_xls
 pyexcel_xlsx
 pyexcel_text
 pyexcel_io
+tweepy

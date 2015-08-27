@@ -22,6 +22,7 @@
 
 import argparse
 import json
+import time
 import tweepy #https://github.com/tweepy/tweepy
 import csv
 
@@ -58,10 +59,158 @@ class TwitterAPIWrapper(APIWrapper):
         api = tweepy.API(auth)
         return api
 
+    def _rate_limit_status(self, api=None, mode=None):
+        '''
+            Verifying the API limits
+        '''
+        if api == None:
+            api = self.connectToAPI()
+        
+        if mode == None:
+            print json.dumps(api.rate_limit_status(), indent=2)
+            raw_input("Presionar")            
+        else:
+            # Testing if we have enough queries
+            while True:
+                allLimits = api.rate_limit_status()
+                
+                if mode == "get_user":
+                    limit = allLimits["resources"]["users"]["/users/show/:id"]["limit"]
+                    remaining = allLimits["resources"]["users"]["/users/show/:id"]["remaining"]
+                    reset = allLimits["resources"]["users"]["/users/show/:id"]["reset"]
+                elif mode == "get_followers":
+                    limit = allLimits["resources"]["followers"]["/followers/ids"]["limit"]
+                    remaining = allLimits["resources"]["followers"]["/followers/ids"]["remaining"]
+                    reset = allLimits["resources"]["followers"]["/followers/ids"]["reset"]                     
+                elif mode == "get_friends":
+                    limit = allLimits["resources"]["friends"]["/friends/ids"]["limit"]
+                    remaining = allLimits["resources"]["friends"]["/friends/ids"]["remaining"]
+                    reset = allLimits["resources"]["friends"]["/friends/ids"]["reset"]     
+                elif mode == "search_users":
+                    limit = allLimits["resources"]["users"]["/users/search"]["limit"]
+                    remaining = allLimits["resources"]["users"]["/users/search"]["remaining"]
+                    reset = allLimits["resources"]["users"]["/users/search"]["reset"]
+                else:
+                    remaining = 1
+                """elif mode == "get_users":
+                    limit = allLimits["resources"]REPLACEME["limit"]
+                    remaining = allLimits["resources"]REPLACEME["remaining"]
+                    reset = allLimits["resources"]REPLACEME["reset"] """                    
+                # Checking if we have enough remaining queries
+                if remaining > 0:
+                    #raw_input(str(remaining) + " queries yet...")
+                    break
+                else:
+                    waitTime = 60
+                    print "No more queries remaining, sleeping for " + str(waitTime) +" seconds..."
+                    time.sleep(waitTime)
+            
+        return 0
+
     def _processUser(self, jUser):
         '''
-            Convert tweepy.User to a i3visio-like user.
+            Convert tweepy.User to a i3visio-like user. This will process the returned JSON object that the API returns to transform it to the i3visio-like format. A sample answer is copied now when testing it to the @i3visio user in Twitter.
+{
+  "follow_request_sent": false, 
+  "has_extended_profile": false, 
+  "profile_use_background_image": true, 
+  "profile_text_color": "333333", 
+  "default_profile_image": false, 
+  "id": 2594815981, 
+  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png", 
+  "verified": false, 
+  "profile_location": null, 
+  "profile_image_url_https": "https://pbs.twimg.com/profile_images/491716630292881408/FBqYf9qv_normal.png", 
+  "profile_sidebar_fill_color": "DDEEF6", 
+  "entities": {
+    "url": {
+      "urls": [
+        {
+          "url": "http://t.co/Vus95W8ub6", 
+          "indices": [
+            0, 
+            22
+          ], 
+          "expanded_url": "http://www.i3visio.com", 
+          "display_url": "i3visio.com"
+        }
+      ]
+    }, 
+    "description": {
+      "urls": [
+        {
+          "url": "http://t.co/SGty7or6SQ", 
+          "indices": [
+            30, 
+            52
+          ], 
+          "expanded_url": "http://github.com/i3visio/osrframework", 
+          "display_url": "github.com/i3visio/osrfra\u2026"
+        }
+      ]
+    }
+  }, 
+  "followers_count": 21, 
+  "profile_sidebar_border_color": "C0DEED", 
+  "id_str": "2594815981", 
+  "profile_background_color": "C0DEED", 
+  "listed_count": 5, 
+  "status": {
+    "lang": "es", 
+    "favorited": false, 
+    "entities": {
+      "symbols": [], 
+      "user_mentions": [], 
+      "hashtags": [], 
+      "urls": []
+    }, 
+    "contributors": null, 
+    "truncated": false, 
+    "text": "Podemos confirmar que Alpify, aunque acabe en ...fy no es una aplicaci\u00f3n nuestra. ;) \u00a1A aprovechar lo que queda de domingo!", 
+    "created_at": "Sun Aug 16 17:35:37 +0000 2015", 
+    "retweeted": true, 
+    "in_reply_to_status_id_str": null, 
+    "coordinates": null, 
+    "in_reply_to_user_id_str": null, 
+    "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>", 
+    "in_reply_to_status_id": null, 
+    "in_reply_to_screen_name": null, 
+    "id_str": "632968969662689280", 
+    "place": null, 
+    "retweet_count": 1, 
+    "geo": null, 
+    "id": 632968969662689280, 
+    "favorite_count": 0, 
+    "in_reply_to_user_id": null
+  }, 
+  "is_translation_enabled": false, 
+  "utc_offset": null, 
+  "statuses_count": 56, 
+  "description": "Leading OSRFramework project (http://t.co/SGty7or6SQ) for researching in Open Sources. #security #osint #socialengineering", 
+  "friends_count": 10, 
+  "location": "Espa\u00f1a", 
+  "profile_link_color": "0084B4", 
+  "profile_image_url": "http://pbs.twimg.com/profile_images/491716630292881408/FBqYf9qv_normal.png", 
+  "following": true, 
+  "geo_enabled": false, 
+  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png", 
+  "name": "i3visio", 
+  "lang": "en", 
+  "profile_background_tile": false, 
+  "favourites_count": 6, 
+  "screen_name": "i3visio", 
+  "notifications": false, 
+  "url": "http://t.co/Vus95W8ub6", 
+  "created_at": "Sun Jun 29 13:27:20 +0000 2014", 
+  "contributors_enabled": false, 
+  "time_zone": null, 
+  "protected": false, 
+  "default_profile": true, 
+  "is_translator": false
+}
+                        
             :param jUser:   A Json representing the information of a profile as returned by the API.            
+            
             
             :return: Dict in i3visio-like format.
         '''
@@ -76,18 +225,31 @@ class TwitterAPIWrapper(APIWrapper):
         aux["value"] = qURL
         aux["attributes"] = []           
         r["attributes"].append(aux) """
+        # Appending the id
+        aux = {}
+        aux["type"] = "@id_str"
+        aux["value"] = jUser["id_str"]
+        aux["attributes"] = []           
+        r["attributes"].append(aux)
+        
         # Appending the alias
         aux = {}
         aux["type"] = "i3visio.alias"
         aux["value"] = jUser["screen_name"]
         aux["attributes"] = []           
-        r["attributes"].append(aux)                    
+        r["attributes"].append(aux)
         # Appending fullname
         aux = {}
         aux["type"] = "i3visio.fullname"
         aux["value"] = jUser["name"]
         aux["attributes"] = []
         r["attributes"].append(aux)
+        # Appending description
+        aux = {}
+        aux["type"] = "i3visio.text"
+        aux["value"] = jUser["description"]
+        aux["attributes"] = []
+        r["attributes"].append(aux)        
         # Appending platform name
         aux = {}
         aux["type"] = "i3visio.platform"
@@ -100,12 +262,31 @@ class TwitterAPIWrapper(APIWrapper):
         aux["value"] = jUser["location"]
         aux["attributes"] = []
         r["attributes"].append(aux)
-        # Appending uri homepage
+        # Appending profile_location
         aux = {}
-        aux["type"] = "i3visio.uri.homepage"
-        aux["value"] = jUser["url"]
+        aux["type"] = "i3visio.location.current"
+        aux["value"] = jUser["profile_location"]
         aux["attributes"] = []
         r["attributes"].append(aux)        
+        # Appending uri homepage      
+        try:
+            print "a"
+            urls = jUser["entities" ]["url"]["urls"]
+            print urls
+            for url in urls:
+                aux = {}
+                aux["type"] = "i3visio.uri.homepage"
+                aux["value"] = url["expanded_url"]
+                aux["attributes"] = []
+                r["attributes"].append(aux)                    
+        except Exception as e:
+            #print str(e)
+            #Something happenned when parsing the URLS
+            aux = {}
+            aux["type"] = "i3visio.uri.homepage"
+            aux["value"] = jUser["url"]
+            aux["attributes"] = []
+            r["attributes"].append(aux)        
         # Appending created_at
         aux = {}
         aux["type"] = "@created_at"
@@ -123,7 +304,7 @@ class TwitterAPIWrapper(APIWrapper):
         aux["type"] = "@followers_count"
         aux["value"] = str(jUser["followers_count"])
         aux["attributes"] = []
-        r["attributes"].append(aux)                        
+        r["attributes"].append(aux)    
         # Appending protected
         aux = {}
         aux["type"] = "@protected"
@@ -135,7 +316,7 @@ class TwitterAPIWrapper(APIWrapper):
         aux["type"] = "@geo_enabled"
         aux["value"] = str(jUser["geo_enabled"]).lower()
         aux["attributes"] = []
-        r["attributes"].append(aux)                        
+        r["attributes"].append(aux)    
         # Appending language
         aux = {}
         aux["type"] = "@language"
@@ -160,6 +341,18 @@ class TwitterAPIWrapper(APIWrapper):
         aux["value"] = str(jUser["listed_count"])
         aux["attributes"] = []
         r["attributes"].append(aux) 
+        # Appending publications_count
+        aux = {}
+        aux["type"] = "@publications_count"
+        aux["value"] = str(jUser["statuses_count"])
+        aux["attributes"] = []
+        r["attributes"].append(aux)         
+        # Appending favourites_count
+        aux = {}
+        aux["type"] = "@favourites_count"
+        aux["value"] = str(jUser["favourites_count"])
+        aux["attributes"] = []
+        r["attributes"].append(aux)         
         # Appending suspended
         try:
             aux = {}
@@ -232,6 +425,9 @@ class TwitterAPIWrapper(APIWrapper):
         # Connecting to the API        
         api = self._connectToAPI()
         
+        # Verifying the limits of the API
+        self._rate_limit_status(api=api, mode="get_followers")        
+        
         # Making the call to the API
         try:
             friends_ids = api.followers_ids(query)
@@ -257,9 +453,9 @@ class TwitterAPIWrapper(APIWrapper):
         # Connecting to the API        
         api = self._connectToAPI()
         
-        print json.dumps(api.rate_limit_status(), indent=2)
-        raw_input("Presionar")
-        
+        # Verifying the limits of the API
+        self._rate_limit_status(api=api, mode="get_friends")
+                
         # Making the call to the API
         try:
             friends_ids = api.friends_ids(query)
@@ -283,16 +479,17 @@ class TwitterAPIWrapper(APIWrapper):
 
             :return:    User.                        
         '''
-        print "wait for it"
         # Connecting to the API
         api = self._connectToAPI()
-        print "here"
+
+        # Verifying the limits of the API
+        self._rate_limit_status(api=api, mode="get_user")
+        
         aux = []
         try:
             user = api.get_user(screen_name)
             # Iterate through the results using user._json
             aux.append(user._json)
-            #print json.dumps(user._json, indent=2)            
         except tweepy.error.TweepError as e:
             pass
         
@@ -300,7 +497,6 @@ class TwitterAPIWrapper(APIWrapper):
         # Extracting the information from each profile
         for a in aux:
             res.append(self._processUser(a))
-        print res
         return res
 
     def search_users(self, query, n=20, maxUsers=60):
@@ -315,7 +511,10 @@ class TwitterAPIWrapper(APIWrapper):
         '''
         # Connecting to the API        
         api = self._connectToAPI()
-        
+
+        # Verifying the limits of the API
+        self._rate_limit_status(api=api, mode="search_users")
+
         aux = []                
                 
         page = 0

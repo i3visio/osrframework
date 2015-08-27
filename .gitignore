@@ -19,3 +19,8 @@ fichero.txt
 test*
 setuptools*
 tmp*
+*csv
+*xls
+*xlsx
+*ods
+_*sh
