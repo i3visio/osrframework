@@ -214,6 +214,7 @@ class TwitterAPIWrapper(APIWrapper):
             
             :return: Dict in i3visio-like format.
         '''
+        #raw_input(json.dumps(jUser, indent=2))
         r = {}            
         r["type"] = "i3visio.profile"
         r["value"] = self.platformName + " - " + jUser["screen_name"]                
@@ -247,7 +248,7 @@ class TwitterAPIWrapper(APIWrapper):
         # Appending description
         aux = {}
         aux["type"] = "i3visio.text"
-        aux["value"] = jUser["description"]
+        aux["value"] = jUser["description"] if jUser["description"] != "" else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)        
         # Appending platform name
@@ -259,32 +260,29 @@ class TwitterAPIWrapper(APIWrapper):
         # Appending location
         aux = {}
         aux["type"] = "i3visio.location"
-        aux["value"] = jUser["location"]
+        aux["value"] = jUser["location"] if jUser["location"] != "" else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)
         # Appending profile_location
         aux = {}
         aux["type"] = "i3visio.location.current"
-        aux["value"] = jUser["profile_location"]
+        aux["value"] = jUser["profile_location"] if jUser["profile_location"] != None else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)        
         # Appending uri homepage      
         try:
-            print "a"
             urls = jUser["entities" ]["url"]["urls"]
-            print urls
             for url in urls:
                 aux = {}
                 aux["type"] = "i3visio.uri.homepage"
-                aux["value"] = url["expanded_url"]
+                aux["value"] = url["expanded_url"] if url["expanded_url"] != None else "[N/A]"
                 aux["attributes"] = []
                 r["attributes"].append(aux)                    
         except Exception as e:
-            #print str(e)
             #Something happenned when parsing the URLS
             aux = {}
             aux["type"] = "i3visio.uri.homepage"
-            aux["value"] = jUser["url"]
+            aux["value"] = "[N/A]"
             aux["attributes"] = []
             r["attributes"].append(aux)        
         # Appending created_at
@@ -326,7 +324,7 @@ class TwitterAPIWrapper(APIWrapper):
         # Appending time_zone
         aux = {}
         aux["type"] = "@time_zone"
-        aux["value"] = jUser["time_zone"]
+        aux["value"] = jUser["time_zone"] if jUser["time_zone"] != None else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)        
         # Appending verified
