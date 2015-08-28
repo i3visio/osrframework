@@ -29,14 +29,14 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.0b"
+__version__ = "v1.1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 import argparse
 # logging imports
 import logging
-
+import json
 import requests
 import os
 from os import listdir
@@ -110,7 +110,7 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
     logger = logging.getLogger("osrframework.entify")
 
     logger.info("Scanning the folder: " + folder)    
-    results = {}
+    results = []
 
     #onlyfiles = []
     #for f in listdir(args.input_folder):
@@ -126,7 +126,11 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
             # reading data
             foundExpr = getEntitiesByRegexp(data = tempF.read(), listRegexp = listRegexp)
             logger.debug("Updating the " + str(len(foundExpr)) + " results found on: " + filePath)    
-            results[filePath] = foundExpr
+            aux = {}
+            aux["type"] = filePath
+            aux["value"] = uri
+            aux["attributes"] = foundExpr            
+            results.append(aux)
 
     if recursive:
         onlyfolders = [ f for f in listdir(folder) if isdir(join(folder,f)) ]
@@ -149,7 +153,7 @@ def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"
     logSet.setupLogger(loggerName="osrframework.entify", verbosity=verbosity, logFolder=logFolder)
     logger = logging.getLogger("osrframework.entify")
 
-    results = {}
+    results = []
     logger.debug("Looking for regular expressions in: " + uri)    
     
     import urllib2
@@ -157,8 +161,34 @@ def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"
     foundExpr = getEntitiesByRegexp(data = data, listRegexp = listRegexp)
 
     logger.debug("Updating the " + str(len(foundExpr)) + " results found on: " + uri)    
-    results[uri] = foundExpr
-        
+
+    # Creating the output structure
+    for f in foundExpr:
+        aux = {}
+
+        aux={}
+        aux["type"] = "i3visio.search"
+        aux["value"] = "URI - " +f["value"]
+        aux["attributes"] = []
+        for a in f["attributes"]:
+            aux["attributes"].append(a) 
+                   
+        #Appending the entity itself
+        entity={}
+        entity["type"] = f["type"]
+        entity["value"] = f["value"]
+        entity["attributes"] = []
+        aux["attributes"].append(entity)
+
+        #Appending the uri
+        entity={}
+        entity["type"] = "i3visio.uri"
+        entity["value"] = uri
+        entity["attributes"] = []
+        aux["attributes"].append(entity)
+            
+        results.append(aux)        
+    
     return results
     
 def entify_main(args):
@@ -177,6 +207,14 @@ This is free software, and you are welcome to redistribute it under certain cond
 
     logger.info("Selecting the regular expressions to be analysed...")
 
+    sayingHello = """entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""    
+    if not args.quiet:
+        print sayingHello
+        print
+        logger.info("Starting entify.py")
+
     listRegexp = []
     if args.regexp:
         listRegexp = regexp_selection.getRegexpsByName(args.regexp)
@@ -190,21 +228,30 @@ This is free software, and you are welcome to redistribute it under certain cond
         results = scanResource(uri = args.web, listRegexp= listRegexp, verbosity=args.verbose, logFolder= args.logfolder)
     logger.info("Logging the results:\n" + general.dictToJson(results))
 
-    if not args.quiet:
-        print general.dictToJson(results)
-
-    if args.output_folder:
-        logger.info("Preparing the output folder...")
+    # Trying to store the information recovered
+    if args.output_folder != None:    
+        # Verifying an output folder was selected
+        logger.debug("Preparing the output folder...")
         if not os.path.exists(args.output_folder):
             logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
             os.makedirs(args.output_folder)
-        logger.info("Storing the results...")
-        """if "csv" in args.extension:
-            with open(os.path.join(args.output_folder, "results.csv"), "w") as oF:
-                oF.write(resultsToCSV(results))"""
-        if "json" in args.extension:
-            with open(os.path.join(args.output_folder, "results.json"), "w") as oF:
-                oF.write(general.dictToJson(results))
+
+        # Grabbing the results 
+        fileHeader = os.path.join(args.output_folder, args.file_header)            
+        for ext in args.extension:
+            # Generating output files
+            general.exportUsufy(results, ext, fileHeader)        
+
+    # Showing the information gathered if requested                
+    if not args.quiet:
+        print "A summary of the results obtained are shown in the following table:"
+        print unicode(general.usufyToTextExport(results))
+        print
+
+        print "You can find all the information collected in the following files:"                                                     
+        for ext in args.extension:
+            # Showing the output files
+            print "\t-" + fileHeader + "." + ext         
 
     return results
 
@@ -228,16 +275,18 @@ if __name__ == "__main__":
     
     # adding the option
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the processing parameters.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['json'], required=False, default = ['json'], action='store', help='output extension for the summary files (if not provided, json is assumed).')
-    groupProcessing.add_argument('-o', '--output_folder',  metavar='<path_to_output_folder>',  action='store', help='path to the output folder where the results will be stored.', required=False)
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['xls'], action='store', help='output extension for the summary files. Default: xls.')    
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
+    # Getting a sample header for the output files
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )      
     groupProcessing.add_argument('-q', '--quiet', required=False, action='store_true', default=False, help='Asking the program not to show any output.')    
     groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')    
     groupProcessing.add_argument('--recursive', action='store_true', default=False, required=False, help='Variable to tell the system to perform a recursive search on the folder tree.')        
 
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s '+__version__, help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s '+" " +__version__, help='shows the version of the program and exists.')
 
     args = parser.parse_args()    
 

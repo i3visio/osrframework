@@ -263,7 +263,7 @@ def usufy_main(args):
     if not args.maltego:
         sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
         logger.info(sayingHello)
         print sayingHello
         print
@@ -481,7 +481,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 
                     print "You can find all the information collected in the following files:"                                                     
                     for ext in args.extension:
-                        # Generating output files
+                        # Showing the output files
                         print "\t-" + fileHeader + "." + ext
 
                 # Showing the execution time...

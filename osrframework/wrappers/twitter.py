@@ -101,7 +101,7 @@ class Twitter(Platform):
         self.fieldsRegExp["usufy"] = {}
         # Examples (do NOT forget to escape the quoting marks inside any string: \"):
         self.fieldsRegExp["usufy"]["@protected"] = {"start": "data-protected=\"", "end": "\">\n      <span class=\"UserActions"}
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "\" data-name=\"", "end": "\" data-protected"}
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "class=\"ProfileHeaderCard-nameLink u-textInheritColor js-nav\n\">", "end": "</a>\n  </h1>"}
         #self.fieldsRegExp["usufy"]["ProfileHeaderCard-bio"] = {"start": "<p class=\"ProfileHeaderCard-bio u-dir\"\n    \n    dir=\"ltr\">", "end": "</p>"}
         self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<span class=\"ProfileHeaderCard-locationText u-dir\" dir=\"ltr\">\n            ", "end": "\n        </span>\n      </div>\n\n    <div class=\"ProfileHeaderCard-url"}
         self.fieldsRegExp["usufy"]["i3visio.date"] = {"start": "<span class=\"ProfileHeaderCard-joinDateText js-tooltip u-dir\" dir=\"ltr\" title=\"", "end": "\">Se uni"}

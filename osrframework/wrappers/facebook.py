@@ -41,7 +41,7 @@ class Facebook(Platform):
         self.tags = ["social", "contact"]
 
         # Base URL
-        self.baseURL = "http://facebook.com"
+        self.baseURL = "http://facebook.com/"
         
         ########################
         # Defining valid modes #

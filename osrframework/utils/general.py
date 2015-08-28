@@ -103,8 +103,8 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
             
     '''
     # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname"]
-    # Dictionary of profiles found found
+    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname", "i3visio.email", "i3visio.ipv4", "i3visio.phone"]
+    # List of profiles found
     values = {}
     try:
         if not isTerminal:
@@ -125,12 +125,11 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
     for p in res:    
         # Creating the dictionaries
         values[p["value"]] = {}
-                
         attributes = p["attributes"]
         # Processing all the attributes found
         for a in attributes:
             # Default behaviour for the output methods
-            if not isTerminal:
+            if not isTerminal:         
                 values[p["value"]][a["type"]] = a["value"]
                 # Appending the column if not already included
                 if str(a["type"]) not in headers:
