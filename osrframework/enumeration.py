@@ -31,6 +31,14 @@ import os.path
 import osrframework.utils.browser as browser
 import re
 
+__author__ = "Felix Brezo, Yaiza Rubio "
+__copyright__ = "Copyright 2015, i3visio"
+__credits__ = ["Felix Brezo", "Yaiza Rubio"]
+__license__ = "GPLv3+"
+__version__ = "v1.0.0"
+__maintainer__ = "Felix Brezo, Yaiza Rubio"
+__email__ = "contacto@i3visio.com"
+
 def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
 
     for i, url in enumerate(urlDict.keys()):
@@ -76,6 +84,12 @@ def enumeration_main(args):
     '''
         Main loop.
     '''
+    sayingHello = """enumeration.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+    logger.info(sayingHello)
+    print sayingHello
+    print    
     # Loading URL
     urlDict = {}
     if args.url !=None:
@@ -99,7 +113,7 @@ def enumeration_main(args):
     enumerateURL(urlDict, args.output_folder, startIndex = args.start_index, maxErrors = args.max_errors)
     
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='enumeration.py - Checking the existence of a possible enumeration.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description='enumeration.py - Checking the existence of a possible enumeration.', prog='enumeration.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options
@@ -118,7 +132,7 @@ if __name__ == "__main__":
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s v0.1.0' , help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s'+" " + __version__ , help='shows the version of the program and exists.')
 
     args = parser.parse_args()    
 

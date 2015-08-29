@@ -41,7 +41,7 @@ class Youtube(Platform):
         self.tags = ["social", "video"]
 
         # Base URL
-        self.baseURL = "http://youtube.com"
+        self.baseURL = "http://youtube.com/"
 
         ########################
         # Defining valid modes #
@@ -142,9 +142,9 @@ class Youtube(Platform):
         try:
             if mode == "base":
                 if word[0] == "/":
-                    return self.baseURL+word, alias
+                    return self.baseURL+word[1:], alias
                 else:
-                    return self.baseURL+"/"+word, alias
+                    return self.baseURL+word, alias
             else:
                 try:
                     return self.url[mode].replace("<"+mode+">", word.replace(' ', '+')), alias

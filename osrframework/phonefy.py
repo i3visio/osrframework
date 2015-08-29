@@ -29,16 +29,17 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.0b"
+__version__ = "v1.0.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 
 import argparse
 import json
+import os
 
 import osrframework.utils.platform_selection as platform_selection
-
+import osrframework.utils.general as general
 
 def processPhoneList(platformNames=[], numbers=[]):
     ''' 
@@ -58,7 +59,7 @@ def processPhoneList(platformNames=[], numbers=[]):
             # This returns a json.txt!
             entities = pla.getInfo(query=num, process = True, mode="phonefy")
             if entities != {}:
-                results.append(json.loads(entities))
+                results+=json.loads(entities)
     return results
 
 def phonefy_main(args):
@@ -67,41 +68,66 @@ def phonefy_main(args):
         
         :param args: Arguments received by parameter
     '''
+    sayingHello = """phonefy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""    
+    if not args.quiet:
+        print sayingHello
+        print
+        
     results = processPhoneList(platformNames=args.platforms, numbers=args.numbers)
 
-    # Printing the results
+    #print json.dumps(results, indent=2)
+
+    # Trying to store the information recovered
+    if args.output_folder != None:    
+        # Verifying an output folder was selected
+        if not os.path.exists(args.output_folder):
+            os.makedirs(args.output_folder)
+        # Grabbing the results 
+        fileHeader = os.path.join(args.output_folder, args.file_header)                        
+        for ext in args.extension:
+            # Generating output files
+            general.exportUsufy(results, ext, fileHeader)        
+
+    # Showing the information gathered if requested                
     if not args.quiet:
-        print json.dumps(results, indent=2) 
+        print "A summary of the results obtained are shown in the following table:"
+        print unicode(general.usufyToTextExport(results))
+        print
 
-    # Writing the results onto a file
-    if args.output_file != None:
-        with open(output_file, "w") as oF:
-            oF.write(json.dumps(results, indent=2) )
-
+        print "You can find all the information collected in the following files:"                                                     
+        for ext in args.extension:
+            # Showing the output files
+            print "\t-" + fileHeader + "." + ext        
+                
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='phonefy.py - Piece of software that checks the existence of a given series of phones in a bunch of phone number lists associated to malicious activities.', prog='phonefy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options
-    general = parser.add_mutually_exclusive_group(required=True)
+    groupMainOptions = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
-    general.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
-    general.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
+    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
+    groupMainOptions.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
 
     listAll = platform_selection.getAllPlatformNames("phonefy")
 
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
-    groupProcessing.add_argument('-o', '--output_file',  metavar='<path_to_output_file>',  action='store', help='path to the output file where the results will be stored in json format.', required=False)
-    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')    
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'json', 'mtz', 'ods', 'txt', 'xls', 'xlsx' ], required=False, default = ['xls'], action='store', help='output extension for the summary files. Default: xls.')    
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')  
+    # Getting a sample header for the output files
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )        
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')        
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     #groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
-    groupAbout.add_argument('--version', action='version', version='%(prog)s ' +__version__, help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='%(prog)s ' +" " +__version__, help='shows the version of the program and exists.')
 
     args = parser.parse_args()    
 

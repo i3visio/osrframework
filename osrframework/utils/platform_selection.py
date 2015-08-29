@@ -395,7 +395,8 @@ def getAllPlatformObjects(mode = None):
     ##################################################
     ##################################################
     # A
-    listAll.append(About())    
+    # Requires javascript
+    #listAll.append(About())    
     listAll.append(Adtriboo())
     listAll.append(Ahmia())    
     listAll.append(Anarchy101())

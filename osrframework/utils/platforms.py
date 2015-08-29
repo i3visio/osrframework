@@ -139,9 +139,9 @@ class Platform():
         try:
             if mode == "base":
                 if word[0] == "/":
-                    return self.baseURL+word, word
+                    return self.baseURL+word[1:], word
                 else:
-                    return self.baseURL+"/"+word, word
+                    return self.baseURL+word, word
             else:
                 try:
                     return self.url[mode].replace("<"+mode+">", word.replace(' ', '+')), word

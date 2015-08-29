@@ -5,6 +5,17 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Considered in platforms.py the chance of using the API if, both, a wrapper exists and the appropriate authentication methods have been provided.
 - Added a Twitter API wrapping the credentials in config_api_credentials.py to make use of Tweepy API.
 
+0.9.3, 2015/08/28 -- Storing the information of mailfy, entify and phonefy files.
+- Updating the export primitives of the entify, mailfy and phonefy files.
+- Showing some extra text at the beginning of the applications.
+- Fix in the extraction of the i3visio.fullname from Twitter.
+- Fix in the URIs returned from searchfy (previously, '//' was used in twitter and github wrappers).
+
+0.9.2, 2015/08/25 -- Dealing with export issues linked to localization.
+- Dealing with an issue when printing unicode characters in the terminal (specially, in right-to-left languages). A message error will be displayed in the terminal though the information will be stored safely).
+- Back to creation of .xls output files by default. An issue has been detected when creating .ods using Unicode characters. We will wait to test the utility.
+- About.me platform temporally deactivated as it requires javascript.
+
 0.9.1, 2015/08/20 -- Fixes in the export using experimental versions of pyexcel. Release version.
 - Fix an issue linked to the export of Unicode characters in this library. It needs to install an experimental library though.
 - Usufy will display now additional details when being launched: start and end messages as well as time consumed.
