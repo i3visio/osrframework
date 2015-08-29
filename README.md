@@ -95,17 +95,33 @@ unzip osrframework-master.zip
 cd osrframework-master
 ```
 
-2.- Then, you might have to COPY the sample files in the osrframework folder to add your  
-own API Keys. You might edit them with your preferred text editor.
+2.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
+your own API Keys. You might edit them with your preferred text editor. The files are:
 ```
-cp config_api_keys.py.sample config_api_keys.py
-nano config_api_keys.py
-cd ..
+cp osrframework/utils/config_api_keys.py.sample osrframework/utils/config_api_keys.py
+```
+Then you can edit it with:
+```
+nano osrframework/utils/config_api_keys.py
 ```
 If you skip this step, OSRFramework will create files without any credentials. This is not a
-major issue as you will be able to provide them as a parameter. 
+major issue as you will be able to provide them as a parameter. Then you can resume the 
+installation.
 
-3.- Then you can resume the installation.
+3.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
+your own credentials. You might edit them with your preferred text editor. The files are:
+```
+cp osrframework/utils/config_credentials.py.sample osrframework/utils/config_credentials.py
+```
+Then you can edit it with:
+```
+nano osrframework/utils/config_credentials.py
+```
+If you skip this step, OSRFramework will create files without any credentials. This is not a
+major issue as you will be able to provide them as a parameter. Then you can resume the 
+installation.
+
+4.- Then you can resume the installation.
 ```
 # Superuser privileges are required so as to complete the installation.
 sudo python setup.py build
@@ -119,7 +135,7 @@ python -c "import osrframework"
 ```
 If no error is displayed, the installation would have been performed correctly.
 
-4.- To configure the Maltego Entities, launch the built-in configurator:
+5.- To configure the Maltego Entities, launch the built-in configurator:
 ```
 python configure_maltego.py
 ```
@@ -128,14 +144,14 @@ This will create a new .mtz file under:
 <INSTALLATION_FOLDER>/osrframework/transforms/lib/
 ```
 
-5.- However, to use our Maltego Transforms, you will have to download Maltego from 
+6.- However, to use our Maltego Transforms, you will have to download Maltego from 
 Paterva's site: 
 ```
 http://www.paterva.com/web6/products/download2.php
 ```
 Follow the instructions there. Afterwards, you may launch the application.
 
-6.- You will have to import the recently created .mtz configuration file. Select 
+7.- You will have to import the recently created .mtz configuration file. Select 
 all the groups and click next. You may use the new i3visio entities now.
 
 Under Windows
@@ -145,7 +161,7 @@ https://www.python.org/downloads/
 
 The installation should be performed normally. However, you will need
 to add c:\python27 to the system  path variable. You have a tutorial
-here: http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path
+here: <http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path>
 
 You can check how everything went by accessing the cmd. Type
 ```
@@ -165,24 +181,37 @@ http://github.com/i3visio/osrframework/archive/master.zip
 3.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
 your own API Keys. You might edit them with your preferred text editor. The files are:
 ```
-config_api_keys.py.sample 
+osrframework/utils/config_api_keys.py.sample 
 ```
 which should be COPIED to 
 ```
-config_api_keys.py
+osrframework/utils/config_api_keys.py
 ```
 If you skip this step, OSRFramework will create files without any credentials. This is not a
 major issue as you will be able to provide them as a parameter. Then you can resume the 
 installation.
 
-4.- Open the terminal (cmd) and navigate to the recently created folder. You know something like:
+4.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
+your own credentials. You might edit them with your preferred text editor. The files are:
+```
+osrframework/utils/config_credentials.py.sample 
+```
+which should be COPIED to 
+```
+osrframework/utils/config_credentials.py
+```
+If you skip this step, OSRFramework will create files without any credentials. This is not a
+major issue as you will be able to provide them as a parameter. Then you can resume the 
+installation.
+
+5.- Open the terminal (cmd) and navigate to the recently created folder. You know something like:
 ```
 cd Downloads
 cd osrframework-master
 ...
 ```
 
-5.- In the osrframework-master folder, build and install the modules in your system:
+6.- In the osrframework-master folder, build and install the modules in your system:
 ```
 python setup.py build
 python setup.py install
@@ -195,7 +224,7 @@ python -c "import osrframework"
 ```
 If no error is displayed, the installation would have been performed correctly.
 
-6.- To configure the Maltego Entities, launch the built-in configurator:
+7.- To configure the Maltego Entities, launch the built-in configurator:
 ```
 python configure_maltego.py
 ```
@@ -204,14 +233,14 @@ This will create a .mtz file under:
 <INSTALLATION_FOLDER>/osrframework/transforms/lib/
 ```
 
-7.- However, to use our Maltego Transforms, you will have to download Maltego from 
+8.- However, to use our Maltego Transforms, you will have to download Maltego from 
 Paterva's site: 
 ```
 http://www.paterva.com/web6/products/download2.php
 ```
 Follow the instructions there. Afterwards, you may launch the application.
 
-8.- Finally, you will have to import the recently created .mtz configuration file. 
+9.- Finally, you will have to import the recently created .mtz configuration file. 
 Select all the groups and click next. You may use the new i3visio entities now.
 
 EXTRA: creating the binary packages
