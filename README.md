@@ -53,7 +53,7 @@ sudo apt-get update
 # Official package
 sudo apt-get install python-osrframework
 # Installing dependencies manually
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator
 ```
 Whenever a new version is released, the following command will upgrade the package:
 ```

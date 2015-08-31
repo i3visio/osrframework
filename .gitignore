@@ -24,3 +24,6 @@ tmp*
 *xlsx
 *ods
 _*sh
+*gml
+*png
+*.gml_*

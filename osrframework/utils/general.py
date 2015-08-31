@@ -20,12 +20,12 @@
 #
 ##################################################################################
 
-
 import hashlib
 import json
 import datetime
 from osrframework.transforms.lib.maltego import MaltegoEntity, MaltegoTransform
 
+import networkx as nx
 import logging
 
 def exportUsufy(data, ext, fileH):
@@ -35,22 +35,33 @@ def exportUsufy(data, ext, fileH):
         :param ext: One of the following: csv, excel, json, ods.
         :param fileH: Fileheader for the output files.
     '''
+    # HACK!
+    import sys
+    reload(sys)
+    sys.setdefaultencoding("ISO-8859-1")        
     # Selecting the appropriate export function
     if ext == "csv":
         usufyToCsvExport(data, fileH+"."+ext)
+    elif ext == "gml":
+        usufyToGmlExport(data, fileH+"."+ext)    
     elif ext == "json":
         usufyToJsonExport(data, fileH+"."+ext)
     elif ext == "mtz":
         usufyToMaltegoExport(data, fileH+"."+ext)
     elif ext == "ods":
         usufyToOdsExport(data, fileH+"."+ext)
+    elif ext == "png":
+        usufyToPngExport(data, fileH+"."+ext)        
     elif ext == "txt":
         usufyToTextExport(data, fileH+"."+ext)        
     elif ext == "xls":
         usufyToXlsExport(data, fileH+"."+ext)
     elif ext == "xlsx":
         usufyToXlsxExport(data, fileH+"."+ext)     
-
+    # HACK!        
+    import sys
+    reload(sys)
+    sys.setdefaultencoding("ascii")    
 def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=True):
     '''
         Method that recovers the values and columns from the current structure
@@ -190,7 +201,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
     # Storing the workingSheet onto the data structure to be stored
     data.update({"Usufy sheet": workingSheet})
     return data
-
+        
 def usufyToJsonExport(d, fPath):
     '''
         Workaround to export to a json file.
@@ -317,7 +328,186 @@ def usufyToXlsxExport(d, fPath):
     from pyexcel_xlsx import save_data
     # Storing the file        
     save_data(fPath, tabularData)
+    
+def _generateGraphData(data, oldData=nx.Graph()):
+    '''
+        Processing the data from i3visio structures to generate the nodes and edges of networkx graph library. It will create a new node for each and i3visio.<something> entities while it will add properties for all the attribute starting with "@".
+        
+        :param d: The i3visio structures containing a list of 
+        :param oldData: A graph structure representing the previous information.
+        
+        :return: A graph structure representing the updated information.
+    '''
+    def _addNewNode(ent, g):
+        """
+            :param ent:   The hi3visio-like entities to be used as the identifier.
+                ent = {
+                    "value":"i3visio",
+                    "type":"i3visio.alias,            
+                }             
+            :param g:   The graph in which the entity will be stored.
+            :return:    newAtts, newEntties
+        """
+        # Serialized entity
+        serEnt = json.dumps(ent)    
+        
+        # Calculating the hash
+        h = hashlib.new('md5')
+        h.update(serEnt)
+        hashLabel = h.hexdigest()    
+                                        
+        # Adding the node
+        g.add_node(hashLabel)
+        
+        # Creating the main attributes such as the type and value
+        g.node[hashLabel]["type"] = ent["type"]        
+        try:
+            g.node[hashLabel]["value"] = unicode(ent["value"])
+        except UnicodeEncodeError as e:
+            # Printing that an error was found
+            g.node[hashLabel]["value"] = "[WARNING: Unicode Encode]"
+        except:
+            # Printing that this is not applicable value
+            g.node[hashLabel]["value"] = "[N/A]"
 
+        return hashLabel  
+        
+    def _processAttributes(elems, g):
+        """
+            :param elems:   List of i3visio-like entities.
+            :param g:   The graph in which the entity will be stored.            
+            
+            :return:    newAtts, newEntities
+        """
+        # Dict of attributes (to be stored as attributes for the given entity)
+        newAtts = {}
+        # List of new Entities (to be stored as attributes for the given entity)
+        newEntities= []
+
+        for att in elems:
+            # If it is an attribute
+            if att["type"][0] == "@":
+                # Removing the @ and the  _ of the attributes
+                attName = str(att["type"][1:]).replace('_', '')
+                try:
+                    newAtts[attName] = int(att["value"])
+                except:
+                    newAtts[attName] = att["value"]
+            elif att["type"][:8] == "i3visio.":
+                # Creating a dict to represent the pair: type, value entity.
+                ent = {
+                    "value":att["value"],
+                    "type":att["type"],            
+                } 
+                # Appending the new Entity to the entity list
+                newEntities.append(ent)
+                
+                # Appending the new node
+                hashLabel = _addNewNode(ent, g)
+
+                # Make this recursive to link the attributes in each and every att
+                newAttsInAttributes, newEntitiesInAttributes = _processAttributes(att["attributes"], g)                
+
+                # Updating the attributes to the current entity
+                g.node[hashLabel].update(newAttsInAttributes)
+                
+                # Creating the edges (the new entities have also been created in the _processAttributes
+                for new in newEntitiesInAttributes:
+                    graphData.add_edge(hashLabel, json.dumps(new))
+                    try:
+                        # Here, we would add the properties of the edge
+                        #graphData.edge[hashLabel][json.dumps(new)]["@times_seen"] +=1
+                        pass
+                    except:
+                        # If the attribute does not exist, we would initialize it
+                        #graphData.edge[hashLabel][json.dumps(new)]["@times_seen"] = 1
+                        pass
+            else:
+                # An unexpected type
+                pass           
+
+        return newAtts, newEntities
+        
+    graphData = oldData
+    # Iterating through the results 
+    for elem in data:
+        # Creating a dict to represent the pair: type, value entity.
+        ent = {
+            "value":elem["value"],
+            "type":elem["type"],            
+        }
+              
+        # Appending the new node
+        hashLabel = _addNewNode(ent, graphData)
+
+        # Processing the attributes to grab the attributes (starting with "@..." and entities)        
+        newAtts, newEntities = _processAttributes(elem["attributes"], graphData)
+        
+        # Updating the attributes to the current entity     
+        graphData.node[hashLabel].update(newAtts)
+
+        # Creating the edges (the new entities have also been created in the _processAttributes
+        for new in newEntities:
+            # Serializing the second entity
+            serEnt = json.dumps(new)    
+            
+            # Calculating the hash of the second entity
+            h = hashlib.new('md5')
+            h.update(serEnt)
+            hashLabelSeconds = h.hexdigest()          
+            
+            # Adding the edge
+            graphData.add_edge(hashLabel, hashLabelSeconds)
+            try:
+                # Here, we would add the properties of the edge
+                #graphData.edge[hashLabel][hashLabelSeconds]["times_seen"] +=1
+                pass                
+            except:
+                # If the attribute does not exist, we would initialize it
+                #graphData.edge[hashLabel][hashLabelSeconds]["times_seen"] = 1
+                pass
+        
+    return graphData
+    
+def usufyToGmlExport(d, fPath):
+    '''
+        Workaround to export to a gml file.
+        :param d: Data to export.
+        :param fPath: File path.
+    '''
+    # Reading the previous gml file      
+    try:
+        oldData=nx.read_gml(fPath)
+    except UnicodeDecodeError as e:
+        print "UnicodeDecodeError:\t" + str(e)
+        print "Something went wrong when reading the .gml file relating to the decoding of UNICODE."
+        import time as time
+        fPath+="_" +str(time.time()) 
+        print "To avoid losing data, the output file will be renamed to use the timestamp as:\n" + fPath + "_" + str(time.time()) 
+        print        
+        # No information has been recovered
+        oldData = nx.Graph()
+    except Exception as e:
+        # No information has been recovered
+        oldData = nx.Graph()
+    newGraph = _generateGraphData(d, oldData)
+
+    # Writing the gml file
+    nx.write_gml(newGraph,fPath)
+    
+def usufyToPngExport(d, fPath):
+    '''
+        Workaround to export to a png file.
+        :param d: Data to export.
+        :param fPath: File path.
+    '''
+    newGraph = _generateGraphData(d)
+
+    import matplotlib.pyplot as plt
+    # Writing the png file
+    nx.draw(newGraph)
+    plt.savefig(fPath)
+        
 def usufyToMaltegoExport(profiles, fPath):
     '''
         Workaround to export to a Maltego file.
