@@ -216,7 +216,7 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
                     email_candidates.append(n+"@"+d)
     return email_candidates
 
-def mailfy_main(args):
+def main(args):
     ''' 
         Main program.
         
@@ -258,7 +258,7 @@ This is free software, and you are welcome to redistribute it under certain cond
             print "\t-" + fileHeader + "." + ext        
                 
 
-if __name__ == "__main__":
+def getParser():
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
@@ -289,7 +289,13 @@ if __name__ == "__main__":
     #groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
     groupAbout.add_argument('--version', action='version', version='%(prog)s ' +" " +__version__, help='shows the version of the program and exists.')
 
+    return parser
+                
+if __name__ == "__main__":
+    # Grabbing the parser
+    parser = getParser()
+    
     args = parser.parse_args()    
 
     # Calling the main function
-    mailfy_main(args)
+    main(args)

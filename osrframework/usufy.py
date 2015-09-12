@@ -250,7 +250,7 @@ def multi_run_wrapper(args):
     return getPageWrapper(*args)
 
 
-def usufy_main(args):
+def main(args):
     ''' 
         Main function. This function is created in this way so as to let other applications make use of the full configuration capabilities of the application.    
     '''
@@ -497,7 +497,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 
                 return res                        
 
-if __name__ == "__main__":
+def getParser():
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
 
@@ -542,9 +542,14 @@ if __name__ == "__main__":
     groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
     groupAbout.add_argument('--version', action='version', version='%(prog)s ' +__version__, help='shows the version of the program and exists.')
 
+    return parser
+
+if __name__ == "__main__":
+    # Grabbing the parser
+    parser = getParser()
+
     args = parser.parse_args()    
 
     # Calling the main function
-    usufy_main(args)
-    
+    main(args)
     

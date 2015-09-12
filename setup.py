@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__version__ = "0.10.0a"
+__version__ = "0.9.4"
 
 #from distutils.core import setup
 import os
@@ -183,23 +183,8 @@ setup(    name="osrframework",
     long_description=read_md("./README.md"),
 #    long_description=open('README.md').read(),
     install_requires=[
-        "pip"
+        "pip",
     ], 
     data_files=files_to_copy,
 )
 
-"""
-    Packages to be installed via pip
-        "mechanize",
-        "Skype4Py",
-        "argparse",
-        "requests",
-        "python-emailahoy",
-        "BeautifulSoup",
-        "pyexcel",
-        "pyexcel_io",           
-        "pyexcel_ods",    
-        "pyexcel_xls",
-        "pyexcel_xlsx",
-        "pyexcel_text",
-"""

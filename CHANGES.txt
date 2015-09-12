@@ -1,12 +1,13 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.10.0, 2015/08/31 -- Added the chance of using the API
+0.9.4, 2015/09/12 -- API integration added to extract information, changes in the export files and added the Twitter API wrapper.
 - Created a osrframework/api folder where all the wrappers to each platform will be included.
 - Considered in platforms.py the chance of using the API if, both, a wrapper exists and the appropriate authentication methods have been provided.
 - Added a Twitter API wrapping the credentials in config_api_credentials.py to make use of Tweepy API.
 - Added networkx library to store the information in a graph format: png and gml have been added.
 - A hack has been used to avoid encoding problems when exporting data.
 - An issue has been detected: python-networkx and python-decorator in Debian-based OS is a problem because they are not up-to-date. Installation from pip is required.
+- Changed the export modules to change the starting "@" in the attributes to a "_" and the "i3visio." headers to "i3visio_" for usability reasons when loading future versions of visualization apps.
 
 0.9.3, 2015/08/28 -- Storing the information of mailfy, entify and phonefy files.
 - Updating the export primitives of the entify, mailfy and phonefy files.

@@ -65,15 +65,14 @@ class TwitterAPIWrapper(APIWrapper):
         '''
         if api == None:
             api = self.connectToAPI()
-        
+                       
         if mode == None:
             print json.dumps(api.rate_limit_status(), indent=2)
-            raw_input("Presionar")            
+            raw_input("<Press ENTER>")            
         else:
             # Testing if we have enough queries
             while True:
-                allLimits = api.rate_limit_status()
-                
+                allLimits = api.rate_limit_status()            
                 if mode == "get_user":
                     limit = allLimits["resources"]["users"]["/users/show/:id"]["limit"]
                     remaining = allLimits["resources"]["users"]["/users/show/:id"]["remaining"]
@@ -91,11 +90,17 @@ class TwitterAPIWrapper(APIWrapper):
                     remaining = allLimits["resources"]["users"]["/users/search"]["remaining"]
                     reset = allLimits["resources"]["users"]["/users/search"]["reset"]
                 else:
-                    remaining = 1
+                    remaining = 1                    
+                """elif mode == "get_all_docs":
+                    limit = allLimits["resources"]REPLACEME["limit"]
+                    remaining = allLimits["resources"]REPLACEME["remaining"]
+                    reset = allLimits["resources"]REPLACEME["reset"]"""
                 """elif mode == "get_users":
                     limit = allLimits["resources"]REPLACEME["limit"]
                     remaining = allLimits["resources"]REPLACEME["remaining"]
                     reset = allLimits["resources"]REPLACEME["reset"] """                    
+                """else:
+                    remaining = 1"""
                 # Checking if we have enough remaining queries
                 if remaining > 0:
                     #raw_input(str(remaining) + " queries yet...")
@@ -228,7 +233,7 @@ class TwitterAPIWrapper(APIWrapper):
         r["attributes"].append(aux) """
         # Appending the id
         aux = {}
-        aux["type"] = "@id_str"
+        aux["type"] = "@twitter_id"
         aux["value"] = jUser["id_str"]
         aux["attributes"] = []           
         r["attributes"].append(aux)
@@ -284,7 +289,35 @@ class TwitterAPIWrapper(APIWrapper):
             aux["type"] = "i3visio.uri.homepage"
             aux["value"] = "[N/A]"
             aux["attributes"] = []
-            r["attributes"].append(aux)        
+            r["attributes"].append(aux)   
+        # Appending profile uri homepage      
+        try:
+            aux = {}
+            aux["type"] = "i3visio.uri.image.profile"
+            aux["value"] = jUser["profile_image_url"] if jUser["profile_image_url"] != None else "[N/A]"
+            aux["attributes"] = []
+            r["attributes"].append(aux)                    
+        except Exception as e:
+            #Something happenned when parsing the Profile URL
+            aux = {}
+            aux["type"] = "i3visio.uri.image.profile"
+            aux["value"] = "[N/A]"
+            aux["attributes"] = []
+            r["attributes"].append(aux)   
+        # Appending uri background
+        try:
+            aux = {}
+            aux["type"] = "i3visio.uri.image.background"
+            aux["value"] = jUser["profile_background_image_url"] if jUser["profile_background_image_url"] != None else "[N/A]"
+            aux["attributes"] = []
+            r["attributes"].append(aux)                    
+        except Exception as e:
+            #Something happenned when parsing the background URL
+            aux = {}
+            aux["type"] = "i3visio.uri.image.background"
+            aux["value"] = "[N/A]"
+            aux["attributes"] = []
+            r["attributes"].append(aux)    
         # Appending created_at
         aux = {}
         aux["type"] = "@created_at"
@@ -370,47 +403,241 @@ class TwitterAPIWrapper(APIWrapper):
 
             :return:    List of tweets.            
         '''
+        def _getNewTweets(api, screen_name,count=200, oldest=None, waitTime=60):
+            '''
+                MEthod that recovers the new tweets or waits until the number of remaining calls has been freed.
+                
+                :param api:     A valid and connected api.
+                :param screen_name: screen_name of the user to monitor.
+                :param count:   Number of tweets to grab per iteration.
+                :param oldes:  Oldest tweet to grab in this iteration.
+                :param waitTime:    Number of seconds to wait between tries.
+                                                                                
+                :return:  List of new_tweets
+            '''
+            # Verifying the limits of the API
+            #self._rate_limit_status(api=api, mode="get_all_docs")         
+               
+            waiting = True
+            while waiting == True:
+                try:
+                    if oldest != None:
+                        # We have to update the oldest id 
+                        new_tweets = api.user_timeline(screen_name=screen_name, count=count, max_id=oldest)
+                    else:
+                        new_tweets = api.user_timeline(screen_name=screen_name, count=count)                        
+                    waiting = False
+                    #save most recent tweets
+
+                except Exception as e:
+                    # Error... We will have to wait
+                    #waiting = True
+                    print str(e)
+                    #print(traceback.format_exc())                    
+                    print "No more queries remaining, sleeping for " + str(waitTime) +" seconds..."
+                    time.sleep(waitTime)          
+                    
+            return new_tweets
+        
         # Connecting to the API
         api = self._connectToAPI()
     
         #initialize a list to hold all the tweepy Tweets
         alltweets = []    
-    
+
         #make initial request for most recent tweets (200 is the maximum allowed count)
-        new_tweets = api.user_timeline(screen_name = screen_name,count=200)
-    
-        #save most recent tweets
+        """waiting = True
+        while waiting == True:
+            try:
+                new_tweets = api.user_timeline(screen_name = screen_name,count=200)
+                waiting = False
+            except:
+                # Error... We will have to wait
+                waiting = True
+                time.sleep(waitTime)  """         
+        new_tweets = _getNewTweets(api, screen_name)
+                
         alltweets.extend(new_tweets)
-    
-        #save the id of the oldest tweet less one
-        oldest = alltweets[-1].id - 1
-    
-        #keep grabbing tweets until there are no tweets left to grab
-        while len(new_tweets) > 0:
-            print "Getting tweets before %s" % (oldest)
-        
-            #all subsiquent requests use the max_id param to prevent duplicates
-            new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest)
-        
-            #save most recent tweets
-            alltweets.extend(new_tweets)
-        
-            #update the id of the oldest tweet less one
+        # Storing manually all the json representation for the tweets        
+        jTweets = []
+        for n in new_tweets:
+            jTweets.append(n._json)
+        if len(alltweets) > 0:
+            #save the id of the oldest tweet less one
             oldest = alltweets[-1].id - 1
         
-            print "... %s tweets downloaded so far" % (len(alltweets))
-        #print alltweets
-        """#transform the tweepy tweets into a 2D array that will populate the csv    
-        outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
+            #keep grabbing tweets until there are no tweets left to grab
+            while len(new_tweets) > 0:
+                print "Getting tweets before %s" % (oldest)
+            
+                """ #all subsiquent requests use the max_id param to prevent duplicates
+                waiting = True
+                while waiting == True:
+                    try:
+                        # We have to update the oldest id 
+                        new_tweets = api.user_timeline(screen_name = screen_name,count=200, max_id=oldest)
+                        waiting = False
+                        #save most recent tweets
+
+                    except:
+                        # Error... We will have to wait
+                        waiting = True
+                        print "No more queries remaining, sleeping for " + str(waitTime) +" seconds..."
+                        time.sleep(waitTime)  """
+
+                new_tweets = _getNewTweets(api, screen_name, oldest=oldest)
+                                 
+                # Extending the list of tweets
+                alltweets.extend(new_tweets)                                                                 
     
-        #write the csv    
+                #update the id of the oldest tweet less one
+                oldest = alltweets[-1].id - 1        
+                print "... %s tweets downloaded so far" % (len(alltweets))
+                # Storing manually all the json representation for the tweets        
+                for n in new_tweets:
+                    jTweets.append(n._json)
+        else:
+            # Verifying the limits of the API
+            print json.dumps(self._rate_limit_status(api=api, mode="get_all_docs"), indent =2)
+            
+        #transform the tweepy tweets into a 2D array that will populate the csv    
+        outtweets = []      
+        # This is how it is represented
+        """
+          "status": {
+            "lang": "es", 
+            "favorited": false, 
+            "entities": {
+              "symbols": [], 
+              "user_mentions": [], 
+              "hashtags": [], 
+              "urls": []
+            }, 
+            "contributors": null, 
+            "truncated": false, 
+            "text": "Podemos confirmar que Alpify, aunque acabe en ...fy no es una aplicaci\u00f3n nuestra. ;) \u00a1A aprovechar lo que queda de domingo!", 
+            "created_at": "Sun Aug 16 17:35:37 +0000 2015", 
+            "retweeted": true, 
+            "in_reply_to_status_id_str": null, 
+            "coordinates": null, 
+            "in_reply_to_user_id_str": null, 
+            "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>", 
+            "in_reply_to_status_id": null, 
+            "in_reply_to_screen_name": null, 
+            "id_str": "632968969662689280", 
+            "place": null, 
+            "retweet_count": 1, 
+            "geo": null, 
+            "id": 632968969662689280, 
+            "favorite_count": 0, 
+            "in_reply_to_user_id": null
+          },         
+        """
+        for tweet in jTweets:
+            row =[]
+            row.append(tweet["id_str"])
+            row.append(tweet["created_at"])
+            row.append(tweet["text"].encode("utf-8"))
+            row.append(tweet["source"])
+            row.append(tweet["coordinates"])
+            row.append(tweet["retweet_count"])
+            row.append(tweet["favorite_count"])
+            row.append(tweet["lang"])
+            row.append(tweet["place"])
+            row.append(tweet["geo"])
+            row.append(tweet["id"])
+            row.append(screen_name)
+            
+            # URLS
+            urls = []      
+            """
+            [    
+                {
+                  "url": "http://t.co/SGty7or6SQ", 
+                  "indices": [
+                    30, 
+                    52
+                  ], 
+                  "expanded_url": "http://github.com/i3visio/osrframework", 
+                  "display_url": "github.com/i3visio/osrfra\u2026"
+                }
+            ]
+            """                             
+            for u in tweet["entities"]["urls"]:
+                urls.append(u["expanded_url"])
+            # Creating the string value for the cell
+            str_urls =""
+            if len(urls) == 0:
+                str_urls = "[N/A]"
+            else:
+                for i, u in enumerate(urls):
+                    str_urls += u
+                    # Appending a separator
+                    if i+1 <> len(urls):
+                        str_urls+= "|"
+            row.append(str_urls.encode('utf-8'))  
+
+            # TODO: Extract Mentions
+            #     
+            mentions = []
+            """ "user_mentions": [
+              {
+                "id": 66345537, 
+                "indices": [
+                  0, 
+                  10
+                ], 
+                "id_str": "66345537", 
+                "screen_name": "muchotomy", 
+                "name": "Tomy"
+              },    
+            """
+            for a in tweet["entities"]["user_mentions"]:
+                mentions.append(a["screen_name"])
+            # Creating the string value for the cell
+            str_mentions =""
+            if len(mentions) == 0:
+                str_mentions = "[N/A]"
+            else:
+                for i, m in enumerate(mentions):
+                    str_mentions += m
+                    # Appending a separator
+                    if i+1 <> len(mentions):
+                        str_mentions+= "|"
+            row.append(str_mentions.encode('utf-8'))  
+            
+            # Appending the row to the output
+            outtweets.append(row)
+            
+        # Writing the csv    
         with open('%s_tweets.csv' % screen_name, 'wb') as f:
             writer = csv.writer(f)
-            writer.writerow(["id","created_at","text"])
-            writer.writerows(outtweets)
+            # Writing the headers
+            writer.writerow([
+                "_tweet_id",
+                "_tweet_created_at",
+                "_tweet_text",
+                "_tweet_source",
+                "_tweet_coordinates",
+                "_tweet_retweet_count",
+                "_tweet_favourite_count",                                                
+                "_tweet_lang",
+                "i3visio_location",
+                "_tweet_geo",
+                "_twitter_id",
+                "i3visio_alias",
+                "i3visio_uri",                                                                                
+                "i3visio_alias_mentions",                  
+            ])
+            # Writing the rows
+            #writer.writerows(outtweets)
+            for o in outtweets:
+                try:
+                    writer.writerow(o)
+                except:
+                    print o
     
-        pass"""
-        return alltweets
+        return jTweets
 
     def get_followers(self, query):
         '''
@@ -554,8 +781,8 @@ def main(args):
     tAW = TwitterAPIWrapper()
     
     # Selecting the query to be launched
-    if args.type == "get_all_tweets":
-        results = tAW.get_all_tweets(args.query)
+    if args.type == "get_all_docs":
+        results = tAW.get_all_docs(args.query)
         
     elif args.type == "get_user":
         results = tAW.get_user(args.query)
@@ -588,8 +815,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='A library that wraps searches onto the Twitter API.', prog='twitter_api.py', epilog="NOTE: if not provided, the API key will be searched in the config_api_keys.py file.", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
-    parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to md5crack.com.', required=True)        
-    parser.add_argument('-t', '--type', action='store', choices=["get_all_tweets", "get_user", "get_followers", "get_friends", "search_users"], help='Type of query to be performed.', required=True)
+    parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to the Twitter API.', required=True)        
+    parser.add_argument('-t', '--type', action='store', choices=["get_all_docs", "get_user", "get_followers", "get_friends", "search_users"], help='Type of query to be performed.', required=True)
     
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
@@ -599,6 +826,6 @@ if __name__ == '__main__':
 
     results = main(args)
     
-    print json.dumps(results, indent=2)
+    #print json.dumps(results, indent=2)
     print len(results)
     

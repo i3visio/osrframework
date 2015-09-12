@@ -191,7 +191,7 @@ def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"
     
     return results
     
-def entify_main(args):
+def main(args):
     ''' 
         Main function. This function is created in this way so as to let other applications make use of the full configuration capabilities of the application.    
     '''
@@ -256,7 +256,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     return results
 
 
-if __name__ == "__main__":
+def getParser():
     parser = argparse.ArgumentParser(description='entify.py - entify.py is a program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify.py', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False)
     parser._optionals.title = "Input options (one required)"
 
@@ -288,6 +288,12 @@ if __name__ == "__main__":
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version='%(prog)s '+" " +__version__, help='shows the version of the program and exists.')
 
+    return parser
+                
+if __name__ == "__main__":
+    # Grabbing the parser
+    parser = getParser()
+    
     args = parser.parse_args()    
 
     # Recovering the logger
@@ -296,4 +302,4 @@ if __name__ == "__main__":
     # From now on, the logger can be recovered like this:
     logger = logging.getLogger("osrframework")
     
-    entify_main(args)
+    main(args)

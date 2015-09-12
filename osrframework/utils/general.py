@@ -62,6 +62,7 @@ def exportUsufy(data, ext, fileH):
     import sys
     reload(sys)
     sys.setdefaultencoding("ascii")    
+    
 def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=True):
     '''
         Method that recovers the values and columns from the current structure
@@ -73,7 +74,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
         :param res:    new data to export.
         :param oldTabularData:    the previous data stored.     
             {
-              "Usufy sheet": [
+              "OSRFramework": [
                 [
                   "i3visio.alias", 
                   "i3visio.platform", 
@@ -93,7 +94,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
             headers, a list containing the headers used for the rows.
             Values is like:            
             {
-              "Usufy sheet": [
+              "OSRFramework": [
                 [
                   "i3visio.alias", 
                   "i3visio.platform", 
@@ -113,24 +114,41 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
             }
             
     '''
+    def _grabbingNewHeader(h):
+        '''
+            Changing the starting @ for a '_' and changing the "i3visio." for "i3visio_". Changed in 0.9.4+.
+        '''
+        if h[0] == "@":
+            h = h.replace("@","_")
+        elif "i3visio." in h:
+            h = h.replace("i3visio.", "i3visio_")      
+        return h
+        
     # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio.alias", "i3visio.uri", "i3visio.platform", "i3visio.fullname", "i3visio.email", "i3visio.ipv4", "i3visio.phone"]
+    allowedInTerminal = ["i3visio_alias", "i3visio_uri", "i3visio_platform", "i3visio_fullname", "i3visio_email", "i3visio_ipv4", "i3visio_phone", "i3visio_email"]
     # List of profiles found
     values = {}
+    headers = ["_id"]
     try:
         if not isTerminal:
             # Recovering the headers in the first line of the old Data
-            headers = oldTabularData["Usufy sheet"][0]
+            headers = oldTabularData["OSRFramework"][0]
         else:
             # Recovering only the printable headers if in Terminal mode
-            oldHeaders = oldTabularData["Usufy sheet"][0]
+            oldHeaders = oldTabularData["OSRFramework"][0]
             headers = []
             for h in oldHeaders:
+                h = _grabbingNewHeader(h)
                 if h in allowedInTerminal:
                     headers.append(h)
+        # Changing the starting @ for a '_' and changing the "i3visio." for "i3visio_". Changed in 0.9.4+
+        for i, h in enumerate(headers):
+            h = _grabbingNewHeader(h)
+            # Replacing the header
+            headers[i] = h
     except:
         # No previous files... Easy...
-        headers = []
+        headers = ["_id"]
 
     # We are assuming that we received a list of profiles. 
     for p in res:    
@@ -139,19 +157,22 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
         attributes = p["attributes"]
         # Processing all the attributes found
         for a in attributes:
+            # Grabbing the type in the new format
+            h = _grabbingNewHeader(a["type"])
+            
             # Default behaviour for the output methods
             if not isTerminal:         
-                values[p["value"]][a["type"]] = a["value"]
+                values[p["value"]][h] = a["value"]
                 # Appending the column if not already included
-                if str(a["type"]) not in headers:
-                    headers.append(str(a["type"]))
+                if str(h) not in headers:
+                    headers.append(str(h))
             # Specific table construction for the terminal output
             else:
-                if a["type"] in allowedInTerminal:
-                    values[p["value"]][a["type"]] = a["value"]
+                if h in allowedInTerminal:
+                    values[p["value"]][h] = a["value"]
                     # Appending the column if not already included
-                    if str(a["type"]) not in headers:
-                        headers.append(str(a["type"]))
+                    if str(h) not in headers:
+                        headers.append(str(h))
 
     data = {}    
     # Note that each row should be a list!
@@ -162,7 +183,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
 
     # First, we will iterate through the previously stored values
     try:
-        for dataRow in oldTabularData["Usufy sheet"][1:]:
+        for dataRow in oldTabularData["OSRFramework"][1:]:
             # Recovering the previous data
             newRow = []
             for cell in dataRow:
@@ -183,12 +204,15 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
     for prof in values.keys():
         # Creating an empty structure
         newRow = []
-        for col in headers:
+        for i, col in enumerate(headers):
             try:
-                if canUnicode:
-                    newRow.append(unicode(values[prof][col]))
+                if col == "_id":
+                    newRow.append(len(workingSheet))
                 else:
-                    newRow.append(str(values[prof][col]))
+                    if canUnicode:
+                        newRow.append(unicode(values[prof][col]))
+                    else:
+                        newRow.append(str(values[prof][col]))
             except UnicodeEncodeError as e:
                 # Printing that an error was found
                 newRow.append("[WARNING: Unicode Encode]")  
@@ -199,7 +223,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
         workingSheet.append(newRow)
 
     # Storing the workingSheet onto the data structure to be stored
-    data.update({"Usufy sheet": workingSheet})
+    data.update({"OSRFramework": workingSheet})
     return data
         
 def usufyToJsonExport(d, fPath):
@@ -230,12 +254,12 @@ def usufyToTextExport(d, fPath=None):
         oldData = get_data(fPath)
     except:
         # No information has been recovered
-        oldData = {"Usufy sheet":[]}
+        oldData = {"OSRFramework":[]}
 
     # Generating the new tabular data
-    tabularData = _generateTabularData(d, {"Usufy sheet":[[]]}, True, canUnicode=False)
+    tabularData = _generateTabularData(d, {"OSRFramework":[[]]}, True, canUnicode=False)
     # The tabular data contains a dict representing the whole book and we need only the sheet!!
-    sheet = pe.Sheet(tabularData["Usufy sheet"])
+    sheet = pe.Sheet(tabularData["OSRFramework"])
     sheet.name = "Profiles recovered (" + getCurrentStrDatetime() +")."
     # Defining the headers
     sheet.name_columns_by_row(0)
@@ -257,10 +281,10 @@ def usufyToCsvExport(d, fPath):
 
     from pyexcel_io import get_data
     try:
-        oldData = {"Usufy sheet": get_data(fPath) }
+        oldData = {"OSRFramework": get_data(fPath) }
     except:
         # No information has been recovered
-        oldData = {"Usufy sheet":[]}
+        oldData = {"OSRFramework":[]}
 
     # Generating the new tabular data.
     tabularData = _generateTabularData(d, oldData)
@@ -268,7 +292,7 @@ def usufyToCsvExport(d, fPath):
     from pyexcel_io import save_data
     # Storing the file
     # NOTE: when working with CSV files it is no longer a dict because it is a one-sheet-format
-    save_data(fPath, tabularData["Usufy sheet"]) 
+    save_data(fPath, tabularData["OSRFramework"]) 
 
 def usufyToOdsExport(d, fPath):
     '''
@@ -281,7 +305,7 @@ def usufyToOdsExport(d, fPath):
         oldData = get_data(fPath)
     except:
         # No information has been recovered
-        oldData = {"Usufy sheet":[]}
+        oldData = {"OSRFramework":[]}
     
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
@@ -301,7 +325,7 @@ def usufyToXlsExport(d, fPath):
         oldData = get_data(fPath)
     except:
         # No information has been recovered
-        oldData = {"Usufy sheet":[]}
+        oldData = {"OSRFramework":[]}
     
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
@@ -320,7 +344,7 @@ def usufyToXlsxExport(d, fPath):
         oldData = get_data(fPath)
     except:
         # No information has been recovered
-        oldData = {"Usufy sheet":[]}
+        oldData = {"OSRFramework":[]}
     
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
@@ -397,7 +421,7 @@ def _generateGraphData(data, oldData=nx.Graph()):
                 # Creating a dict to represent the pair: type, value entity.
                 ent = {
                     "value":att["value"],
-                    "type":att["type"],            
+                    "type":att["type"].replace("i3visio.", "i3visio_"),            
                 } 
                 # Appending the new Entity to the entity list
                 newEntities.append(ent)

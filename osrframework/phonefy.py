@@ -62,7 +62,7 @@ def processPhoneList(platformNames=[], numbers=[]):
                 results+=json.loads(entities)
     return results
 
-def phonefy_main(args):
+def main(args):
     ''' 
         Main program.
         
@@ -100,8 +100,8 @@ This is free software, and you are welcome to redistribute it under certain cond
         for ext in args.extension:
             # Showing the output files
             print "\t-" + fileHeader + "." + ext        
-                
-if __name__ == "__main__":
+
+def getParser():
     parser = argparse.ArgumentParser(description='phonefy.py - Piece of software that checks the existence of a given series of phones in a bunch of phone number lists associated to malicious activities.', prog='phonefy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
@@ -128,8 +128,14 @@ if __name__ == "__main__":
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     #groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
     groupAbout.add_argument('--version', action='version', version='%(prog)s ' +" " +__version__, help='shows the version of the program and exists.')
-
+    
+    return parser
+                
+if __name__ == "__main__":
+    # Grabbing the parser
+    parser = getParser()
+    
     args = parser.parse_args()    
 
     # Calling the main function
-    phonefy_main(args)
+    main(args)
