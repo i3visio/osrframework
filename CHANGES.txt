@@ -1,5 +1,9 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.5, 2015/09/13 -- Corrected some errors in entify.py.
+- Corrected some errors in entify.py when looking for entities in a folder.
+- Corrected an error when looking for Spanish DNI.
+
 0.9.4, 2015/09/12 -- API integration added to extract information, changes in the export files and added the Twitter API wrapper.
 - Created a osrframework/api folder where all the wrappers to each platform will be included.
 - Considered in platforms.py the chance of using the API if, both, a wrapper exists and the appropriate authentication methods have been provided.

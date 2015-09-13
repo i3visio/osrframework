@@ -58,15 +58,17 @@ class DNI(RegexpObject):
         try:
             # verifying if it is an 8-length number
             number = int(exp[0:7])
+            if l == order[number%23]:
+                return True                            
         except:
             try:
                 # verifying if it is a 7-length number
                 number = int(exp[0:6])
+                if l == order[number%23]:
+                    return True                
             except:
                 # not a  valid number
-                pass
-        if l == order[number%23]:
-                    return True
-        else:
-            return False
+                return False
+        return False
+            
 

@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.1.0"
+__version__ = "v1.1.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -84,7 +84,7 @@ def getEntitiesByRegexp(data = None, listRegexp = None, verbosity=1, logFolder="
     return foundExpr
 
 
-def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, verbosity=1, logFolder= "./logs"):
+def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, verbosity=1, logFolder= "./logs", quiet=False):
     ''' 
         [Optionally] recursive method to scan the files in a given folder.
 
@@ -118,17 +118,18 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
     #        onlyfiles.append(f)    
     onlyfiles = [ f for f in listdir(folder) if isfile(join(folder,f)) ]
     
-    for f in onlyfiles:
+    for i, f in enumerate(onlyfiles):
         filePath = join(folder,f)
         logger.debug("Looking for regular expressions in: " + filePath)    
-
+        if not quiet:
+            print str(i) + "/" + str(len(onlyfiles)) + "\tLooking for regular expressions in: " + filePath
         with open(filePath, "r") as tempF:
             # reading data
             foundExpr = getEntitiesByRegexp(data = tempF.read(), listRegexp = listRegexp)
             logger.debug("Updating the " + str(len(foundExpr)) + " results found on: " + filePath)    
             aux = {}
-            aux["type"] = filePath
-            aux["value"] = uri
+            aux["type"] = "i3visio.uri"
+            aux["value"] = filePath
             aux["attributes"] = foundExpr            
             results.append(aux)
 
@@ -138,6 +139,12 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
             folderPath = join(folder, f)
             logger.debug("Looking for additional in the folder: "+ folderPath)
             results.update(scanFolderForRegexp(folder = folderPath,listRegexp = listRegexp, recursive = recursive))
+
+    # Printing the information if not in quiet mode
+    if not quiet:
+        print json.dumps(results, indent=2)
+    #with open("./entify_out.txt", "w") as oF:
+    #    oF.write(json.dumps(results, indent=2))
     return results
 
     
@@ -223,7 +230,7 @@ This is free software, and you are welcome to redistribute it under certain cond
             listRegexp.append(RegexpObject(name = "NewRegexp"+str(i), reg_exp = args.new_regexp))
 
     if not args.web:
-        results = scanFolderForRegexp(folder = args.input_folder, listRegexp= listRegexp, recursive = args.recursive, verbosity=args.verbose, logFolder= args.logfolder)
+        results = scanFolderForRegexp(folder = args.input_folder, listRegexp= listRegexp, recursive = args.recursive, verbosity=args.verbose, logFolder= args.logfolder, quiet=args.quiet)
     else:
         results = scanResource(uri = args.web, listRegexp= listRegexp, verbosity=args.verbose, logFolder= args.logfolder)
     logger.info("Logging the results:\n" + general.dictToJson(results))
