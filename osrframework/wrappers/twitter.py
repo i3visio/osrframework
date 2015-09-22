@@ -48,9 +48,11 @@ class Twitter(Platform):
         # Trying to find an API... This line should be added in every  platform for which we have defined an API. 
         # DO NOT FORGET TO IMPORT THE APIWRAPPER, i. e.:
         # from osrframework.api import TwitterAPIWrapper as TwitterAPIWrapper
-        self.wrapperAPI = TwitterAPIWrapper()
-
-        
+        try:
+            self.wrapperAPI = TwitterAPIWrapper()
+        except:
+            self.wrapperAPI = None
+                    
         ########################
         # Defining valid modes #
         ########################

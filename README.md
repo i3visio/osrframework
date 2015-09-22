@@ -53,7 +53,7 @@ sudo apt-get update
 # Official package
 sudo apt-get install python-osrframework
 # Installing dependencies manually
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator flask
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator
 ```
 Whenever a new version is released, the following command will upgrade the package:
 ```
@@ -73,7 +73,7 @@ entify.py -h
 ```
 
 Under Linux (for developers and other systems)
------------------------------------------
+----------------------------------------------
 
 As Python is already installed, the rest of the installation under Python 2.7 is as 
 follows:
@@ -154,13 +154,13 @@ Follow the instructions there. Afterwards, you may launch the application.
 7.- You will have to import the recently created .mtz configuration file. Select 
 all the groups and click next. You may use the new i3visio entities now.
 
-Under Windows
------------
+Under Windows (experimental)
+----------------------------
 First of all, you will have to download and install Python 2.7 from:
 https://www.python.org/downloads/
 
 The installation should be performed normally. However, you will need
-to add c:\python27 to the system  path variable. You have a tutorial
+to add c:\python27 to the system's path variable. You have a tutorial
 here: <http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path>
 
 You can check how everything went by accessing the cmd. Type
@@ -215,7 +215,10 @@ cd osrframework-master
 ```
 python setup.py build
 python setup.py install
-# Installing other packages from PyPI that osrframework needs using the requirements.txt file
+```
+Installing other packages from PyPI that osrframework needs using the requirements.txt file. You 
+should have pip installed and the path c:\python27\scripts in the system's path.
+```
 pip install -r requirements.txt
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:

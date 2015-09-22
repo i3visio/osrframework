@@ -34,10 +34,12 @@ class TwitterAPIWrapper(APIWrapper):
         Twitter API wrapper using tweepy API.
     '''
 
-    def __init__(self, api_data=api_keys.returnListOfAPIKeys()["twitter"]):
+    def __init__(self, api_data=None):
         '''
             :param api_data:    dictionary containing the credentials for the given platform.
         '''
+        if api_data == None:
+            api_data = api_keys.returnListOfAPIKeys()["twitter"]
         # Processing the results received by parameter
         self.consumer_key= api_data["consumer_key"] 
         self.consumer_secret= api_data["consumer_secret"] 
