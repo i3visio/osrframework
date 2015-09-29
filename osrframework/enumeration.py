@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-''' 
+'''
 enumeration.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
@@ -35,7 +35,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.0"
+__version__ = "v1.0.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -44,20 +44,20 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
     for i, url in enumerate(urlDict.keys()):
         # Grabbing domain name:
         domain = re.findall("://(.*)/", url)[0]
-    
+
         # Defining the starting index
         index = startIndex
-        
+
         # The app will stop when this value reaches maxErrors
         consecutiveErrors = 0
-       
+
         i3Browser = browser.Browser()
-        
+
         # Main loop
         while consecutiveErrors <= maxErrors:
             # creating the new URL to download
             newQuery = url.replace("<INDEX>", str(index))
-            print newQuery            
+            print newQuery
             # Downloading the file
             try:
 
@@ -70,15 +70,15 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
                         # The profile was found  so we will store it:
                         with open( outputFolder + "/" + filename, "w") as oF:
                             oF.write(data)
-                else: 
+                else:
                     # The profile was found  so we will store it:
                     print "Storing resource as:\t" + filename + "..."
                     with open( outputFolder + "/" + filename, "w") as oF:
-                        oF.write(data)                
+                        oF.write(data)
             except:
                 pass
                 #logger.error("The resource could not be downloaded.")            
-            
+
             index+=1
 def enumeration_main(args):
     '''
@@ -87,9 +87,9 @@ def enumeration_main(args):
     sayingHello = """enumeration.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
-    logger.info(sayingHello)
+    #logger.info(sayingHello)
     print sayingHello
-    print    
+    print
     # Loading URL
     urlDict = {}
     if args.url !=None:
@@ -108,10 +108,10 @@ This is free software, and you are welcome to redistribute it under certain cond
         return
     if not os.path.exists(args.output_folder):
         os.makedirs(args.output_folder)
-                
+
     # Making the call
     enumerateURL(urlDict, args.output_folder, startIndex = args.start_index, maxErrors = args.max_errors)
-    
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='enumeration.py - Checking the existence of a possible enumeration.', prog='enumeration.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
@@ -125,16 +125,16 @@ if __name__ == "__main__":
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     groupProcessing.add_argument('-o', '--output_folder',  metavar='<path_to_output_folder>',  action='store', help='path to the output folder where the results will be stored in raw. The name of the files will be their index.', required=False, default = "./results")
-    groupProcessing.add_argument('--config', metavar='<url>',  action='store', default="./utils/enumeration_config.txt", help = 'the file with the list of URL to test. The format should be: "platform_name\\thttp://example.com/user/<INDEX>\\tNOT_FOUND_TEXT".')        
-    groupProcessing.add_argument('--max_errors',  metavar='<max_errors>',  action='store', help='maximum number of consecutive errors tolerated until finishing the crawling process.', required=False, default = 100, type = int)    
-    groupProcessing.add_argument('--start_index',  metavar='<start_index>',  action='store', help='starting user index for the crawling process.', required=False, default = 0, type = int)    
+    groupProcessing.add_argument('--config', metavar='<url>',  action='store', default="./utils/enumeration_config.txt", help = 'the file with the list of URL to test. The format should be: "platform_name\\thttp://example.com/user/<INDEX>\\tNOT_FOUND_TEXT".')
+    groupProcessing.add_argument('--max_errors',  metavar='<max_errors>',  action='store', help='maximum number of consecutive errors tolerated until finishing the crawling process.', required=False, default = 100, type = int)
+    groupProcessing.add_argument('--start_index',  metavar='<start_index>',  action='store', help='starting user index for the crawling process.', required=False, default = 0, type = int)
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version='%(prog)s'+" " + __version__ , help='shows the version of the program and exists.')
 
-    args = parser.parse_args()    
+    args = parser.parse_args()
 
     # Calling the main function
     enumeration_main(args)

@@ -1,5 +1,9 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.7, 2015/09/29 -- Updated the enumeration.py file and corrected the slashdot wrapper.
+- Corrected the slashdot wrapper which was showing the existence of platforms which in fact didn't exist.
+- Commented some references to an old logger in enumeration.py.
+
 0.9.6, 2015/09/22 -- Corrected some installations misconfigurations.
 - Fixed an issue when creating the twitter_api which now will try to grab the api_key in compilation time.
 - A .csv file will be created by default now in usufy, entify, searchfy, mailfy and phonefy.

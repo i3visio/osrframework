@@ -81,7 +81,7 @@ class Slashdot(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>- Slashdot User</title>"]
+        self.notFoundText["usufy"] = ["<title>- Slashdot User</title>", "The user you requested does not exist, no matter how much you wish this might be the case."]
         #self.notFoundText["searchfy"] = []        
         
         #########################
