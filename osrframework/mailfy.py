@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.1"
+__version__ = "v1.1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -48,6 +48,9 @@ import emailahoy
 
 # For the timeout function
 #from osrframework.utils.timeout import timeout
+
+EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "foxmail.com", "gmail.com", "hushmail.com", "qq.com", "yandex.com"]
+
 
 def getMoreInfo(e):
     '''
@@ -135,7 +138,7 @@ def weCanCheckTheseDomains(email):
     for n in notWorking:
         if n in email:
             return False
-    emailDomains = ["gmail.com", "hushmail.com"]
+    emailDomains = EMAIL_DOMAINS
     safe = False
     for e in emailDomains:
         if e in email:
@@ -182,10 +185,11 @@ def performSearch(emails=[]):
                         results.append(aux)
                 except:
                     # Probably a Timeout exception
-                    pass"""
+                    pass
+                """
     return results
 
-def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = ["gmail.com", "hushmail.com"]):
+def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS):
     '''
         Method that globally permits to grab the emails.
         
@@ -258,11 +262,10 @@ This is free software, and you are welcome to redistribute it under certain cond
             print "\t-" + fileHeader + "." + ext        
                 
 
+
 def getParser():
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
-
-    emailDomains = ["gmail.com", "hushmail.com"]
 
     # Defining the mutually exclusive group for the main options
     groupMainOptions = parser.add_mutually_exclusive_group(required=True)
@@ -270,15 +273,15 @@ def getParser():
     groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')    
     groupMainOptions.add_argument('-m', '--emails', metavar='<emails>', nargs='+', action='store', help = 'the list of emails to be checked.')
     groupMainOptions.add_argument('-M', '--emails_file', metavar='<emails_file>', action='store', help = 'the file with the list of emails.')    
-    groupMainOptions.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the following platforms: ' +str(emailDomains))
-    groupMainOptions.add_argument('-N', '--nicks_file', metavar='<nicks_file>', action='store', help = 'the file with the list of nicks to be checked in the following platforms: '+str(emailDomains))    
-    groupMainOptions.add_argument('--create_emails', metavar='<nicks_file>',  action='store', help = 'the file with the list of nicks to be created in the following domains: '+str(emailDomains))    
+    groupMainOptions.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the following platforms: ' +str(EMAIL_DOMAINS))
+    groupMainOptions.add_argument('-N', '--nicks_file', metavar='<nicks_file>', action='store', help = 'the file with the list of nicks to be checked in the following platforms: '+str(EMAIL_DOMAINS))    
+    groupMainOptions.add_argument('--create_emails', metavar='<nicks_file>',  action='store', help = 'the file with the list of nicks to be created in the following domains: '+str(EMAIL_DOMAINS))    
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')        
     groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = ['csv'], action='store', help='output extension for the summary files. Default: xls.')  
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>>',  action='store', help='list of domains where the nick will be looked for.', required=False, default = emailDomains)    
+    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>>',  action='store', help='list of domains where the nick will be looked for.', required=False, default = EMAIL_DOMAINS)    
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )      
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')        

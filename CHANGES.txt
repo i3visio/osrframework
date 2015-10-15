@@ -1,5 +1,8 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.8, 2015/10/15 -- Updated the number of email accounts that con be searched with mailfy.py.
+- We have added a series of email providers in which the emailahoy library is also working:  "126.com", "163.com", "189.cn", "foxmail.com", "qq.com", "yandex.com".
+
 0.9.7, 2015/09/29 -- Updated the enumeration.py file and corrected the slashdot wrapper.
 - Corrected the slashdot wrapper which was showing the existence of platforms which in fact didn't exist.
 - Commented some references to an old logger in enumeration.py.
