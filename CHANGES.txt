@@ -1,5 +1,8 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.9, 2015/10/16 -- Updated the number of email accounts that con be searched with mailfy.py.
+- We have added a series of email providers in which the emailahoy library is also working:  "188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com", "yeah.net".
+
 0.9.8, 2015/10/15 -- Updated the number of email accounts that con be searched with mailfy.py.
 - We have added a series of email providers in which the emailahoy library is also working:  "126.com", "163.com", "189.cn", "foxmail.com", "qq.com", "yandex.com".
 

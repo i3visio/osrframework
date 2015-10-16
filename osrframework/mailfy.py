@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.1.0"
+__version__ = "v1.2.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -49,7 +49,7 @@ import emailahoy
 # For the timeout function
 #from osrframework.utils.timeout import timeout
 
-EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "foxmail.com", "gmail.com", "hushmail.com", "qq.com", "yandex.com"]
+EMAIL_DOMAINS = ["126.com", "163.com", "188.com", "189.cn", "21cn.cn", "foxmail.com", "gmail.com", "hushmail.com", "popo.163.com", "qq.com", "vip.126.com", "vip.163.com", "vip.188.com", "yahoo.com", "yandex.com", "yeah.net"]
 
 
 def getMoreInfo(e):
