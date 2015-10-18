@@ -4,7 +4,7 @@
 
 [![Version in PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
 [![Downloads/Month in PyPI](https://img.shields.io/pypi/dm/osrframework.svg)]()
-[![License](https://img.shields.io/github/license/i3visio/osrframework.svg)]()
+[![License](https://img.shields.io/badge/license-GNU%20General%20Public%20License%20Version%203%20or%20Later-blue.svg)]()
 
 Description:
 ============
@@ -12,7 +12,7 @@ OSRFramework is a GPLv3+ set of libraries developed by i3visio to perform Open S
 Intelligence tasks. They include references to a bunch of different applications 
 related to username checking, information leaks research, deep web search, regular
 expressions extraction and many others. At the same time, by means of ad-hoc Maltego 
-Maltego transforms, OSRFramework provides a way of making these queries graphically.
+transforms, OSRFramework provides a way of making these queries graphically.
 
 
 License: GPLv3+
