@@ -12,7 +12,7 @@ OSRFramework is a GPLv3+ set of libraries developed by i3visio to perform Open S
 Intelligence tasks. They include references to a bunch of different applications 
 related to username checking, information leaks research, deep web search, regular
 expressions extraction and many others. At the same time, by means of ad-hoc Maltego 
-Maltego transforms, OSRFramework provides a way of making these queries graphically.
+transforms, OSRFramework provides a way of making these queries graphically.
 
 
 License: GPLv3+
