@@ -2,6 +2,10 @@
 	OSRFramework  Copyright (C) 2015  F. Brezo and Y. Rubio, i3visio
 	================================================================
 
+[![PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
+[![PyPI](https://img.shields.io/pypi/dm/osrframework.svg)](
+[![GitHub license](https://img.shields.io/github/license/i3visio/osrframework.svg)]())
+
 Description:
 ============
 OSRFramework is a GPLv3+ set of libraries developed by i3visio to perform Open Source
