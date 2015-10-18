@@ -48,8 +48,9 @@ import emailahoy
 
 # For the timeout function
 #from osrframework.utils.timeout import timeout
-
-EMAIL_DOMAINS = ["126.com", "163.com", "188.com", "189.cn", "21cn.cn", "foxmail.com", "gmail.com", "hushmail.com", "popo.163.com", "qq.com", "vip.126.com", "vip.163.com", "vip.188.com", "yahoo.com", "yandex.com", "yeah.net"]
+# Pending
+#188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
+EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "foxmail.com", "gmail.com", "hushmail.com", "qq.com", "yandex.com", "yeah.net"]
 
 
 def getMoreInfo(e):
