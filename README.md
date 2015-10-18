@@ -4,7 +4,7 @@
 
 [![Version in PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
 [![Downloads/Month in PyPI](https://img.shields.io/pypi/dm/osrframework.svg)]()
-[![License](https://img.shields.io/github/license/i3visio/osrframework.svg)]()
+[![License](https://img.shields.io/badge/license-GNU%20General%20Public%20License%20Version%203%20or%20Later-blue.svg)]()
 
 Description:
 ============
