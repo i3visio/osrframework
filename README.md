@@ -56,10 +56,41 @@ sudo apt-get update
 ```
 # Official package
 sudo apt-get install python-osrframework
-# Installing dependencies manually
+# Installing Python dependencies manually
 sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator
 ```
-Whenever a new version is released, the following command will upgrade the package:
+There might be an issue in some Debian systems regarding the usage of the ouath library as v0.7.1 or later is required and in some Debian systems this library is owned by the OS.
+```
+Traceback (most recent call last):
+  File "usufy.py", line 49, in <module>
+    import osrframework.utils.platform_selection as platform_selection
+  File "/usr/local/lib/python2.7/dist-packages/osrframework-0.9.10-py2.7.egg/osrframework/utils/platform_selection.py", line 277, in <module>
+    from osrframework.wrappers.twitter import Twitter
+  File "/usr/local/lib/python2.7/dist-packages/osrframework-0.9.10-py2.7.egg/osrframework/wrappers/twitter.py", line 32, in <module>
+    from osrframework.api.twitter_api import TwitterAPIWrapper as TwitterAPIWrapper
+  File "/usr/local/lib/python2.7/dist-packages/osrframework-0.9.10-py2.7.egg/osrframework/api/twitter_api.py", line 26, in <module>
+    import tweepy #https://github.com/tweepy/tweepy
+  File "/usr/local/lib/python2.7/dist-packages/tweepy/__init__.py", line 16, in <module>
+    from tweepy.auth import OAuthHandler, AppAuthHandler
+  File "/usr/local/lib/python2.7/dist-packages/tweepy/auth.py", line 9, in <module>
+    from requests_oauthlib import OAuth1Session, OAuth1
+  File "/usr/local/lib/python2.7/dist-packages/requests_oauthlib/__init__.py", line 3, in <module>
+    from .oauth2_auth import OAuth2
+  File "/usr/local/lib/python2.7/dist-packages/requests_oauthlib/oauth2_auth.py", line 3, in <module>
+    from oauthlib.oauth2 import is_secure_transport
+ImportError: cannot import name is_secure_transport
+```
+In the case of receiving a similar error to this one, we should remove the old oauth library and install the most recent version of it from pip:
+```
+# Hack extracted from: <http://stackoverflow.com/questions/25676259/cant-import-is-secure-transport>
+#Remove old oauthlib package
+sudo apt-get remove python-oauthlib
+
+# ... and install last oauthlib version 0.7.1
+pip install oauthlib -U
+```
+
+Thus, whenever a new version is released, the following command will upgrade the package:
 ```
 sudo apt-get upgrade
 ```
