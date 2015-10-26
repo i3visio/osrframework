@@ -1,5 +1,11 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.10, 2015/10/26 -- Updated the error messages of burbuja.info in response to issue #32.
+- Fixed in the burbuja platform which were confirmed to be working wrongly.
+- Updated a new ebay error message just to try to confirm the reported malfunctioning by some users.
+- Temporally deactivation of jamiiforums platform to try to fix this issue further.
+- Throwing a Warning message when using Twitter API with old versions of ouath library.
+
 0.9.9, 2015/10/18 -- Updated the number of email accounts that con be searched with mailfy.py.
 - We have added a series of email providers in which the emailahoy library is also working:  "yeah.net".
 - Added badges to the README.md file.
@@ -84,7 +90,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - The i3visio.location.city entity is extracted correctly when calling ip-api.com API.
 - If the number of entities returned are too many a message will be displayed in the Transform output tab.
 - Debug windows are not shown in production thanks to a new utility included in configure_maltego.py.
-- Fix in Skype wrapper to avoid showing errors messages that make Maltego crash. 
+- Fix in Skype wrapper to avoid showing errors messages that make Maltego crash.
 - Remove PIP dependencies: only pip will be required. The other dependencies will be checked when installed and included to be manually installed by the user.
 - Update on the version number from v0.9.0 to 0.9.0 format (without the 'v').
 
@@ -174,7 +180,7 @@ v0.8.0, 2015/04/03 -- Improvements in the entity generation and an extensive ip-
 - Modified Maltego transform: uriToProtocol.
 - Fixed errors in cafemom.com and activerain.trulia.com platforms.
 - Requesting credentials for Pokerstrategy and Flixter platforms.
-- Addition of a method to recursively extract the information of the fields and attributes, even when it exceeds the maximum number of queries performed for the free version. 
+- Addition of a method to recursively extract the information of the fields and attributes, even when it exceeds the maximum number of queries performed for the free version.
 - Change in the returnOutput methods of MaltegoEntity and MaltegoTransform to make use of an auxiliar getOutputText method.
 - Creation of two new methods in maltfy.lib.maltego to create new entities.
 - Reorganization of ip-api.com json objects returned by the API to display i3visio-like objects.
@@ -290,7 +296,7 @@ v0.1.0, 2014/12/31 -- Initial release.
 - Initial release.
 
 
-[TO-DO] 
+[TO-DO]
 Short term:
 
 Long term:
@@ -312,4 +318,3 @@ Long term:
 - Recursive expansion of attributes when the cap is reached in Maltego.
 - Mailfy seems not to be working properly in Windows systems, but it does in Linux.
 - There is an issue in Maltego Chlorine CE when exporting a transform with the transform.local.parameters popup marked as True: <Property name="transform.local.parameters" type="string" popup="true"></Property>. However, when importing the created .mtz file the popup attribute is not correctly updated not requesting the user who imported the transform the value unless he/she clicks on configure and manually update this value, something which may not be trivial for some users. This issue affects the transform aliasToSelectedPlatforms which will throw an error if not manually configured by the user instead of asking the user to insert the deliberately missing parameters. This is not an OSRFramework issue and has conveniently be notified to Paterva with date of 2015/08/12.
-

@@ -525,7 +525,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Ixgames())
 
     # J
-    listAll.append(Jamiiforums())
+    #listAll.append(Jamiiforums())
 
     # K
     listAll.append(Kaboodle())
