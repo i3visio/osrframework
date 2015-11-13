@@ -1,5 +1,14 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.11, 2015/11/13 -- Addition of a new searchfy platform to look for PGP keys, as well as new platforms for mailfy.
+- Added the search in the PGP public key repository by the MIT.
+- Fixed a change in garage4hackers platform.
+- Added new wikipediafr and wikipediapt user search.
+- The platform thehoodup now waits for credentials.
+- Added the sina.com email provider to mailfy.py.
+- Added a message to urge the users to report any issue to <https://github.com/i3visio/osrframework/issues>.
+- Corrected a mistake related to matplotlib.
+
 0.9.10, 2015/10/26 -- Updated the error messages of burbuja.info in response to issue #32.
 - Fixed in the burbuja platform which were confirmed to be working wrongly.
 - Updated a new ebay error message just to try to confirm the reported malfunctioning by some users.

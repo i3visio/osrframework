@@ -206,6 +206,7 @@ from osrframework.wrappers.pastebin import Pastebin
 from osrframework.wrappers.pearltrees import Pearltrees
 from osrframework.wrappers.peerbackers import Peerbackers
 from osrframework.wrappers.photobucket import Photobucket
+from osrframework.wrappers.pgpmit import PGPMIT
 from osrframework.wrappers.pinterest import Pinterest
 from osrframework.wrappers.pixinsight import Pixinsight
 from osrframework.wrappers.pjrc import Pjrc
@@ -300,6 +301,8 @@ from osrframework.wrappers.wikipediade import WikipediaDe
 from osrframework.wrappers.wikipediaen import WikipediaEn
 from osrframework.wrappers.wikipediaes import WikipediaEs
 from osrframework.wrappers.wikipediaeu import WikipediaEu
+from osrframework.wrappers.wikipediafr import WikipediaFr
+from osrframework.wrappers.wikipediapt import WikipediaPt
 from osrframework.wrappers.winamp import Winamp
 from osrframework.wrappers.wishlistr import Wishlistr
 from osrframework.wrappers.wordpress import Wordpress
@@ -323,9 +326,9 @@ from osrframework.wrappers.zentyal import Zentyal
 
 
 def getAllPlatformNames(mode):
-    ''' 
+    '''
         Method that defines the whole list of available parameters.
-        
+
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
 
         Return values:
@@ -341,7 +344,7 @@ def getAllPlatformNames(mode):
             parameter = p.parameterName
         except:
             parameter = p.platformName.lower()
-        
+
         if parameter not in platOptions:
             platOptions.append(parameter)
     platOptions =  sorted(set(platOptions))
@@ -350,9 +353,9 @@ def getAllPlatformNames(mode):
 
 
 def getPlatformsByName(platformNames = ['all'], mode = None, tags = []):
-    ''' 
+    '''
         Method that recovers the names of the <Platforms> in a given list.
-        
+
         :param platformNames:    list of strings containing the possible platforms.
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
         :param tags:    Just in case the method to select the candidates is a series of tags.
@@ -360,12 +363,12 @@ def getPlatformsByName(platformNames = ['all'], mode = None, tags = []):
     '''
 
     allPlatformsList = getAllPlatformObjects(mode)
-    
+
     if 'all' in platformNames:
         return allPlatformsList
 
     platformList = []
-    # going through the regexpList 
+    # going through the regexpList
     for name in platformNames:
         for plat in allPlatformsList:
             added = False
@@ -373,22 +376,22 @@ def getPlatformsByName(platformNames = ['all'], mode = None, tags = []):
             if name == str(plat.platformName).lower():
                 platformList.append(plat)
                 added = True
-                break    
+                break
             # Verifying if any of the platform tags match the original tag
             if not added:
                 for t in plat.tags:
                     if t in tags:
                         platformList.append(plat)
-                        break                    
-    return platformList      
+                        break
+    return platformList
 
 
 def getAllPlatformObjects(mode = None):
-    ''' 
+    '''
         Method that recovers ALL the list of <Platform> classes to be processed....
 
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
-        
+
         :return:    Returns a list [] of <Platform> objects.
     '''
     listAll = []
@@ -396,9 +399,9 @@ def getAllPlatformObjects(mode = None):
     ##################################################
     # A
     # Requires javascript
-    #listAll.append(About())    
+    #listAll.append(About())
     listAll.append(Adtriboo())
-    listAll.append(Ahmia())    
+    listAll.append(Ahmia())
     listAll.append(Anarchy101())
     listAll.append(Aporrealos())
     listAll.append(Apsense())
@@ -413,14 +416,14 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Audioboo())
     listAll.append(Authorstream())
     listAll.append(Autospies())
-    
+
     # B
     listAll.append(Backyardchickens())
     listAll.append(Badoo())
     listAll.append(Behance())
     listAll.append(Bennugd())
     listAll.append(Bitbucket())
-    listAll.append(Bitcointalk())    
+    listAll.append(Bitcointalk())
     listAll.append(Bitly())
     listAll.append(Blackplanet())
     listAll.append(Bladna())
@@ -436,7 +439,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Burbuja())
     listAll.append(Burdastyle())
     listAll.append(Buzznet())
-    
+
     # C
     listAll.append(Cafemom())
     listAll.append(Carbonmade())
@@ -448,20 +451,20 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Chess())
     listAll.append(Cockos())
     listAll.append(Connectingsingles())
-    listAll.append(Couchsurfing())    
+    listAll.append(Couchsurfing())
 
     # D
-    listAll.append(Dailymail())   
-    listAll.append(Dailymotion())   
-    listAll.append(Deviantart())   
-    listAll.append(Digitalspy())   
-    listAll.append(Disqus())   
-    listAll.append(Doodle())   
-    listAll.append(Douban())   
-    listAll.append(Dribbble())   
-    listAll.append(Drugbuyersforum())   
-    listAll.append(Drupal())   
-    
+    listAll.append(Dailymail())
+    listAll.append(Dailymotion())
+    listAll.append(Deviantart())
+    listAll.append(Digitalspy())
+    listAll.append(Disqus())
+    listAll.append(Doodle())
+    listAll.append(Douban())
+    listAll.append(Dribbble())
+    listAll.append(Drugbuyersforum())
+    listAll.append(Drupal())
+
     # E
     listAll.append(Ebay())
     listAll.append(Echatta())
@@ -488,7 +491,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Foursquare())
     listAll.append(Freebase())
     listAll.append(Freerepublic())
-    # Project discontinued on 9th April, 2015    
+    # Project discontinued on 9th April, 2015
     #listAll.append(Friendfeed())
 
     # G
@@ -543,7 +546,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Listspam())
     listAll.append(Livejournal())
     listAll.append(Looki())
-    
+
     # M
     listAll.append(Marca())
     listAll.append(Matchdoctor())
@@ -574,6 +577,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Pearltrees())
     listAll.append(Peerbackers())
     listAll.append(Photobucket())
+    listAll.append(PGPMIT())
     listAll.append(Pinterest())
     listAll.append(Pixinsight())
     listAll.append(Pjrc())
@@ -599,7 +603,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Relatious())
     listAll.append(Researchgate())
     listAll.append(Rojadirecta())
-    listAll.append(Ruby())    
+    listAll.append(Ruby())
 
     # S
     listAll.append(Scribd())
@@ -629,7 +633,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Thehoodup())
     listAll.append(Thesims())
     listAll.append(Thestudentroom())
-    #listAll.append(Torsearch())    
+    #listAll.append(Torsearch())
     listAll.append(Tradimo())
     listAll.append(Travian())
     listAll.append(Tripadvisor())
@@ -643,7 +647,7 @@ def getAllPlatformObjects(mode = None):
     #listAll.append(Twitch())
     listAll.append(Twitpic())
     listAll.append(Twitter())
-    listAll.append(Twoplustwo())    
+    listAll.append(Twoplustwo())
 
     # U
     # Seems to be down: 2015-06-21
@@ -651,14 +655,14 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Ummahforum())
     listAll.append(Unsystem())
     listAll.append(Ustream())
-    
+
     # V
     listAll.append(Vexforum())
     listAll.append(Videohelp())
     listAll.append(Vimeo())
     listAll.append(Virustotal())
     listAll.append(Vk())
-    
+
     # W
     #listAll.append(Wefollow())
     listAll.append(WikipediaAr())
@@ -667,6 +671,8 @@ def getAllPlatformObjects(mode = None):
     listAll.append(WikipediaEn())
     listAll.append(WikipediaEs())
     listAll.append(WikipediaEu())
+    listAll.append(WikipediaFr())
+    listAll.append(WikipediaPt())
     listAll.append(Winamp())
     listAll.append(Wishlistr())
     listAll.append(Wordpress())
@@ -676,15 +682,15 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Xanga())
     listAll.append(Xat())
     listAll.append(Xing())
-    listAll.append(Xtube())    
+    listAll.append(Xtube())
 
     # Y
     listAll.append(Youku())
     listAll.append(Youtube())
-    
+
     # Z
     listAll.append(Zabbix())
-    listAll.append(Zentyal())    
+    listAll.append(Zentyal())
     ##################################################
     ##################################################
 
@@ -693,8 +699,8 @@ def getAllPlatformObjects(mode = None):
     for p in listAll:
         # Verify if there are credentials to be loaded
         if p.platformName.lower() in creds.keys():
-            p.setCredentials(creds[p.platformName.lower()])    
-    
+            p.setCredentials(creds[p.platformName.lower()])
+
     if mode == None:
         return listAll
     else:
@@ -704,5 +710,3 @@ def getAllPlatformObjects(mode = None):
             if p.isValidMode[mode]:
                 selected.append(p)
         return selected
-        
-  
