@@ -28,6 +28,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 import argparse
 import os
 import os.path
+import osrframework.utils.banner as banner
 import osrframework.utils.browser as browser
 import re
 
@@ -77,7 +78,7 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
                         oF.write(data)
             except:
                 pass
-                #logger.error("The resource could not be downloaded.")            
+                #logger.error("The resource could not be downloaded.")
 
             index+=1
 def enumeration_main(args):
@@ -88,6 +89,9 @@ def enumeration_main(args):
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     #logger.info(sayingHello)
+    print banner.text
+
+
     print sayingHello
     print
     # Loading URL

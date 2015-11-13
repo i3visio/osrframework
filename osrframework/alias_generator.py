@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-''' 
+'''
 alias_generator.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
@@ -36,10 +36,12 @@ __email__ = "contacto@i3visio.com"
 
 import argparse
 
+import osrframework.utils.banner as banner
+
 def main(name = None, surname1 = None, surname2 = None, city = None, country = None, year = None):
     '''
         Method that generates de given aliases.
-        
+
         :param args: Options given by parameter
 
         :return:    Text matching the regular expression provided.
@@ -56,7 +58,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     if country == '':
         country = None
     if year == '':
-        year = None        
+        year = None
     print "Generation of new aliases..."
     try:
         tmp = name + surname1 + surname2
@@ -3794,8 +3796,8 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
         tmp = name[0] + "_" + surname1 + "." + year[-2:]
         if tmp not in lista: lista.append(tmp)
     except:
-        pass # An element is missing    
-   
+        pass # An element is missing
+
     print lista
 
     print "Writing the results onto the file: " + args.outputFile
@@ -3803,35 +3805,37 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     for l in lista:
         oF.write(l+"\n")
     oF.close()
-    
+
     return lista
-    
+
 if __name__ == "__main__":
+    print banner.text
+
     parser = argparse.ArgumentParser(description='alias_generator.py is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator.py', epilog="", add_help=False)
 
     # Adding the main options
     # Defining the mutually exclusive group for the main options
     #general = parser.add_mutually_exclusive_group(required=True)
     parser.add_argument('-n', '--name', metavar='<NAME>', default=None, action='store', help='Name of the person.', required=False)
-    parser.add_argument('-s1', '--surname1', metavar='<SURNAME_1>', default=None, action='store', help='First surname.', required=False)    
+    parser.add_argument('-s1', '--surname1', metavar='<SURNAME_1>', default=None, action='store', help='First surname.', required=False)
     parser.add_argument('-s2', '--surname2', metavar='<SURNAME_2>', default=None, action='store', help='Second surname.', required=False)
-    parser.add_argument('-c', '--city', metavar='<CITY>', default=None, action='store', help='A city linked to the profile.', required=False)    
-    parser.add_argument('-C', '--country', metavar='<COUNTRY>', default=None, action='store', help='A country.', required=False)    
-    parser.add_argument('-y', '--year', metavar='<YEAR>', default=None, action='store', help='Birth year.', required=False)        
-    parser.add_argument('-o', '--outputFile', metavar='<path_to_output_file>', default="./output.txt", action='store', help='Path to the output file.', required=False)            
+    parser.add_argument('-c', '--city', metavar='<CITY>', default=None, action='store', help='A city linked to the profile.', required=False)
+    parser.add_argument('-C', '--country', metavar='<COUNTRY>', default=None, action='store', help='A country.', required=False)
+    parser.add_argument('-y', '--year', metavar='<YEAR>', default=None, action='store', help='Birth year.', required=False)
+    parser.add_argument('-o', '--outputFile', metavar='<path_to_output_file>', default="./output.txt", action='store', help='Path to the output file.', required=False)
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version='%(prog)s '+__version__, help='shows the version of the program and exists.')
 
-    args = parser.parse_args()    
+    args = parser.parse_args()
 
     if args.name == None and args.surname1 == None and args.surname2 == None and args.city == None and args.country == None and args.year == None:
         args.name=raw_input("Insert a name:\t").replace(' ','')
         args.surname1=raw_input("Insert the first surname:\t").replace(' ','')
-        args.surname2=raw_input("Insert the second surname:\t").replace(' ','') 
-        args.city=raw_input("Insert a city:\t").replace(' ','') 
-        args.country=raw_input("Insert a country:\t").replace(' ','') 
-        args.year=raw_input("Insert a year (e. g.: birthyear):\t").replace(' ','') 
+        args.surname2=raw_input("Insert the second surname:\t").replace(' ','')
+        args.city=raw_input("Insert a city:\t").replace(' ','')
+        args.country=raw_input("Insert a country:\t").replace(' ','')
+        args.year=raw_input("Insert a year (e. g.: birthyear):\t").replace(' ','')
 
     lista=[]
 
@@ -3845,7 +3849,6 @@ if __name__ == "__main__":
     if args.city != "": print args.city
     if args.country != "": print args.country
     if args.year != "": print args.year
-    print 
-    
+    print
+
     main(name = args.name, surname1 = args.surname1, surname2 = args.surname2, city = args.city, country = args.country, year= args.year)
-    

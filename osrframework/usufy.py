@@ -47,6 +47,7 @@ from multiprocessing import Process, Queue, Pool
 
 # configuration and utils
 import osrframework.utils.platform_selection as platform_selection
+import osrframework.utils.banner as banner
 import osrframework.utils.benchmark as benchmark
 import osrframework.utils.browser as browser
 import osrframework.utils.general as general
@@ -261,6 +262,8 @@ def main(args):
     logger = logging.getLogger("osrframework.usufy")
     # Printing the results if requested
     if not args.maltego:
+        print banner.text
+
         sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""

@@ -38,6 +38,7 @@ import argparse
 import json
 import os
 
+import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.general as general
 
@@ -69,6 +70,8 @@ def main(args):
 
         :param args: Arguments received in the command line.
     '''
+    print banner.text
+
     sayingHello = """searchfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""

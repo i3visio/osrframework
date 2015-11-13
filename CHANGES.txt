@@ -9,6 +9,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Added a message to urge the users to report any issue to <https://github.com/i3visio/osrframework/issues>.
 - Added a message in mailfy.py when being run under Windows systems to let them know that the app. may behave unexpectedly.
 - Corrected a mistake related to matplotlib.
+- Added a banner text to each script of the framework showing the current version of the libraries.
 
 0.9.10, 2015/10/26 -- Updated the error messages of burbuja.info in response to issue #32.
 - Fixed in the burbuja platform which were confirmed to be working wrongly.

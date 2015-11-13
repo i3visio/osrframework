@@ -43,6 +43,7 @@ from os import listdir
 from os.path import isfile, join, isdir
 
 # Imports
+import osrframework.utils.banner as banner
 from osrframework.utils.regexp import RegexpObject
 import osrframework.utils.general as general
 import osrframework.utils.logger as logSet
@@ -218,6 +219,8 @@ This is free software, and you are welcome to redistribute it under certain cond
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:
+        print banner.text
+
         print sayingHello
         print
         logger.info("Starting entify.py")
