@@ -205,6 +205,7 @@ from osrframework.wrappers.oroom import Oroom
 from osrframework.wrappers.pastebin import Pastebin
 from osrframework.wrappers.pearltrees import Pearltrees
 from osrframework.wrappers.peerbackers import Peerbackers
+from osrframework.wrappers.periscope import Periscope
 from osrframework.wrappers.photobucket import Photobucket
 from osrframework.wrappers.pgpmit import PGPMIT
 from osrframework.wrappers.pinterest import Pinterest
@@ -576,6 +577,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Pastebin())
     listAll.append(Pearltrees())
     listAll.append(Peerbackers())
+    listAll.append(Periscope())    
     listAll.append(Photobucket())
     listAll.append(PGPMIT())
     listAll.append(Pinterest())

@@ -1,5 +1,10 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.12, 2015/11/18 -- Addition of Periscope. 
+- Addition of a wrapper for Periscope.
+- Imported in the setup.py the local osrframework folder to grab the current version number.
+- Fixed some errors in the messages displayed.
+
 0.9.11, 2015/11/13 -- Addition of a new searchfy platform to look for PGP keys, as well as new platforms for mailfy.
 - Added the search in the PGP public key repository by the MIT.
 - Fixed a change in garage4hackers platform.

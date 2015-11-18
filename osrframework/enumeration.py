@@ -36,7 +36,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.1"
+__version__ = "v1.0.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -115,6 +115,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 
     # Making the call
     enumerateURL(urlDict, args.output_folder, startIndex = args.start_index, maxErrors = args.max_errors)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='enumeration.py - Checking the existence of a possible enumeration.', prog='enumeration.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)

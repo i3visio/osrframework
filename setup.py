@@ -20,7 +20,9 @@
 #
 ##################################################################################
 
-__version__ = "0.9.11"
+# Importing the local scrips for the setup and taking the new version number
+import osrframework
+NEW_VERSION = osrframework.__version__
 
 #from distutils.core import setup
 import os
@@ -132,7 +134,7 @@ else:
 
 # Launching the setup
 setup(    name="osrframework",
-    version=__version__,
+    version=NEW_VERSION,
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
     author="Felix Brezo and Yaiza Rubio",
     author_email="contacto@i3visio.com",

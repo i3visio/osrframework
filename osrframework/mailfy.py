@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.2.1"
+__version__ = "v1.2.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -275,7 +275,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     # Urging users to place an issue on Github...
     if not args.quiet:
         print
-        print "Did something went wrong? Is a platform reporting false positives? Do you need to integrate a new platform?"
+        print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
         print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
         print "Note that otherwise, we won't know about it!"
         print

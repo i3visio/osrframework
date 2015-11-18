@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.1.1"
+__version__ = "v0.1.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -3852,3 +3852,9 @@ if __name__ == "__main__":
     print
 
     main(name = args.name, surname1 = args.surname1, surname2 = args.surname2, city = args.city, country = args.country, year= args.year)
+    
+    print
+    print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
+    print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
+    print "Note that otherwise, we won't know about it!"
+    print    
