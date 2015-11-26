@@ -143,6 +143,7 @@ from osrframework.wrappers.hi5 import Hi5
 from osrframework.wrappers.ibosocial import Ibosocial
 from osrframework.wrappers.identica import Identica
 from osrframework.wrappers.imgur import Imgur
+from osrframework.wrappers.infotelefonica import Infotelefonica
 from osrframework.wrappers.instagram import Instagram
 from osrframework.wrappers.instructables import Instructables
 # Seems to have problems
@@ -172,7 +173,7 @@ from osrframework.wrappers.kupika import Kupika
 # L
 from osrframework.wrappers.lastfm import Lastfm
 from osrframework.wrappers.linkedin import Linkedin
-from osrframework.wrappers.listspam import Listspam
+from osrframework.wrappers.listaspam import Listaspam
 from osrframework.wrappers.livejournal import Livejournal
 from osrframework.wrappers.looki import Looki
 
@@ -518,6 +519,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Ibosocial())
     listAll.append(Identica())
     listAll.append(Imgur())
+    listAll.append(Infotelefonica())    
     listAll.append(Instagram())
     listAll.append(Instructables())
     #listAll.append(Interracialmatch())
@@ -544,7 +546,7 @@ def getAllPlatformObjects(mode = None):
     # L
     listAll.append(Lastfm())
     listAll.append(Linkedin())
-    listAll.append(Listspam())
+    listAll.append(Listaspam())
     listAll.append(Livejournal())
     listAll.append(Looki())
 

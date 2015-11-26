@@ -1,5 +1,11 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.9.13, 2015/11/26 -- Modifications for the Cybercamp. 
+- Modification of the Welcome banner for the different utilities.
+- Changed the default extension to .xls as stated in the help.
+- Added a new phonefy platform: infotelefonica.es.
+- Modified the name of the listaspam platform from "listspam" to "listaspam".
+
 0.9.12, 2015/11/18 -- Addition of Periscope. 
 - Addition of a wrapper for Periscope.
 - Imported in the setup.py the local osrframework folder to grab the current version number.
