@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.2.3"
+__version__ = "v2.0a"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -44,7 +44,8 @@ import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.general as general
 # From emailahoy code
 import emailahoy
-
+from validate_email import validate_email
+            
 # For the manual checkout
 #import DNS, smtplib, socket
 
@@ -83,57 +84,6 @@ def getMoreInfo(e):
 
     return email, alias, domain
 
-# TO-DO:
-# Needs verification and further work.
-"""@timeout(5)
-def manualEmailCheck(mail):
-    '''
-        Manually checking whether a mail is being sent.
-
-        :param mail:    Email to check.
-
-        :result:
-    '''
-    DNS.DiscoverNameServers()
-    #print "checking %s..."%(mail)
-    hostname = mail[mail.find('@')+1:]
-    mx_hosts = DNS.mxlookup(hostname)
-    failed_mx = True
-    for mx in mx_hosts:
-            smtp = smtplib.SMTP()
-            try:
-                    smtp.connect(mx[1])
-                    # print "Stage 1 (MX lookup & connect) successful."
-                    failed_mx = False
-                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    s.connect((mx[1], 25))
-                    s.recv(1024)
-                    s.send("HELO %s\n"%(mx[1]))
-                    s.recv(1024)
-                    s.send("MAIL FROM:< test@test.com>\n")
-                    s.recv(1024)
-                    s.send("RCPT TO:<%s>\n"%(mail))
-                    result = s.recv(1024)
-                    #print result
-                    if result.find('Recipient address rejected') > 0:
-                            #print "Failed at stage 2 (recipient does not exist)"
-                            pass
-                    else:
-                            #print "Adress valid."
-                            failed_mx = False
-                    s.send("QUIT\n")
-                    break
-            except smtplib.SMTPConnectError:
-                    continue
-    if failed_mx:
-            #print "Failed at stage 1 (MX lookup & connect)."
-            pass
-    #print ""
-    if not failed_mx:
-            return True
-    return False
-"""
-
 def weCanCheckTheseDomains(email):
     '''
     '''
@@ -164,7 +114,10 @@ def performSearch(emails=[]):
     for e in emails:
         if weCanCheckTheseDomains(e):
             if '_' not in e and "-" not in e:
-                if emailahoy.verify_email_address(e):
+                #if emailahoy.verify_email_address(e):
+                is_valid = validate_email(e,verify=True)
+
+                if is_valid:
                     email, alias, domain = getMoreInfo(e)
                     aux = {}
                     aux["type"] = "i3visio.profile"
@@ -241,7 +194,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     if sys.platform == 'win32':
         print "WARNING:"
         print "\tmailfy.py seems to be run in a Windows system."
-        print "\tThe emailahoy libraries may NOT work properly."
+        print "\tThe emailahoy libraries may NOT work properly. We are trying to find a fix for this issue."
         print
 
     if args.create_emails:

@@ -440,7 +440,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Bucketlistly())
     listAll.append(Burbuja())
     listAll.append(Burdastyle())
-    listAll.append(Buzznet())
+    #listAll.append(Buzznet())
 
     # C
     listAll.append(Cafemom())
@@ -525,7 +525,7 @@ def getAllPlatformObjects(mode = None):
     #listAll.append(Interracialmatch())
     listAll.append(Intersect())
     listAll.append(Intfiction())
-    listAll.append(Islamicawakening())
+    #listAll.append(Islamicawakening())
     listAll.append(Issuu())
     #listAll.append(Ivoox())
     listAll.append(Ixgames())
@@ -534,7 +534,7 @@ def getAllPlatformObjects(mode = None):
     #listAll.append(Jamiiforums())
 
     # K
-    listAll.append(Kaboodle())
+    #listAll.append(Kaboodle())
     listAll.append(Kali())
     listAll.append(Karmacracy())
     listAll.append(Kickstarter())
@@ -594,7 +594,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Pz())
 
     # Q
-    listAll.append(Qq())
+    #listAll.append(Qq())
     listAll.append(Quartermoonsaloon())
 
     # R
@@ -633,7 +633,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Teamtreehouse())
     listAll.append(Techcrunch())
     listAll.append(Thecarcommunity())
-    listAll.append(Theguardian())
+    #listAll.append(Theguardian())
     listAll.append(Thehoodup())
     listAll.append(Thesims())
     listAll.append(Thestudentroom())
@@ -645,7 +645,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Trulia())
     listAll.append(Tumblr())
     listAll.append(Tuporno())
-    listAll.append(Tvtag())
+    #listAll.append(Tvtag())
     listAll.append(Twicsy())
     # Temporarily deactivated: 2015-06-21
     #listAll.append(Twitch())

@@ -116,7 +116,7 @@ class Browser():
 		# Opening the resource
 		
 		
-		recurso = self.br.open(url)
+		recurso = self.br.open(url, timeout=2)
 		
 		logger.debug("Reading html code from: " + url)
 		# [TO-DO]
