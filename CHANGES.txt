@@ -1,6 +1,7 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
 0.9.14, 2016/01/21 -- Mitigation of several fixes. 
+- Fix to issues #46, #47, #48, #49. Mitigating #40, #42, #43, #44, 45.
 - Modification of the Welcome banner for the different utilities. Back to normal.
 
 0.9.13, 2015/11/26 -- Modifications for the Cybercamp. 
