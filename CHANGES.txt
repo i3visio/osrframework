@@ -1,7 +1,8 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.10.0b, 2016/01/23 -- Mitigation of several fixes. 
+0.10.0b, 2016/01/23 -- Releasing a new version with several fixes. 
 - Fix to issue #53: adding tabulate dependency to the requirements.txt file.
+- Fix to issue #52: fixed a crash when launching -p wikipedia only in usufy.py and some false positives associated to the platform.
 
 0.9.14, 2016/01/21 -- Mitigation of several fixes. 
 - Fix to issues #46, #47, #48, #49. Mitigating #40, #42, #43, #44, 45.

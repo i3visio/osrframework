@@ -379,6 +379,12 @@ def getPlatformsByName(platformNames = ['all'], mode = None, tags = []):
                 platformList.append(plat)
                 added = True
                 break
+            # We need to perform additional checks to verify the Wikipedia platforms, which are called with a single parameter
+            try:
+                if name == str(plat.parameterName).lower():
+                    platformList.append(plat)
+            except:
+                pass
             # Verifying if any of the platform tags match the original tag
             if not added:
                 for t in plat.tags:

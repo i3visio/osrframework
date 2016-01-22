@@ -82,7 +82,7 @@ class WikipediaFr(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["n'est pas enregistré."]
+        self.notFoundText["usufy"] = ["dans les autres pages de l'espace Utilisateur."]
         #self.notFoundText["searchfy"] = []
 
         #########################

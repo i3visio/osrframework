@@ -82,7 +82,7 @@ class WikipediaEu(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["erabiltzaile-kontua ez dago erregistraturik."]
+        self.notFoundText["usufy"] = ["Lankidea orrialdea Wikipedia honetan ez badago oraindik:"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

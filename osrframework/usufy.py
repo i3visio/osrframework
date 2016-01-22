@@ -211,15 +211,18 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
     for nick in nicks:
         logger.info("Looking for '" + nick + "' in " + str(len(platforms)) + " different platforms:\n" +str( [ str(plat) for plat in platforms ] ) )
 
-        # If the process is executed by the current app, we use the Processes. It is faster than pools.
-        if nThreads <= 0 or nThreads > len(platforms):
-            nThreads = len(platforms)
+
         # Using threads in a pool if we are not running the program in main
         args = []
         # We need to create all the arguments that will be needed
         #print platforms
         for plat in platforms:
             args.append (( plat, nick, rutaDescarga, avoidProcessing, avoidDownload))
+            
+        # If the process is executed by the current app, we use the Processes. It is faster than pools.
+        if nThreads <= 0 or nThreads > len(platforms):
+            nThreads = len(platforms)
+            
         logger.info("Launching " + str(nThreads) + " different threads...")
         # We define the pool
         pool = Pool(nThreads)
