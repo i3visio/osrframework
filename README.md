@@ -1,5 +1,5 @@
 	================================================================
-	OSRFramework  Copyright (C) 2015  F. Brezo and Y. Rubio, i3visio
+	OSRFramework  Copyright (C) 2016  F. Brezo and Y. Rubio, i3visio
 	================================================================
 
 [![Version in PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
@@ -110,14 +110,17 @@ python usufy.py -n i3visio -p twitter facebook instagram -e xls csv ods
 python usufy.py -n i3visio -p all 
 ```
 
-3.2 - Via repositories (Ubuntu based)
--------------------------------------
+3.2 - Via repositories (Ubuntu Trusty)
+--------------------------------------
 As of August 16th, 2015, a ppa repository has been created to let users keep track of updates using the packaging utilities provided by Debian/Ubuntu systems. This installation is recommended for sporadic Ubuntu users.
 
 1.- Adding the i3visio repository and updating the package list
 ```
 # Adding the repository
 sudo add-apt-repository ppa:i3visio
+# Adding the public key to your keyring
+gpg --keyserver keyserver.ubuntu.com --recv FC66B540
+gpg --export --armor FC66B540 | sudo apt-key add -
 # Updating the package list
 sudo apt-get update
 ```
