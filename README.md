@@ -40,9 +40,78 @@ Installation:
 =============
 The instructions may vary in the different OS but we encourage to run this program under Linux as some utilities may behave unstably.
 
-Under Linux (Debian based, including Ubuntu)
--------------------------------------------
-As of August 16th, 2015, a ppa repository has been added to let users keep track of updates using the packaging utilities provided by Debian/Ubuntu systems.
+General install (all systems)
+-----------------------------
+
+### Checking the Python installation
+Python 2.7 is needed to let this installation work. To try your Python installation open a terminal and try:
+```
+python -c "import pip; print 'This system seems to be ready to install OSRFramework.'"
+```
+
+If the message appears, everythin is OK and you can skip the following step recommended for Windows systems.
+
+#### Python installation tips for Windows users
+You will have to download and install Python 2.7 (currently, 2.7.11) from:
+https://www.python.org/downloads/
+
+The installation should be performed normally letting the system know that you want to add the Python27 folders to the path. If not done during the installation, you will need to add it manually c:\python27 or c:\python27\scripts to the system's path variable. You have a tutorial
+here: <http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path>
+
+Once finised, you can check how everything went by accessing a **NEW** cmd and typing again:
+```
+python -c "import pip; print 'This system seems to be ready to install OSRFramework.'"
+```
+If you have seen the message, those are good news.
+
+### Installing the automatic installer
+
+**Important note**: This method will **NOT** let you configurate the credentials and API.
+
+We have shipped an installer via a public gist at https://gist.github.com/i3visio/b079202c1b49b2d45d9b. You need to download this file what can be done by manually in Linux terminal by letting wget do the magic:
+```
+https://gist.githubusercontent.com/i3visio/b079202c1b49b2d45d9b/raw/2c44aefa0d97d28836a7efc974c7c74ac242ff60/osrframework-installer.py
+```
+
+The rest of the installation under Python 2.7 is as follows:
+
+1.- Change directory to wherever you have downloaded the installer <DOWNLOAD_PATH>:
+```
+cd <DOWNLOAD_PATH>
+```
+
+2.- Let osrframework-installer.py clone, unzip, install, try to fix dependencies and run some sample tests for you. This needs to be done being root in MacOS and Linux systems. Thus, for Linux and MacOS:
+```
+sudo python osrframework-installer.py
+```
+For Windows:
+```
+python osrframework-installer.py
+```
+
+3.- [In case of errors in Windows] Firstly, don't panic ;). We have not typed so much. Secondly, it seems that we might have to type something else to install manually part of the process, but is already shown in the screen:
+```
+cd osrframework-master
+python setup.py build
+python setup.py install
+```
+That should have done the trick, letting you go into the folder and perform some tests manually.
+
+4.- Test the installation checking first if i3visio exists in Twitter by going to the folder where usufy.py is:
+```
+cd osrframework 
+```
+And executing some tests:
+```
+python usufy.py -n i3visio -p twitter
+python usufy.py -n i3visio -p twitter facebook instagram
+python usufy.py -n i3visio -p twitter facebook instagram -e xls csv ods
+python usufy.py -n i3visio -p all 
+```
+
+Via repositories (Ubuntu based)
+-------------------------------
+As of August 16th, 2015, a ppa repository has been created to let users keep track of updates using the packaging utilities provided by Debian/Ubuntu systems. This installation is recommended for sporadic Ubuntu users.
 
 1.- Adding the i3visio repository and updating the package list
 ```
@@ -57,9 +126,9 @@ sudo apt-get update
 # Official package
 sudo apt-get install python-osrframework
 # Installing Python dependencies manually
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator
+sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator validate_email pyDNS tabulate
 ```
-There might be an issue in some Debian systems regarding the usage of the ouath library as v0.7.1 or later is required and in some Debian systems this library is owned by the OS.
+There might be an issue in some old Debian systems regarding the usage of the ouath library as v0.7.1 or later is required and in some Debian systems this library is owned by the OS.
 ```
 Traceback (most recent call last):
   File "usufy.py", line 49, in <module>
@@ -102,13 +171,14 @@ entify.py -h
 ...
 ```
 
+
 3.- You will be able to import the .mtz configuration for Maltego from the file under:
 ```
 /usr/share/osrframework
 ```
 
-Under Linux (for developers and other systems)
-----------------------------------------------
+Manual install for developers
+-----------------------------
 
 As Python is already installed, the rest of the installation under Python 2.7 is as 
 follows:
@@ -139,9 +209,7 @@ Then you can edit it with:
 ```
 nano osrframework/utils/config_api_keys.py
 ```
-If you skip this step, OSRFramework will create files without any credentials. This is not a
-major issue as you will be able to provide them as a parameter. Then you can resume the 
-installation.
+If you skip this step, OSRFramework will create files without any credentials. This is not a major issue as you will be able to provide them as a parameter. Then you can resume the installation.
 
 3.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
 your own credentials. You might edit them with your preferred text editor. The files are:
@@ -170,124 +238,32 @@ python -c "import osrframework"
 ```
 If no error is displayed, the installation would have been performed correctly.
 
-5.- To configure the Maltego Entities, launch the built-in configurator:
-```
-python configure_maltego.py
-```
-This will create a new .mtz file under: 
-```
-<INSTALLATION_FOLDER>/osrframework/transforms/lib/
-```
+Maltego Installation
+====================
 
-6.- However, to use our Maltego Transforms, you will have to download Maltego from 
+However, to use our Maltego Transforms, you will have to download Maltego from 
 Paterva's site: 
 ```
 http://www.paterva.com/web6/products/download2.php
 ```
-Follow the instructions there. Afterwards, you may launch the application.
+Follow the instructions there. Afterwards, you may launch the application and you you will have to import the recently created .mtz configuration file created by your Linux Installation.
 
-7.- You will have to import the recently created .mtz configuration file. Select 
-all the groups and click next. You may use the new i3visio entities now.
-
-Under Windows (experimental)
-----------------------------
-First of all, you will have to download and install Python 2.7 from:
-https://www.python.org/downloads/
-
-The installation should be performed normally. However, you will need
-to add c:\python27 to the system's path variable. You have a tutorial
-here: <http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path>
-
-You can check how everything went by accessing the cmd. Type
-```
-python
-```
-If you have accessed the Python interpreter, those are good news.
-
-The rest of the installation under Python 2.7 is as follows:
-
-1.- Download the latest version of the osrframework found in:
-```
-http://github.com/i3visio/osrframework/archive/master.zip
-```
-
-2.- Unzip the master.zip file wherever you want.
-
-3.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
-your own API Keys. You might edit them with your preferred text editor. The files are:
-```
-osrframework/utils/config_api_keys.py.sample 
-```
-which should be COPIED to 
-```
-osrframework/utils/config_api_keys.py
-```
-If you skip this step, OSRFramework will create files without any credentials. This is not a
-major issue as you will be able to provide them as a parameter. Then you can resume the 
-installation.
-
-4.- [Optional] Then, you might have to copy the sample files in the osrframework folder to add 
-your own credentials. You might edit them with your preferred text editor. The files are:
-```
-osrframework/utils/config_credentials.py.sample 
-```
-which should be COPIED to 
-```
-osrframework/utils/config_credentials.py
-```
-If you skip this step, OSRFramework will create files without any credentials. This is not a
-major issue as you will be able to provide them as a parameter. Then you can resume the 
-installation.
-
-5.- Open the terminal (cmd) and navigate to the recently created folder. You know something like:
-```
-cd Downloads
-cd osrframework-master
-...
-```
-
-6.- In the osrframework-master folder, build and install the modules in your system:
-```
-python setup.py build
-python setup.py install
-```
-Installing other packages from PyPI that osrframework needs using the requirements.txt file. You 
-should have pip installed and the path c:\python27\scripts in the system's path.
-```
-pip install -r requirements.txt
-```
-Afterwards, the module will be importable from any python code. You can check this by typing:
-```
-python -c "import osrframework"
-```
-If no error is displayed, the installation would have been performed correctly.
-
-7.- To configure the Maltego Entities, launch the built-in configurator:
-```
-python configure_maltego.py
-```
-This will create a .mtz file under: 
-```
-<INSTALLATION_FOLDER>/osrframework/transforms/lib/
-```
-
-8.- However, to use our Maltego Transforms, you will have to download Maltego from 
-Paterva's site: 
-```
-http://www.paterva.com/web6/products/download2.php
-```
-Follow the instructions there. Afterwards, you may launch the application.
-
-9.- Finally, you will have to import the recently created .mtz configuration file. 
 Select all the groups and click next. You may use the new i3visio entities now.
 
-EXTRA: creating the binary packages
-===================================
+### Tips for Windows users
+To configure the Maltego entities and transforms we have developed, launch the built-in configurator in the project folder:
 ```
-# First updating the .mtz file
-python configure_maltego.py -i /usr/bin -o linux
-python setup.py --command-packages=stdeb.command bdist_deb
-# The deb file is under ./deb_dist
-python setup.py bdist --format=zip
-# The zip file is under ./dist
+cd <DOWNLOAD_PATH>
+cd osrframework-master
+python configure_maltego.py
 ```
+
+This will create a .mtz file under the following path, which is where you will find the entities to be configured: 
+```
+<DOWNLOAD_PATH>/osrframework-master/osrframework/transforms/lib/
+```
+
+AUTHORS
+=======
+
+This software is a personal project conducted by Yaiza Rubio ([@yrubiosec](https://twitter.com/yrubiosec)) and Félix Brezo ([@febrezo](https://twitter.com/febrezo)), both of whom conform the [i3visio](http://i3visio.com) team.
