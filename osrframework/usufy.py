@@ -134,7 +134,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
                 if nick in html:
                     possibleURL.append(test)
                     print "Usufy found!!!\n"
-                    break
+                    #break
             except:
                 logger.error("The resource could not be downloaded.")
 

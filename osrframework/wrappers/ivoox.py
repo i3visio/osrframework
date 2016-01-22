@@ -29,51 +29,42 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Jamiiforums(Platform):
-    ''' 
-        A <Platform> object for Jamiiforums.
+class Ivoox(Platform):
+    '''
+        A <Platform> object for Ivoox.
     '''
     def __init__(self):
-        ''' 
-            Constructor... 
         '''
-        self.platformName = "Jamiiforums"
-        # Add the tags for the platform
-        self.tags = ["audio"]
-        self.NICK_WILDCARD = "<HERE_GOES_THE_NICK>"
-        # Add the URL below
-        self.url = "http://www.jamiiforums.com/member.php?username=" + self.NICK_WILDCARD
-        # Add the strings to look for when an error appears
-        #self.notFoundText = ["<title>about.me | your personal homepage</title><style>"]
-        self.notFoundText = ["<title>JamiiForums | The Home of Great Thinkers</title>"]
-        self.forbiddenList = ['.', ' ']
-        self.score = 10.0
-        
+            Constructor...
+        '''
+        self.platformName = "Ivoox"
+        self.tags = ["opinions", "contact"]
+
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
-        
+        self.isValidMode["searchfy"] = False
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.gametracker.com/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "http://" + "<usufy>" + ".ivoox.com" 
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
-        
+        #self.needsCredentials["searchfy"] = False
+
         #################
         # Valid queries #
         #################
@@ -81,28 +72,28 @@ class Jamiiforums(Platform):
         self.validQuery = {}
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".*")   
+        self.validQuery["usufy"] = re.compile(".*")
         #self.validQuery["searchfy"] = re.compile(".*")
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["GameTracker.com : Profile Not Found"]
-        #self.notFoundText["searchfy"] = []        
-        
+        self.notFoundText["usufy"] = ["El contenido que estás buscando no existe."]
+        #self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -110,12 +101,10 @@ class Jamiiforums(Platform):
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-        
-                

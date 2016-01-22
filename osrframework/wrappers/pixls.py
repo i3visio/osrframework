@@ -29,15 +29,15 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Rawtherapee(Platform):
+class Pixls(Platform):
     """ 
-        A <Platform> object for Rawtherapee.
+        A <Platform> object for Pixls.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Rawtherapee"
+        self.platformName = "Pixls"
         self.tags = ["image", "professional", "development"]
 
         ########################
@@ -54,7 +54,7 @@ class Rawtherapee(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://rawtherapee.com/forum/memberlist.php?username=" + "<usufy>"       
+        self.url["usufy"] = "https://discuss.pixls.us/users/" + "<usufy>" + "/activity"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Rawtherapee(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["No members found for this search criterion."]
+        self.notFoundText["usufy"] = ["The page you requested doesn&#39;t exist or is private."]
         #self.notFoundText["searchfy"] = []        
         
         #########################
