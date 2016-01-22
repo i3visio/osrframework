@@ -16,4 +16,4 @@ networkx
 decorator
 validate_email
 pyDNS
-
+tabulate
