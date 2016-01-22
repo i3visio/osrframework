@@ -113,7 +113,7 @@ from osrframework.wrappers.flixster import Flixster
 from osrframework.wrappers.foodspotting import Foodspotting
 from osrframework.wrappers.forobtc import Forobtc
 from osrframework.wrappers.forocoches import Forocoches
-#from osrframework.wrappers.forosperu import Forosperu
+from osrframework.wrappers.forosperu import Forosperu
 from osrframework.wrappers.foursquare import Foursquare
 from osrframework.wrappers.freebase import Freebase
 from osrframework.wrappers.freerepublic import Freerepublic
@@ -136,7 +136,7 @@ from osrframework.wrappers.googleplus import GooglePlus
 from osrframework.wrappers.gsmspain import Gsmspain
 
 # H
-#from osrframework.wrappers.hellboundhackers import Hellboundhackers
+from osrframework.wrappers.hellboundhackers import Hellboundhackers
 from osrframework.wrappers.hi5 import Hi5
 
 # I
@@ -152,8 +152,7 @@ from osrframework.wrappers.intersect import Intersect
 from osrframework.wrappers.intfiction import Intfiction
 from osrframework.wrappers.islamicawakening import Islamicawakening
 from osrframework.wrappers.issuu import Issuu
-# Not implemented
-#from osrframework.wrappers.ivoox import Ivoox
+from osrframework.wrappers.ivoox import Ivoox
 from osrframework.wrappers.ixgames import Ixgames
 
 
@@ -209,6 +208,7 @@ from osrframework.wrappers.peerbackers import Peerbackers
 from osrframework.wrappers.periscope import Periscope
 from osrframework.wrappers.photobucket import Photobucket
 from osrframework.wrappers.pgpmit import PGPMIT
+from osrframework.wrappers.pixls import Pixls
 from osrframework.wrappers.pinterest import Pinterest
 from osrframework.wrappers.pixinsight import Pixinsight
 from osrframework.wrappers.pjrc import Pjrc
@@ -228,7 +228,6 @@ from osrframework.wrappers.quartermoonsaloon import Quartermoonsaloon
 from osrframework.wrappers.rankia import Rankia
 from osrframework.wrappers.rapid import Rapid
 from osrframework.wrappers.ratemypoo import Ratemypoo
-from osrframework.wrappers.rawtherapee import Rawtherapee
 from osrframework.wrappers.rebelmouse import Rebelmouse
 from osrframework.wrappers.redtube import Redtube
 from osrframework.wrappers.relatious import Relatious
@@ -440,7 +439,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Bucketlistly())
     listAll.append(Burbuja())
     listAll.append(Burdastyle())
-    #listAll.append(Buzznet())
+    listAll.append(Buzznet())
 
     # C
     listAll.append(Cafemom())
@@ -489,7 +488,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Foodspotting())
     listAll.append(Forobtc())
     listAll.append(Forocoches())
-    #listAll.append(Forosperu())
+    listAll.append(Forosperu())
     listAll.append(Foursquare())
     listAll.append(Freebase())
     listAll.append(Freerepublic())
@@ -512,7 +511,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Gsmspain())
 
     # H
-    #listAll.append(Hellboundhackers())
+    listAll.append(Hellboundhackers())
     listAll.append(Hi5())
 
     # I
@@ -527,11 +526,11 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Intfiction())
     #listAll.append(Islamicawakening())
     listAll.append(Issuu())
-    #listAll.append(Ivoox())
+    listAll.append(Ivoox())
     listAll.append(Ixgames())
 
     # J
-    #listAll.append(Jamiiforums())
+    listAll.append(Jamiiforums())
 
     # K
     #listAll.append(Kaboodle())
@@ -584,6 +583,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(PGPMIT())
     listAll.append(Pinterest())
     listAll.append(Pixinsight())
+    listAll.append(Pixls())
     listAll.append(Pjrc())
     listAll.append(Plancast())
     listAll.append(Pokerred())
@@ -594,14 +594,13 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Pz())
 
     # Q
-    #listAll.append(Qq())
+    listAll.append(Qq())
     listAll.append(Quartermoonsaloon())
 
     # R
     listAll.append(Rankia())
     listAll.append(Rapid())
     listAll.append(Ratemypoo())
-    listAll.append(Rawtherapee())
     listAll.append(Rebelmouse())
     listAll.append(Redtube())
     listAll.append(Relatious())

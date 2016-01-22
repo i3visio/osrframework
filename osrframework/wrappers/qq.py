@@ -55,7 +55,7 @@ class Qq(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://t.qq.com/" + "<usufy>"       
+        self.url["usufy"] = "http://bbs.map.qq.com/space-username-" + "<usufy>" + ".html"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -82,7 +82,7 @@ class Qq(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h1>404", "var love404"]
+        self.notFoundText["usufy"] = ["<div id=\"messagetext\" class=\"alert_error\">"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

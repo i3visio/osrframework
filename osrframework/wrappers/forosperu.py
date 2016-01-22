@@ -29,13 +29,6 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-##############################################################
-# Not working. For non-existing users the opened page is the #
-#   main page for forosperu.                                 #
-##############################################################
-
-from platforms import Platform
-
 class Forosperu(Platform):
     """ 
         A <Platform> object for Forosperu.
@@ -45,7 +38,10 @@ class Forosperu(Platform):
             Constructor... 
         """
         self.platformName = "Forosperu"
-        self.tags = ["opinions"]
+        self.tags = ["opinions", "activism"]
+             
+        # Add the URL for enumeration below
+        #self.urlEnumeration = "http://www.forocoches.com/foro/member.php?u=" + "<HERE_GOES_THE_USER_ID>"
 
         ########################
         # Defining valid modes #
@@ -61,7 +57,7 @@ class Forosperu(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.forosperu.net/member.php?username=" + "<usufy>"       
+        self.url["usufy"] = "http://forosperu.net/members/?username=" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -88,7 +84,7 @@ class Forosperu(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [">Este usuario no se ha registrado y por lo tanto no tiene un perfil para ver.</div>"]
+        self.notFoundText["usufy"] = ["No se encontró el usuario especificado."]
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -117,15 +113,3 @@ class Forosperu(Platform):
         self.foundFields = {}
         
                         
-
-    # While the issue cannot be solved on this platform
-    def _doesTheUserExist(self, html):
-        ''' 
-            Method that performs the verification of the existence or not of a given profile. This is a reimplementation of the method found in all the <Platform> objects.    In this case, this will return ALWAYS None because the platform is no longer available.
-            
-            :param html:    The html text in which the self.notFoundText
-            :return :   None if the user was not found in the html text and the html text if the user DOES exist.
-        '''
-        return None
-
-

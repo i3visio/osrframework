@@ -54,7 +54,7 @@ class Jamiiforums(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.jamiiforums.com/member.php?username=" + "<usufy>"
+        self.url["usufy"] = "http://jamiiforums.com/index.php?action=profile;user=" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -81,7 +81,7 @@ class Jamiiforums(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["This user has not registered and therefore does not have a profile to view.", "<title>JamiiForums | The Home of Great Thinkers</title>"]
+        self.notFoundText["usufy"] = ["The requested page could not be found."]
         #self.notFoundText["searchfy"] = []
 
         #########################

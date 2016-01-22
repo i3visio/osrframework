@@ -81,7 +81,7 @@ class Linkedin(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Página no encontrada","error404"]
+        self.notFoundText["usufy"] = ["Perfil no encontrado"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

@@ -1,5 +1,10 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.10.0b, 2016/01/22 -- Modification of different issues related to platforms that were not working. Fuzzing actions have been improved.
+- Different fixes linked to issues #33 (jamiiforums), #43 (qq), #42 (buzznet) and #44 (pixls substitutes rawtherapee).
+- Bringing back forosperu, hellboundhackers, ivoox and linkedin.
+- A fix has been introduced in the --fuzz option of usufy.py so as not to stop when a matching pattern has been found.
+
 0.9.14, 2016/01/21 -- Mitigation of several fixes. 
 - Fix to issues #46, #47, #48, #49. Mitigating #40, #42, #43, #44, 45.
 - Modification of the Welcome banner for the different utilities. Back to normal.
