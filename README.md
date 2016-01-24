@@ -160,7 +160,7 @@ In the case of receiving a similar error to this one, we should remove the old o
 sudo apt-get remove python-oauthlib
 
 # ... and install last oauthlib version 0.7.1
-pip install oauthlib -U
+sudo pip install oauthlib -U
 ```
 
 Thus, whenever a new version is released, the following command will upgrade the package:

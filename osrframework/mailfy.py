@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v2.0a"
+__version__ = "v2.0b"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -53,7 +53,7 @@ from validate_email import validate_email
 #from osrframework.utils.timeout import timeout
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
-EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "foxmail.com", "gmail.com", "hushmail.com", "qq.com", "sina.com", "yandex.com", "yeah.net"]
+EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "foxmail.com", "gmail.com", "hotmail.com", "hushmail.com", "outlook.com", "protonmail.com", "sina.com", "yandex.com", "yeah.net"]
 
 
 def getMoreInfo(e):
@@ -113,36 +113,21 @@ def performSearch(emails=[]):
 
     for e in emails:
         if weCanCheckTheseDomains(e):
-            if '_' not in e and "-" not in e:
-                #if emailahoy.verify_email_address(e):
-                is_valid = validate_email(e,verify=True)
+            #if emailahoy.verify_email_address(e):
+            is_valid = validate_email(e,verify=True)
 
-                if is_valid:
-                    email, alias, domain = getMoreInfo(e)
-                    aux = {}
-                    aux["type"] = "i3visio.profile"
-                    aux["value"] =  domain["value"]+ " - " +alias["value"]
-                    aux["attributes"]= []
-                    aux["attributes"].append(email)
-                    aux["attributes"].append(alias)
-                    aux["attributes"].append(domain)
-                    results.append(aux)
-                else:
-                    pass
+            if is_valid:
+                email, alias, domain = getMoreInfo(e)
+                aux = {}
+                aux["type"] = "i3visio.profile"
+                aux["value"] =  domain["value"]+ " - " +alias["value"]
+                aux["attributes"]= []
+                aux["attributes"].append(email)
+                aux["attributes"].append(alias)
+                aux["attributes"].append(domain)
+                results.append(aux)
             else:
                 pass
-                """ try:
-                    if not "gmail.com" in e and manualEmailCheck(e):
-                        aux = {}
-                        aux["type"] = "i3visio.email"
-                        aux["value"] = e
-                        aux["attributes"] = getMoreInfo(e)
-
-                        results.append(aux)
-                except:
-                    # Probably a Timeout exception
-                    pass
-                """
     return results
 
 def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS):

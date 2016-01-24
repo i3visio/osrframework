@@ -1,6 +1,7 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.10.0b, 2016/01/23 -- New release with several fixes. 
+0.10.0b, 2016/01/24 -- New release with several fixes. 
+- Fix to issues linked to mailfy: #56, #57, #58 and #60.
 - Fix to issue #53: adding tabulate dependency to the requirements.txt file.
 - Fix to issue #52: fixed a crash when launching -p wikipedia only in usufy.py and some false positives associated to the platform.
 - Different fixes linked to issues #33 (jamiiforums), #43 (qq), #42 (buzznet) and #44 (pixls substitutes rawtherapee).
