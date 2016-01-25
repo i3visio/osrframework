@@ -4,9 +4,11 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix to issues linked to mailfy: #56, #57, #58 and #60.
 - Fix to issue #53: adding tabulate dependency to the requirements.txt file.
 - Fix to issue #52: fixed a crash when launching -p wikipedia only in usufy.py and some false positives associated to the platform.
+- Fixed issue #64: foxmail.com has been removed from the list of secure domains.
 - Different fixes linked to issues #33 (jamiiforums), #43 (qq), #42 (buzznet) and #44 (pixls substitutes rawtherapee).
 - Bringing back forosperu, hellboundhackers, ivoox and linkedin.
 - A fix has been introduced in the --fuzz option of usufy.py so as not to stop when a matching pattern has been found.
+
 - Addressed issue #61: usufy.py --fuzz sample.txt now uses as separator either a '\t' or a ' '.
 - Update in the README file.
 
