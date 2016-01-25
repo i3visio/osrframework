@@ -29,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class About(Platform):
+class Newgrounds(Platform):
     """ 
-        A <Platform> object for About.
+        A <Platform> object for Newgrounds.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "About"
-        self.tags = ["blog"]
+        self.platformName = "Newgrounds"
+        self.tags = ["games"]
 
         ########################
         # Defining valid modes #
@@ -54,7 +54,7 @@ class About(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://about.me/" + "<usufy>"       
+        self.url["usufy"] = "http://" + "<usufy>" + ".newgrounds.com"     
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class About(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>about.me | your personal homepage</title>"]
+        self.notFoundText["usufy"] = ["ERROR &mdash; No user &quot;sonofkjsdfhjsdfh&quot; exists in our system."]
         #self.notFoundText["searchfy"] = []        
         
         #########################

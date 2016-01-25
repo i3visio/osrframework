@@ -121,6 +121,7 @@ from osrframework.wrappers.freerepublic import Freerepublic
 #from osrframework.wrappers.friendfeed import Friendfeed
 
 # G
+from osrframework.wrappers.gamesheep import Gamesheep
 from osrframework.wrappers.gametracker import Gametracker
 from osrframework.wrappers.gapyear import Gapyear
 from osrframework.wrappers.garage4hackers import Garage4hackers
@@ -138,6 +139,7 @@ from osrframework.wrappers.gsmspain import Gsmspain
 # H
 from osrframework.wrappers.hellboundhackers import Hellboundhackers
 from osrframework.wrappers.hi5 import Hi5
+from osrframework.wrappers.hubpages import Hubpages
 
 # I
 from osrframework.wrappers.ibosocial import Ibosocial
@@ -162,6 +164,7 @@ from osrframework.wrappers.jamiiforums import Jamiiforums
 # K
 from osrframework.wrappers.kaboodle import Kaboodle
 from osrframework.wrappers.kali import Kali
+from osrframework.wrappers.kanogames import Kanogames
 from osrframework.wrappers.karmacracy import Karmacracy
 from osrframework.wrappers.kickstarter import Kickstarter
 from osrframework.wrappers.kinja import Kinja
@@ -194,6 +197,8 @@ from osrframework.wrappers.myspace import Myspace
 from osrframework.wrappers.naver import Naver
 from osrframework.wrappers.netlog import Netlog
 from osrframework.wrappers.netvibes import Netvibes
+from osrframework.wrappers.newgrounds import Newgrounds
+from osrframework.wrappers.nubelo import Nubelo
 
 # O
 from osrframework.wrappers.occupywallst import Occupywallst
@@ -232,12 +237,14 @@ from osrframework.wrappers.rebelmouse import Rebelmouse
 from osrframework.wrappers.redtube import Redtube
 from osrframework.wrappers.relatious import Relatious
 from osrframework.wrappers.researchgate import Researchgate
+from osrframework.wrappers.retailmenot import Retailmenot
 from osrframework.wrappers.rojadirecta import Rojadirecta
 from osrframework.wrappers.ruby import Ruby
 
 # S
 from osrframework.wrappers.scribd import Scribd
 from osrframework.wrappers.sencha import Sencha
+from osrframework.wrappers.sidereel import Sidereel
 from osrframework.wrappers.skype import Skype
 from osrframework.wrappers.slashdot import Slashdot
 from osrframework.wrappers.slideshare import Slideshare
@@ -261,6 +268,7 @@ from osrframework.wrappers.techcrunch import Techcrunch
 from osrframework.wrappers.thecarcommunity import Thecarcommunity
 from osrframework.wrappers.theguardian import Theguardian
 from osrframework.wrappers.thehoodup import Thehoodup
+from osrframework.wrappers.thepiratebay import Thepiratebay
 from osrframework.wrappers.thesims import Thesims
 from osrframework.wrappers.thestudentroom import Thestudentroom
 #from osrframework.wrappers.torsearch import Torsearch
@@ -306,6 +314,7 @@ from osrframework.wrappers.wikipediafr import WikipediaFr
 from osrframework.wrappers.wikipediapt import WikipediaPt
 from osrframework.wrappers.winamp import Winamp
 from osrframework.wrappers.wishlistr import Wishlistr
+from osrframework.wrappers.worldcarfans import Worldcarfans
 from osrframework.wrappers.wordpress import Wordpress
 from osrframework.wrappers.wykop import Wykop
 
@@ -406,7 +415,7 @@ def getAllPlatformObjects(mode = None):
     ##################################################
     # A
     # Requires javascript
-    #listAll.append(About())
+    listAll.append(About())
     listAll.append(Adtriboo())
     listAll.append(Ahmia())
     listAll.append(Anarchy101())
@@ -502,6 +511,7 @@ def getAllPlatformObjects(mode = None):
     #listAll.append(Friendfeed())
 
     # G
+    listAll.append(Gamesheep())
     listAll.append(Gametracker())
     listAll.append(Gapyear())
     listAll.append(Garage4hackers())
@@ -519,6 +529,7 @@ def getAllPlatformObjects(mode = None):
     # H
     listAll.append(Hellboundhackers())
     listAll.append(Hi5())
+    listAll.append(Hubpages())
 
     # I
     listAll.append(Ibosocial())
@@ -541,6 +552,7 @@ def getAllPlatformObjects(mode = None):
     # K
     #listAll.append(Kaboodle())
     listAll.append(Kali())
+    listAll.append(Kanogames())
     listAll.append(Karmacracy())
     listAll.append(Kickstarter())
     listAll.append(Kinja())
@@ -573,6 +585,8 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Naver())
     listAll.append(Netlog())
     listAll.append(Netvibes())
+    listAll.append(Newgrounds())
+    listAll.append(Nubelo())
 
     # O
     listAll.append(Occupywallst())
@@ -611,12 +625,14 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Redtube())
     listAll.append(Relatious())
     listAll.append(Researchgate())
+    listAll.append(Retailmenot())
     listAll.append(Rojadirecta())
     listAll.append(Ruby())
 
     # S
     listAll.append(Scribd())
     listAll.append(Sencha())
+    listAll.append(Sidereel())
     listAll.append(Skype())
     listAll.append(Slashdot())
     listAll.append(Slideshare())
@@ -640,6 +656,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Thecarcommunity())
     #listAll.append(Theguardian())
     listAll.append(Thehoodup())
+    listAll.append(Thepiratebay())
     listAll.append(Thesims())
     listAll.append(Thestudentroom())
     #listAll.append(Torsearch())
@@ -684,6 +701,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(WikipediaPt())
     listAll.append(Winamp())
     listAll.append(Wishlistr())
+    listAll.append(Worldcarfans())
     listAll.append(Wordpress())
     listAll.append(Wykop())
 

@@ -29,42 +29,42 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class About(Platform):
-    """ 
-        A <Platform> object for About.
-    """
+class Thepiratebay(Platform):
+    '''
+        A <Platform> object for Thepiratebay.
+    '''
     def __init__(self):
-        """ 
-            Constructor... 
-        """
-        self.platformName = "About"
-        self.tags = ["blog"]
+        '''
+            Constructor...
+        '''
+        self.platformName = "Thepiratebay"
+        self.tags = ["downloads", "torrents"]
 
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
-        
+        self.isValidMode["searchfy"] = False
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://about.me/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "https://thepiratebay.mk/user/" + "<usufy>"
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
-        
+        #self.needsCredentials["searchfy"] = False
+
         #################
         # Valid queries #
         #################
@@ -72,28 +72,28 @@ class About(Platform):
         self.validQuery = {}
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".*")   
+        self.validQuery["usufy"] = re.compile(".*")
         #self.validQuery["searchfy"] = re.compile(".*")
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>about.me | your personal homepage</title>"]
-        #self.notFoundText["searchfy"] = []        
-        
+        self.notFoundText["usufy"] = ["<title> - TPB</title>"]
+        #self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -101,12 +101,10 @@ class About(Platform):
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-        
-        

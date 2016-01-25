@@ -29,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class About(Platform):
+class Nubelo(Platform):
     """ 
-        A <Platform> object for About.
+        A <Platform> object for Nubelo.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "About"
-        self.tags = ["blog"]
+        self.platformName = "Nubelo"
+        self.tags = ["jobs"]
 
         ########################
         # Defining valid modes #
@@ -54,7 +54,7 @@ class About(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://about.me/" + "<usufy>"       
+        self.url["usufy"] = "http://www.nubelo.com/perfil/" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class About(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>about.me | your personal homepage</title>"]
+        self.notFoundText["usufy"] = ["<h1>Accede a tu cuenta</h1>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
