@@ -79,7 +79,7 @@ class Infotelefonica(Platform):
         ###################        
         # Strings that will imply that the phone number is not appearing
         self.notFoundText = {}
-        self.notFoundText["phonefy"] = ["<h3>No hay comentarios para este número de teléfono</h3>"]
+        self.notFoundText["phonefy"] = ["Al dejar el primer comentario procederás a registrar este número de teléfono en en nuestro foro."]
         #self.notFoundText["usufy"] = []   
         #self.notFoundText["searchfy"] = []        
         

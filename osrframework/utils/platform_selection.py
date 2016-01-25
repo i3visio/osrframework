@@ -160,10 +160,10 @@ from osrframework.wrappers.ixgames import Ixgames
 from osrframework.wrappers.jamiiforums import Jamiiforums
 
 # K
-from osrframework.wrappers.kaboodle import Kaboodle
 from osrframework.wrappers.kali import Kali
 from osrframework.wrappers.karmacracy import Karmacracy
 from osrframework.wrappers.kickstarter import Kickstarter
+from osrframework.wrappers.kimatel import Kimatel
 from osrframework.wrappers.kinja import Kinja
 from osrframework.wrappers.klout import Klout
 from osrframework.wrappers.kongregate import Kongregate
@@ -271,7 +271,6 @@ from osrframework.wrappers.tripit import Tripit
 from osrframework.wrappers.trulia import Trulia
 from osrframework.wrappers.tumblr import Tumblr
 from osrframework.wrappers.tuporno import Tuporno
-from osrframework.wrappers.tvtag import Tvtag
 from osrframework.wrappers.twicsy import Twicsy
 # Temporarily deactivated: 2015-06-21
 from osrframework.wrappers.twitch import Twitch
@@ -539,10 +538,10 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Jamiiforums())
 
     # K
-    #listAll.append(Kaboodle())
     listAll.append(Kali())
     listAll.append(Karmacracy())
     listAll.append(Kickstarter())
+    listAll.append(Kimatel())
     listAll.append(Kinja())
     listAll.append(Klout())
     listAll.append(Kongregate())
@@ -650,7 +649,6 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Trulia())
     listAll.append(Tumblr())
     listAll.append(Tuporno())
-    #listAll.append(Tvtag())
     listAll.append(Twicsy())
     # Temporarily deactivated: 2015-06-21
     #listAll.append(Twitch())
