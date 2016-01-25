@@ -29,84 +29,86 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Tvtag(Platform):
-    """ 
-        A <Platform> object for Tvtag.
-    """
+class Kimatel(Platform):
+    '''
+        A <Platform> object for Infotelefonica.    
+    '''
     def __init__(self):
-        """ 
-            Constructor... 
-        """
-        self.platformName = "Tvtag"
-        self.tags = ["social", "news"]
-
+        '''
+            Consstructor...
+        '''
+        self.platformName = "Kimatel"        
+        self.tags = ["phone"]
+        
         ########################
         # Defining valid modes #
         ########################
         self.isValidMode = {}        
-        self.isValidMode["phonefy"] = False
-        self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["phonefy"] = True
+        self.isValidMode["usufy"] = False
+        self.isValidMode["searchfy"] = False        
         
         ######################################
         # Search URL for the different modes #
         ######################################
-        # Strings with the URL for each and every mode
-        self.url = {}        
-        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://tvtag.com/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url = {}    
+        self.url["phonefy"] = "http://www.quienera.es/numero/n/" + "<phonefy>"
+        #self.url["usufy"] = "http://anyurl.com/user/" + "<phonefy>"
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<phonefy>"            
 
         ######################################
         # Whether the user needs credentials #
         ######################################
         self.needsCredentials = {}        
-        #self.needsCredentials["phonefy"] = False
+        self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
-        
+        self.needsCredentials["searchfy"] = False         
+
         #################
         # Valid queries #
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.*' will match any query.
-        #self.validQuery["phonefy"] = re.compile(".*")
+        self.validQuery["phonefy"] = re.compile(".*")
         self.validQuery["usufy"] = re.compile(".*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
         # Not_found clues #
-        ###################
-        # Strings that will imply that the query number is not appearing
+        ###################        
+        # Strings that will imply that the phone number is not appearing
         self.notFoundText = {}
-        #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>tvtag - tag along with the world as you watch TV</title>"]
+        self.notFoundText["phonefy"] = ["""<!-- END formulaire -->
+
+    
+    
+    
+    <!-- BEGIN aucun_commentaire -->"""]
+        #self.notFoundText["usufy"] = []   
         #self.notFoundText["searchfy"] = []        
         
         #########################
         # Fields to be searched #
-        #########################
+        #########################        
         self.fieldsRegExp = {}
-        
         # Definition of regular expressions to be searched in phonefy mode
-        #self.fieldsRegExp["phonefy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+        self.fieldsRegExp["phonefy"] = {}
+        self.fieldsRegExp["phonefy"]["i3visio.fullname"] = 'Titular: <a href="http://bandir.infotelefonica.es/[0-9]+">([^<]+)</a><br />'
+        #self.fieldsRegExp["phonefy"]["i3visio.fullname"] = 'Titular: <a href="http://bandir.infotelefonica.es/[0-9]+">([^<]+)</a><br />'
+
         # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
+        #self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""               
         
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-        
-        

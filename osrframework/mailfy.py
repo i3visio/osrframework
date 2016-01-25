@@ -53,7 +53,7 @@ from validate_email import validate_email
 #from osrframework.utils.timeout import timeout
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
-EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "foxmail.com", "gmail.com", "hotmail.com", "hushmail.com", "outlook.com", "protonmail.com", "sina.com", "yandex.com", "yeah.net"]
+EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "gmail.com", "hotmail.com", "hushmail.com", "outlook.com", "protonmail.com", "sina.com", "yandex.com", "yeah.net"]
 
 
 def getMoreInfo(e):
