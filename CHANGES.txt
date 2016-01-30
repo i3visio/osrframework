@@ -1,6 +1,6 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.10.0b, 2016/01/30 -- New release with several fixes. 
+0.10.0, 2016/01/30 -- New release with several fixes. 
 - New platforms added to usufy: archive, ehow, gamesheep, hubpages, kanogames, newgrounds, nubelo, retailmenot, sidereel, thepiratebay, webtv, worldcarfans.
 - Fixed issues linked to mailfy: #56, #57, #58 and #60.
 - Fixed issue #53: adding tabulate dependency to the requirements.txt file.
