@@ -177,7 +177,13 @@ This is free software, and you are welcome to redistribute it under certain cond
         print "\tThe emailahoy libraries may NOT work properly. We are trying to find a fix for this issue."
         print
 
-    if args.create_emails:
+
+    # Showing the execution time...
+    if not args.quiet:
+        startTime= dt.datetime.now()
+        print str(startTime) +"\tStarting search... Be patient!\n"
+
+    if args.create_emails:  
         results = grabEmails(nicksFile = args.create_emails, domains = ["gmail.com"])
     else:
         emails = grabEmails(emails=args.emails, emailsFile = args.emails_file, nicks=args.nicks, nicksFile = args.nicks_file, domains = args.domains)
@@ -204,6 +210,15 @@ This is free software, and you are welcome to redistribute it under certain cond
         for ext in args.extension:
             # Showing the output files
             print "\t-" + fileHeader + "." + ext
+
+    # Showing the execution time...
+    if not args.quiet:
+        print
+        endTime= dt.datetime.now()
+        print str(endTime) +"\tFinishing execution..."
+        print
+        print "Total time used:\t" + str(endTime-startTime)
+        print
 
     # Urging users to place an issue on Github...
     if not args.quiet:
