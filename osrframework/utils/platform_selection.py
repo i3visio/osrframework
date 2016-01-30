@@ -30,6 +30,7 @@ from osrframework.wrappers.ahmia import Ahmia
 from osrframework.wrappers.anarchy101 import Anarchy101
 from osrframework.wrappers.aporrealos import Aporrealos
 from osrframework.wrappers.apsense import Apsense
+from osrframework.wrappers.archive import Archive
 from osrframework.wrappers.arduino import Arduino
 from osrframework.wrappers.ariva import Ariva
 from osrframework.wrappers.armorgames import Armorgames
@@ -160,6 +161,7 @@ from osrframework.wrappers.ixgames import Ixgames
 
 # J
 from osrframework.wrappers.jamiiforums import Jamiiforums
+#from osrframework.wrappers.justpaste import Justpaste
 
 # K
 from osrframework.wrappers.kali import Kali
@@ -223,7 +225,7 @@ from osrframework.wrappers.pokerstrategy import Pokerstrategy
 from osrframework.wrappers.pornhub import Pornhub
 from osrframework.wrappers.proboards import Proboards
 from osrframework.wrappers.px500 import Px500
-from osrframework.wrappers.pz import Pz
+#from osrframework.wrappers.pz import Pz
 
 # Q
 from osrframework.wrappers.qq import Qq
@@ -302,6 +304,7 @@ from osrframework.wrappers.virustotal import Virustotal
 from osrframework.wrappers.vk import Vk
 
 # W
+from osrframework.wrappers.webtv import Webtv
 from osrframework.wrappers.wefollow import Wefollow
 from osrframework.wrappers.wikipediaar import WikipediaAr
 from osrframework.wrappers.wikipediaca import WikipediaCa
@@ -420,6 +423,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Anarchy101())
     listAll.append(Aporrealos())
     listAll.append(Apsense())
+    listAll.append(Archive())
     listAll.append(Arduino())
     listAll.append(Ariva())
     listAll.append(Armorgames())
@@ -547,6 +551,7 @@ def getAllPlatformObjects(mode = None):
 
     # J
     listAll.append(Jamiiforums())
+    # listAll.append(Justpaste())
 
     # K
     listAll.append(Kali())
@@ -610,7 +615,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Pornhub())
     listAll.append(Proboards())
     listAll.append(Px500())
-    listAll.append(Pz())
+    # listAll.append(Pz())
 
     # Q
     listAll.append(Qq())
@@ -689,6 +694,7 @@ def getAllPlatformObjects(mode = None):
 
     # W
     #listAll.append(Wefollow())
+    listAll.append(Webtv())
     listAll.append(WikipediaAr())
     listAll.append(WikipediaCa())
     listAll.append(WikipediaDe())
