@@ -190,6 +190,10 @@ setup(    name="osrframework",
         "pyexcel_ods",
         "pyexcel_xls",
         "pyexcel_xlsx",
+<<<<<<< HEAD
+=======
+        "pyexcel_text",
+>>>>>>> e0fb5ca838361556140fded0529253306f3157c9
         "pyexcel_io",
         "tweepy",
         "networkx",
@@ -197,7 +201,10 @@ setup(    name="osrframework",
         "validate_email",
         "pyDNS",
         "tabulate",
+<<<<<<< HEAD
         "oauthlib>=1.0"
+=======
+>>>>>>> e0fb5ca838361556140fded0529253306f3157c9
     ], 
     data_files=files_to_copy,
 )
