@@ -43,144 +43,57 @@ The instructions may vary in the different OS but we encourage to run this progr
 3.1 - General install (all systems)
 -----------------------------------
 
-This installation is recommended for most users.
+This installation is recommended for most users. This will use the official package uploaded to pip.
 
-### 3.1.1 - Checking the Python installation
-Python 2.7 is needed to let this installation work. To try your Python installation open a terminal and try:
+# 3.1.1 - Verifying the Python and pip installation
+
+First of all, on any system we should verify that we have a Python 2.7 installation and a Pip installation setup properly. Opening the terminal or the powershell, we can try the following to check your python installation:
 ```
-python -c "import pip; print 'This system seems to be ready to install OSRFramework.'"
-```
-
-If the message appears, everythin is OK and you can skip the following step recommended for Windows systems.
-
-#### Python installation tips for Windows users
-You will have to download and install Python 2.7 (currently, 2.7.11) from: <https://www.python.org/downloads/>
-
-The installation should be performed normally letting the system know that you want to add the Python27 folders to the path. If not done during the installation, you will need to add it manually `c:\python27` or `c:\python27\scripts` to the system's path variable. You have a tutorial
-here: <http://earthwithsun.com/questions/441106/how-do-i-add-c-python27-to-systems-path>
-
-Once finised, you can check how everything went by accessing a **NEW** cmd and typing again:
-```
-python -c "import pip; print 'This system seems to be ready to install OSRFramework.'"
-```
-If you have seen the message, those are good news.
-
-### 3.1.2 - Installing the automatic installer
-
-**Important note**: This method will **NOT** let you configurate the credentials and API.
-
-We have shipped an installer via a public gist at <https://gist.github.com/i3visio/b079202c1b49b2d45d9b>. You need to download this file what can be done by manually in Linux terminal by letting wget do the magic:
-```
-wget https://gist.githubusercontent.com/i3visio/b079202c1b49b2d45d9b/raw/2c44aefa0d97d28836a7efc974c7c74ac242ff60/osrframework-installer.py
+python --version
 ```
 
-The rest of the installation under Python 2.7 is as follows:
+If you get errors at this point or the Python version is not appeating, your system is not yet prepared. You will need to install Python 2.7 from the official website:
+```
+https://www.python.org/downloads/
+```
+Follow the installation steps for your system. Note that in one step of the Windows installation process you WILL NEED to manually add c:\Python27 and C:\Python27\scripts to the system. Try again after completing this task.
 
-1.- Change directory to wherever you have downloaded the installer <DOWNLOAD_PATH>:
+Now it's the turn of the Package manager. Check that you have the pip version installed:
 ```
-cd <DOWNLOAD_PATH>
+pip --version
 ```
+If you get any errors at this point, you have several options:
+* If your running Ubuntu or Debian-like systems, try sudo apt-get install python-pip
+* In any case you can always download <https://bootstrap.pypa.io/get-pip.py> and install it manually.
+```
+# Going to the downloads folder
+sudo python get-pip.py
+```
+In Windows-like systems, you do NOT need to type sudo. Try again and heck if the new pip version is installed.
 
-2.- Let osrframework-installer.py clone, unzip, install, try to fix dependencies and run some sample tests for you. This needs to be done being root in MacOS and Linux systems. Thus, for Linux and MacOS:
-```
-sudo python osrframework-installer.py
-```
-For Windows:
-```
-python osrframework-installer.py
-```
 
-3.- [In case of errors in Windows] Firstly, don't panic ;). We have not typed so much. Secondly, it seems that we might have to type something else to install manually part of the process, but is already shown in the screen:
-```
-cd osrframework-master
-python setup.py build
-python setup.py install
-```
-That should have done the trick, letting you go into the folder and perform some tests manually.
+# 3.1.2 - Installing OSRFramework from pip
 
-4.- Test the installation checking first if i3visio exists in Twitter by going to the folder where usufy.py is:
+Fast way to do it on any system
 ```
-cd osrframework 
+pip install osrframework
 ```
-And executing some tests:
+Under MacOS or Linux systems, you may need to do this as superuser:
 ```
-python usufy.py -n i3visio -p twitter
-python usufy.py -n i3visio -p twitter facebook instagram
-python usufy.py -n i3visio -p twitter facebook instagram -e xls csv ods
-python usufy.py -n i3visio -p all 
+sudo pip install osrframework
 ```
+This will manage all the dependencies for you.
 
-3.2 - Via repositories (Ubuntu Trusty)
---------------------------------------
-As of August 16th, 2015, a ppa repository has been created to let users keep track of updates using the packaging utilities provided by Debian/Ubuntu systems. This installation is recommended for sporadic Ubuntu users.
+# 3.1.3 - Test the installation
 
-1.- Adding the i3visio repository and updating the package list
+If everything went correctly (we hope so!), it's time for trying usufy.py, mailfy.py and so on. But we are they? They are installed in your path meaning that you can open a terminal anywhere and typing the name of the program (seems to be an improvement from previous installations...). Examples:
 ```
-# Adding the repository
-sudo add-apt-repository ppa:i3visio
-# Adding the public key to your keyring
-gpg --keyserver keyserver.ubuntu.com --recv FC66B540
-gpg --export --armor FC66B540 | sudo apt-key add -
-# Updating the package list
-sudo apt-get update
+usufy.py -n i3visio febrezo yrubiosec -p twitter facebook
+searchfy.py -q "i3visio"
+mailfy.py -m i3visio
 ```
 
-2.- Installing the application and the corresponding dependencies:
-```
-# Official package
-sudo apt-get install python-osrframework
-# Installing Python dependencies manually
-sudo pip install mechanize Skype4Py argparse requests python-emailahoy BeautifulSoup pyexcel pyexcel_ods pyexcel_xls pyexcel_xlsx pyexcel_text pyexcel_io tweepy matplotlib networkx decorator validate_email pyDNS tabulate
-```
-There might be an issue in some old Debian systems regarding the usage of the ouath library as v0.7.1 or later is required and in some Debian systems this library is owned by the OS.
-```
-Traceback (most recent call last):
-  File "usufy.py", line 49, in <module>
-    import osrframework.utils.platform_selection as platform_selection
-  File "/usr/local/lib/python2.7/dist-packages/osrframework-0.9.10-py2.7.egg/osrframework/utils/platform_selection.py", line 277, in <module>
-    from osrframework.wrappers.twitter import Twitter
-  File "/usr/local/lib/python2.7/dist-packages/osrframework-0.9.10-py2.7.egg/osrframework/wrappers/twitter.py", line 32, in <module>
-    from osrframework.api.twitter_api import TwitterAPIWrapper as TwitterAPIWrapper
-  File "/usr/local/lib/python2.7/dist-packages/osrframework-0.9.10-py2.7.egg/osrframework/api/twitter_api.py", line 26, in <module>
-    import tweepy #https://github.com/tweepy/tweepy
-  File "/usr/local/lib/python2.7/dist-packages/tweepy/__init__.py", line 16, in <module>
-    from tweepy.auth import OAuthHandler, AppAuthHandler
-  File "/usr/local/lib/python2.7/dist-packages/tweepy/auth.py", line 9, in <module>
-    from requests_oauthlib import OAuth1Session, OAuth1
-  File "/usr/local/lib/python2.7/dist-packages/requests_oauthlib/__init__.py", line 3, in <module>
-    from .oauth2_auth import OAuth2
-  File "/usr/local/lib/python2.7/dist-packages/requests_oauthlib/oauth2_auth.py", line 3, in <module>
-    from oauthlib.oauth2 import is_secure_transport
-ImportError: cannot import name is_secure_transport
-```
-In the case of receiving a similar error to this one, we should remove the old oauth library and install the most recent version of it from pip:
-```
-# Hack extracted from: <http://stackoverflow.com/questions/25676259/cant-import-is-secure-transport>
-#Remove old oauthlib package
-sudo apt-get remove python-oauthlib
-
-# ... and install last oauthlib version 0.7.1
-sudo pip install oauthlib -U
-```
-
-Thus, whenever a new version is released, the following command will upgrade the package:
-```
-sudo apt-get upgrade
-```
-You should be able to launch usufy.py, entify.py and so on from a terminal by typing:
-```
-usufy.py -h
-searchfy.py -h
-entify.py -h
-...
-```
-
-3.- You will be able to import the .mtz configuration for Maltego from the file under:
-```
-/usr/share/osrframework
-```
-
-3.3 - Manual install for developers
+3.2 - Manual install for developers
 -----------------------------------
 
 As Python is already installed, the rest of the installation under Python 2.7 is as 
