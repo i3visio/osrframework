@@ -97,7 +97,7 @@ If everything went correctly (we hope so!), it's time for trying usufy.py, mailf
 ```
 usufy.py -n i3visio febrezo yrubiosec -p twitter facebook
 searchfy.py -q "i3visio"
-mailfy.py -m i3visio
+mailfy.py -n i3visio
 ```
 
 ### 3.2 - Manual install for developers
