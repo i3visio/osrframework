@@ -64,12 +64,19 @@ pip --version
 ```
 If you get any errors at this point, you have several options:
 * If your running Ubuntu or Debian-like systems, try sudo apt-get install python-pip
-* In any case you can always download <https://bootstrap.pypa.io/get-pip.py> and install it manually.
+* In any case you can always download <https://bootstrap.pypa.io/get-pip.py> and install it manually. In Windows-like systems, you do NOT need to type sudo. 
 ```
 # Going to the downloads folder
+python get-pip.py
+```
+You can do it at a time in Linux and MacOS systems:
+```
+# Downloading
+wget https://bootstrap.pypa.io/get-pip.py
+# Installing as root
 sudo python get-pip.py
 ```
-In Windows-like systems, you do NOT need to type sudo. Try again and heck if the new pip version is installed.
+Try again and check if the new pip version is installed.
 
 
 # 3.1.2 - Installing OSRFramework from pip
