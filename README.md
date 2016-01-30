@@ -1,4 +1,6 @@
-#	OSRFramework: Open Sources Research Framework
+#	OSRFramework
+
+OSRFramework: Open Sources Research Framework
 
 Copyright (C) 2016  F. Brezo and Y. Rubio, i3visio
 
@@ -149,8 +151,6 @@ installation.
 # Superuser privileges are required so as to complete the installation.
 sudo python setup.py build
 sudo python setup.py install	
-# Installing other packages from PyPI that osrframework needs using the requirements.txt file
-sudo pip install -r requirements.txt
 ```
 Afterwards, the module will be importable from any python code. You can check this by typing:
 ```
