@@ -20,36 +20,33 @@
 #
 ##################################################################################
 
-import codecs
 import os
+import sys
 
-here = os.path.abspath(os.path.dirname(__file__))
+HERE = os.path.abspath(os.path.dirname(__file__))
 
 # Importing the local scrips for the setup and taking the new version number
 import osrframework
 NEW_VERSION = osrframework.__version__
 
-
-# Ensuring that Setuptools is install
-import ez_setup
-ez_setup.use_setuptools()
-
-def read(*parts):
-    # intentionally *not* adding an encoding option to open, See:
-    #   https://github.com/pypa/virtualenv/issues/201#issuecomment-3145690
-    return codecs.open(os.path.join(here, *parts), 'r').read()
-
-
 # Depending on the place in which the project is going to be upgraded
 from setuptools import setup
 try:
+    raise Exception('Trying to load the markdown manually!')    
     from pypandoc import convert
     read_md = lambda f: convert(f, 'rst')
 except ImportError:
     print("warning: pypandoc module not found, could not convert Markdown to RST")
     read_md = lambda f: open(f, 'r').read()
+except Exception:
+    read_md = lambda f: open(f, 'r').read()
 
-    
+# Reading the .md file    
+try:
+    long_description = read_md(os.path.join(HERE,"README.md"))
+except:
+    long_description = ""
+
 # verifying if the credential files have already been created
 import os
 try:
@@ -71,66 +68,6 @@ except:
     import sys
     sys.exit()
  
-import sys
-if sys.platform == 'win32':
-    files_to_copy=[]
-else:
-    files_to_copy=[
-        ("/usr/share/applications/",
-            [
-            "res/alias_generator.py.desktop",            
-            "res/entify.py.desktop",
-            "res/mailfy.py.desktop",              
-            "res/phonefy.py.desktop",             
-            "res/searchfy.py.desktop",
-            "res/usufy.py.desktop",                
-            ]
-        ),        
-        ("/usr/share/osrframework",
-            [
-                "osrframework/transforms/lib/i3visio-transforms[linux].mtz",            
-                "osrframework/alias_generator.py",            
-                "osrframework/entify.py",
-                "osrframework/mailfy.py",              
-                "osrframework/phonefy.py",             
-                "osrframework/searchfy.py",
-                "osrframework/usufy.py",                                
-                "res/logo.png",                   
-                "COPYING",                                   
-            ]
-        ),
-        ("/usr/share/osrframework/transforms",  [                
-                "osrframework/transforms/aliasToKnownEmails.py",
-                "osrframework/transforms/aliasToSkypeAccounts.py",
-                "osrframework/transforms/aliasToSkypeIP.py",
-                "osrframework/transforms/bitcoinAddressToBlockchainDetails.py",
-                "osrframework/transforms/coordinatesToGoogleMapsBrowser.py",
-                "osrframework/transforms/coordinatesToTwitterBrowser.py",
-                "osrframework/transforms/domainToGoogleSearchUriWithEmails.py",
-                "osrframework/transforms/domainToTld.py",
-                "osrframework/transforms/emailToAlias.py",
-                "osrframework/transforms/emailToBreachedAccounts.py",
-                "osrframework/transforms/emailToDomain.py",
-                "osrframework/transforms/emailToSkypeAccounts.py",
-                "osrframework/transforms/expandPropertiesFromI3visioEntity.py",
-                "osrframework/transforms/hashToMD5crackDotCom.py",
-                "osrframework/transforms/ipToIp_ApiInformation.py",
-                "osrframework/transforms/phoneToMoreInfo.py",
-                "osrframework/transforms/phoneToPerson.py",
-                "osrframework/transforms/textToEntities.py",
-                "osrframework/transforms/textToGoogleSearchUri.py",
-                "osrframework/transforms/textToPlatformSearch.py",
-                "osrframework/transforms/textToProfiles.py",
-                "osrframework/transforms/uriToBrowser.py",
-                "osrframework/transforms/uriToDomain.py",
-                "osrframework/transforms/uriToEntities.py",
-                "osrframework/transforms/uriToGoogleCacheUri.py",
-                "osrframework/transforms/uriToPort.py",
-                "osrframework/transforms/uriToProtocol.py",                
-            ]
-        ),        
-    ]
-
 # Launching the setup
 setup(    name="osrframework",
     version=NEW_VERSION,
@@ -145,7 +82,7 @@ setup(    name="osrframework",
         "osrframework/entify.py",
         "osrframework/mailfy.py",              
         "osrframework/phonefy.py",             
-        "osrframework/searchfy.py",
+        "osrframework/searchfy.py", 
         "osrframework/usufy.py",            
     ],
     classifiers=[
@@ -185,8 +122,7 @@ setup(    name="osrframework",
         "osrframework.wrappers", 
         "osrframework.searchengines",                                        
     ],
-
-    long_description=read('README.md'),
+    long_description=long_description,
     install_requires=[
         "setuptools",
         "mechanize",
@@ -200,14 +136,146 @@ setup(    name="osrframework",
         "pyexcel_xls",
         "pyexcel_xlsx",
         "pyexcel_io",
+        "pyexcel_text==0.0.3",        
         "tweepy",
         "networkx",
         "decorator",
         "validate_email",
         "pyDNS",
         "tabulate",
-        "oauthlib>=1.0"
-    ], 
-    data_files=files_to_copy,
+        "oauthlib>=1.0.0"
+    ],    
 )
 
+############################
+### Creating other files ###
+############################
+
+# Windows Systems
+# ---------------
+if sys.platform == 'win32':
+    # Nothing to copy at the moment
+    files_to_copy = {}
+# Linux Systems
+# -------------    
+elif sys.platform == 'linux2':   
+    files_to_copy= {
+        "/usr/share/applications/" :
+            [
+                "res/alias_generator.py.desktop",           
+                "res/entify.py.desktop",
+                "res/mailfy.py.desktop",              
+                "res/phonefy.py.desktop",             
+                "res/searchfy.py.desktop",
+                "res/usufy.py.desktop",                
+            ],        
+        "/usr/share/osrframework" :
+            [
+                "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
+                "res/logo.png",       
+                "README.md",            
+                "CHANGES.txt",
+                "COPYING"
+            ],
+        "/usr/share/osrframework/transforms" : 
+            [                
+                "osrframework/transforms/aliasToKnownEmails.py", 
+                "osrframework/transforms/aliasToSkypeAccounts.py", 
+                "osrframework/transforms/aliasToSkypeIP.py", 
+                "osrframework/transforms/bitcoinAddressToBlockchainDetails.py", 
+                "osrframework/transforms/coordinatesToGoogleMapsBrowser.py", 
+                "osrframework/transforms/coordinatesToTwitterBrowser.py", 
+                "osrframework/transforms/domainToGoogleSearchUriWithEmails.py", 
+                "osrframework/transforms/domainToTld.py", 
+                "osrframework/transforms/emailToAlias.py", 
+                "osrframework/transforms/emailToBreachedAccounts.py", 
+                "osrframework/transforms/emailToDomain.py", 
+                "osrframework/transforms/emailToSkypeAccounts.py", 
+                "osrframework/transforms/expandPropertiesFromI3visioEntity.py", 
+                "osrframework/transforms/hashToMD5crackDotCom.py", 
+                "osrframework/transforms/ipToIp_ApiInformation.py", 
+                "osrframework/transforms/phoneToMoreInfo.py", 
+                "osrframework/transforms/phoneToPerson.py", 
+                "osrframework/transforms/textToEntities.py", 
+                "osrframework/transforms/textToGoogleSearchUri.py", 
+                "osrframework/transforms/textToPlatformSearch.py", 
+                "osrframework/transforms/textToProfiles.py", 
+                "osrframework/transforms/uriToBrowser.py", 
+                "osrframework/transforms/uriToDomain.py", 
+                "osrframework/transforms/uriToEntities.py", 
+                "osrframework/transforms/uriToGoogleCacheUri.py", 
+                "osrframework/transforms/uriToPort.py", 
+                "osrframework/transforms/uriToProtocol.py",                
+            ]        
+    }
+    # Iterating through all destinations
+    for destiny in files_to_copy.keys():
+        # Grabbing each source file to be moved
+        for sourceFile in files_to_copy[destiny]:
+            fileToMove = os.path.join(HERE,sourceFile)
+            cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
+            #print "\tLaunching command:\t> " + cmd
+            output = os.popen(cmd).read()    
+            #print output
+# MacOS Systems
+# -------------            
+elif sys.platform == 'darwin':   
+    files_to_copy= {
+    "/usr/share/applications/" :
+        [
+            "res/alias_generator.py.desktop",           
+            "res/entify.py.desktop",
+            "res/mailfy.py.desktop",              
+            "res/phonefy.py.desktop",             
+            "res/searchfy.py.desktop",
+            "res/usufy.py.desktop",                
+        ],        
+    "/usr/share/osrframework" :
+        [
+            "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
+            "res/logo.png",       
+            "README.md",            
+            "CHANGES.txt",
+            "COPYING"
+        ],
+    "/usr/share/osrframework/transforms" : 
+        [                
+            "osrframework/transforms/aliasToKnownEmails.py", 
+            "osrframework/transforms/aliasToSkypeAccounts.py", 
+            "osrframework/transforms/aliasToSkypeIP.py", 
+            "osrframework/transforms/bitcoinAddressToBlockchainDetails.py", 
+            "osrframework/transforms/coordinatesToGoogleMapsBrowser.py", 
+            "osrframework/transforms/coordinatesToTwitterBrowser.py", 
+            "osrframework/transforms/domainToGoogleSearchUriWithEmails.py", 
+            "osrframework/transforms/domainToTld.py", 
+            "osrframework/transforms/emailToAlias.py", 
+            "osrframework/transforms/emailToBreachedAccounts.py", 
+            "osrframework/transforms/emailToDomain.py", 
+            "osrframework/transforms/emailToSkypeAccounts.py", 
+            "osrframework/transforms/expandPropertiesFromI3visioEntity.py", 
+            "osrframework/transforms/hashToMD5crackDotCom.py", 
+            "osrframework/transforms/ipToIp_ApiInformation.py", 
+            "osrframework/transforms/phoneToMoreInfo.py", 
+            "osrframework/transforms/phoneToPerson.py", 
+            "osrframework/transforms/textToEntities.py", 
+            "osrframework/transforms/textToGoogleSearchUri.py", 
+            "osrframework/transforms/textToPlatformSearch.py", 
+            "osrframework/transforms/textToProfiles.py", 
+            "osrframework/transforms/uriToBrowser.py", 
+            "osrframework/transforms/uriToDomain.py", 
+            "osrframework/transforms/uriToEntities.py", 
+            "osrframework/transforms/uriToGoogleCacheUri.py", 
+            "osrframework/transforms/uriToPort.py", 
+            "osrframework/transforms/uriToProtocol.py",                
+        ]        
+    }
+    
+    # Iterating through all destinations
+    for destiny in files_to_copy.keys():
+        # Grabbing each source file to be moved
+        for sourceFile in files_to_copy[destiny]:
+            fileToMove = os.path.join(HERE,sourceFile)
+            cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
+            #print "\tLaunching command:\t> " + cmd
+            output = os.popen(cmd).read()    
+            #print output
