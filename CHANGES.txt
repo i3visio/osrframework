@@ -1,14 +1,13 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-
 0.10.0b, 2016/01/25 -- New release with several fixes. 
-
 - New platforms added to usufy: ehow, gamesheep, hubpages, kanogames, newgrounds, nubelo, retailmenot, sidereel, thepiratebay, worldcarfans.
 - Fix to issues linked to mailfy: #56, #57, #58 and #60.
 - Fix to issue #53: adding tabulate dependency to the requirements.txt file.
 - Fix to issue #52: fixed a crash when launching -p wikipedia only in usufy.py and some false positives associated to the platform.
 - Fixed issue #64: foxmail.com has been removed from the list of secure domains.
 - Fixed issue #67: infotelefonica.es has changed its error.
+- Fixed issue #73: more convenient packaging solution with pip. Added osrframework scritps to path.
 - Different fixes linked to issues #33 (jamiiforums), #43 (qq), #42 (buzznet) and #44 (pixls substitutes rawtherapee).
 - Fixes for about, forosperu, hellboundhackers, ivoox and linkedin.
 - Addressed issue #61: usufy.py --fuzz sample.txt now uses as separator either a '\t' or a ' '.
