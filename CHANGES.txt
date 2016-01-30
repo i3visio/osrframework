@@ -2,18 +2,20 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 
 0.10.0b, 2016/01/30 -- New release with several fixes. 
 - New platforms added to usufy: archive, ehow, gamesheep, hubpages, kanogames, newgrounds, nubelo, retailmenot, sidereel, thepiratebay, webtv, worldcarfans.
-- Fix to issues linked to mailfy: #56, #57, #58 and #60.
-- Fix to issue #53: adding tabulate dependency to the requirements.txt file.
-- Fix to issue #52: fixed a crash when launching -p wikipedia only in usufy.py and some false positives associated to the platform.
+- Fixed issues linked to mailfy: #56, #57, #58 and #60.
+- Fixed issue #53: adding tabulate dependency to the requirements.txt file.
+- Fixed issue #52: fixed a crash when launching -p wikipedia only in usufy.py and some false positives associated to the platform.
 - Fixed issue #64: foxmail.com has been removed from the list of secure domains.
 - Fixed issue #67: infotelefonica.es has changed its error.
 - Fixed issue #73: more convenient packaging solution with pip. Added osrframework scritps to path.
+- Fixed issue #69: the new installation process has been detailed.
+- Fixes for mailfy platforms which have been deactivated: outlook.com (#69) and sina.com (#70).
 - Different fixes linked to issues #33 (jamiiforums), #43 (qq), #42 (buzznet) and #44 (pixls substitutes rawtherapee).
 - Fixes for about, forosperu, hellboundhackers, ivoox and linkedin.
 - Addressed issue #61: usufy.py --fuzz sample.txt now uses as separator either a '\t' or a ' '.
 - A fix has been introduced in the --fuzz option of usufy.py so as not to stop when a matching pattern has been found.
 - Added a new phonefy platform: kimatel (quienera.es).
-- Bringing back forosperu, hellboundhackers, ivoox and linkedin.
+- Removed unused files such as requirements.txt, utils/export.py, utils/timeout.py.
 - Update in the README file.
 
 0.9.14, 2016/01/21 -- Mitigation of several fixes. 

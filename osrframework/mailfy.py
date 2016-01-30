@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v2.0b"
+__version__ = "v2.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -46,14 +46,9 @@ import osrframework.utils.general as general
 import emailahoy
 from validate_email import validate_email
             
-# For the manual checkout
-#import DNS, smtplib, socket
-
-# For the timeout function
-#from osrframework.utils.timeout import timeout
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
-EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "gmail.com", "hotmail.com", "hushmail.com", "outlook.com", "protonmail.com", "sina.com", "yandex.com", "yeah.net"]
+EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "gmail.com", "hotmail.com", "hushmail.com", "protonmail.com", "yandex.com", "yeah.net"]
 
 
 def getMoreInfo(e):
