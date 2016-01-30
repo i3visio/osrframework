@@ -186,7 +186,7 @@ setup(    name="osrframework",
         "osrframework.searchengines",                                        
     ],
 
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
     install_requires=[
         "setuptools",
         "mechanize",
