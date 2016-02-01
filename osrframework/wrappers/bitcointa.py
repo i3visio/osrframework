@@ -29,17 +29,17 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Aporrealos(Platform):
+class Bitcointa(Platform):
     """ 
-        A <Platform> object for Aporrealos.
+        A <Platform> object for Bitcointa.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Aporrealos"
-        self.tags = ["activism"]
-        
+        self.platformName = "Bitcointa"
+        self.tags = ["bitcoin"]
+
         ########################
         # Defining valid modes #
         ########################
@@ -54,7 +54,7 @@ class Aporrealos(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.aporrealos.com/forum/profile.php?mode=viewprofile&u=" + "<usufy>"       
+        self.url["usufy"] = "http://bitcointa.lk/members/?username=" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Aporrealos(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Lo sentimos, pero ese usuario no existe.", "<b>Critical Error</b>"]   
+        self.notFoundText["usufy"] = ["<title>Notable Members | Bitcointa.lk</title>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -97,15 +97,7 @@ class Aporrealos(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        self.fieldsRegExp["usufy"]["i3visio.profile.aporrealos"] = {"start": "Viendo perfil :: ", "end": "</th>"}
-        self.fieldsRegExp["usufy"]["@registered"] = {"start": "Registrado:&nbsp;</span></td>\n\n\t\t  <td width=\"100%\"><b><span class=\"gen\">", "end": "</span></b></td>"}
-        self.fieldsRegExp["usufy"]["@total_posts"] = {"start": "<td valign=\"top\"><b><span class=\"gen\">", "end": "</span>"}
-        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "Ubicaci.n:&nbsp;</span></td>\n\n\t\t  <td><b><span class=\"gen\">", "end": "</span></b></td>"}
-        self.fieldsRegExp["usufy"]["i3visio.uri.home"] = {"start": "Sitio Web:&nbsp;</span></td>\n\n\t\t  <td><span class=\"gen\">", "end": "</span></td>"}
-        self.fieldsRegExp["usufy"]["@occupation"] = {"start": "Ocupaci.n:&nbsp;</span></td>\n\n\t\t  <td><b><span class=\"gen\">", "end": "</span></b></td>"}
-        self.fieldsRegExp["usufy"]["@interests"] = {"start": "Intereses:</span></td>\n\n\t\t  <td> <b><span class=\"gen\">", "end": "</span></b></td>"}
-        
-        
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
@@ -118,4 +110,3 @@ class Aporrealos(Platform):
         self.foundFields = {}
         
         
-

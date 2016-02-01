@@ -49,6 +49,7 @@ from osrframework.wrappers.badoo import Badoo
 from osrframework.wrappers.behance import Behance
 from osrframework.wrappers.bennugd import Bennugd
 from osrframework.wrappers.bitbucket import Bitbucket
+from osrframework.wrappers.bitcointa import Bitcointa
 from osrframework.wrappers.bitcointalk import Bitcointalk
 from osrframework.wrappers.bitly import Bitly
 from osrframework.wrappers.blackplanet import Blackplanet
@@ -106,6 +107,7 @@ from osrframework.wrappers.evilzone import Evilzone
 # F
 from osrframework.wrappers.facebook import Facebook
 from osrframework.wrappers.facesaerch import Facesaerch
+from osrframework.wrappers.fanbitcoin import Fanbitcoin
 from osrframework.wrappers.fanpop import Fanpop
 from osrframework.wrappers.fark import Fark
 from osrframework.wrappers.favstar import Favstar
@@ -442,6 +444,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Behance())
     listAll.append(Bennugd())
     listAll.append(Bitbucket())
+    listAll.append(Bitcointa())
     listAll.append(Bitcointalk())
     listAll.append(Bitly())
     listAll.append(Blackplanet())
@@ -498,6 +501,7 @@ def getAllPlatformObjects(mode = None):
     # F
     listAll.append(Facebook())
     listAll.append(Facesaerch())
+    listAll.append(Fanbitcoin())
     listAll.append(Fanpop())
     listAll.append(Fark())
     listAll.append(Favstar())

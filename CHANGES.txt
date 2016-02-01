@@ -1,5 +1,9 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.10.1, 2016/02/02 -- Two Bitcoin platforms added and a fix introduced to repair aporrealos.
+- fanbitcoin and bitcointa have been added to the platform.
+- A new error message has been added to aporrealos to avoid false positives when the platform throws errors.
+
 0.10.0, 2016/01/30 -- New release with several fixes. 
 - New platforms added to usufy: archive, ehow, gamesheep, hubpages, kanogames, newgrounds, nubelo, retailmenot, sidereel, thepiratebay, webtv, worldcarfans.
 - Fixed issues linked to mailfy: #56, #57, #58 and #60.
