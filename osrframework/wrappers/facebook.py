@@ -103,7 +103,7 @@ class Facebook(Platform):
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "lfloat _ohe\" href=\"https://www.facebook.com/([^\"]+)\" onclick=\"if"
+        self.searchfyAliasRegexp = "lfloat _ohe\" href=\"https://www.facebook.com/([^\"]+)\" aria-hidden=\"true\""
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         

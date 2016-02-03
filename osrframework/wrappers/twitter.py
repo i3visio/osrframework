@@ -68,7 +68,7 @@ class Twitter(Platform):
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "http://twitter.com/" + "<usufy>"
-        self.url["searchfy"] = "https://twitter.com/search?q=" + "<searchfy>"  + "&f=users"    
+        self.url["searchfy"] = "https://twitter.com/search?f=users&vertical=default&q=\"" + "<searchfy>" + "\""
 
         ######################################
         # Whether the user needs credentials #

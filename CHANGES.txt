@@ -1,6 +1,7 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.10.2, 2016/02/03 -- Minor fixes in several platforms.
+0.10.2, 2016/02/03 -- Fixes in mailfy and some searchfy platforms that got outdated.
+- Fixed the searchfy search for the following platforms: facebook and youtube. The wrapper for twitter does NOT accept special characters such as the 'á', 'é', 'í', etc.
 - Added more info to the output of the script to let the user know more info about what is happening.
 - The number of domains to be searched is configurable now with the -d option.
 - Added keemail.me to mailfy.py.

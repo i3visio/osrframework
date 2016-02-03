@@ -115,7 +115,7 @@ class Youtube(Platform):
         
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = '<div class="yt-lockup-thumbnail"><a aria-hidden="true" href="([^\"]+)\" class=\"yt-uix-sessionlink  g-hovercard'
+        self.searchfyAliasRegexp = '<div class="yt-lockup-byline"><a href="([^\"]+)" class="yt-uix-sessionlink g-hovercard      spf-link "'
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
