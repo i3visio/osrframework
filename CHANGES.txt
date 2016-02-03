@@ -1,5 +1,11 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.10.2, 2016/02/03 -- Minor fixes in several platforms.
+- Added more info to the output of the script to let the user know more info about what is happening.
+- The number of domains to be searched is configurable now with the -d option.
+- Added keemail.me to mailfy.py.
+- Relaxing a requirement for a buggy version of pyexcel_text.
+
 0.10.1, 2016/02/02 -- Two Bitcoin platforms added and a fix introduced to repair aporrealos.
 - fanbitcoin and bitcointa have been added to the platform.
 - A new error message has been added to aporrealos to avoid false positives when the platform throws errors.
