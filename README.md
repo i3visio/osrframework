@@ -81,7 +81,7 @@ Try again and check if the new pip version is installed.
 
 #### 3.1.2 - Installing OSRFramework from pip
 
-Fast way to do it on any system
+Fast way to do it on any system:
 ```
 pip install osrframework
 ```
@@ -99,6 +99,23 @@ usufy.py -n i3visio febrezo yrubiosec -p twitter facebook
 searchfy.py -q "i3visio"
 mailfy.py -n i3visio
 ```
+
+#### 3.1.3 - Updating the framework
+
+From time to time, we will fix bugs and add new platforms. To upgrade your local osrframework installation you can type the following:
+```
+pip install osrframework --upgrade
+```
+Under MacOS or Linux systems, you may need to do this as superuser:
+```
+sudo pip install osrframework --upgrade
+```
+This will manage all the dependencies for you and will try to download the latest "stable" version. If you want to try a prerelease version, you can type:
+```
+sudo pip install osrframework --upgrade --pre
+```
+But please, do it under your responsibility. Strange things may take place!
+
 
 ### 3.2 - Manual install for developers
 
