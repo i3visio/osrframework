@@ -1,5 +1,10 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.10.3, 2016/02/06 -- Fixes in mailfy and some searchfy platforms that got outdated.
+- Fixed issue #83: alias_generator script is throwing an error related to where to find Python.
+- Moved CHANGES.txt to CHANGES and README.md to README.
+- Removed setup.cfg.
+
 0.10.2, 2016/02/03 -- Fixes in mailfy and some searchfy platforms that got outdated.
 - Fixed the searchfy search for the following platforms: facebook and youtube. The wrapper for twitter does NOT accept special characters such as the 'á', 'é', 'í', etc.
 - Added more info to the output of the script to let the user know more info about what is happening.
