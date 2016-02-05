@@ -1,5 +1,8 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.10.4, 2016/02/06 -- Some improvements in alias_generator.
+- README.md brought back as README.md.
+
 0.10.3, 2016/02/06 -- Fixes in mailfy and some searchfy platforms that got outdated.
 - Fixed issue #83: alias_generator script is throwing an error related to where to find Python.
 - Moved CHANGES.txt to CHANGES and README.md to README.
