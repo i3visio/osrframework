@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.1.3"
+__version__ = "v0.2.0b"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -46,6 +46,14 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
 
         :return:    Text matching the regular expression provided.
     '''
+    # Lowering all the info received
+    name = name.lower()
+    surname1 = surname1.lower()
+    surname2 = surname2.lower()
+    year = year.lower()
+    country = country.lower()
+    city = city.lower()                    
+    
     # Check if the value provided is a '' string
     if name == '':
         name = None
@@ -53,12 +61,13 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
         surname1 = None
     if surname2 == '':
         surname2 = None
+    if year == '':
+        year = None        
     if city == '':
         city = None
     if country == '':
         country = None
-    if year == '':
-        year = None
+
     print "Generation of new aliases..."
     try:
         tmp = name + surname1 + surname2
@@ -3830,12 +3839,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.name == None and args.surname1 == None and args.surname2 == None and args.city == None and args.country == None and args.year == None:
-        args.name=raw_input("Insert a name:\t").replace(' ','')
-        args.surname1=raw_input("Insert the first surname:\t").replace(' ','')
-        args.surname2=raw_input("Insert the second surname:\t").replace(' ','')
-        args.city=raw_input("Insert a city:\t").replace(' ','')
-        args.country=raw_input("Insert a country:\t").replace(' ','')
-        args.year=raw_input("Insert a year (e. g.: birthyear):\t").replace(' ','')
+        args.name=raw_input("Insert a name: ".ljust(35, " ")).replace(' ','')
+        args.surname1=raw_input("Insert the first surname: ".ljust(35, " ")).replace(' ','')
+        args.surname2=raw_input("Insert the second surname: ".ljust(35, " ")).replace(' ','')
+        args.year=raw_input("Insert a year (e. g.: birthyear): ".ljust(35, " ")).replace(' ','')
+        args.city=raw_input("Insert a city: ".ljust(35, " ")).replace(' ','')
+        args.country=raw_input("Insert a country: ".ljust(35, " ")).replace(' ','')
 
     lista=[]
 
@@ -3846,9 +3855,9 @@ if __name__ == "__main__":
     if args.name != "": print args.name
     if args.surname1 != "": print args.surname1
     if args.surname2 != "": print args.surname2
+    if args.year != "": print args.year    
     if args.city != "": print args.city
     if args.country != "": print args.country
-    if args.year != "": print args.year
     print
 
     main(name = args.name, surname1 = args.surname1, surname2 = args.surname2, city = args.city, country = args.country, year= args.year)
