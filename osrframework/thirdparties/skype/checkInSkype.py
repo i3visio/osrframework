@@ -57,7 +57,11 @@ def checkInSkype(query=None):
                 skype.Attach()
         skype.OnAttachmentStatus = new_skype_status
     except:
-        print "ERROR: something happened when trying to link to Skype."
+        print "WARNING. Something happened when trying to link to a valid Skype session."
+        print "This usually happens when you do NOT have any version of Skype logged in in this machine. Although you may omit this message, you can also fix it by: "
+        print "\ta) Install any version of  Skype log in"
+        print "\tb) If Skype is installed, the log in window will be appearing. You will need to log in and perform the search again (or run it with '-p skype' only) to get results from Skype."        
+        print "In spite of this message, execution is going on."
         return []
 
     try:    
@@ -119,7 +123,11 @@ def checkInSkype(query=None):
             jsonData.append(userData)
         return jsonData
     except:
-        #print "ERROR: something happened when searching in Skype."
+        print "WARNING. Something happened when trying to link to a valid Skype session."
+        print "This usually happens when you do NOT have any version of Skype logged in in this machine. Although you may omit this message, you can also fix it by: "
+        print "\ta) Install any version of  Skype log in"
+        print "\tb) If Skype is installed, the log in window will be appearing. You will need to log in and perform the search again (or run it with '-p skype' only) to get results from Skype."        
+        print "In spite of this message, execution is going on."    
         return []
     
 if __name__ == "__main__":

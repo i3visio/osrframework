@@ -174,7 +174,7 @@ elif sys.platform == 'linux2':
                 "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
                 "res/logo.png",       
                 "README.md",            
-                "CHANGES.txt",
+                "CHANGES",
                 "COPYING"
             ],
         "/usr/share/osrframework/transforms" : 

@@ -1,9 +1,10 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.10.4, 2016/02/06 -- Some improvements in the alias generator to address issues #79, #80 and #81.
+0.10.4, 2016/02/06 -- Some improvements in the alias generator to address issues #79, #80 and #81. Skype link error message defined as a warning now.
 - Fixed issue #79: Some new rules to be added to alias_generator.py.
 - Fixed issue #80: Moving the traditional profilesquatting changes to alias_generator.py. Removed the option from usufy.py.
 - Fixed issue #81: all options inserted are now lowercased in alias_generator.
+. Modified the Skype warning message to show what is happening and that a Skype session should be opened by the user.
 - The interactive interface is now aligned and looks better.
 - The birthyear is now the 4th option after the information about the profile.
 - README.md brought back as README.md.
