@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.0.6"
+__version__ = "v3.0.7"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -362,34 +362,6 @@ This is free software, and you are welcome to redistribute it under certain cond
                 except:
                     logger.error("ERROR: there has been an error when opening the file that stores the nicks.\tPlease, check the existence of this file.")
 
-            # Checking if performing any transform was required
-            if args.squatting:
-                logger.debug("Making basic transformations on the provided nicknames...")
-                # Iterating to process _ and or .
-                #nicks = profilesquatting.generatingProfiles(nicks, args.profilesquatting)
-                nicks = profilesquatting.getNewNicks(nicks, logName = "usufy", modes = args.squatting, nonValidChars = args.nonvalid)
-                logger.info("Obtained nicks:\n" + str(nicks))
-
-                logger.debug("Profilesquatting nicknames recovered.")
-                if args.info == 'list_users':
-                    strNicks = ""
-                    for n in nicks:
-                        strNicks += n + "\n"
-                    logger.info("Generated nicks:\n----------------\n" + strNicks)
-                    # Storing the file...
-                    logger.info("Creating output files as requested.")
-                    # Verifying if the outputPath exists
-                    if not os.path.exists (args.output_folder):
-                        logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
-                        os.makedirs(args.output_folder)
-
-                    strTime = general.getCurrentStrDatetime()
-                    logger.info("Writing generated nicks to a text file.")
-                    with open (os.path.join(args.output_folder, "nicks_" + strTime +".txt"), "w") as oF:
-                        oF.write( strNicks )
-                    # if this option was selected, we will jsut return this and exist
-                    return nicks
-
             if args.output_folder != None:
                 # if Verifying an output folder was selected
                 logger.debug("Preparing the output folder...")
@@ -545,8 +517,6 @@ def getParser():
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    # [TO-DO]: to be revisited
-    groupProcessing.add_argument('-s', '--squatting', metavar='<level>',  nargs='+', choices=['basic', 'l33t', 'local', 'years', 'words', 'all'], required=False, default=[], action='store', help="select the level of profilesquatting to be looked for (in order of execution): words (for adding sensitive words such as 'real', 'home', 'news', etc.); l33t (l33t m0d3);  years (ending in numbers); local (looking for localized endings: '_es', '_en', '_fr', etc.); basic (changing '-', '.' and ' '); and all.")
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=32, type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')
 
     # About options
