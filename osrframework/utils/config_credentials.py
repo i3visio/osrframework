@@ -18,7 +18,8 @@
 #
 ################################################################################
 
-import ConfigParser, os
+import ConfigParser
+import os
 import osrframework.utils.general as general
 
 def returnListOfCreds():
@@ -30,8 +31,7 @@ def returnListOfCreds():
             listCreds.append(("<platform>", "<username>", "<password>"))
     '''
     listCreds = []
-    # TODO: If a current.cfg has not been found, creating it by copying from 
-    #       default
+    # If a current.cfg has not been found, creating it by copying from default
     configPath = general.getConfigPath("accounts.cfg")
 
     # Checking if the configuration file exists

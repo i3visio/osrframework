@@ -170,7 +170,7 @@ files_to_copy= {
     [
         "config/accounts.cfg",                                         
         "config/api_keys.cfg",                                         
-        "config/network.cfg",                                                         
+        "config/browser.cfg",
     ],
 }
 
