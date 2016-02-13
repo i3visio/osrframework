@@ -1,5 +1,9 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.10.5, 2016/02/13 -- Fixed issue #86, Metacafe is returning false positives.
+- Fixed issue #86: Metacafe was returning false positives and the error was updated.
+- Updated a dependency for pyexcel_text package. OSRFramework now works with the latest version.
+
 0.10.4, 2016/02/06 -- Some improvements in the alias generator to address issues #79, #80 and #81. Skype link error message defined as a warning now.
 - Fixed issue #79: Some new rules to be added to alias_generator.py.
 - Fixed issue #80: Moving the traditional profilesquatting changes to alias_generator.py. Removed the option from usufy.py.

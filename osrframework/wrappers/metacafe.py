@@ -54,7 +54,7 @@ class Metacafe(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.metacafe.com/" + "<usufy>"       
+        self.url["usufy"] = "http://www.metacafe.com/channels/" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Metacafe(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<p>We're sorry, but the requested page was not found.</p>"]
+        self.notFoundText["usufy"] = ["Metacafe - Online Video Entertainment - Free video clips for your enjoyment"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
