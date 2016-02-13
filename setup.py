@@ -54,32 +54,15 @@ except:
 applicationPath = general.getConfigPath()
 applicationPathDefaults = os.path.join(applicationPath, "default")
 
-if not os.path.exists(applicationPathDefaults):
-    os.makedirs(applicationPathDefaults)
-
 # Copying the default configuration files.
+if not os.path.exists(applicationPathDefaults):
+    os.makedirs(applicationPathDefaults) 
 
-
-# verifying if the credential files have already been created
-try:
-    if not os.path.isfile("./osrframework/utils/config_api_keys.py"):
-        # An empty api_keys file will be created
-        with open("./osrframework/utils/config_api_keys.py", "w") as oF:
-            with open("./osrframework/utils/config_api_keys.py.sample") as iF:
-                cont = iF.read()
-                oF.write(cont)
-except:
-    print "ERROR: something happened when reading the configuration files."
-    print "The installation is aborting now."
-    import sys
-    sys.exit()
- 
- 
  
 # Launching the setup
 setup(    name="osrframework",
     version=NEW_VERSION,
-    description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio for online research.",
+    description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio analysts for online research.",
     author="Felix Brezo and Yaiza Rubio",
     author_email="contacto@i3visio.com",
     url="http://github.com/i3visio/osrframework",
@@ -151,7 +134,11 @@ setup(    name="osrframework",
         "validate_email",
         "pyDNS",
         "tabulate",
-        "oauthlib>=1.0.0"
+        "oauthlib>=1.0.0",
+        # Adding dependencies to avoid the InsecurePlatformWarning when calling Twitter API dealing with SSL: <http://stackoverflow.com/a/29202163>. Other options would require the user to upgrade to Python 2.7.9.
+        "pyopenssl",
+        "ndg-httpsclient",
+        "pyasn1"
     ],    
 )
 
@@ -191,7 +178,7 @@ for destiny in files_to_copy.keys():
     
             
 
-# Maltego transforms to be added as content scripts:
+# Temp: Maltego transforms to be added as content scripts:
     """"/usr/share/osrframework/transforms" : 
         [                
             "osrframework/transforms/aliasToKnownEmails.py", 

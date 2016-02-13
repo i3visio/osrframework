@@ -31,7 +31,7 @@ def returnListOfCreds():
             listCreds.append(("<platform>", "<username>", "<password>"))
     '''
     listCreds = []
-    # If a current.cfg has not been found, creating it by copying from default
+    # If a accounts.cfg has not been found, creating it by copying from default
     configPath = general.getConfigPath("accounts.cfg")
 
     # Checking if the configuration file exists
