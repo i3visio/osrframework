@@ -1,5 +1,8 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.11.0a, 2016/02/14 -- Fixed issue #86, Metacafe is returning false positives.
+- Fix issue #65: Add threading to mailfy.py to allow parallel queries.
+
 0.10.5, 2016/02/13 -- Fixed issue #86, Metacafe is returning false positives.
 - Fixed issue #86: Metacafe was returning false positives and the error was updated.
 - Updated a dependency for pyexcel_text package. OSRFramework now works with the latest version.
