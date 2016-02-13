@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 import osrframework
 NEW_VERSION = osrframework.__version__
 
+import osrframework.utils.general as general
+
 # Depending on the place in which the project is going to be upgraded
 from setuptools import setup
 try:
@@ -47,15 +49,19 @@ try:
 except:
     long_description = ""
 
+
+# Creating the application path
+applicationPath = general.getConfigPath()
+applicationPathDefaults = os.path.join(applicationPath, "default")
+
+if not os.path.exists(applicationPathDefaults):
+    os.makedirs(applicationPathDefaults)
+
+# Copying the default configuration files.
+
+
 # verifying if the credential files have already been created
-import os
 try:
-    if not os.path.isfile("./osrframework/utils/config_credentials.py"):
-        # An empty credentials file will be created
-        with open("./osrframework/utils/config_credentials.py", "w") as oF:
-            with open("./osrframework/utils/config_credentials.py.sample") as iF:
-                cont = iF.read()
-                oF.write(cont)
     if not os.path.isfile("./osrframework/utils/config_api_keys.py"):
         # An empty api_keys file will be created
         with open("./osrframework/utils/config_api_keys.py", "w") as oF:
@@ -67,6 +73,8 @@ except:
     print "The installation is aborting now."
     import sys
     sys.exit()
+ 
+ 
  
 # Launching the setup
 setup(    name="osrframework",
@@ -151,94 +159,40 @@ setup(    name="osrframework",
 ### Creating other files ###
 ############################
 
-# Windows Systems
-# ---------------
-if sys.platform == 'win32':
-    # Nothing to copy at the moment
-    files_to_copy = {}
-# Linux Systems
-# -------------    
-elif sys.platform == 'linux2':   
-    files_to_copy= {
-        "/usr/share/applications/" :
-            [
-                "res/alias_generator.py.desktop",           
-                "res/entify.py.desktop",
-                "res/mailfy.py.desktop",              
-                "res/phonefy.py.desktop",             
-                "res/searchfy.py.desktop",
-                "res/usufy.py.desktop",                
-            ],        
-        "/usr/share/osrframework" :
-            [
-                "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
-                "res/logo.png",       
-                "README.md",            
-                "CHANGES",
-                "COPYING"
-            ],
-        "/usr/share/osrframework/transforms" : 
-            [                
-                "osrframework/transforms/aliasToKnownEmails.py", 
-                "osrframework/transforms/aliasToSkypeAccounts.py", 
-                "osrframework/transforms/aliasToSkypeIP.py", 
-                "osrframework/transforms/bitcoinAddressToBlockchainDetails.py", 
-                "osrframework/transforms/coordinatesToGoogleMapsBrowser.py", 
-                "osrframework/transforms/coordinatesToTwitterBrowser.py", 
-                "osrframework/transforms/domainToGoogleSearchUriWithEmails.py", 
-                "osrframework/transforms/domainToTld.py", 
-                "osrframework/transforms/emailToAlias.py", 
-                "osrframework/transforms/emailToBreachedAccounts.py", 
-                "osrframework/transforms/emailToDomain.py", 
-                "osrframework/transforms/emailToSkypeAccounts.py", 
-                "osrframework/transforms/expandPropertiesFromI3visioEntity.py", 
-                "osrframework/transforms/hashToMD5crackDotCom.py", 
-                "osrframework/transforms/ipToIp_ApiInformation.py", 
-                "osrframework/transforms/phoneToMoreInfo.py", 
-                "osrframework/transforms/phoneToPerson.py", 
-                "osrframework/transforms/textToEntities.py", 
-                "osrframework/transforms/textToGoogleSearchUri.py", 
-                "osrframework/transforms/textToPlatformSearch.py", 
-                "osrframework/transforms/textToProfiles.py", 
-                "osrframework/transforms/uriToBrowser.py", 
-                "osrframework/transforms/uriToDomain.py", 
-                "osrframework/transforms/uriToEntities.py", 
-                "osrframework/transforms/uriToGoogleCacheUri.py", 
-                "osrframework/transforms/uriToPort.py", 
-                "osrframework/transforms/uriToProtocol.py",                
-            ]        
-    }
-    # Iterating through all destinations
-    for destiny in files_to_copy.keys():
-        # Grabbing each source file to be moved
-        for sourceFile in files_to_copy[destiny]:
-            fileToMove = os.path.join(HERE,sourceFile)
+general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
+files_to_copy= {
+    applicationPath :
+    [
+        "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
+        "config/logo.png",       
+    ],
+    applicationPathDefaults :
+    [
+        "config/accounts.cfg",                                         
+        "config/api_keys.cfg",                                         
+        "config/network.cfg",                                                         
+    ],
+}
+
+# Iterating through all destinations to write the info
+for destiny in files_to_copy.keys():
+
+    # Grabbing each source file to be moved
+    for sourceFile in files_to_copy[destiny]:
+        fileToMove = os.path.join(HERE,sourceFile)
+
+        # Choosing the command depending on the SO
+        if sys.platform == 'win32':
+            cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
+        elif sys.platform == 'linux2' or sys.platform == 'darwin':   
             cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
-            #print "\tLaunching command:\t> " + cmd
-            output = os.popen(cmd).read()    
-            #print output
-# MacOS Systems
-# -------------            
-elif sys.platform == 'darwin':   
-    files_to_copy= {
-    "/usr/share/applications/" :
-        [
-            "res/alias_generator.py.desktop",           
-            "res/entify.py.desktop",
-            "res/mailfy.py.desktop",              
-            "res/phonefy.py.desktop",             
-            "res/searchfy.py.desktop",
-            "res/usufy.py.desktop",                
-        ],        
-    "/usr/share/osrframework" :
-        [
-            "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
-            "res/logo.png",       
-            "README.md",            
-            "CHANGES.txt",
-            "COPYING"
-        ],
-    "/usr/share/osrframework/transforms" : 
+
+        output = os.popen(cmd).read()    
+    
+            
+
+# Maltego transforms to be added as content scripts:
+    """"/usr/share/osrframework/transforms" : 
         [                
             "osrframework/transforms/aliasToKnownEmails.py", 
             "osrframework/transforms/aliasToSkypeAccounts.py", 
@@ -267,15 +221,4 @@ elif sys.platform == 'darwin':
             "osrframework/transforms/uriToGoogleCacheUri.py", 
             "osrframework/transforms/uriToPort.py", 
             "osrframework/transforms/uriToProtocol.py",                
-        ]        
-    }
-    
-    # Iterating through all destinations
-    for destiny in files_to_copy.keys():
-        # Grabbing each source file to be moved
-        for sourceFile in files_to_copy[destiny]:
-            fileToMove = os.path.join(HERE,sourceFile)
-            cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
-            #print "\tLaunching command:\t> " + cmd
-            output = os.popen(cmd).read()    
-            #print output
+        ]        """            

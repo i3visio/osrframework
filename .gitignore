@@ -11,7 +11,6 @@ deb_dist*
 _lab*
 _new*
 config_api_keys.py
-config_credentials.py
 bin*
 _toinclude*
 output*

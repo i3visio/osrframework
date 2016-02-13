@@ -65,6 +65,9 @@ class Spotify(Platform):
         self.needsCredentials["usufy"] = True
         #self.needsCredentials["searchfy"] = False 
         
+        # Array of credentials to be used
+        self.creds = []        
+        
         #################
         # Valid queries #
         #################
