@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 ##################################################################################
 
 '''
-usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
 For details, run:

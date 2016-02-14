@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 ##################################################################################
 
 '''
-mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
 '''
@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v2.2"
+__version__ = "v3.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -39,6 +39,9 @@ import datetime as dt
 import json
 import os
 import sys
+
+# global issues for multiprocessing
+from multiprocessing import Process, Queue, Pool
 
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
@@ -99,41 +102,6 @@ def weCanCheckTheseDomains(email):
         print "WARNING: the domain of '" + email + "' will not be safely verified."
     return True
 
-def performSearch(emails=[]):
-    '''
-        Method to perform the mail verification process.
-
-        :param emails: List of emails.
-
-        :return:
-    '''
-    results = []
-
-    for e in emails:
-        if weCanCheckTheseDomains(e):
-            #if emailahoy.verify_email_address(e):
-            try:
-                is_valid = validate_email(e,verify=True)
-            except TimeoutError as e:
-                print "Something went wrong as a TimeoutError has been raised. Is your internet connection ready?"
-                print "We recommend you to repeat this test..."
-                is_validad = False
-                
-
-            if is_valid:
-                email, alias, domain = getMoreInfo(e)
-                aux = {}
-                aux["type"] = "i3visio.profile"
-                aux["value"] =  domain["value"]+ " - " +alias["value"]
-                aux["attributes"]= []
-                aux["attributes"].append(email)
-                aux["attributes"].append(alias)
-                aux["attributes"].append(domain)
-                results.append(aux)
-            else:
-                pass
-    return results
-
 def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS):
     '''
         Method that globally permits to grab the emails.
@@ -165,6 +133,82 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
                     email_candidates.append(n+"@"+d)
     return email_candidates
 
+
+
+
+def multi_run_wrapper(args):
+    '''
+        Wrapper for being able to launch all the threads of getPageWrapper.
+        :param args: We receive the parameters for getPageWrapper as a tuple.
+    '''
+    is_valid = True
+
+    try:
+        is_valid = validate_email(args,verify=True)
+    except Exception, e:
+        print "WARNING. An error was found when performing the search. You can omit this message."
+        print str(e)
+        print
+        is_valid = False
+
+    if is_valid:
+        email, alias, domain = getMoreInfo(args)
+        aux = {}
+        aux["type"] = "i3visio.profile"
+        aux["value"] =  domain["value"]+ " - " +alias["value"]
+        aux["attributes"]= []
+        aux["attributes"].append(email)
+        aux["attributes"].append(alias)
+        aux["attributes"].append(domain)
+        return aux
+    else:
+        return {}        
+
+def performSearch(emails=[], nThreads=16):
+    '''
+        Method to perform the mail verification process.
+
+        :param emails: List of emails.
+
+        :return:
+    '''
+    results = []
+    
+    # Using threads in a pool if we are not running the program in main
+    args = []
+
+    # Grabbing all the emails that would be validated
+    for e in emails:
+        if weCanCheckTheseDomains(e):
+            args.append((e))        
+
+    # If the process is executed by the current app, we use the Processes. It is faster than pools.
+    if nThreads <= 0 or nThreads > len(args):
+        nThreads = len(args)
+
+    # Launching the Pool
+    # ------------------
+    #logger.info("Launching " + str(nThreads) + " different threads...")
+    # We define the pool
+    pool = Pool(nThreads)
+
+    # We call the wrapping function with all the args previously generated
+    #poolResults = pool.apply_async(multi_run_wrapper,(args))
+    poolResults = pool.map(multi_run_wrapper,args)
+
+    pool.close()    
+    
+    # Processing the results
+    # ----------------------
+    results = []
+
+    for res in poolResults:
+        # Recovering the results and check if they are not an empty json
+        if res != {}:
+            results.append(res)
+
+    return results
+   
 def main(args):
     '''
         Main program.
@@ -204,7 +248,8 @@ This is free software, and you are welcome to redistribute it under certain cond
         startTime= dt.datetime.now()
         print str(startTime) +"\tStarting search of the following " + str(len(emails))+ " different emails: "+ str(emails) + ". Be patient!\n"
 
-    results = performSearch(emails)
+    # Perform searches, using different Threads
+    results = performSearch(emails, args.threads)
 
     # Trying to store the information recovered
     if args.output_folder != None:
@@ -267,6 +312,7 @@ def getParser():
     groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices= ['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default = ["all"])
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=16, type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')    
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options
