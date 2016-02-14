@@ -26,3 +26,5 @@ _*sh
 *png
 *.gml_*
 fuzz.txt
+*.mtz
+*.zip

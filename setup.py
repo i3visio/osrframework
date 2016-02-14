@@ -53,11 +53,13 @@ except:
 # Creating the application path
 applicationPath = general.getConfigPath()
 applicationPathDefaults = os.path.join(applicationPath, "default")
+applicationPathTransforms = os.path.join(applicationPath, "transforms")
 
 # Copying the default configuration files.
 if not os.path.exists(applicationPathDefaults):
     os.makedirs(applicationPathDefaults) 
-
+if not os.path.exists(applicationPathTransforms):
+    os.makedirs(applicationPathTransforms) 
  
 # Launching the setup
 setup(    name="osrframework",
@@ -148,17 +150,43 @@ setup(    name="osrframework",
 
 general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
 files_to_copy= {
-    applicationPath :
-    [
-        "osrframework/transforms/lib/i3visio-transforms[linux].mtz",                                         
+    applicationPath : [
         "config/logo.png",       
     ],
-    applicationPathDefaults :
-    [
+    applicationPathDefaults : [
         "config/accounts.cfg",                                         
         "config/api_keys.cfg",                                         
         "config/browser.cfg",
     ],
+    applicationPathTransforms : [                
+        "osrframework/transforms/aliasToKnownEmails.py", 
+        "osrframework/transforms/aliasToSkypeAccounts.py", 
+        "osrframework/transforms/aliasToSkypeIP.py", 
+        "osrframework/transforms/bitcoinAddressToBlockchainDetails.py", 
+        "osrframework/transforms/coordinatesToGoogleMapsBrowser.py", 
+        "osrframework/transforms/coordinatesToTwitterBrowser.py", 
+        "osrframework/transforms/domainToGoogleSearchUriWithEmails.py", 
+        "osrframework/transforms/domainToTld.py", 
+        "osrframework/transforms/emailToAlias.py", 
+        "osrframework/transforms/emailToBreachedAccounts.py", 
+        "osrframework/transforms/emailToDomain.py", 
+        "osrframework/transforms/emailToSkypeAccounts.py", 
+        "osrframework/transforms/expandPropertiesFromI3visioEntity.py", 
+        "osrframework/transforms/hashToMD5crackDotCom.py", 
+        "osrframework/transforms/ipToIp_ApiInformation.py", 
+        "osrframework/transforms/phoneToMoreInfo.py", 
+        "osrframework/transforms/phoneToPerson.py", 
+        "osrframework/transforms/textToEntities.py", 
+        "osrframework/transforms/textToGoogleSearchUri.py", 
+        "osrframework/transforms/textToPlatformSearch.py", 
+        "osrframework/transforms/textToProfiles.py", 
+        "osrframework/transforms/uriToBrowser.py", 
+        "osrframework/transforms/uriToDomain.py", 
+        "osrframework/transforms/uriToEntities.py", 
+        "osrframework/transforms/uriToGoogleCacheUri.py", 
+        "osrframework/transforms/uriToPort.py", 
+        "osrframework/transforms/uriToProtocol.py",                
+    ] 
 }
 
 # Iterating through all destinations to write the info
@@ -175,37 +203,14 @@ for destiny in files_to_copy.keys():
             cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
 
         output = os.popen(cmd).read()    
-    
-            
 
-# Temp: Maltego transforms to be added as content scripts:
-    """"/usr/share/osrframework/transforms" : 
-        [                
-            "osrframework/transforms/aliasToKnownEmails.py", 
-            "osrframework/transforms/aliasToSkypeAccounts.py", 
-            "osrframework/transforms/aliasToSkypeIP.py", 
-            "osrframework/transforms/bitcoinAddressToBlockchainDetails.py", 
-            "osrframework/transforms/coordinatesToGoogleMapsBrowser.py", 
-            "osrframework/transforms/coordinatesToTwitterBrowser.py", 
-            "osrframework/transforms/domainToGoogleSearchUriWithEmails.py", 
-            "osrframework/transforms/domainToTld.py", 
-            "osrframework/transforms/emailToAlias.py", 
-            "osrframework/transforms/emailToBreachedAccounts.py", 
-            "osrframework/transforms/emailToDomain.py", 
-            "osrframework/transforms/emailToSkypeAccounts.py", 
-            "osrframework/transforms/expandPropertiesFromI3visioEntity.py", 
-            "osrframework/transforms/hashToMD5crackDotCom.py", 
-            "osrframework/transforms/ipToIp_ApiInformation.py", 
-            "osrframework/transforms/phoneToMoreInfo.py", 
-            "osrframework/transforms/phoneToPerson.py", 
-            "osrframework/transforms/textToEntities.py", 
-            "osrframework/transforms/textToGoogleSearchUri.py", 
-            "osrframework/transforms/textToPlatformSearch.py", 
-            "osrframework/transforms/textToProfiles.py", 
-            "osrframework/transforms/uriToBrowser.py", 
-            "osrframework/transforms/uriToDomain.py", 
-            "osrframework/transforms/uriToEntities.py", 
-            "osrframework/transforms/uriToGoogleCacheUri.py", 
-            "osrframework/transforms/uriToPort.py", 
-            "osrframework/transforms/uriToProtocol.py",                
-        ]        """            
+print    
+print "Last part: trying to configure Maltego Transforms..."            
+# Creating the configuration file
+try:
+    import osrframework.transforms.lib.configure_maltego as maltego
+    maltego.configureMaltego(transformsConfigFolder = applicationPathTransforms, base="./osrframework/transforms/lib/osrframework-maltego-settings[Base]", debug = False, backupPath = applicationPathDefaults)
+except Exception, e:
+    print "WARNING. The Maltego configuration file to use i3visio transforms could not be created and thus, cannot be used. Check the following error:"
+    print str(e)
+print
