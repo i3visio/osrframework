@@ -186,18 +186,15 @@ Follow the instructions there. Afterwards, you may launch the application and yo
 
 Select all the groups and click next. You may use the new i3visio entities now.
 
-### Tips for Windows users
-To configure the Maltego entities and transforms we have developed, launch the built-in configurator in the project folder:
+The Maltego transforms and entities are generated automatically by the setup script.
+This will create a .mtz file in the User's home (check the installation terminal output to find it) and under the default folder inside the application folder (just in case a disaster happends ;)).
 ```
-cd <DOWNLOAD_PATH>
-cd osrframework-master
-python configure_maltego.py
+# Under Linux...
+~/osrframework-maltego-settings_<VERSION>.mtz
+~/.config/OSRFramework/default/osrframework-maltego-settings_<VERSION>.mtz
 ```
 
-This will create a .mtz file under the following path, which is where you will find the entities to be configured: 
-```
-<DOWNLOAD_PATH>/osrframework-master/osrframework/transforms/lib/
-```
+You will then have to import this file in Maltego by clicking the Menu --> Import --> Import configuration. You might have to manually check all the types in the installer assistant.
 
 ## 4 - AUTHORS
 
