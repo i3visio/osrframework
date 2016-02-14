@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Alias Generator
-GenericName=OSINT tools
-Exec=alias_generator.py -h
-Icon=/usr/share/osrframework/logo.png
-Categories=i3visio;
-Terminal=False
-Type=Application
-Version=1.0

@@ -50,8 +50,9 @@ class Twitter(Platform):
         # from osrframework.api import TwitterAPIWrapper as TwitterAPIWrapper
         try:
             self.wrapperAPI = TwitterAPIWrapper()
-        except:
+        except Exception, e:
             self.wrapperAPI = None
+            
                     
         ########################
         # Defining valid modes #

@@ -1,6 +1,6 @@
 # -*- coding: cp1252 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
 import osrframework.utils.credentials as credentials
 
@@ -99,7 +99,6 @@ from osrframework.wrappers.elmundo import Elmundo
 from osrframework.wrappers.enfemenino import Enfemenino
 # Credentials needed?
 #from osrframework.wrappers.epinions import Epinions
-#from osrframework.wrappers.eqe import Eqe
 from osrframework.wrappers.ethereum import Ethereum
 from osrframework.wrappers.etsy import Etsy
 from osrframework.wrappers.evilzone import Evilzone
@@ -258,7 +257,7 @@ from osrframework.wrappers.soundcloud import Soundcloud
 from osrframework.wrappers.sourceforge import Sourceforge
 from osrframework.wrappers.spaniards import Spaniards
 from osrframework.wrappers.spoj import Spoj
-from osrframework.wrappers.spotify import Spotify
+#from osrframework.wrappers.spotify import Spotify
 from osrframework.wrappers.squidoo import Squidoo
 from osrframework.wrappers.steamcommunity import Steamcommunity
 from osrframework.wrappers.steinberg import Steinberg
@@ -650,7 +649,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Sourceforge())
     listAll.append(Spaniards())
     listAll.append(Spoj())
-    listAll.append(Spotify())
+    #listAll.append(Spotify())
     listAll.append(Squidoo())
     listAll.append(Steamcommunity())
     listAll.append(Steinberg())

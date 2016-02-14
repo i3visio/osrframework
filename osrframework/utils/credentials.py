@@ -22,46 +22,49 @@ import os
 import logging
 import osrframework.utils.config_credentials as c_creds
 
-def getCredentials():
-	''' 
-		Recovering the credentials from a file with the following structure:
-		
-		:return: A dictionary with the following struture:
-			{ "platform1": [C1<Credential>, C2<Credential>], "platform2": [C3<Credential>]}
-	'''
-	logger = logging.getLogger("osrframework.utils")
-	# Dictionary of lists:
-	# 	{'Twitter': {cred1, cred2, ...}}
-	creds = {} 
-	try:
-		contenido = c_creds.returnListOfCreds()
-		#contenido = ["demo	champ2001	hacker"]
-		for l in contenido:
-			plat, user, password = l
-			c = Credential(user, password)
-
-			if plat not in creds.keys():
-				creds[plat] = [c]
-			else:
-				creds[plat] = creds[plat].append(c)
-		logger.info(str(len(contenido)) + " credentials have been loaded.")	
-		return creds
-	except:
-		logger.error("The user credentials file could not be opened. Check if you have installed it in python.")
-	logger.debug("No credentials were loaded.")	
-	return {}
-
 class Credential():
-	""" 
-		Class to match the credentials needed by a platform.
-	"""
-	def __init__(self, user, password):
-		""" 
-			Creation of the credentials.
-			
-			:param user:	Login name.
-			:param password:	Password.
-		"""
-		self.user = user
-		self.password = password
+    """ 
+        Class to match the credentials needed by a platform.
+    """
+    def __init__(self, user, password):
+        """ 
+            Creation of the credentials.
+            
+            :param user:    Login name.
+            :param password:    Password.
+        """
+        self.user = user
+        self.password = password
+
+
+def getCredentials():
+    ''' 
+        Recovering the credentials from a file with the following structure:
+        
+        :return: A dictionary with the following struture:
+            { "platform1": [C1<Credential>, C2<Credential>], "platform2": [C3<Credential>]}
+    '''
+    logger = logging.getLogger("osrframework.utils")
+    # Dictionary of lists:
+    #     {'Twitter': {cred1, cred2, ...}}
+    creds = {} 
+    try:
+        credsTuples = c_creds.returnListOfCreds()
+
+        for cTuple in credsTuples:
+            plat, user, password = cTuple
+
+            c = Credential(user, password)
+
+            if plat not in creds.keys():
+                creds[plat] = [c]
+            else:
+                creds[plat] = creds[plat].append(c)
+        logger.info(str(len(credsTuples)) + " credentials have been loaded.")    
+        return creds
+    except Exception, e:
+        logger.error("WARNING. Something happened when loading credentials.")
+        logger.error(str(e))        
+        logger.debug("No credentials were loaded.")    
+    return {}
 

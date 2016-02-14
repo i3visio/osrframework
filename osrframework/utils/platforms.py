@@ -82,11 +82,14 @@ class Platform():
 
         ######################################
         # Whether the user needs credentials #
-        ######################################
+        ######################################        
         self.needsCredentials = {}        
         self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
         self.needsCredentials["searchfy"] = False 
+        
+        # Array of credentials to be used
+        self.creds = []
         
         ###################
         # Valid queries #
@@ -537,4 +540,11 @@ class Platform():
             return False
             
            
-  
+    def setCredentials(self, cred):
+        """
+            Getting the credentials and appending it to self.creds.
+        """
+        try:
+            self.creds.append(cred)
+        except:
+            pass

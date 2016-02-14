@@ -1,15 +1,19 @@
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.11.0a, 2016/02/14 -- Fixed issue #86, Metacafe is returning false positives.
+0.11.0a, 2016/02/14 -- Adding configuration files so as to let the user configure credentials and API keys.
 - Fix issue #65: Add threading to mailfy.py to allow parallel queries.
+- Fixed issue #51: settings for credentials, API keys and connectivity are now stored in the user's home.
+- Added a browser.cfg to let the user configure OSRFramework browser settings such as the way in which it gets connected to the internet or the user agent.
+- Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
+- Added three new dependencies pyopenssl, ndg-httpsclient, pyasn1 to deal with InsecurePlatformWarning when calling the Twitter API.
 
 0.10.5, 2016/02/13 -- Fixed issue #86, Metacafe is returning false positives.
 - Fixed issue #86: Metacafe was returning false positives and the error was updated.
 - Updated a dependency for pyexcel_text package. OSRFramework now works with the latest version.
 
 0.10.4, 2016/02/06 -- Some improvements in the alias generator to address issues #79, #80 and #81. Skype link error message defined as a warning now.
-- Fixed issue #79: Some new rules to be added to alias_generator.py.
-- Fixed issue #80: Moving the traditional profilesquatting changes to alias_generator.py. Removed the option from usufy.py.
+- Fixed issue #79: some new rules to be added to alias_generator.py.
+- Fixed issue #80: moving the traditional profilesquatting changes to alias_generator.py. Removed the option from usufy.py.
 - Fixed issue #81: all options inserted are now lowercased in alias_generator.
 . Modified the Skype warning message to show what is happening and that a Skype session should be opened by the user.
 - The interactive interface is now aligned and looks better.

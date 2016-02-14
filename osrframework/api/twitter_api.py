@@ -49,8 +49,6 @@ class TwitterAPIWrapper(APIWrapper):
         # The platformName, a bit redundant
         self.platformName = "Twitter"   
 
-        #Twitter API credentials
-
     def _connectToAPI(self):
         '''
             :return: A tweepy.API object that performs the queries
@@ -472,7 +470,7 @@ class TwitterAPIWrapper(APIWrapper):
             while len(new_tweets) > 0:
                 print "Getting tweets before %s" % (oldest)
             
-                """ #all subsiquent requests use the max_id param to prevent duplicates
+                """ #all subsequent requests use the max_id param to prevent duplicates
                 waiting = True
                 while waiting == True:
                     try:
@@ -814,7 +812,7 @@ def main(args):
     return results
     
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='A library that wraps searches onto the Twitter API.', prog='twitter_api.py', epilog="NOTE: if not provided, the API key will be searched in the config_api_keys.py file.", add_help=False)
+    parser = argparse.ArgumentParser(description='A library that wraps searches onto the Twitter API.', prog='twitter_api.py', epilog="NOTE: the API tokens will be searched in api_keys.cfg configuration file.", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
     parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to the Twitter API.', required=True)        

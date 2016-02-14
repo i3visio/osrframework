@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Usufy
-GenericName=OSINT tools
-Exec=usufy.py -h
-Icon=/usr/share/osrframework/logo.png
-Categories=i3visio;
-Terminal=true
-Type=Application
-Version=1.0
