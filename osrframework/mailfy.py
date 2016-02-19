@@ -26,7 +26,7 @@ This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015, i3visio"
+__copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
 __version__ = "v3.0"
@@ -215,7 +215,7 @@ def main(args):
 
         :param args: Arguments received in the command line.
     '''
-    sayingHello = """mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+    sayingHello = """mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:
@@ -235,7 +235,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         domains = EMAIL_DOMAINS
     else:
         # processing only the given domains
-        domains = args.domains
+        domains = args.domai2015ns
 
     if args.create_emails:  
         emails = grabEmails(nicksFile = args.create_emails, domains = domains)

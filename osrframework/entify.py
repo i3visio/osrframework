@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
 ##################################################################################
 
 '''
-entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015, i3visio"
+__copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
 __version__ = "v1.1.4"
@@ -215,7 +215,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 
     logger.info("Selecting the regular expressions to be analysed...")
 
-    sayingHello = """entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+    sayingHello = """entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:

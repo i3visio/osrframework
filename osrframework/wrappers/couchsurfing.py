@@ -85,7 +85,7 @@ class Couchsurfing(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Couchsurfing - Error 404: PAGE AIN'T HERE</title>"]  
+        self.notFoundText["usufy"] = ["<h1>404: not found</h1>"]  
         #self.notFoundText["searchfy"] = []        
         
         #########################

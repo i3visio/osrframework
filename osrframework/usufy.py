@@ -28,10 +28,10 @@ For details, run:
     python usufy.py --license
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015, i3visio"
+__copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.0.7"
+__version__ = "v3.0.8"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -249,8 +249,10 @@ def multi_run_wrapper(args):
         Wrapper for being able to launch all the threads of getPageWrapper.
         :param args: We receive the parameters for getPageWrapper as a tuple.
     '''
-
-    return getPageWrapper(*args)
+    #print "STARTED: ", args
+    res = getPageWrapper(*args)
+    #print "COMPLETED: ", args
+    return res
 
 
 def main(args):
@@ -266,7 +268,7 @@ def main(args):
     if not args.maltego:
         print banner.text
 
-        sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015
+        sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
         logger.info(sayingHello)

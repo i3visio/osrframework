@@ -8,6 +8,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #65: add threading to mailfy.py to allow parallel queries.
 - Fixed issue #51: settings for credentials, API keys and connectivity are now stored in the user's home.
 - Fixed issue #90: added new documentation files as AUTHORS.md, INSTALL.md and HACKING.md.
+- Fixed couchsurfing.py wrapper for usufy which was not capable of returning a result properly.
 - Added a browser.cfg to let the user configure OSRFramework browser settings such as the way in which it gets connected to the internet or the user agent.
 - Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
 - Added three new dependencies pyopenssl, ndg-httpsclient, pyasn1 to deal with InsecurePlatformWarning when calling the Twitter API.
