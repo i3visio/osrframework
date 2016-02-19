@@ -12,6 +12,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Added a browser.cfg to let the user configure OSRFramework browser settings such as the way in which it gets connected to the internet or the user agent.
 - Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
 - Added three new dependencies pyopenssl, ndg-httpsclient, pyasn1 to deal with InsecurePlatformWarning when calling the Twitter API.
+- Removed obsolete functions from osrframework/utils/general.py.
 
 0.10.5, 2016/02/13 -- Fixed issue #86, Metacafe is returning false positives.
 - Fixed issue #86: Metacafe was returning false positives and the error was updated.

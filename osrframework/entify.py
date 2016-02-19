@@ -236,7 +236,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         results = scanFolderForRegexp(folder = args.input_folder, listRegexp= listRegexp, recursive = args.recursive, verbosity=args.verbose, logFolder= args.logfolder, quiet=args.quiet)
     else:
         results = scanResource(uri = args.web, listRegexp= listRegexp, verbosity=args.verbose, logFolder= args.logfolder)
-    logger.info("Logging the results:\n" + general.dictToJson(results))
+    logger.info("Logging the results:\n" + json.dumps(results, indent=2, sort_keys=True))
 
     # Trying to store the information recovered
     if args.output_folder != None:
