@@ -237,8 +237,9 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
                 
             # Appending the newRow to the data structure
             workingSheet.append(newRow)
-    except:
+    except Exception, e:
         # No previous value found!
+        #print str(e)
         pass
 
     # After having all the previous data stored an updated... We will go through the rest:
@@ -273,7 +274,18 @@ def usufyToJsonExport(d, fPath):
         :param d: Data to export.
         :param fPath: File path.
     '''
-    jsonText =  json.dumps(d, indent=2, sort_keys=True)
+    oldData = []
+    try:
+        with open (fPath) as iF:
+            oldText = iF.read()
+            if oldText != "":
+                oldData = json.loads(oldText) 
+    except:
+        # No file found, so we will create it...
+        pass
+
+    jsonText =  json.dumps(oldData+d, indent=2, sort_keys=True)
+
     with open (fPath, "w") as oF:
         oF.write(jsonText)
         
@@ -343,14 +355,16 @@ def usufyToOdsExport(d, fPath):
     '''
     from pyexcel_ods import get_data
     try:
-        oldData = get_data(fPath)
+        #oldData = get_data(fPath)
+        # A change in the API now returns only an array of arrays if there is only one sheet.
+        oldData = {"OSRFramework": get_data(fPath) }
     except:
         # No information has been recovered
         oldData = {"OSRFramework":[]}
-    
+        
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
-    
+
     from pyexcel_ods import save_data
     # Storing the file        
     save_data(fPath, tabularData)    
@@ -363,11 +377,13 @@ def usufyToXlsExport(d, fPath):
     '''
     from pyexcel_xls import get_data
     try:
-        oldData = get_data(fPath)
+        #oldData = get_data(fPath)
+        # A change in the API now returns only an array of arrays if there is only one sheet.
+        oldData = {"OSRFramework": get_data(fPath) }      
     except:
         # No information has been recovered
         oldData = {"OSRFramework":[]}
-    
+
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
     from pyexcel_xls import save_data
@@ -382,11 +398,13 @@ def usufyToXlsxExport(d, fPath):
     '''
     from pyexcel_xlsx import get_data
     try:
-        oldData = get_data(fPath)
+        #oldData = get_data(fPath)
+        # A change in the API now returns only an array of arrays if there is only one sheet.
+        oldData = {"OSRFramework": get_data(fPath) }
     except:
         # No information has been recovered
         oldData = {"OSRFramework":[]}
-    
+
     # Generating the new tabular data
     tabularData = _generateTabularData(d, oldData)
     
