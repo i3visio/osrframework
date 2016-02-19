@@ -1,9 +1,13 @@
+OSRFramework Changelog
+======================
+
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
 0.11.0a, 2016/02/14 -- Adding configuration files so as to let the user configure credentials and API keys, as well as making the Maltego transforms work with the current architecture.
-- Fix issue #84: Fix Maltego installation using the content_scripts. The creation of the Maltego configuration file is currently done by the setup.py script.
-- Fix issue #65: Add threading to mailfy.py to allow parallel queries.
+- Fixed issue #84: fix Maltego installation using the content_scripts. The creation of the Maltego configuration file is currently done by the setup.py script.
+- Fixed issue #65: add threading to mailfy.py to allow parallel queries.
 - Fixed issue #51: settings for credentials, API keys and connectivity are now stored in the user's home.
+- Fixed issue #90: added new documentation files as AUTHORS.md, INSTALL.md and HACKING.md.
 - Added a browser.cfg to let the user configure OSRFramework browser settings such as the way in which it gets connected to the internet or the user agent.
 - Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
 - Added three new dependencies pyopenssl, ndg-httpsclient, pyasn1 to deal with InsecurePlatformWarning when calling the Twitter API.
@@ -379,24 +383,16 @@ v0.1.0, 2014/12/31 -- Initial release.
 
 
 [TO-DO]
-Short term:
-
 Long term:
-- Addition of GML visualization.
-- Fix searchfy wrappers to let them work with basic contextual information.
 - Usage of mashape.com API linked to email verification.
 - Usage of mashape.com API linked to image verification.
 - Inclusions of email verification transforms.
 - Inclusion of a call to pipl.com API.
-- Inclusion of new usufy platforms which are now in testing mode.
 - Full normalization of fields.
 - Create Facesaerch and Tor search transforms in Maltego.
 - Recover the logging functions.
-- Include a globla function to recover the license.
-- bzr integration?
 
 [Known issues]
 - Text to deep web search is broken.
 - Recursive expansion of attributes when the cap is reached in Maltego.
-- Mailfy seems not to be working properly in Windows systems, but it does in Linux.
 - There is an issue in Maltego Chlorine CE when exporting a transform with the transform.local.parameters popup marked as True: <Property name="transform.local.parameters" type="string" popup="true"></Property>. However, when importing the created .mtz file the popup attribute is not correctly updated not requesting the user who imported the transform the value unless he/she clicks on configure and manually update this value, something which may not be trivial for some users. This issue affects the transform aliasToSelectedPlatforms which will throw an error if not manually configured by the user instead of asking the user to insert the deliberately missing parameters. This is not an OSRFramework issue and has conveniently be notified to Paterva with date of 2015/08/12.
