@@ -64,7 +64,7 @@ mailfy.py -n i3visio
 4 - Updating the framework
 --------------------------
 
-From time to time, we will fix bugs and add new platforms. To upgrade your local osrframework installation you can type the following:
+OSRFramework is a tool in development mantained by its [authors](AUTHORS.md) and, thus, we will fix bugs and add new platforms from time to time. To upgrade your local osrframework installation you can type the following:
 ```
 pip install osrframework --upgrade
 ```
@@ -77,7 +77,6 @@ This will manage all the dependencies for you and will try to download the lates
 sudo pip install osrframework --upgrade --pre
 ```
 But please, do it under your responsibility. Strange things may take place!
-
 
 5 - Maltego Installation
 ------------------------

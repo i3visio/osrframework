@@ -34,7 +34,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-For more details on this issue, check the COPYING file.
+For more details on this issue, check the [COPYING](COPYING) file.
 
 3 - Installation
 ----------------
@@ -49,8 +49,7 @@ sudo pip install osrframework
 ```
 This will manage all the dependencies for you.
 
-If you needed further information, check the [INSTALL.md](github.com/i3visio/osrframework/INSTALL.md) file.
-file.
+If you needed further information, check the [INSTALL.md](INSTALL.md) file.
 
 4 - Basic usage
 ---------------
@@ -77,9 +76,9 @@ OSRFramework will look for the configuration settings stored there. You can add 
 5 - HACKING
 -----------
 
-If you want to extend the functionalities of OSRFramework and you do not know where to start from, check the [HACKING.md](github.com/i3visio/osrframework/HACKING.md) file.
+If you want to extend the functionalities of OSRFramework and you do not know where to start from, check the [HACKING.md](HACKING.md) file.
 
 6 - AUTHORS
 -----------
 
-More details about the Authors in the [AUTHORS.md](github.com/i3visio/osrframework/AUTHORS.md) file.
+More details about the authors in the [AUTHORS.md](AUTHORS.md) file.
