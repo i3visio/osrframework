@@ -28,7 +28,7 @@ import shutil, errno
 import osrframework
 import osrframework.utils.general as general
 
-VERSION = "v0.8"
+VERSION = "v0.9"
 
 def copyAnything(src="./osrframework-maltego-settings-[Base]", dst=os.path.join("./", "tmp", "osrframework-maltego-settings") ):
     '''
@@ -116,7 +116,7 @@ def configureMaltego(transformsConfigFolder = None, base=None, wFolder=None, deb
     '''
     '''
     # Defining the name of the output file
-    settingsFile = "osrframework-maltego-settings"
+    settingsFile = "osrframework-maltego-settings"  + "_" + VERSION 
 
     # Defining the full path to the folder in which the configuration files will be created
     dst=os.path.join("./", "tmp", settingsFile)    
@@ -133,7 +133,7 @@ def configureMaltego(transformsConfigFolder = None, base=None, wFolder=None, deb
     
     print "Building the .mtz file."
     # Zipping the new configuration
-    filePath = zip(pathFolder=dst + "_" + VERSION )
+    filePath = zip(pathFolder=dst)
 
     folder, fileName = os.path.split(filePath)
 
@@ -147,7 +147,7 @@ def configureMaltego(transformsConfigFolder = None, base=None, wFolder=None, deb
         shutil.copy2(filePath, backupPath)        
        
     # Remove tmp files.
-    shutil.rmtree(os.path.join("./", "tmp"))
+    #shutil.rmtree(os.path.join("./", "tmp"))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='configure_maltego.py - A function to automatically generate Maltego configuration files.', prog='configure_maltego.py', epilog="", add_help=False)

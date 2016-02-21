@@ -1,7 +1,7 @@
 <TransformSettings enabled="true" disclaimerAccepted="false" showHelp="true">
    <Properties>
       <Property name="transform.local.command" type="string" popup="false">usufy.py</Property>
-      <Property name="transform.local.parameters" type="string" popup="false"> -p badoo facebook forocoches github googleplus kali linkedin pastebin twitter youtube --maltego -n </Property>
+      <Property name="transform.local.parameters" type="string" popup="false"> -p badoo facebook forocoches github googleplus kali linkedin pastebin twitter youtube --maltego -T 12 -n </Property>
       <Property name="transform.local.working-directory" type="string" popup="false"><CUSTOM_WORKING_DIRECTORY></Property>
       <Property name="transform.local.debug" type="boolean" popup="false"><DEBUG_MODE></Property>
    </Properties>

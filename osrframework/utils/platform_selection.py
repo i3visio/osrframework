@@ -78,7 +78,8 @@ from osrframework.wrappers.ccsinfo import Ccsinfo
 from osrframework.wrappers.chess import Chess
 from osrframework.wrappers.cockos import Cockos
 from osrframework.wrappers.connectingsingles import Connectingsingles
-from osrframework.wrappers.couchsurfing import Couchsurfing
+# Temporally deactivated
+#from osrframework.wrappers.couchsurfing import Couchsurfing
 
 # D
 from osrframework.wrappers.dailymail import Dailymail
@@ -145,7 +146,8 @@ from osrframework.wrappers.hubpages import Hubpages
 
 # I
 from osrframework.wrappers.ibosocial import Ibosocial
-from osrframework.wrappers.identica import Identica
+# The website seems to be broken
+#from osrframework.wrappers.identica import Identica
 from osrframework.wrappers.imgur import Imgur
 from osrframework.wrappers.infotelefonica import Infotelefonica
 from osrframework.wrappers.instagram import Instagram
@@ -472,7 +474,8 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Chess())
     listAll.append(Cockos())
     listAll.append(Connectingsingles())
-    listAll.append(Couchsurfing())
+    # Temporally deactivated
+    #listAll.append(Couchsurfing())
 
     # D
     listAll.append(Dailymail())
@@ -539,7 +542,7 @@ def getAllPlatformObjects(mode = None):
 
     # I
     listAll.append(Ibosocial())
-    listAll.append(Identica())
+    #listAll.append(Identica())
     listAll.append(Imgur())
     listAll.append(Infotelefonica())    
     listAll.append(Instagram())

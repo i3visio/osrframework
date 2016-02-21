@@ -7,6 +7,8 @@ Reporting issues, bugs and fresh ideas
 The way in which we track the issues regarding the software is by means of the issues page in Github's project site, which can be found here: <https://github.com/i3visio/osrframework/issues>.
 Whether you have experimented problems with the installation, you have found a bug in a new platform or you feel that we can add a new functionality, you can find the place to report them there. The only "rule" is to notify one error per issue to be able to track the problems indepently, as well as trying to provide as much information as possible regarding the OS or version you are trying.
 
+If you find that a transform in Maltego is not behaving as expected, we recommend you to set the debug mode as True. Go to Manage --> Manage Transforms, choose the transform and mark the "Set debug info" as True. Please, copy the information shown in the new tab in the issue so as to provide more information to debug it faster.
+
 Contributing code
 -----------------
 

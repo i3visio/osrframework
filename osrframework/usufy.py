@@ -249,9 +249,11 @@ def multi_run_wrapper(args):
         Wrapper for being able to launch all the threads of getPageWrapper.
         :param args: We receive the parameters for getPageWrapper as a tuple.
     '''
-    #print "STARTED: ", args
+    startTime= dt.datetime.now()
+    print "STARTED:\t", str(args[0])
     res = getPageWrapper(*args)
-    #print "COMPLETED: ", args
+    endTime = dt.datetime.now()
+    print "COMPLETED:\t", str(args[0]), "\t", str(endTime-startTime)
     return res
 
 

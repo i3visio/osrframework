@@ -34,10 +34,11 @@ def expandPropertiesFromI3visioEntity(argv):
     '''
     me = MaltegoTransform(argv)
     newEntities = []
+
     try:
         # Trying to recover pending entities if they exist.
         # If so, it means that it is NOT the first time that this info is recovered
-        if str(me.getVar("@number_pending")) != "0":
+        if str(me.getVar("@number_pending")) != "0" and me.getVar("@number_pending") != None:
             entitiesToShow = me.getVar("@pending")
             #print entitiesToShow
             newEntities = json.loads(entitiesToShow)        
@@ -46,6 +47,8 @@ def expandPropertiesFromI3visioEntity(argv):
             # We will try to expand the rest of the attributes
             for field in constants.I3VISIO_FIELDS:
                 value =  me.getVar(field)
+                #print field, value
+                
                 if value != None and value != " " and value != "":            
                     aux = {}
                     aux["type"] = field
@@ -56,6 +59,8 @@ def expandPropertiesFromI3visioEntity(argv):
         # In case of errors, we will try to expand the rest of the attributes
         for field in constants.I3VISIO_FIELDS:
             value =  me.getVar(field)
+            #print field, value
+            
             if value != None and value != " " and value != "":            
                 aux = {}
                 aux["type"] = field

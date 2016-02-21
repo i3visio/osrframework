@@ -82,7 +82,7 @@ class Gsmspain(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Este usuario de GSMspain no tiene perfil en el foro."]
+        self.notFoundText["usufy"] = ["<b>Error</b>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

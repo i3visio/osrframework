@@ -138,7 +138,7 @@ setup(    name="osrframework",
         "tabulate",
         "oauthlib>=1.0.0",
         # Adding dependencies to avoid the InsecurePlatformWarning when calling Twitter API dealing with SSL: <http://stackoverflow.com/a/29202163>. Other options would require the user to upgrade to Python 2.7.9.
-        "pyopenssl",
+        #"pyopenssl",
         "ndg-httpsclient",
         "pyasn1"
     ],    

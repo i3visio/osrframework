@@ -66,8 +66,8 @@ class MaltegoEntity(object):
         ''' 
             Method to print the XML information that Maltego will be reading.
         '''
-        print self.getEntityText()
-
+        print self.getEntityText()    
+    
     def getEntityText(self):
         ''' 
             Generating the Entity Type text based on the parameters of the entity.
@@ -75,18 +75,18 @@ class MaltegoEntity(object):
             :return:    The entity text.
         '''
         entityOutput = ""
-        entityOutput +=     "<Entity Type=\"" + str(self.entityType) + "\">";
-        entityOutput +=     "<Value>" + str(self.value) + "</Value>";
-        entityOutput +=     "<Weight>" + str(self.weight) + "</Weight>";
+        entityOutput +=     "<Entity Type=\"" + stringify(self.entityType) + "\">";
+        entityOutput +=     "<Value>" + stringify(self.value) + "</Value>";
+        entityOutput +=     "<Weight>" + stringify(self.weight) + "</Weight>";
         if (self.displayInformation is not None):
-            entityOutput +=     "<DisplayInformation><Label Name=\"\" Type=\"text/html\"><![CDATA[" + str(self.displayInformation) + "]]></Label></DisplayInformation>";
+            entityOutput +=     "<DisplayInformation><Label Name=\"\" Type=\"text/html\"><![CDATA[" + stringify(self.displayInformation) + "]]></Label></DisplayInformation>";
         if (len(self.additionalFields) > 0):
             entityOutput +=     "<AdditionalFields>";
             for i in range(len(self.additionalFields)):
-                if (str(self.additionalFields[i][2]) <> "strict"):
-                    entityOutput +=     "<Field Name=\"" + str(self.additionalFields[i][0]) + "\" DisplayName=\"" + str(self.additionalFields[i][1]) + "\">" + str(self.additionalFields[i][3]) + "</Field>";
+                if (stringify(self.additionalFields[i][2]) <> "strict"):
+                    entityOutput +=     "<Field Name=\"" + stringify(self.additionalFields[i][0]) + "\" DisplayName=\"" + stringify(self.additionalFields[i][1]) + "\">" + stringify(self.additionalFields[i][3]) + "</Field>";
                 else:
-                    entityOutput +=     "<Field MatchingRule=\"" + str(self.additionalFields[i][2]) + "\" Name=\"" + str(self.additionalFields[i][0]) + "\" DisplayName=\"" + str(self.additionalFields[i][1]) + "\">" + str(self.additionalFields[i][3]) + "</Field>";
+                    entityOutput +=     "<Field MatchingRule=\"" + stringify(self.additionalFields[i][2]) + "\" Name=\"" + stringify(self.additionalFields[i][0]) + "\" DisplayName=\"" + stringify(self.additionalFields[i][1]) + "\">" + stringify(self.additionalFields[i][3]) + "</Field>";
             entityOutput +=     "</AdditionalFields>";
         if (len(self.iconURL) > 0):
             entityOutput +=     "<IconURL>" + self.iconURL + "</IconURL>";
@@ -178,16 +178,16 @@ class MaltegoTransform(object):
             :param pendingEntities:  list of entities which are to be shown in future executions of the transforms.
         '''
         # Creating the new entity
-        newEnt = self.addEntity(str(ent["type"]),str(ent["value"]))
+        newEnt = self.addEntity(stringify(ent["type"]),stringify(ent["value"]))
 
         # Establishing the new value for the entity..
-        newEnt.addAdditionalFields("@value","@value",True,str(ent["value"]))                          
+        newEnt.addAdditionalFields("@value","@value",True,stringify(ent["value"]))                          
         
         # Establishing the new entity type.
-        newEnt.addAdditionalFields("@entity_type","@entity_type",True,str(ent["type"]))                          
+        newEnt.addAdditionalFields("@entity_type","@entity_type",True,stringify(ent["type"]))                          
         
         # This field will contain the number of entities yet to be shown in the GUI
-        newEnt.addAdditionalFields("@number_pending","@number_pending",True,str(len(pendingEntities)))                  
+        newEnt.addAdditionalFields("@number_pending","@number_pending",True,stringify(len(pendingEntities)))                  
 
         # This field will contain the entities that have not been shown yet in the GUI in its attribute field.
         newEnt.addAdditionalFields("@pending","@pending",True,json.dumps(pendingEntities))
@@ -200,7 +200,7 @@ class MaltegoTransform(object):
             newEnt.addAdditionalFields(att["type"], att["type"],True,att["value"])
 
         # Displaying the full information in the tab...
-        newEnt.setDisplayInformation("<h3>" + str(ent["value"]) +"</h3><p>" + json.dumps(ent, indent=2) + "</p>");    
+        newEnt.setDisplayInformation("<h3>" + stringify(ent["value"]) +"</h3><p>" + json.dumps(ent, indent=2) + "</p>");    
         newEnt.setDisplayInformation(json.dumps(ent, indent=2))
         
     def addListOfEntities(self, newEntities):
@@ -225,6 +225,7 @@ class MaltegoTransform(object):
                 addedEntities.append(new)            
             if len(addedEntities) >= 12:
                 # We stop, as Maltego in the Community edition does NOT show more than 12 entities per transform. THIS WILL BE CHANGED IN FUTURE VERSIONS TO LET UPDATE THE PROPERTY NUM_PNEDING OF THE CURRENT ENTITY.
+                self.addException("The entities to be shown is greater than 12, so not all entities can be shown in Community version.")
                 break
 
         # Creating the addedEntities
@@ -304,18 +305,24 @@ class MaltegoTransform(object):
         return maltegoOutput
 
     def writeSTDERR(self,msg):
-        sys.stderr.write(str(msg));
+        sys.stderr.write(stringify(msg));
     
     def heartbeat(self):
         self.writeSTDERR("+");
     
     def progress(self,percent):
-        self.writeSTDERR("%" + str(percent));
+        self.writeSTDERR("%" + stringify(percent));
     
     def debug(self,msg):
-        self.writeSTDERR("D:" + str(msg));
+        self.writeSTDERR("D:" + stringify(msg));
             
 
+
+def stringify(value):
+    try:
+        return json.dumps(value)[1:-1]
+    except:
+        return value
 
 def sanitise(value):
     replace_these = ["&",">","<"];
@@ -325,22 +332,22 @@ def sanitise(value):
         tempvalue = tempvalue.replace(replace_these[i],replace_with[i]);
     return tempvalue;
 
-#######################################################
-# The code is based on an unlicensed Paterva's development. 
-# The only disclaimer of this code is below.
-#######################################################
-# Maltego Python Local Transform Helper               #
-#   Version 0.2                              #
-#                                                     #
-# Local transform specification can be found at:      #
-#    http://ctas.paterva.com/view/Specification          #
-#                                                     #
-# For more help and other local transforms            #
-# try the forum or mail me:                           #
-#                                                     #
-#   http://www.paterva.com/forum                      #
-#                                                     #
-#  Andrew MacPherson [ andrew <<at>> Paterva.com ]    #
-#                                                     #
-#######################################################
+#############################################################
+# The code is based on an unlicensed Paterva's development. #
+# The only disclaimer of this code is below.                #
+#############################################################
+# Maltego Python Local Transform Helper                     #
+#   Version 0.2                                             #
+#                                                           #
+# Local transform specification can be found at:            #
+#    http://ctas.paterva.com/view/Specification             #
+#                                                           #
+# For more help and other local transforms                  #
+# try the forum or mail me:                                 #
+#                                                           #
+#   http://www.paterva.com/forum                            #
+#                                                           #
+#  Andrew MacPherson [ andrew <<at>> Paterva.com ]          #
+#                                                           #
+#############################################################
 

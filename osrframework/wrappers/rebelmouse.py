@@ -81,7 +81,7 @@ class Rebelmouse(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [">Oh Snap!</div>"]
+        self.notFoundText["usufy"] = ["<strong>404 Error</strong>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

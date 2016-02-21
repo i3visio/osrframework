@@ -9,7 +9,9 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #84: fix Maltego installation using the content_scripts. The creation of the Maltego configuration file is currently done by the setup.py script.
 - Fixed issue #88: ods, xls, xlsx are no longer appending results to previously found files. A change in the API now returns only an array of arrays if there is only one sheet.
 - Fixed issue #90: added new documentation files as AUTHORS.md, INSTALL.md and HACKING.md.
-- Fixed couchsurfing.py wrapper for usufy which was not capable of returning a result properly.
+- Changed the maximum number of threads to be opened by OSRFramework transforms in Maltego as this could lead to problems with the applications.
+- Fixed gsmspain.py wrapper for usufy which was not capable of returning a result properly. 
+- Deactivated identi.ca and couchsurfing because the platforms seems to be unstable.
 - Added a browser.cfg to let the user configure OSRFramework browser settings such as the way in which it gets connected to the internet or the user agent.
 - Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
 - Added three new dependencies pyopenssl, ndg-httpsclient, pyasn1 to deal with InsecurePlatformWarning when calling the Twitter API.
