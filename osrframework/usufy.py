@@ -249,11 +249,14 @@ def multi_run_wrapper(args):
         Wrapper for being able to launch all the threads of getPageWrapper.
         :param args: We receive the parameters for getPageWrapper as a tuple.
     '''
-    startTime= dt.datetime.now()
-    print "STARTED:\t", str(args[0])
+    #startTime= dt.datetime.now()
+    #print "STARTED:\t", str(args[0])
+        
     res = getPageWrapper(*args)
-    endTime = dt.datetime.now()
-    print "COMPLETED:\t", str(args[0]), "\t", str(endTime-startTime)
+    
+    #endTime = dt.datetime.now()
+    #print "COMPLETED:\t", str(args[0]), "\t", str(endTime-startTime)
+        
     return res
 
 
@@ -339,7 +342,7 @@ This is free software, and you are welcome to redistribute it under certain cond
             platforms = platform_selection.getAllPlatformNames("usufy")
             res = benchmark.doBenchmark(platforms)
             strTimes = ""
-            for e in sorted(res.keys()):
+            for e in sorted(res.keys()):, verbosity=args.verbose
                 strTimes += str(e) + "\t" + str(res[e]) + "\n"
             logger.info(strTimes)
             return strTimes
@@ -376,7 +379,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                 # Launching the process...
                 res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
             else:
-                res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
+                res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder, verbosity=args.verbose)
 
 
             logger.info("Listing the results obtained...")

@@ -11,6 +11,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #90: added new documentation files as AUTHORS.md, INSTALL.md and HACKING.md.
 - Fixed issue #93: Issue when installing in Windows v0.11.x. An exception has been added in the general.changePermissionsRecursively function to deal with os.chown issues when running on Windows.
 - Added a MANIFEST.in file to include static files in the ./config folder and the configuration of the transforms.
+- Commented logging text in usufy.py.
 - Changed the maximum number of threads to be opened by OSRFramework transforms in Maltego as this could lead to problems with the applications.
 - Fixed gsmspain.py wrapper for usufy which was not capable of returning a result properly. 
 - Deactivated identi.ca and couchsurfing because the platforms seems to be unstable.
@@ -18,6 +19,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
 - Added three new dependencies pyopenssl, ndg-httpsclient, pyasn1 to deal with InsecurePlatformWarning when calling the Twitter API.
 - Removed obsolete functions from osrframework/utils/general.py.
+- Removed the logo.png references.
 
 0.10.5, 2016/02/13 -- Fixed issue #86, Metacafe is returning false positives.
 - Fixed issue #86: Metacafe was returning false positives and the error was updated.

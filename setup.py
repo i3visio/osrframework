@@ -151,7 +151,6 @@ setup(    name="osrframework",
 general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
 files_to_copy= {
     applicationPath : [
-        "config/logo.png",       
     ],
     applicationPathDefaults : [
         "config/accounts.cfg",                                         
