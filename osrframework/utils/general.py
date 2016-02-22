@@ -41,12 +41,22 @@ def changePermissionsRecursively(path, uid, gid):
         itempath = os.path.join(path, item)
         if os.path.isfile(itempath):
             # Setting owner
-            os.chown(itempath, uid, gid)
+            try:
+                os.chown(itempath, uid, gid)
+            except Exception, e:
+                # If this crashes it may be because we are running the 
+                # application in Windows systems, where os.chown does NOT work.
+                pass
             # Setting permissions
             os.chmod(itempath, 0600) 
         elif os.path.isdir(itempath):
             # Setting owner
-            os.chown(itempath, uid, gid)
+            try:
+                os.chown(itempath, uid, gid)
+            except Exception, e:
+                # If this crashes it may be because we are running the 
+                # application in Windows systems, where os.chown does NOT work.
+                pass
             # Setting permissions
             os.chmod(itempath, 6600)             
             # Recursive function to iterate the files
