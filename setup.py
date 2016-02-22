@@ -151,7 +151,6 @@ setup(    name="osrframework",
 general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
 files_to_copy= {
     applicationPath : [
-        "config/logo.png",       
     ],
     applicationPathDefaults : [
         "config/accounts.cfg",                                         
@@ -209,7 +208,7 @@ print "Last part: trying to configure Maltego Transforms..."
 # Creating the configuration file
 try:
     import osrframework.transforms.lib.configure_maltego as maltego
-    maltego.configureMaltego(transformsConfigFolder = applicationPathTransforms, base=os.path.join(HERE,"osrframework/transforms/lib/osrframework-maltego-settings[Base]"), debug = False, backupPath = applicationPathDefaults)
+    maltego.configureMaltego(transformsConfigFolder = applicationPathTransforms, base=os.path.join(HERE,"osrframework/transforms/lib/osrframework-maltego-settings"), debug = False, backupPath = applicationPathDefaults)
 except Exception, e:
     print "WARNING. The Maltego configuration file to use i3visio transforms could not be created and thus, cannot be used. Check the following error:"
     print str(e)

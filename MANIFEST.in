@@ -1,4 +1,4 @@
-recursive-include config/*
-recursive-include osrframework/transforms/lib/osrframework-maltego-settings[Base]/*
-recursive-include osrframework/transforms/lib/*txt
-
+recursive-include config *cfg
+recursive-include osrframework/transforms/lib/osrframework-maltego-settings *
+recursive-include osrframework/transforms/lib *txt
+include *md
