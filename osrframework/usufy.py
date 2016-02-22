@@ -342,7 +342,7 @@ This is free software, and you are welcome to redistribute it under certain cond
             platforms = platform_selection.getAllPlatformNames("usufy")
             res = benchmark.doBenchmark(platforms)
             strTimes = ""
-            for e in sorted(res.keys()):, verbosity=args.verbose
+            for e in sorted(res.keys()):
                 strTimes += str(e) + "\t" + str(res[e]) + "\n"
             logger.info(strTimes)
             return strTimes
@@ -379,7 +379,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                 # Launching the process...
                 res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
             else:
-                res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder, verbosity=args.verbose)
+                res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
 
 
             logger.info("Listing the results obtained...")
