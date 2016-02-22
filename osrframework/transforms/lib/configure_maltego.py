@@ -30,7 +30,7 @@ import osrframework.utils.general as general
 
 VERSION = "v0.9"
 
-def copyAnything(src="./osrframework-maltego-settings-[Base]", dst=os.path.join("./", "tmp", "osrframework-maltego-settings") ):
+def copyAnything(src="./osrframework-maltego-settings", dst=os.path.join("./", "tmp", "osrframework-maltego-settings") ):
     '''
         :param src: Source folder.
         :param dst: Destination folder.

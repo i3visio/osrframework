@@ -209,7 +209,7 @@ print "Last part: trying to configure Maltego Transforms..."
 # Creating the configuration file
 try:
     import osrframework.transforms.lib.configure_maltego as maltego
-    maltego.configureMaltego(transformsConfigFolder = applicationPathTransforms, base=os.path.join(HERE,"osrframework/transforms/lib/osrframework-maltego-settings[Base]"), debug = False, backupPath = applicationPathDefaults)
+    maltego.configureMaltego(transformsConfigFolder = applicationPathTransforms, base=os.path.join(HERE,"osrframework/transforms/lib/osrframework-maltego-settings"), debug = False, backupPath = applicationPathDefaults)
 except Exception, e:
     print "WARNING. The Maltego configuration file to use i3visio transforms could not be created and thus, cannot be used. Check the following error:"
     print str(e)
