@@ -138,7 +138,7 @@ setup(    name="osrframework",
         "tabulate",
         "oauthlib>=1.0.0",
         # Adding dependencies to avoid the InsecurePlatformWarning when calling Twitter API dealing with SSL: <http://stackoverflow.com/a/29202163>. Other options would require the user to upgrade to Python 2.7.9.
-        #"pyopenssl",
+        "pyopenssl",
         "ndg-httpsclient",
         "pyasn1"
     ],    
@@ -147,8 +147,12 @@ setup(    name="osrframework",
 ############################
 ### Creating other files ###
 ############################
+try:
+    general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
+except:
+    # Something happened with the permissions... We omit this.
+    pass
 
-general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
 files_to_copy= {
     applicationPath : [
     ],
