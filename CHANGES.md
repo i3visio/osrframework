@@ -12,6 +12,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #93: Issue when installing in Windows v0.11.x. An exception has been added in the general.changePermissionsRecursively function to deal with os.chown issues when running on Windows.
 - Added a MANIFEST.in file to include static files in the ./config folder and the configuration of the transforms.
 - Commented logging text in usufy.py.
+- Added the missing script config_api_keys.py which was previously ignored.
 - Changed the maximum number of threads to be opened by OSRFramework transforms in Maltego as this could lead to problems with the applications.
 - Fixed gsmspain.py wrapper for usufy which was not capable of returning a result properly. 
 - Deactivated identi.ca and couchsurfing because the platforms seems to be unstable.
