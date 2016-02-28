@@ -61,13 +61,13 @@ def getConfigPath(configFileName = None):
     if configFileName != None:
         # Returning the path of the configuration file
         if sys.platform == 'win32':
-            return os.path.expanduser(os.path.join('~/', 'OSRFramework', configFileName))
+            return os.path.expanduser(os.path.join('~\\', 'OSRFramework', configFileName))
         else:
             return os.path.expanduser(os.path.join('~/', '.config', 'OSRFramework', configFileName))
     else:
         # Returning the path of the configuration folder
         if sys.platform == 'win32':
-            return os.path.expanduser(os.path.join('~/', 'OSRFramework'))
+            return os.path.expanduser(os.path.join('~\\', 'OSRFramework'))
         else:
             return os.path.expanduser(os.path.join('~/', '.config', 'OSRFramework'))
 

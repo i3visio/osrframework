@@ -58,9 +58,10 @@ applicationPathTransforms = os.path.join(applicationPath, "transforms")
 # Copying the default configuration files.
 if not os.path.exists(applicationPathDefaults):
     os.makedirs(applicationPathDefaults) 
+	
 if not os.path.exists(applicationPathTransforms):
     os.makedirs(applicationPathTransforms) 
- 
+
 # Launching the setup
 setup(    name="osrframework",
     version=NEW_VERSION,
@@ -157,38 +158,38 @@ files_to_copy= {
     applicationPath : [
     ],
     applicationPathDefaults : [
-        "config/accounts.cfg",                                         
-        "config/api_keys.cfg",                                         
-        "config/browser.cfg",
+        os.path.join("config", "accounts.cfg"),
+        os.path.join("config", "api_keys.cfg"),
+        os.path.join("config", "browser.cfg"),
     ],
     applicationPathTransforms : [                
-        "osrframework/transforms/aliasToKnownEmails.py", 
-        "osrframework/transforms/aliasToSkypeAccounts.py", 
-        "osrframework/transforms/aliasToSkypeIP.py", 
-        "osrframework/transforms/bitcoinAddressToBlockchainDetails.py", 
-        "osrframework/transforms/coordinatesToGoogleMapsBrowser.py", 
-        "osrframework/transforms/coordinatesToTwitterBrowser.py", 
-        "osrframework/transforms/domainToGoogleSearchUriWithEmails.py", 
-        "osrframework/transforms/domainToTld.py", 
-        "osrframework/transforms/emailToAlias.py", 
-        "osrframework/transforms/emailToBreachedAccounts.py", 
-        "osrframework/transforms/emailToDomain.py", 
-        "osrframework/transforms/emailToSkypeAccounts.py", 
-        "osrframework/transforms/expandPropertiesFromI3visioEntity.py", 
-        "osrframework/transforms/hashToMD5crackDotCom.py", 
-        "osrframework/transforms/ipToIp_ApiInformation.py", 
-        "osrframework/transforms/phoneToMoreInfo.py", 
-        "osrframework/transforms/phoneToPerson.py", 
-        "osrframework/transforms/textToEntities.py", 
-        "osrframework/transforms/textToGoogleSearchUri.py", 
-        "osrframework/transforms/textToPlatformSearch.py", 
-        "osrframework/transforms/textToProfiles.py", 
-        "osrframework/transforms/uriToBrowser.py", 
-        "osrframework/transforms/uriToDomain.py", 
-        "osrframework/transforms/uriToEntities.py", 
-        "osrframework/transforms/uriToGoogleCacheUri.py", 
-        "osrframework/transforms/uriToPort.py", 
-        "osrframework/transforms/uriToProtocol.py",                
+        os.path.join("osrframework", "transforms", "aliasToKnownEmails.py"),
+        os.path.join("osrframework", "transforms", "aliasToSkypeAccounts.py"),
+        os.path.join("osrframework", "transforms", "aliasToSkypeIP.py"),
+        os.path.join("osrframework", "transforms", "bitcoinAddressToBlockchainDetails.py"),
+        os.path.join("osrframework", "transforms", "coordinatesToGoogleMapsBrowser.py"),
+        os.path.join("osrframework", "transforms", "coordinatesToTwitterBrowser.py"),
+        os.path.join("osrframework", "transforms", "domainToGoogleSearchUriWithEmails.py"),
+        os.path.join("osrframework", "transforms", "domainToTld.py"),
+        os.path.join("osrframework", "transforms", "emailToAlias.py"),
+        os.path.join("osrframework", "transforms", "emailToBreachedAccounts.py"),
+        os.path.join("osrframework", "transforms", "emailToDomain.py"),
+        os.path.join("osrframework", "transforms", "emailToSkypeAccounts.py"),
+        os.path.join("osrframework", "transforms", "expandPropertiesFromI3visioEntity.py"),
+        os.path.join("osrframework", "transforms", "hashToMD5crackDotCom.py"),
+        os.path.join("osrframework", "transforms", "ipToIp_ApiInformation.py"),
+        os.path.join("osrframework", "transforms", "phoneToMoreInfo.py"),
+        os.path.join("osrframework", "transforms", "phoneToPerson.py"),
+        os.path.join("osrframework", "transforms", "textToEntities.py"),
+        os.path.join("osrframework", "transforms", "textToGoogleSearchUri.py"),
+        os.path.join("osrframework", "transforms", "textToPlatformSearch.py"),
+        os.path.join("osrframework", "transforms", "textToProfiles.py"),
+        os.path.join("osrframework", "transforms", "uriToBrowser.py"),
+        os.path.join("osrframework", "transforms", "uriToDomain.py"),
+        os.path.join("osrframework", "transforms", "uriToEntities.py"),
+        os.path.join("osrframework", "transforms", "uriToGoogleCacheUri.py"),
+        os.path.join("osrframework", "transforms", "uriToPort.py"),
+        os.path.join("osrframework", "transforms", "uriToProtocol.py"),
     ] 
 }
 
@@ -204,7 +205,7 @@ for destiny in files_to_copy.keys():
             cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
         elif sys.platform == 'linux2' or sys.platform == 'darwin':   
             cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
-
+        print cmd
         output = os.popen(cmd).read()    
 
 print    
