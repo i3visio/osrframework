@@ -163,6 +163,12 @@ files_to_copy= {
         os.path.join("config", "browser.cfg"),
     ],
     applicationPathTransforms : [                
+        os.path.join("osrframework", "alias_generator.py"),
+        os.path.join("osrframework", "entify.py"),
+        os.path.join("osrframework", "phonefy.py"),
+        os.path.join("osrframework", "searchfy.py"),
+        os.path.join("osrframework", "mailfy.py"),
+        os.path.join("osrframework", "usufy.py"),
         os.path.join("osrframework", "transforms", "aliasToKnownEmails.py"),
         os.path.join("osrframework", "transforms", "aliasToSkypeAccounts.py"),
         os.path.join("osrframework", "transforms", "aliasToSkypeIP.py"),
@@ -205,7 +211,7 @@ for destiny in files_to_copy.keys():
             cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
         elif sys.platform == 'linux2' or sys.platform == 'darwin':   
             cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
-        print cmd
+        #print cmd
         output = os.popen(cmd).read()    
 
 print    

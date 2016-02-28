@@ -68,7 +68,7 @@ You can find the configuration files in a folder created in your user home:
 # Configuration files for Linux and MacOS
 ~/.config/OSRFramework/
 # Configuration files for Windows
-%APP_DATA%/OSRFramework/
+C:\Users\<User>\OSRFramework\
 ```
 
 OSRFramework will look for the configuration settings stored there. You can add new credentials there and if something goes wrong, you can always restore the files stored in the `defaults` subfolder.

@@ -12,6 +12,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #93: Issue when installing in Windows v0.11.x. An exception has been added in the general.changePermissionsRecursively function to deal with os.chown issues when running on Windows.
 - Fixed issue #98: Configuration files seem not to be copied correctly in the installation process. In Windows there was a problem with the direction of the slashes. Updated the configuration.py file to address it.
 - Fixed issue #100: With the new installation procedure, networkx should be installed in the system. Added a osrframework/utils/configuration.py file.
+- Transforms adjusted to use a copy of the scripts stored in the transforms folder inside the configuration directory to fix an issue when trying to run the scripts from Maltego, which seems not to be capable of launching them otherwise making calls in the "python usufy.py..." way in Windows systems. 
 - Added a MANIFEST.in file to include static files in the ./config folder and the configuration of the transforms.
 - Commented logging text in usufy.py.
 - Added the missing script config_api_keys.py which was previously ignored.

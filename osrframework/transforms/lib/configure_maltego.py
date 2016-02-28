@@ -28,7 +28,7 @@ import shutil, errno
 import osrframework
 import osrframework.utils.configuration as configuration
 
-VERSION = "v0.9"
+VERSION = "v0.10"
 
 def copyAnything(src="./osrframework-maltego-settings", dst=os.path.join("./", "tmp", "osrframework-maltego-settings") ):
     '''
