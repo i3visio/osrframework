@@ -3,13 +3,14 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.11.0b, 2016/02/23 -- Adding configuration files so as to let the user configure credentials and API keys, as well as making the Maltego transforms work with the current architecture.
+0.11.0b, 2016/02/28 -- Adding configuration files so as to let the user configure credentials and API keys, as well as making the Maltego transforms work with the current architecture.
 - Fixed issue #51: settings for credentials, API keys and connectivity are now stored in the user's home.
 - Fixed issue #65: add threading to mailfy.py to allow parallel queries.
 - Fixed issue #84: fix Maltego installation using the content_scripts. The creation of the Maltego configuration file is currently done by the setup.py script.
 - Fixed issue #88: ods, xls, xlsx are no longer appending results to previously found files. A change in the API now returns only an array of arrays if there is only one sheet.
 - Fixed issue #90: added new documentation files as AUTHORS.md, INSTALL.md and HACKING.md.
 - Fixed issue #93: Issue when installing in Windows v0.11.x. An exception has been added in the general.changePermissionsRecursively function to deal with os.chown issues when running on Windows.
+- Fixed issue #100: With the new installation procedure, networkx should be installed in the system. Added a osrframework/utils/configuration.py file.
 - Added a MANIFEST.in file to include static files in the ./config folder and the configuration of the transforms.
 - Commented logging text in usufy.py.
 - Added the missing script config_api_keys.py which was previously ignored.

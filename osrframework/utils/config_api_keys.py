@@ -1,10 +1,11 @@
+# !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
 ##################################################################################
 #
-#    This file is part of OSRFramework.
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
-#    OSRFramework is free software: you can redistribute it and/or modify
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -22,7 +23,7 @@
 import os
 import ConfigParser
 
-import osrframework.utils.general as general
+import osrframework.utils.configuration as configuration
 
 def returnListOfAPIKeys():
     '''
@@ -31,13 +32,13 @@ def returnListOfAPIKeys():
     dictAPIKeys = {}
     
     # If a api_keys.cfg has not been found, creating it by copying from default
-    configPath = general.getConfigPath("api_keys.cfg")
+    configPath = configuration.getConfigPath("api_keys.cfg")
 
     # Checking if the configuration file exists
     if not os.path.exists(configPath):
         try:
             # Copy the data from the default folder
-            defaultConfigPath = general.getConfigPath(os.path.join("default", "api_keys.cfg"))
+            defaultConfigPath = configuration.getConfigPath(os.path.join("default", "api_keys.cfg"))
      
             with open(configPath, "w") as oF:
                 with open(defaultConfigPath) as iF:

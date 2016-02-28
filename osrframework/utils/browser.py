@@ -3,7 +3,9 @@
 #
 ##################################################################################
 #
-#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -26,7 +28,7 @@ import random
 import os
 
 
-import osrframework.utils.general as general
+import osrframework.utils.configuration as configuration
 
 # logging imports
 import logging
@@ -65,13 +67,13 @@ class Browser():
         # Trying to read the configuration
         # --------------------------------
         # If a current.cfg has not been found, creating it by copying from default
-        configPath = general.getConfigPath("browser.cfg")
+        configPath = configuration.getConfigPath("browser.cfg")
 
         # Checking if the configuration file exists
         if not os.path.exists(configPath):
             try:
                 # Copy the data from the default folder
-                defaultConfigPath = general.getConfigPath(os.path.join("default", "browser.cfg"))
+                defaultConfigPath = configuration.getConfigPath(os.path.join("default", "browser.cfg"))
          
                 with open(configPath, "w") as oF:
                     with open(defaultConfigPath) as iF:

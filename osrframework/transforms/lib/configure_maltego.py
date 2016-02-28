@@ -26,7 +26,7 @@ import argparse
 import shutil, errno
 
 import osrframework
-import osrframework.utils.general as general
+import osrframework.utils.configuration as configuration
 
 VERSION = "v0.9"
 
@@ -163,7 +163,7 @@ if __name__ == "__main__":
     args = parser.parse_args()        
 
     # Creating the application path
-    applicationPath = general.getConfigPath()
+    applicationPath = configuration.getConfigPath()
     applicationPathDefaults = os.path.join(applicationPath, "default")
     applicationPathTransforms = os.path.join(applicationPath, "transforms")
 

@@ -5,7 +5,7 @@
 #
 #    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
-#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -29,7 +29,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 import osrframework
 NEW_VERSION = osrframework.__version__
 
-import osrframework.utils.general as general
+import osrframework.utils.configuration as configuration
 
 # Depending on the place in which the project is going to be upgraded
 from setuptools import setup
@@ -51,7 +51,7 @@ except:
 
 
 # Creating the application path
-applicationPath = general.getConfigPath()
+applicationPath = configuration.getConfigPath()
 applicationPathDefaults = os.path.join(applicationPath, "default")
 applicationPathTransforms = os.path.join(applicationPath, "transforms")
 
@@ -148,7 +148,7 @@ setup(    name="osrframework",
 ### Creating other files ###
 ############################
 try:
-    general.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
+    configuration.changePermissionsRecursively(applicationPath, int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
 except:
     # Something happened with the permissions... We omit this.
     pass
