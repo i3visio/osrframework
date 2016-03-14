@@ -312,7 +312,7 @@ def getParser():
     groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices= ['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default = ["all"])
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=16, type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')    
+    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=16, type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')    
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options

@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.11.0b, 2016/02/28 -- Adding configuration files so as to let the user configure credentials and API keys, as well as making the Maltego transforms work with the current architecture.
+0.11.0, 2016/03/14 -- Adding configuration files so as to let the user configure credentials and API keys, as well as making the Maltego transforms work with the current architecture.
 - Fixed issue #51: settings for credentials, API keys and connectivity are now stored in the user's home.
 - Fixed issue #65: add threading to mailfy.py to allow parallel queries.
 - Fixed issue #84: fix Maltego installation using the content_scripts. The creation of the Maltego configuration file is currently done by the setup.py script.
