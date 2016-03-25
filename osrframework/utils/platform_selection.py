@@ -2,7 +2,7 @@
 #
 ################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ import osrframework.utils.credentials as credentials
 ##################################################
 # A
 from osrframework.wrappers.about import About
-from osrframework.wrappers.adtriboo import Adtriboo
+# Issue #103: Removed as this has been moved to Twago
+#from osrframework.wrappers.adtriboo import Adtriboo
 from osrframework.wrappers.ahmia import Ahmia
 from osrframework.wrappers.anarchy101 import Anarchy101
 from osrframework.wrappers.aporrealos import Aporrealos
@@ -421,7 +422,8 @@ def getAllPlatformObjects(mode = None):
     # A
     # Requires javascript
     listAll.append(About())
-    listAll.append(Adtriboo())
+    # Issue #102: Moved to Twago
+    #listAll.append(Adtriboo())
     listAll.append(Ahmia())
     listAll.append(Anarchy101())
     listAll.append(Aporrealos())
@@ -498,7 +500,8 @@ def getAllPlatformObjects(mode = None):
     #listAll.append(Eqe())
     listAll.append(Ethereum())
     listAll.append(Etsy())
-    listAll.append(Evilzone())
+    # Issue 104: Temporally deactivated
+    #listAll.append(Evilzone())
 
     # F
     listAll.append(Facebook())
