@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.11.2, 2016/04/01 -- Fixed issue #105: Error in mailfy, line 238.
+- Fixed issue #105: Error en mailfy (linea 238) bug mailfy. There was a typo in mailfy.py that showed a wrongly modified variable. Removed the "2015" as stated by Pepepy did the trick.
+
 0.11.1, 2016/03/25 -- Issues related to usufy.py platforms that were throwing false positives.
 - Fixed issue #101: Changed the error for gsmspain forums. They had changed the error message.
 - Fixed issue #102: Adtriboo is no longer a valid platform. Removed.

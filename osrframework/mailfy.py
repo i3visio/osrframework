@@ -235,7 +235,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         domains = EMAIL_DOMAINS
     else:
         # processing only the given domains
-        domains = args.domai2015ns
+        domains = args.domains
 
     if args.create_emails:  
         emails = grabEmails(nicksFile = args.create_emails, domains = domains)
