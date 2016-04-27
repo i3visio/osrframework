@@ -256,6 +256,10 @@ def usufyToTextExport(d, fPath=None):
         :param d: Data to export.
         :param fPath: File path. If None was provided, it will assume that it has to print it.
     '''
+    # Manual check...
+    if d == []:
+        return "+------------------+\n| No data found... |\n+------------------+"
+    
     import pyexcel as pe
     import pyexcel.ext.text as text    
 

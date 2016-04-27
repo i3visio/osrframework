@@ -241,7 +241,8 @@ from osrframework.wrappers.rapid import Rapid
 from osrframework.wrappers.ratemypoo import Ratemypoo
 from osrframework.wrappers.rebelmouse import Rebelmouse
 from osrframework.wrappers.redtube import Redtube
-from osrframework.wrappers.relatious import Relatious
+# Issue #114
+#from osrframework.wrappers.relatious import Relatious
 from osrframework.wrappers.researchgate import Researchgate
 from osrframework.wrappers.retailmenot import Retailmenot
 from osrframework.wrappers.rojadirecta import Rojadirecta
@@ -266,12 +267,14 @@ from osrframework.wrappers.steamcommunity import Steamcommunity
 from osrframework.wrappers.steinberg import Steinberg
 from osrframework.wrappers.streakgaming import Streakgaming
 from osrframework.wrappers.stuff import Stuff
-from osrframework.wrappers.stumbleupon import Stumbleupon
+# Issue  #113
+#from osrframework.wrappers.stumbleupon import Stumbleupon
 
 # T
 from osrframework.wrappers.teamtreehouse import Teamtreehouse
 from osrframework.wrappers.techcrunch import Techcrunch
-from osrframework.wrappers.thecarcommunity import Thecarcommunity
+# Issue #113
+#from osrframework.wrappers.thecarcommunity import Thecarcommunity
 from osrframework.wrappers.theguardian import Theguardian
 from osrframework.wrappers.thehoodup import Thehoodup
 from osrframework.wrappers.thepiratebay import Thepiratebay
@@ -320,7 +323,8 @@ from osrframework.wrappers.wikipediafr import WikipediaFr
 from osrframework.wrappers.wikipediapt import WikipediaPt
 from osrframework.wrappers.winamp import Winamp
 from osrframework.wrappers.wishlistr import Wishlistr
-from osrframework.wrappers.worldcarfans import Worldcarfans
+# Issue #115
+#from osrframework.wrappers.worldcarfans import Worldcarfans
 from osrframework.wrappers.wordpress import Wordpress
 from osrframework.wrappers.wykop import Wykop
 
@@ -636,7 +640,8 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Ratemypoo())
     listAll.append(Rebelmouse())
     listAll.append(Redtube())
-    listAll.append(Relatious())
+    # Issue #114
+    #listAll.append(Relatious())
     listAll.append(Researchgate())
     listAll.append(Retailmenot())
     listAll.append(Rojadirecta())
@@ -661,12 +666,14 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Steinberg())
     listAll.append(Streakgaming())
     listAll.append(Stuff())
-    listAll.append(Stumbleupon())
+    # Issue 113
+    #listAll.append(Stumbleupon())
 
     # T
     listAll.append(Teamtreehouse())
     listAll.append(Techcrunch())
-    listAll.append(Thecarcommunity())
+    # Issue #113
+    #listAll.append(Thecarcommunity())
     #listAll.append(Theguardian())
     listAll.append(Thehoodup())
     listAll.append(Thepiratebay())
@@ -714,7 +721,8 @@ def getAllPlatformObjects(mode = None):
     listAll.append(WikipediaPt())
     listAll.append(Winamp())
     listAll.append(Wishlistr())
-    listAll.append(Worldcarfans())
+    # Issue #115
+    #listAll.append(Worldcarfans())
     listAll.append(Wordpress())
     listAll.append(Wykop())
 
