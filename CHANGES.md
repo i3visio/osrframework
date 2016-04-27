@@ -3,8 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.11.4, 2016/04/28 -- Corrected a fix #116 in mailfy.py after breaking a thing before committing...
+- Fixed issue #116: Mailfy.py is now throwing an error message when the email does not exist.
+
 0.11.3, 2016/04/28 -- Several fixes addressed (#116, #115, #114, #113, #112) regarding with obsolete platforms.
-- Fixed issue #116: Mailfy.py is now throwing an error message when the email does not exist. Added a manual check in usufyToTextExport to avoid this error in all the tables printed when they don't have any information to print.
 - Fixed issue #115: Worldcarfans is no longer working bug usufy. Removed.
 - Fixed issue #114: Relatious.com platform is broken bug usufy. Removed.
 - Fixed issue #113: Thecarcommunity platform is broken. Removed.

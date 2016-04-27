@@ -270,7 +270,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         print "You can find all the information collected in the following files:"
         for ext in args.extension:
             # Showing the output files
-            print "\t-" + fileHeader + "." + ext"
+            print "\t-" + fileHeader + "." + ext
     # Showing the execution time...
     if not args.quiet:
         print
