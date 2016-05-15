@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.1"
+__version__ = "v3.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -52,7 +52,34 @@ from validate_email import validate_email
             
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
-EMAIL_DOMAINS = ["126.com", "163.com", "189.cn", "gmail.com", "hushmail.com", "keemail.me", "protonmail.com", "yandex.com", "yeah.net"]
+
+EMAIL_DOMAINS = [
+    "126.com", 
+    "163.com", 
+    "189.cn", 
+    "aaathats3as.com",
+    "cocaine.ninja",
+    "cock.lu",
+    "cock.email", 
+    "firemail.cc", 
+    "hitler.rocks", 
+    "getbackinthe.kitchen", 
+    "gmail.com", 
+    "hushmail.com", 
+    "keemail.me", 
+    "lycos.com",
+    "memeware.net", 
+    "protonmail.com", 
+    "rediffmail.com",
+    "tuta.io", 
+    "tutamail.com", 
+    "tutanota.com", 
+    "tutanota.de", 
+    "waifu.club", 
+    "yandex.com", 
+    "yeah.net", 
+    "zoho.com"
+]
 
 
 def getMoreInfo(e):
@@ -87,10 +114,27 @@ def weCanCheckTheseDomains(email):
     '''
     '''
     # Known platform not to be working...
-    notWorking = ["outlook.com", "hotmail.com", "@yahoo.", "@ymail", "@gmx.", "@inbox.", "@mail.ru", "@gandhi.net"]
+    notWorking = [
+        "@aol.com",
+        "@bk.ru",
+        "@gmx.", 
+        "@hotmail.co", 
+        "@inbox.com",
+        "@latinmail.com", 
+        "@mail.ru", 
+        "@mail2tor.com", 
+        "@outlook.com", 
+        "@rambler.ru",
+        "@starmedia.com",
+        "@ukr.net",
+        "@yahoo.", 
+        "@ymail."
+    ]
+
     #notWorking = []
     for n in notWorking:
         if n in email:
+            print "WARNING: the domain of '" + email + "' has been blacklisted by mailfy.py as it CANNOT BE VERIFIED."
             return False
     emailDomains = EMAIL_DOMAINS
     safe = False

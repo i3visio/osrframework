@@ -3,6 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.11.5, 2016/05/15 -- Added 16 new email providers for mailfy.py.
+- The following email providers have been whitelisted in mailfy.py: aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, lycos.com, memeware.net, rediffmail.com, tuta.io, tutamail.com, tutanota.com, tutanota.de, waifu.club and zoho.com.
+- Some updates done in the mailfy.py blacklists.
+
 0.11.4, 2016/04/28 -- Corrected a fix #116 in mailfy.py after breaking a thing before committing...
 - Fixed issue #116: Mailfy.py is now throwing an error message when the email does not exist.
 
