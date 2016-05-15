@@ -330,7 +330,8 @@ from osrframework.wrappers.wykop import Wykop
 
 # X
 from osrframework.wrappers.xanga import Xanga
-from osrframework.wrappers.xat import Xat
+# Issue #120. Temporally deactivated
+#from osrframework.wrappers.xat import Xat
 from osrframework.wrappers.xing import Xing
 from osrframework.wrappers.xtube import Xtube
 
@@ -728,7 +729,8 @@ def getAllPlatformObjects(mode = None):
 
     # X
     listAll.append(Xanga())
-    listAll.append(Xat())
+    # Issue #120. Temporally deactivated.
+    #listAll.append(Xat())
     listAll.append(Xing())
     listAll.append(Xtube())
 
