@@ -7,6 +7,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #125: Ibosocial has changed its error for non-existing websites... Changed the error message.
 - Fixed issue #124: Freebase wrapper does not work...
 - Fixed issue #123: Arto has closed its service... :(. Platform removed.
+- Fixed issue with thepiratebay.mk. Added a new message to find platforms which are no longer available.
 - Removed other non working platforms that were maintained unnecessarily.
 
 0.11.5, 2016/05/15 -- Added 16 new email providers for mailfy.py.
