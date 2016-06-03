@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -29,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Relatious(Platform):
+class Tune(Platform):
     """ 
-        A <Platform> object for Relatious.
+        A <Platform> object for Tune.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Relatious"
-        self.tags = ["contact"]
+        self.platformName = "Tune"
+        self.tags = ["social", "video"] 
 
         ########################
         # Defining valid modes #
@@ -54,7 +54,7 @@ class Relatious(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://relatious.com/" + "<usufy>"       
+        self.url["usufy"] = "http://tune.pk/user/" + "<usufy>" + "/about/"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Relatious(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Relatious</title>"]
+        self.notFoundText["usufy"] = ["<h1>User does not exist!</h1>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -97,7 +97,7 @@ class Relatious(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.location.country"] = {"start": "<img src='https://tune.pk/images/icons/country/..\.png' title=\"", "end": "\" /> <span>"}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
@@ -109,4 +109,4 @@ class Relatious(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
         
-                
+        

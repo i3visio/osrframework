@@ -25,8 +25,6 @@ import osrframework.utils.credentials as credentials
 ##################################################
 # A
 from osrframework.wrappers.about import About
-# Issue #103: Removed as this has been moved to Twago
-#from osrframework.wrappers.adtriboo import Adtriboo
 from osrframework.wrappers.ahmia import Ahmia
 from osrframework.wrappers.anarchy101 import Anarchy101
 from osrframework.wrappers.aporrealos import Aporrealos
@@ -37,7 +35,6 @@ from osrframework.wrappers.ariva import Ariva
 from osrframework.wrappers.armorgames import Armorgames
 #from osrframework.wrappers.artbreak import Artbreak
 from osrframework.wrappers.artician import Artician
-from osrframework.wrappers.arto import Arto
 from osrframework.wrappers.askfm import Askfm
 from osrframework.wrappers.audiob import Audiob
 from osrframework.wrappers.audioboo import Audioboo
@@ -119,10 +116,7 @@ from osrframework.wrappers.forobtc import Forobtc
 from osrframework.wrappers.forocoches import Forocoches
 from osrframework.wrappers.forosperu import Forosperu
 from osrframework.wrappers.foursquare import Foursquare
-from osrframework.wrappers.freebase import Freebase
 from osrframework.wrappers.freerepublic import Freerepublic
-# Project discontinued on 9th April, 2015
-#from osrframework.wrappers.friendfeed import Friendfeed
 
 # G
 from osrframework.wrappers.gamesheep import Gamesheep
@@ -241,8 +235,6 @@ from osrframework.wrappers.rapid import Rapid
 from osrframework.wrappers.ratemypoo import Ratemypoo
 from osrframework.wrappers.rebelmouse import Rebelmouse
 from osrframework.wrappers.redtube import Redtube
-# Issue #114
-#from osrframework.wrappers.relatious import Relatious
 from osrframework.wrappers.researchgate import Researchgate
 from osrframework.wrappers.retailmenot import Retailmenot
 from osrframework.wrappers.rojadirecta import Rojadirecta
@@ -273,8 +265,6 @@ from osrframework.wrappers.stuff import Stuff
 # T
 from osrframework.wrappers.teamtreehouse import Teamtreehouse
 from osrframework.wrappers.techcrunch import Techcrunch
-# Issue #113
-#from osrframework.wrappers.thecarcommunity import Thecarcommunity
 from osrframework.wrappers.theguardian import Theguardian
 from osrframework.wrappers.thehoodup import Thehoodup
 from osrframework.wrappers.thepiratebay import Thepiratebay
@@ -287,6 +277,7 @@ from osrframework.wrappers.tripadvisor import Tripadvisor
 from osrframework.wrappers.tripit import Tripit
 from osrframework.wrappers.trulia import Trulia
 from osrframework.wrappers.tumblr import Tumblr
+from osrframework.wrappers.tune import Tune
 from osrframework.wrappers.tuporno import Tuporno
 from osrframework.wrappers.twicsy import Twicsy
 # Temporarily deactivated: 2015-06-21
@@ -296,8 +287,6 @@ from osrframework.wrappers.twitter import Twitter
 from osrframework.wrappers.twoplustwo import Twoplustwo
 
 # U
-# Seems to be down: 2015-06-21
-#from osrframework.wrappers.ukdebate import Ukdebate
 from osrframework.wrappers.ummahforum import Ummahforum
 from osrframework.wrappers.unsystem import Unsystem
 from osrframework.wrappers.ustream import Ustream
@@ -323,8 +312,6 @@ from osrframework.wrappers.wikipediafr import WikipediaFr
 from osrframework.wrappers.wikipediapt import WikipediaPt
 from osrframework.wrappers.winamp import Winamp
 from osrframework.wrappers.wishlistr import Wishlistr
-# Issue #115
-#from osrframework.wrappers.worldcarfans import Worldcarfans
 from osrframework.wrappers.wordpress import Wordpress
 from osrframework.wrappers.wykop import Wykop
 
@@ -427,8 +414,6 @@ def getAllPlatformObjects(mode = None):
     # A
     # Requires javascript
     listAll.append(About())
-    # Issue #102: Moved to Twago
-    #listAll.append(Adtriboo())
     listAll.append(Ahmia())
     listAll.append(Anarchy101())
     listAll.append(Aporrealos())
@@ -439,7 +424,6 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Armorgames())
     #listAll.append(Artbreak())
     listAll.append(Artician())
-    listAll.append(Arto())
     listAll.append(Askfm())
     listAll.append(Audiob())
     listAll.append(Audioboo())
@@ -522,10 +506,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Forocoches())
     listAll.append(Forosperu())
     listAll.append(Foursquare())
-    listAll.append(Freebase())
     listAll.append(Freerepublic())
-    # Project discontinued on 9th April, 2015
-    #listAll.append(Friendfeed())
 
     # G
     listAll.append(Gamesheep())
@@ -641,8 +622,6 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Ratemypoo())
     listAll.append(Rebelmouse())
     listAll.append(Redtube())
-    # Issue #114
-    #listAll.append(Relatious())
     listAll.append(Researchgate())
     listAll.append(Retailmenot())
     listAll.append(Rojadirecta())
@@ -673,8 +652,6 @@ def getAllPlatformObjects(mode = None):
     # T
     listAll.append(Teamtreehouse())
     listAll.append(Techcrunch())
-    # Issue #113
-    #listAll.append(Thecarcommunity())
     #listAll.append(Theguardian())
     listAll.append(Thehoodup())
     listAll.append(Thepiratebay())
@@ -687,6 +664,7 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Tripit())
     listAll.append(Trulia())
     listAll.append(Tumblr())
+    listAll.append(Tune())
     listAll.append(Tuporno())
     listAll.append(Twicsy())
     # Temporarily deactivated: 2015-06-21
@@ -696,8 +674,6 @@ def getAllPlatformObjects(mode = None):
     listAll.append(Twoplustwo())
 
     # U
-    # Seems to be down: 2015-06-21
-    #listAll.append(Ukdebate())
     listAll.append(Ummahforum())
     listAll.append(Unsystem())
     listAll.append(Ustream())
@@ -722,8 +698,6 @@ def getAllPlatformObjects(mode = None):
     listAll.append(WikipediaPt())
     listAll.append(Winamp())
     listAll.append(Wishlistr())
-    # Issue #115
-    #listAll.append(Worldcarfans())
     listAll.append(Wordpress())
     listAll.append(Wykop())
 
