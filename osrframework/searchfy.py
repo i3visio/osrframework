@@ -104,6 +104,10 @@ This is free software, and you are welcome to redistribute it under certain cond
     if not args.maltego:
         print "A summary of the results obtained are listed in the following table:"
         print unicode(general.usufyToTextExport(results))
+
+        if args.web_browser:
+            general.openResultsInBrowser(results)
+
         print "You will find all the information collected in the following files:"
         for ext in args.extension:
             # Generating output files
@@ -144,6 +148,7 @@ def getParser():
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')
     groupProcessing.add_argument('--process', required=False, default =False ,action='store_true', help='whether to process the info in the profiles recovered. NOTE: this would be much slower.')
+    groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the URIs returned in the default web browser.')
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')

@@ -700,3 +700,44 @@ def getFilesFromAFolder(path):
     return onlyFiles
 
 
+
+import webbrowser as wb
+import subprocess
+
+def uriToBrowser(uri=None):
+    ''' 
+        Method that launches the URI in the default browser of the system. This returns no new entity.
+
+        :param uri:    uri to open.
+    '''
+    # Temporally deactivating standard ouptut and error:
+    #   Source: <https://stackoverflow.com/questions/2323080/how-can-i-disable-the-webbrowser-message-in-python>
+
+    # Cloning stdout (1) and stderr (2)
+    savout1 = os.dup(1)
+    savout2 = os.dup(2)
+
+    # Closing them
+    os.close(1)
+    os.close(2)
+    os.open(os.devnull, os.O_RDWR)
+
+    try:
+        # Opening the Tor URI using onion.cab proxy
+        if ".onion" in uri:
+            wb.get().open(uri.replace(".onion", ".onion.cab"), new=2)    
+        else:
+            wb.get().open(uri, new=2)
+    finally:
+        # Reopening them...
+        os.dup2(savout1, 1)
+        os.dup2(savout2, 2)
+
+
+def openResultsInBrowser(res):
+    print "Opening URIs in the default web browser..."
+
+    for r in res:
+        for att in r["attributes"]:
+            if att["type"] == "i3visio.uri":
+                uriToBrowser(att["value"])

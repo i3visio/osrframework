@@ -99,6 +99,9 @@ This is free software, and you are welcome to redistribute it under certain cond
         print unicode(general.usufyToTextExport(results))
         print
 
+        if args.web_browser:
+            general.openResultsInBrowser(results)
+
         print "You can find all the information collected in the following files:"
         for ext in args.extension:
             # Showing the output files
@@ -134,6 +137,7 @@ def getParser():
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
+    groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the URIs returned in the default web browser.')
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')

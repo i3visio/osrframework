@@ -3,8 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.12.0, 2016/06/12 -- Fixed issues in 8 platforms when making use of usernames with a ".". Added 3 new mailfy platforms.
+0.12.0, 2016/06/12 -- Fixed issues in 8 platforms when making use of usernames with a ".". URL can be automatically opened in the current web browser. Added 3 new mailfy platforms.
 - Important change in the way of validating the nicknames. Valid expressions are matched now as ".+".
+- Addressed issue #129: Open found URL in the current webbrowser.
 - Fixed issue #141: Btinternet.com as new mailfy platform.
 - Fixed issue #140: Libero.it as new mailfy platform.
 - Fixed issue #139: Ya.ru as new mailfy platform.

@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.0.8"
+__version__ = "v3.1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -464,6 +464,9 @@ This is free software, and you are welcome to redistribute it under certain cond
 
                 print
 
+                if args.web_browser:
+                    general.openResultsInBrowser(res)
+
                 print "You can find all the information collected in the following files:"
                 for ext in args.extension:
                     # Showing the output files
@@ -522,6 +525,7 @@ def getParser():
     groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the uris returned in the default web browser.')
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=32, type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')
