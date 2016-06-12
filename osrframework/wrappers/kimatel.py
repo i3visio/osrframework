@@ -69,10 +69,10 @@ class Kimatel(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.*' will match any query.
-        self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".*")   
-        self.validQuery["searchfy"] = re.compile(".*")
+        # The regular expression '.+' will match any query.
+        self.validQuery["phonefy"] = re.compile(".+")
+        self.validQuery["usufy"] = re.compile(".+")   
+        self.validQuery["searchfy"] = re.compile(".+")
         
         ###################
         # Not_found clues #

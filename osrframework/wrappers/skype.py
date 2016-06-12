@@ -76,8 +76,8 @@ class Skype(Platform):
         self.validQuery = {}
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".*")   
-        self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["usufy"] = re.compile(".+")   
+        self.validQuery["searchfy"] = re.compile(".+")
         
         ###################
         # Not_found clues #

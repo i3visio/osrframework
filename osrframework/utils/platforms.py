@@ -2,7 +2,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -172,6 +172,11 @@ class Platform():
             # TO-DO: InvalidModeException
             return json.dumps(results)
         
+        # Verrifying if the mode is valid
+        if not self._isValidQuery(query, mode=mode):
+            # TO-DO: InvalidQueryException
+            return json.dumps(results)
+
         # Verifying if the platform has an API defined
         try:
             if type(self.wrapperAPI) != "<type 'NoneType'>":
@@ -534,10 +539,26 @@ class Platform():
             :return:    True | False
         '''
         # Verifying if the mode supports such a query
-        if  self.validQuery[mode].match(query):
-            return True                
-        else:
-            return False
+        try:
+            # Checking if the length of the regexps is just one which would mean that it matches
+            if  len(self.validQuery[mode].findall(query))==1:
+                # Will return something different to []
+                """print "VALID query:"
+                print "\tmode: ", mode
+                print "\tquery: ", query"""
+                return True                
+            else:
+                # The query would have returned a bigger array
+                """print "Invalid query:"
+                print "\tMode: ", mode
+                print "\tQuery: ", query"""
+                return False
+        except:
+            # If something happened... just returning True
+            print "Oops. Something happened when validating the query:"
+            print "\tMode: ", mode
+            print "\tQuery: ", query
+            return True
             
            
     def setCredentials(self, cred):

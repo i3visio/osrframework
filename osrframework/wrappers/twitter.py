@@ -87,7 +87,7 @@ class Twitter(Platform):
         # The regular expression '.*' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
         self.validQuery["usufy"] = re.compile("[a-zA-Z0-9_]+")   
-        self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["searchfy"] = re.compile(".+")
         
         ###################
         # Not_found clues #
