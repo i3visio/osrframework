@@ -58,6 +58,7 @@ EMAIL_DOMAINS = [
     "163.com", 
     "189.cn", 
     "aaathats3as.com",
+    "btinternet.com",
     "cocaine.ninja",
     "cock.lu",
     "cock.email", 
@@ -67,6 +68,7 @@ EMAIL_DOMAINS = [
     "gmail.com", 
     "hushmail.com", 
     "keemail.me", 
+    "libero.it",
     "lycos.com",
     "memeware.net", 
     "protonmail.com", 
@@ -76,6 +78,7 @@ EMAIL_DOMAINS = [
     "tutanota.com", 
     "tutanota.de", 
     "waifu.club", 
+    "ya.ru", 
     "yandex.com", 
     "yeah.net", 
     "zoho.com"

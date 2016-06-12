@@ -3,6 +3,20 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.11.8, 2016/06/12 -- Fixed issues in 8 platforms when making use of usernames with a ".". Added 3 new mailfy platforms.
+- Fixed issue #141: Btinternet.com as new mailfy platform.
+- Fixed issue #140: Libero.it as new mailfy platform.
+- Fixed issue #139: Ya.ru as new mailfy platform.
+- Fixed issue #138: Causes platform does NOT accept the character "." in the username.
+- Fixed issue #137: Nubelo platform does NOT accept the character "." in the username.
+- Fixed issue #136: Bucketlistly platform does NOT accept the character "." in the username.
+- Fixed issue #135: Burdastyle platform does NOT accept the character "." in the username.
+- Fixed issue #134: Askfm platform does NOT accept the character "." in the username.
+- Fixed issue #133: Gogobot platform does NOT accept the character "." in the username.
+- Fixed issue #132: Rankia platform does NOT accept the character "." in the username.
+- Fixed issue #131: Twitpic platform does NOT accept the character "." in the username.
+
+
 0.11.7, 2016/06/03 -- Critical bug addressed in the installation process identified as #122. Other minor issues addressed too.
 - Fixed issue #126: Periscope has changed its error message.
 
