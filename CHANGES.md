@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.11.7, 2016/06/03 -- Critical bug addressed in the installation process identified as #122. Other minor issues addressed too.
+- Fixed issue #126: Periscope has changed its error message.
+
 0.11.6, 2016/06/03 -- Critical bug addressed in the installation process identified as #122. Other minor issues addressed too.
 - Fixed issue #125: Ibosocial has changed its error for non-existing websites... Changed the error message.
 - Fixed issue #124: Freebase wrapper does not work...
