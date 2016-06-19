@@ -131,10 +131,10 @@ In some platforms, we may now that the usernames always match a given regular ex
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.*' will match any query.
-        #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".*")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        # The regular expression '.+' will match any non-empty query.
+        #self.validQuery["phonefy"] = re.compile(".+")
+        self.validQuery["usufy"] = re.compile(".+")   
+        #self.validQuery["searchfy"] = re.compile(".+")
 ```
 
 The last part, is telling the framework which is the message that appears when the user is not present. This is an array, so more than one message can be used here.
