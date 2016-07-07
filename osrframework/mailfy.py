@@ -275,11 +275,14 @@ This is free software, and you are welcome to redistribute it under certain cond
         print sayingHello
         print
 
+    # Commented out as not needed after 0.12.1
+    """ 
     if sys.platform == 'win32':
         print "WARNING:"
         print "\tmailfy.py seems to be run in a Windows system."
         print "\tThe emailahoy libraries may NOT work properly. We are trying to find a fix for this issue."
         print
+    """
 
     # Processing the options returned to remove the "all" option
     if "all" in args.domains:
