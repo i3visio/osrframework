@@ -3,6 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.12.1, 2016/07/07 -- Fixed issues in Favstar and mailfy.py.
+- Fixed issue #145. Favstar platform returns false positives in usufy when looking for long usernames.
+- Fixed issue #144. mailfy.py returns error with specific domains. The error seemed to be a problem when no mail was loaded.
+- Fixed issue #130. Removing obsolete warning of not properly working in Windows mailfy.
+
 0.12.0, 2016/06/12 -- Fixed issues in 8 platforms when making use of usernames with a ".". URL can be automatically opened in the current web browser. Added 3 new mailfy platforms.
 - Important change in the way of validating the nicknames. Valid expressions are matched now as ".+".
 - Addressed issue #129: Open found URL in the current webbrowser.

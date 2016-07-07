@@ -73,7 +73,7 @@ class Favstar(Platform):
         self.validQuery = {}
         # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile("[a-zA-Z0-9_]+")  
+        self.validQuery["usufy"] = re.compile("[a-zA-Z0-9_]{1,19}")  
         #self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
