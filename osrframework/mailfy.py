@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.2"
+__version__ = "v3.3"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -228,6 +228,10 @@ def performSearch(emails=[], nThreads=16):
     for e in emails:
         if weCanCheckTheseDomains(e):
             args.append((e))        
+    
+    # Returning None if no valid domain has been returned
+    if len(args) == 0:
+        return results
 
     # If the process is executed by the current app, we use the Processes. It is faster than pools.
     if nThreads <= 0 or nThreads > len(args):
@@ -271,11 +275,14 @@ This is free software, and you are welcome to redistribute it under certain cond
         print sayingHello
         print
 
+    # Commented out as not needed after 0.12.1
+    """ 
     if sys.platform == 'win32':
         print "WARNING:"
         print "\tmailfy.py seems to be run in a Windows system."
         print "\tThe emailahoy libraries may NOT work properly. We are trying to find a fix for this issue."
         print
+    """
 
     # Processing the options returned to remove the "all" option
     if "all" in args.domains:

@@ -84,5 +84,6 @@ If you want to extend the functionalities of OSRFramework and you do not know wh
 More details about the authors in the [AUTHORS.md](AUTHORS.md) file.
 
 Bitcoin Address: [3JJJZU5UvdN2AQrUAeiPM6i7JfRBZNPLhS](bitcoin:1FEdwYGDiuKRfuVCu9reUVS5t6ViGsFJLP?amount=0.01000000&label=3JJJZU5UvdN2AQrUAeiPM6i7JfRBZNPLhS&message=Donate%20Bitcoin%20to%20OSRFramework%20Project)
+
 ![Bitcoin donations to OSRFramework](http://i3visio.com/OSRFramework-donations.png "Donate Bitcoin to OSRFramework developers.")
 
