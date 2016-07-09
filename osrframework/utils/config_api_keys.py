@@ -32,13 +32,13 @@ def returnListOfAPIKeys():
     dictAPIKeys = {}
     
     # If a api_keys.cfg has not been found, creating it by copying from default
-    configPath = configuration.getConfigPath("api_keys.cfg")
+    configPath = os.path.join(configuration.getConfigPath()["appPath"], "api_keys.cfg")
 
     # Checking if the configuration file exists
     if not os.path.exists(configPath):
         try:
             # Copy the data from the default folder
-            defaultConfigPath = configuration.getConfigPath(os.path.join("default", "api_keys.cfg"))
+            defaultConfigPath =     configPath = os.path.join(configuration.getConfigPath()[["appPathDefaults"]], "api_keys.cfg")
      
             with open(configPath, "w") as oF:
                 with open(defaultConfigPath) as iF:

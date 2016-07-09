@@ -34,13 +34,13 @@ def returnListOfCreds():
     '''
     listCreds = []
     # If a accounts.cfg has not been found, creating it by copying from default
-    configPath = configuration.getConfigPath("accounts.cfg")
+    configPath = os.path.join(configuration.getConfigPath()["appPath"], "accounts.cfg")
 
     # Checking if the configuration file exists
     if not os.path.exists(configPath):
         try:
             # Copy the data from the default folder
-            defaultConfigPath = configuration.getConfigPath(os.path.join("default", "accounts.cfg"))
+            defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "accounts.cfg")
      
             with open(configPath, "w") as oF:
                 with open(defaultConfigPath) as iF:

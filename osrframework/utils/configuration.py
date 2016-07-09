@@ -56,18 +56,33 @@ def changePermissionsRecursively(path, uid, gid):
 
 def getConfigPath(configFileName = None):
     """
-        Auxiliar function to get the configuration path depending on the system.
+        Auxiliar function to get the configuration paths depending on the system.
+        
+        Returns a dictionary with the following keys: appPath, appPathDefaults, appPathTransforms, appPathPlugins, appPathPatterns, appPathPatterns.
     """
-    if configFileName != None:
-        # Returning the path of the configuration file
-        if sys.platform == 'win32':
-            return os.path.expanduser(os.path.join('~\\', 'OSRFramework', configFileName))
-        else:
-            return os.path.expanduser(os.path.join('~/', '.config', 'OSRFramework', configFileName))
-    else:
-        # Returning the path of the configuration folder
-        if sys.platform == 'win32':
-            return os.path.expanduser(os.path.join('~\\', 'OSRFramework'))
-        else:
-            return os.path.expanduser(os.path.join('~/', '.config', 'OSRFramework'))
+    paths = {}
+    applicationPath = "./"
+    
 
+    # Returning the path of the configuration folder
+    if sys.platform == 'win32':
+        applicationPath = os.path.expanduser(os.path.join('~\\', 'OSRFramework'))
+    else:
+        applicationPath = os.path.expanduser(os.path.join('~/', '.config', 'OSRFramework'))
+
+    # Defining additional folders
+    paths = {
+        "appPath": applicationPath,
+        "appPathDefaults": os.path.join(applicationPath, "default"),
+        "appPathTransforms": os.path.join(applicationPath, "transforms"),
+        "appPathPlugins": os.path.join(applicationPath, "plugins"),
+        "appPathWrappers": os.path.join(applicationPath, "plugins", "wrappers"),
+        "appPathPatterns": os.path.join(applicationPath, "plugins", "patterns"),
+    }
+    
+    # Creating them if they don't exist 
+    for path in paths.keys():
+        if not os.path.exists(paths[path]):
+            os.makedirs(paths[path]) 
+
+    return paths

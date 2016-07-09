@@ -49,18 +49,8 @@ try:
 except:
     long_description = ""
 
-
-# Creating the application path
-applicationPath = configuration.getConfigPath()
-applicationPathDefaults = os.path.join(applicationPath, "default")
-applicationPathTransforms = os.path.join(applicationPath, "transforms")
-
-# Copying the default configuration files.
-if not os.path.exists(applicationPathDefaults):
-    os.makedirs(applicationPathDefaults) 
-	
-if not os.path.exists(applicationPathTransforms):
-    os.makedirs(applicationPathTransforms) 
+# Creating the application paths
+paths = configuration.getConfigPath()
 
 # Launching the setup
 setup(    name="osrframework",
@@ -138,6 +128,10 @@ setup(    name="osrframework",
         "pyDNS",
         "tabulate",
         "oauthlib>=1.0.0",
+        # Added to dinamically import wrappers:
+        "importlib",
+        #"inspect",
+        #"pkgutil",
         # Adding dependencies to avoid the InsecurePlatformWarning when calling Twitter API dealing with SSL: <http://stackoverflow.com/a/29202163>. Other options would require the user to upgrade to Python 2.7.9.
         #"pyopenssl",
         #"ndg-httpsclient",
@@ -155,14 +149,14 @@ except:
     pass
 
 files_to_copy= {
-    applicationPath : [
+    paths["appPath : [
     ],
-    applicationPathDefaults : [
+    paths["appPathDefaults"] : [
         os.path.join("config", "accounts.cfg"),
         os.path.join("config", "api_keys.cfg"),
         os.path.join("config", "browser.cfg"),
     ],
-    applicationPathTransforms : [                
+    paths["appPathTransforms"] : [                
         os.path.join("osrframework", "alias_generator.py"),
         os.path.join("osrframework", "entify.py"),
         os.path.join("osrframework", "phonefy.py"),
@@ -196,7 +190,10 @@ files_to_copy= {
         os.path.join("osrframework", "transforms", "uriToGoogleCacheUri.py"),
         os.path.join("osrframework", "transforms", "uriToPort.py"),
         os.path.join("osrframework", "transforms", "uriToProtocol.py"),
-    ] 
+    ],
+    paths["appPathWrappers"] : [
+        os.path.join("config", "plugins", "wrapper.py.sample"),
+    ]
 }
 
 # Iterating through all destinations to write the info

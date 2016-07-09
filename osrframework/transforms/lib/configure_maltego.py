@@ -162,15 +162,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()        
 
-    # Creating the application path
-    applicationPath = configuration.getConfigPath()
-    applicationPathDefaults = os.path.join(applicationPath, "default")
-    applicationPathTransforms = os.path.join(applicationPath, "transforms")
-
-    # Copying the default configuration files.
-    if not os.path.exists(applicationPathDefaults):
-        os.makedirs(applicationPathDefaults) 
-    if not os.path.exists(applicationPathTransforms):
-        os.makedirs(applicationPathTransforms)   
+    # Creating the application paths
+    paths = configuration.getConfigPath()
     
-    configureMaltego(transformsConfigFolder = applicationPathTransforms, base=args.base, debug = args.debug, backupPath = applicationPathDefaults)
+    configureMaltego(transformsConfigFolder = paths["appPathTransforms"], base=args.base, debug = args.debug, backupPath = paths["applicationPathDefaults"])

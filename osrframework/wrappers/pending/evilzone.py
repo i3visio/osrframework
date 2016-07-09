@@ -29,17 +29,17 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Friendfeed(Platform):
-    """ 
-        A <Platform> object for Friendfeed.
-    """
+class Evilzone(Platform):
+    ''' 
+        A <Platform> object for Evilzone.
+    '''
     def __init__(self):
-        """ 
+        ''' 
             Constructor... 
-        """
-        self.platformName = "Friendfeed"
-        self.tags = ["social", "tools"]
-
+        '''
+        self.platformName = "Evilzone"
+        self.tags = ["hacking"]
+        
         ########################
         # Defining valid modes #
         ########################
@@ -54,7 +54,7 @@ class Friendfeed(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://friendfeed.com/" + "<usufy>"       
+        self.url["usufy"] = "https://evilzone.org/index.php?action=profile;user=" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Friendfeed(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>FriendFeed</title>"]   
+        self.notFoundText["usufy"] = ["The user whose profile you are trying to view does not exist"]   
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -98,6 +98,7 @@ class Friendfeed(Platform):
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
@@ -109,4 +110,6 @@ class Friendfeed(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
         
-                        
+        
+        
+

@@ -81,7 +81,7 @@ class Evilzone(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["The user whose profile you are trying to view does not exist"]   
+        self.notFoundText["usufy"] = ["The user whose profile you are trying to view does not exist", "<p>We're doing stuff: Check back later!</p>"]   
         #self.notFoundText["searchfy"] = []        
         
         #########################

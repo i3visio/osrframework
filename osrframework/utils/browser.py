@@ -68,12 +68,13 @@ class Browser():
         # --------------------------------
         # If a current.cfg has not been found, creating it by copying from default
         configPath = configuration.getConfigPath("browser.cfg")
+        configPath = os.path.join(configuration.getConfigPath()["appPath"], "browser.cfg")
 
         # Checking if the configuration file exists
         if not os.path.exists(configPath):
             try:
                 # Copy the data from the default folder
-                defaultConfigPath = configuration.getConfigPath(os.path.join("default", "browser.cfg"))
+                defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "browser.cfg")
          
                 with open(configPath, "w") as oF:
                     with open(defaultConfigPath) as iF:
