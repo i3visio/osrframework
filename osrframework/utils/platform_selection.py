@@ -155,7 +155,7 @@ def getAllPlatformObjects(mode = None):
     userImportedModules = {}
 
     for module in os.listdir(newPath):
-        if '.py' in module and '.pyc' not in module and ".py~" not in module:
+        if module[-3:] == '.py':
             current = module.replace('.py', '')
             userImportedModules[current] = __import__(current)
 
@@ -182,7 +182,7 @@ def getAllPlatformObjects(mode = None):
     # --------------------------------------------------------------------------
     # Overwriting original modules with the user plugins
     # --------------------------------------------------------------------------
-
+    listToAdd = []
     for userClass in userClasses:
         for i, officialClass in enumerate(listAll):
             # Checking if the name is the same
@@ -190,8 +190,12 @@ def getAllPlatformObjects(mode = None):
                 # Replacing the official module if a user module exists for it
                 listAll[i] = userClass
             else:
-                # Appending the new class
-                listAll.append(userClass)
+                if userClass not in listToAdd:
+                    # Appending the new class
+                    listToAdd.append(userClass)
+
+    # Merging listAll and listToAdd
+    listAll = listAll + listToAdd
     ############################################################################
     ############################################################################
 

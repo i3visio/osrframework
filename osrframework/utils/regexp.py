@@ -148,3 +148,23 @@ class RegexpObject():
                     verifiedExp.append(t)
 
         return self.getResults(verifiedExp)
+        
+        
+    def __str__(self):
+        ''' 
+            Function to represent the text when printing the object
+            
+            :return:    self.platformName
+        '''
+        try:
+            return self.name        
+        except:
+            return "UNKNOWN_NAME"    
+
+    def __eq__(self, obj):
+        ''' 
+            Function to check if two wrappers are the same based on the convention.
+
+            :return:    True or False
+        '''
+        return self.name == obj.name

@@ -4,10 +4,12 @@ OSRFramework Changelog
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
 0.13.0a, 2016/07/09 -- Fixed issues #146 y #147.
+- Fixed issue #147. Letting the user create new entify regexps in its home folder.
 - Fixed issue #146. Letting the user create new usufy wrappers in its home folder.
 - Modified the configuration file.
 - Removed old wrappers which had been removed.
 - Added a pending folder with wrappers which need to be fixed. They will not be imported.
+- Implemented __eq__ for both wrappers and patterns.
 
 0.12.1, 2016/07/07 -- Fixed issues in Favstar and mailfy.py.
 - Fixed issue #145. Favstar platform returns false positives in usufy when looking for long usernames.

@@ -24,7 +24,7 @@ The basic things you should know in order to create a new wrapper are:
 * A valid nickname that has an active profile in the website.
 
 For the example, we are going to use an invented socialnetwork: `http://example.com/james` is the URL of a user called `james` in that figured platform. The error returned is `<title>404 not found</title>`. 
-Go to the `plugins/wrappers` folder in your home, copy and rename the `demo.py.sample` to `example.py`.
+Go to the `plugins/wrappers` folder in your home, copy and rename the `wrapper.py.sample` to `example.py`.
 Thus you will have a template that you will be able to modify.
 
 First, we'll change the name of the wrapper and the tags:
@@ -117,28 +117,23 @@ git clone https://github.com/osrframework_contributor/osrframework
 cd osrframework
 ```
 
-Then, you can modify any file you want, for example, the `README.md`.
+Then, you can modify any file you want, for example, adding the new wrapper that you have created in the previous case.
 ```
-# Opening it with nano... 
-nano README.md
-```
-
-After the apprpriate changes have been performed, you can test the installation with pip.
-```
-pip install -e ./
+# Copying the file to the wrappers folder
+mv ~/.config/OSRFramework/plugins/wrappers/example.py ./osrframework/wrappers/
 ```
 
 Whenever you want, you can add the changes performed to the Git index to keep track of what you have changed and prepar it for the commit. 
 ```
 # Add one file
-git add ./README.md
-# Or adding all the files modified... Just be a lil' bit more careful
+git add ./osrframework/wrappers/example.py
+# Or adding all the files modified... Just be a little bit more careful
 # git add -A
 ```
 
 Once you are happy with the changes (and you have tested them!), you can commit the changes with a descriptive message.
 ```
-git commit -m "Fixing issue #0: modifications in the README.md file."
+git commit -m "Adding a new wrapper as example.py."
 ```
 
 You have to push the changes to your Github project.
@@ -147,6 +142,8 @@ git push origin
 ```
 
 You're almost there. You can now go to your project's website (`http://github.com/osrframework_contributor/osrframework`) and click in the `Pulls` tab or going directly to it by appending `pulls` to your forked URL, something similar to `https://github.com/osrframework_contributor/osrframework/pulls`. Then provide there as much detail as you can about the contents of the pull request and shortly we will evaluate the changes and pushed it upstream.
+
+NOTE: a similar procedure can be performed to add new patterns to entify.py.
 
 Style guide
 -----------

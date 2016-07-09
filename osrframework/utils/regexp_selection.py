@@ -2,45 +2,34 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 3 of the License, or
-#	(at your option) any later version.
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-#	You should have received a copy of the GNU General Public License
-#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##################################################################################
 
 import os
+import sys
+
+import pkgutil
+import importlib
+import inspect
+
 import copy
-import logging
-# Importing Classes of <RegexpObject> objects that will be used in the script. The files are stored in the regexp folder.
-# For demo only
-#from regexp.demo import Demo
-from osrframework.patterns.bitcoinaddress import BitcoinAddress
-from osrframework.patterns.dni import DNI
-from osrframework.patterns.dogecoinaddress import DogecoinAddress
-from osrframework.patterns.email import Email
-from osrframework.patterns.ipv4 import IPv4
-from osrframework.patterns.litecoinaddress import LitecoinAddress
-from osrframework.patterns.md5 import MD5
-from osrframework.patterns.namecoinaddress import NamecoinAddress
-from osrframework.patterns.peercoinaddress import PeercoinAddress
-from osrframework.patterns.sha1 import SHA1
-from osrframework.patterns.sha256 import SHA256
-from osrframework.patterns.uri import URI
-# Add any additional import here
-#from regexp.anynewregexp import AnyNewRegexp
-# <ADD_NEW_REGEXP_IMPORT_BELOW>
-# Please, notify the authors if you have written a new regexp.
+
+import osrframework.patterns
+import osrframework.utils.configuration as configuration
 
 def getAllRegexp():
     ''' 
@@ -48,30 +37,101 @@ def getAllRegexp():
 
         :return:    Returns a list [] of <RegexpObject> classes.
     '''
-    logger = logging.getLogger("osrframework.entify")
 
-    logger.debug("Recovering all the available <RegexpObject> classes.")
     listAll = []
-    # For demo only
-    #listAll.append(Demo())
-    listAll.append(BitcoinAddress())
-    listAll.append(DNI())
-    listAll.append(DogecoinAddress())         
-    listAll.append(Email())
-    listAll.append(IPv4())
-    listAll.append(LitecoinAddress())
-    listAll.append(MD5())
-    listAll.append(NamecoinAddress())
-    listAll.append(PeercoinAddress())
-    listAll.append(SHA1())
-    listAll.append(SHA256())
-    listAll.append(URI())
-    # Add any additional import here
-    #listAll.append(AnyNewRegexp)
-    # <ADD_NEW_REGEXP_TO_THE_LIST>
-    # Please, notify the authors if you have written a new regexp.
 
-    logger.debug("Returning a list of " + str(len(listAll)) + " <RegexpObject> classes.")
+    ############################################################################
+    ############################################################################
+    
+    # --------------------------------------------------------------------------
+    # Dinamically collecting all the "official" modules
+    # --------------------------------------------------------------------------
+    
+    # A list that will contain all of the module names
+    all_modules = []
+    
+    # Grabbing all the module names
+    for _, name, _ in pkgutil.iter_modules(osrframework.patterns.__path__):
+        all_modules.append("osrframework.patterns." + name)
+
+    # Iterating through all the module names to grab them
+    for moduleName in all_modules:
+        # Importing the module
+        my_module = importlib.import_module(moduleName)
+        
+        # Getting all the classNames.
+        classNames = [m[0] for m in inspect.getmembers(my_module, inspect.isclass) if m[1].__module__ == moduleName]
+
+        # Dinamically grabbing the first class of the module. IT SHOULD BE ALONE!
+        MyClass = getattr(my_module, classNames[0])
+        
+        # Instantiating the object
+        newInstance = MyClass()
+        
+        # Adding to the list!
+        listAll.append(newInstance)
+        
+    # --------------------------------------------------------------------------
+    # Loading user-defined wrappers under [OSRFrameworkHOME]/plugins/patterns/
+    # --------------------------------------------------------------------------
+    
+    # Creating the application paths
+    paths = configuration.getConfigPath()
+    
+    newPath = os.path.abspath(paths["appPathPatterns"])
+
+    # Inserting in the System Path
+    if not newPath in sys.path:
+        sys.path.append(newPath)
+
+    userImportedModules = {}
+
+    for module in os.listdir(newPath):
+        if module[-3:] == '.py':
+            current = module.replace('.py', '')
+            userImportedModules[current] = __import__(current)
+
+    del newPath
+
+    userClasses = []
+
+    # Iterating through all the files
+    for userModule in userImportedModules.keys():
+
+        my_module = userImportedModules[userModule]
+        # Getting all the classNames.
+        classNames = [m[0] for m in inspect.getmembers(my_module, inspect.isclass) if m[1].__module__ == userModule]
+
+        # Dinamically grabbing the first class of the module. IT SHOULD BE ALONE!
+        MyClass = getattr(my_module, classNames[0])
+        
+        # Instantiating the object
+        newInstance = MyClass()
+        
+        # Adding to the list!
+        userClasses.append(newInstance)
+
+    print userClasses
+    # --------------------------------------------------------------------------
+    # Overwriting original modules with the user plugins
+    # --------------------------------------------------------------------------
+    listToAdd = []
+    for userClass in userClasses:
+        for i, officialClass in enumerate(listAll):
+            # Checking if the name is the same
+            if str(userClass) == str(officialClass):
+                # Replacing the official module if a user module exists for it
+                listAll[i] = userClass
+            else:
+                if userClass not in listToAdd:
+                    # Appending the new class
+                    listToAdd.append(userClass)
+                
+    # Merging listAll and listToAdd
+    listAll = listAll + listToAdd
+    ############################################################################
+    ############################################################################
+
     return listAll
 
 def getAllRegexpNames(regexpList = None):

@@ -513,6 +513,14 @@ class Platform():
         except:
             return self.platformName    
 
+    def __eq__(self, obj):
+        ''' 
+            Function to check if two wrappers are the same based on the convention.
+
+            :return:    True or False
+        '''
+        return self.platformName == obj.platformName
+
     def _getAuthenticated(self, browser):
         ''' 
             Getting authenticated. This method will be overwritten.

@@ -149,7 +149,7 @@ except:
     pass
 
 files_to_copy= {
-    paths["appPath : [
+    paths["appPath"] : [
     ],
     paths["appPathDefaults"] : [
         os.path.join("config", "accounts.cfg"),
@@ -193,6 +193,9 @@ files_to_copy= {
     ],
     paths["appPathWrappers"] : [
         os.path.join("config", "plugins", "wrapper.py.sample"),
+    ],
+    paths["appPathPatterns"] : [
+        os.path.join("config", "plugins", "pattern.py.sample"),
     ]
 }
 
