@@ -184,15 +184,18 @@ def getAllPlatformObjects(mode = None):
     # --------------------------------------------------------------------------
     listToAdd = []
     for userClass in userClasses:
+        overwritten = False
         for i, officialClass in enumerate(listAll):
             # Checking if the name is the same
             if str(userClass) == str(officialClass):
                 # Replacing the official module if a user module exists for it
                 listAll[i] = userClass
-            else:
-                if userClass not in listToAdd:
-                    # Appending the new class
-                    listToAdd.append(userClass)
+                # We stop iterating this loop
+                overwritten = True
+                break
+        if not overwritten:
+            # Appending the new class
+            listToAdd.append(userClass)
 
     # Merging listAll and listToAdd
     listAll = listAll + listToAdd

@@ -97,9 +97,9 @@ class Platform():
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.*' will match any query.
-        self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".*")   
-        self.validQuery["searchfy"] = re.compile(".*")
+        self.validQuery["phonefy"] = ".*"
+        self.validQuery["usufy"] = ".*"
+        self.validQuery["searchfy"] = ".*"
         
         ###################
         # Not_found clues #
@@ -548,20 +548,21 @@ class Platform():
         '''
         # Verifying if the mode supports such a query
         try:
-            # Checking if the length of the regexps is just one which would mean that it matches
-            if  len(self.validQuery[mode].findall(query))==1:
-                # Will return something different to []
+            # Checking if the query matched the compiled regexp
+            compiledRegexp = re.compile("^" + self.validQuery[mode] + "$")
+            if  compiledRegexp.match(query):
                 """print "VALID query:"
                 print "\tmode: ", mode
                 print "\tquery: ", query"""
-                return True                
+                return True
             else:
                 # The query would have returned a bigger array
                 """print "Invalid query:"
                 print "\tMode: ", mode
                 print "\tQuery: ", query"""
                 return False
-        except:
+        except Exception as e:
+            print str(e)
             # If something happened... just returning True
             print "Oops. Something happened when validating the query:"
             print "\tMode: ", mode

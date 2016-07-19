@@ -7,6 +7,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #147. Letting the user create new entify regexps in its home folder.
 - Fixed issue #146. Letting the user create new usufy wrappers in its home folder.
 - Fixed issue #150. Ruby-forum.com has changed its base URL.
+- Updated the process of compiling the regular expressions to validate the usernames for each platform.
 - Addressed issue #149. Bookmarky.com seems not to be working (moved to pending).
 - Modified the configuration file.
 - Removed old wrappers which had been removed.
