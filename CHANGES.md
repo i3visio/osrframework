@@ -12,6 +12,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #153. Sample files (wrapper.py.sample and pattern.py.sample) are not copied during the installation. Added a recursive-include clause to MANIFEST.in to collect the sample files in the config/plugins.
 - Addressed issue #149. Bookmarky.com seems not to be working (moved to pending).
 - Updated the process of compiling the regular expressions to validate the usernames for each platform.
+- Fixed a bug that was not capable of setting properly the api_keys.cfg.
 - Modified the configuration file.
 - Removed old wrappers which had been removed.
 - Added a pending folder with wrappers which need to be fixed. They will not be imported.

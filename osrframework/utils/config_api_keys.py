@@ -29,6 +29,7 @@ def returnListOfAPIKeys():
     '''
         :return: A dictionary containing the API Keys stored in a dictionary depending on the information required by each platform
     '''
+
     dictAPIKeys = {}
     
     # If a api_keys.cfg has not been found, creating it by copying from default
@@ -38,7 +39,7 @@ def returnListOfAPIKeys():
     if not os.path.exists(configPath):
         try:
             # Copy the data from the default folder
-            defaultConfigPath =     configPath = os.path.join(configuration.getConfigPath()[["appPathDefaults"]], "api_keys.cfg")
+            defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "api_keys.cfg")
      
             with open(configPath, "w") as oF:
                 with open(defaultConfigPath) as iF:
@@ -48,7 +49,7 @@ def returnListOfAPIKeys():
             print "WARNING. No configuration file could be found and the default file was not found either, so NO API keys have been loaded."
             print str(e)
             print
-            return listCreds
+            return dictAPIKeys
 
     # Reading the configuration file
     config = ConfigParser.ConfigParser()
