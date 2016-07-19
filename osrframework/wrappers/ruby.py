@@ -54,7 +54,7 @@ class Ruby(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.ruby-forum.com/forum/" + "<usufy>"       
+        self.url["usufy"] = "https://www.ruby-forum.com/user/show/" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -81,7 +81,7 @@ class Ruby(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Forum not found"]
+        self.notFoundText["usufy"] = ["User not found"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

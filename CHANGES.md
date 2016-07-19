@@ -3,9 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.13.0a, 2016/07/09 -- Fixed issues #146 y #147.
+0.13.0a, 2016/07/19 -- Added the possibility of dinamically adding user-defined modules under the configuration folder. Fixed issues #150.
 - Fixed issue #147. Letting the user create new entify regexps in its home folder.
 - Fixed issue #146. Letting the user create new usufy wrappers in its home folder.
+- Fixed issue #150. Ruby-forum.com has changed its base URL.
 - Addressed issue #149. Bookmarky.com seems not to be working (moved to pending).
 - Modified the configuration file.
 - Removed old wrappers which had been removed.
