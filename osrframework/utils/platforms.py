@@ -562,11 +562,12 @@ class Platform():
                 print "\tQuery: ", query"""
                 return False
         except Exception as e:
-            print str(e)
             # If something happened... just returning True
             print "Oops. Something happened when validating the query:"
+            print "\tError: ", str(e)
             print "\tMode: ", mode
             print "\tQuery: ", query
+            print "\tPlatform: ", self.platformName
             return True
             
            

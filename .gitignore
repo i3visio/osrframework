@@ -28,3 +28,4 @@ _*sh
 fuzz.txt
 *.mtz
 *.zip
+*.back

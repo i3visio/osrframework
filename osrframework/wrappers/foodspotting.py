@@ -37,7 +37,7 @@ class Foodspotting(Platform):
         """ 
             Constructor... 
         """
-        self.platformName = "Foodspotting"
+        self.platformName = "Foodspotting2"
         self.tags = ["opinions"]
 
         ########################
@@ -72,7 +72,7 @@ class Foodspotting(Platform):
         self.validQuery = {}
         # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".+")   
+        self.validQuery["usufy"] = "[^0-9].+"
         #self.validQuery["searchfy"] = re.compile(".*")
         
         ###################

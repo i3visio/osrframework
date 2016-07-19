@@ -72,9 +72,9 @@ class Gather(Platform):
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.+' will match any query.
-        #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile(".+")   
-        #self.validQuery["searchfy"] = re.compile(".*")
+        #self.validQuery["phonefy"] = ".*"
+        self.validQuery["usufy"] = ".+"
+        #self.validQuery["searchfy"] = ".*"
         
         ###################
         # Not_found clues #

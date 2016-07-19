@@ -72,9 +72,9 @@ class Favstar(Platform):
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.+' will match any query.
-        #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile("[a-zA-Z0-9_]{1,19}")  
-        #self.validQuery["searchfy"] = re.compile(".*")
+        #self.validQuery["phonefy"] = ".*"
+        self.validQuery["usufy"] = "[a-zA-Z0-9_]{1,19}"
+        #self.validQuery["searchfy"] = ".*"
         
         ###################
         # Not_found clues #

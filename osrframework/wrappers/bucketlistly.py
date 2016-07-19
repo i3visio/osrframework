@@ -39,7 +39,7 @@ class Bucketlistly(Platform):
         """
         self.platformName = "Bucketlistly"
         self.tags = ["trips"]
-
+        
         ########################
         # Defining valid modes #
         ########################
@@ -72,7 +72,7 @@ class Bucketlistly(Platform):
         self.validQuery = {}
         # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = re.compile("[^\.]+")   
+        self.validQuery["usufy"] = re.compile("[^0-9][^\.]+")   
         #self.validQuery["searchfy"] = re.compile(".*")
         
         ###################
