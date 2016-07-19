@@ -3,12 +3,13 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.13.0b, 2016/07/19 -- Added the possibility of dinamically adding user-defined modules under the configuration folder. Fixed issues #150, #151, #152.
+0.13.0b, 2016/07/19 -- Added the possibility of dinamically adding user-defined modules under the configuration folder. Fixed issues #150, #151, #152, #153.
 - Fixed issue #146. Letting the user create new usufy wrappers in its home folder.
 - Fixed issue #147. Letting the user create new entify regexps in its home folder.
 - Fixed issue #150. Ruby-forum.com has changed its base URL.
 - Fixed issue #151. Foodspotting is returning false positives when the first character is a number bug usufy.
-- Fixed issue #152. Bucketlistly is returning false positives when the first character is a number bug usufy
+- Fixed issue #152. Bucketlistly is returning false positives when the first character is a number bug usufy.
+- Fixed issue #153. Sample files (wrapper.py.sample and pattern.py.sample) are not copied during the installation. Added a recursive-include clause to MANIFEST.in to collect the sample files in the config/plugins.
 - Addressed issue #149. Bookmarky.com seems not to be working (moved to pending).
 - Updated the process of compiling the regular expressions to validate the usernames for each platform.
 - Modified the configuration file.
