@@ -351,7 +351,7 @@ This is free software, and you are welcome to redistribute it under certain cond
             # Showing the execution time...
             if not args.maltego:
                 startTime= dt.datetime.now()
-                print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Be patient!\n"
+                print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!\n"
 
             # Defining the list of users to monitor
             nicks = []
