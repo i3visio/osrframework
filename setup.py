@@ -23,6 +23,28 @@
 import os
 import sys
 
+# Checking if obsolete versions are installed in the machine
+import shutil
+import site
+
+installationFound = True
+
+print
+while installationFound:
+    packagesPaths = site.getsitepackages()
+    osrframeworkSystemPath = os.path.join(packagesPaths[0], "osrframework")
+    if os.path.isdir(osrframeworkSystemPath):
+        print "[!] Found an old installation at: " + osrframeworkSystemPath
+    else:
+        print "[*] No OSRFramework installation found in the system."
+    try:
+        shutil.rmtree(osrframeworkSystemPath)
+        print "[*] Successfully removed the old installation. Installation will resume now to upgrade it..."
+    except Exception as e:
+        print str(e)
+        print "[E] The installed version of OSRFramework cannot be removed. Try to remove it manually in your python installation under 'local/lib/python2.7/dist-packages/'."
+        print sys.exit()
+
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 # Importing the local scrips for the setup and taking the new version number
@@ -38,7 +60,7 @@ try:
     from pypandoc import convert
     read_md = lambda f: convert(f, 'rst')
 except ImportError:
-    print("warning: pypandoc module not found, could not convert Markdown to RST")
+    print("[!] pypandoc module not found, could not convert Markdown to RST")
     read_md = lambda f: open(f, 'r').read()
 except Exception:
     read_md = lambda f: open(f, 'r').read()
@@ -52,6 +74,7 @@ except:
 # Creating the application paths
 paths = configuration.getConfigPath()
 
+print "[*] Defining the installation of the osrframework module..."    
 # Launching the setup
 setup(    name="osrframework",
     version=NEW_VERSION,
@@ -142,12 +165,14 @@ setup(    name="osrframework",
 ############################
 ### Creating other files ###
 ############################
+print "[*] Changing permissions of the user folders..."
 try:
     configuration.changePermissionsRecursively(paths["appPath"], int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))              
 except:
     # Something happened with the permissions... We omit this.
     pass
 
+print "[*] Copying relevant files..."
 files_to_copy= {
     paths["appPath"] : [
     ],
@@ -201,7 +226,6 @@ files_to_copy= {
 
 # Iterating through all destinations to write the info
 for destiny in files_to_copy.keys():
-
     # Grabbing each source file to be moved
     for sourceFile in files_to_copy[destiny]:
         fileToMove = os.path.join(HERE,sourceFile)
@@ -215,12 +239,12 @@ for destiny in files_to_copy.keys():
         output = os.popen(cmd).read()    
 
 print    
-print "Last part: trying to configure Maltego Transforms..."            
+print "[*] Last part: trying to configure Maltego Transforms..."
 # Creating the configuration file
 try:
     import osrframework.transforms.lib.configure_maltego as maltego
     maltego.configureMaltego(transformsConfigFolder = paths["appPathTransforms"], base=os.path.join(HERE,"osrframework/transforms/lib/osrframework-maltego-settings"), debug = False, backupPath = paths["appPathDefaults"])
 except Exception, e:
-    print "WARNING. The Maltego configuration file to use i3visio transforms could not be created and thus, cannot be used. Check the following error:"
+    print "[!] The Maltego configuration file to use i3visio transforms could not be created and thus, cannot be used. Check the following error:"
     print str(e)
 print

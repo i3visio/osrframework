@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.13.1, 2016/07/20 -- Fixed a deployment issue with versions which are older than 0.13.0.
+- Relevant hotfix deployed to remove any trace of deprecated installations of the framework during the setup. New installs will not perceive the difference.
+
 0.13.0, 2016/07/19 -- Added the possibility of dinamically adding user-defined modules under the configuration folder. Fixed issues #150, #151, #152, #153.
 - Fixed issue #146. Letting the user create new usufy wrappers in its home folder.
 - Fixed issue #147. Letting the user create new entify regexps in its home folder.
