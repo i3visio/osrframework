@@ -27,16 +27,12 @@ import sys
 import shutil
 import site
 
-installationFound = True
-
+# Removing old installations first...
 print
-while installationFound:
-    packagesPaths = site.getsitepackages()
-    osrframeworkSystemPath = os.path.join(packagesPaths[0], "osrframework")
-    if os.path.isdir(osrframeworkSystemPath):
-        print "[!] Found an old installation at: " + osrframeworkSystemPath
-    else:
-        print "[*] No OSRFramework installation found in the system."
+packagesPaths = site.getsitepackages()
+osrframeworkSystemPath = os.path.join(packagesPaths[0], "osrframework")
+if os.path.isdir(osrframeworkSystemPath):
+    print "[!] Found an old installation at: " + osrframeworkSystemPath
     try:
         shutil.rmtree(osrframeworkSystemPath)
         print "[*] Successfully removed the old installation. Installation will resume now to upgrade it..."
@@ -44,6 +40,8 @@ while installationFound:
         print str(e)
         print "[E] The installed version of OSRFramework cannot be removed. Try to remove it manually in your python installation under 'local/lib/python2.7/dist-packages/'."
         print sys.exit()
+else:
+    print "[*] No OSRFramework installation found in the system."
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
