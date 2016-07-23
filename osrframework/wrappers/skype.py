@@ -173,8 +173,11 @@ class Skype(Platform):
    
                 # Search for users and display their Skype name, full name
                 # and country.
+                #print "In skype.py, before sending the query: '" + query + "'"
                 data = skype.checkInSkype(query)
-        except:
+                #print "In skype.py, printing the 'data' variable:\n" + json.dumps(data, indent=2)
+        except Exception as e:
+            print "[!] In skype.py, exception caught when checking information in Skype!"
             # No information was found, then we return a null entity
             return json.dumps(results)            
                 
@@ -185,6 +188,7 @@ class Skype(Platform):
                     results.append(user)
         elif mode == "searchfy":
             results = data
-               
+
+    	#print "In skype.py, printing the 'results' variable:\n" + json.dumps(results, indent=2)              
         return json.dumps(results)
 

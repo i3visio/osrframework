@@ -3,6 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.13.2, 2016/07/23 -- Fixed issue #154: OSRFramework 0.13.1 is installed but throws an error when launching usufy.py.
+- Evilzone and Thepiratebay wrappers have been moved to pending as they are conflicting with Skype.
+- Some changes performed in the way in which Skype logs the messages in the console.
+
 0.13.1, 2016/07/20 -- Fixed a deployment issue with versions which are older than 0.13.0.
 - Relevant hotfix deployed to remove any trace of deprecated installations of the framework during the setup. New installs will not perceive the difference.
 
