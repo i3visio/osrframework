@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.1.0"
+__version__ = "v4.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -217,11 +217,11 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         #print platforms
         for plat in platforms:
             args.append (( plat, nick, rutaDescarga, avoidProcessing, avoidDownload))
-            
+
         # If the process is executed by the current app, we use the Processes. It is faster than pools.
         if nThreads <= 0 or nThreads > len(platforms):
             nThreads = len(platforms)
-            
+
         logger.info("Launching " + str(nThreads) + " different threads...")
         # We define the pool
         pool = Pool(nThreads)
@@ -251,12 +251,12 @@ def multi_run_wrapper(args):
     '''
     #startTime= dt.datetime.now()
     #print "STARTED:\t", str(args[0])
-        
+
     res = getPageWrapper(*args)
-    
+
     #endTime = dt.datetime.now()
     #print "COMPLETED:\t", str(args[0]), "\t", str(endTime-startTime)
-        
+
     return res
 
 
@@ -367,7 +367,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                 try:
                     nicks = args.list.read().splitlines()
                 except:
-                    logger.error("ERROR: there has been an error when opening the file that stores the nicks.\tPlease, check the existence of this file.")            
+                    logger.error("ERROR: there has been an error when opening the file that stores the nicks.\tPlease, check the existence of this file.")
 
             # Definning the results
             res = []
@@ -501,6 +501,9 @@ This is free software, and you are welcome to redistribute it under certain cond
             return res
 
 def getParser():
+    import osrframework.utils.configuration as configuration
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("usufy")
+
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
 
@@ -519,7 +522,7 @@ def getParser():
 
     # Selecting the platforms where performing the search
     groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
-    groupPlatforms.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default =['all'] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(platOptions) + '. More than one option can be selected.')
+    groupPlatforms.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default = DEFAULT_VALUES["platforms"] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(platOptions) + '. More than one option can be selected.')
     groupPlatforms.add_argument('-t', '--tags', metavar='<tag>', default = [], nargs='+', required=False, action='store', help='select the list of tags that fit the platforms in which you want to perform the search. More than one option can be selected.')
 
     # Configuring the processing options
@@ -528,15 +531,14 @@ def getParser():
     groupProcessing.add_argument('--avoid_processing', required=False, action='store_true', default=False, help='argument to force usufy NOT to perform any processing task with the valid profiles.')
     groupProcessing.add_argument('--fuzz_config',  metavar='<path_to_fuzz_list>', action='store', type=argparse.FileType('r'), help='path to the fuzzing config details. Wildcards such as the domains or the nicknames should come as: <DOMAIN>, <USERNAME>.')
     groupProcessing.add_argument('--nonvalid', metavar='<not_valid_characters>', required=False, default = '\\|<>=', action='store', help="string containing the characters considered as not valid for nicknames." )
-    groupProcessing.add_argument('-c', '--credentials', metavar='<path_to_credentials_file', required=False, default = './creds.txt', action='store', help='path to the credentials file. If none was provided, ./creds.txt is assumed.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = ['xls'], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the uris returned in the default web browser.')
     # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=32, type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default= int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')

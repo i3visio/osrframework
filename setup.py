@@ -84,6 +84,7 @@ setup(    name="osrframework",
     keywords = "python osint harvesting profiling maltego username socialmedia forums",
     scripts= [
         "osrframework/alias_generator.py",
+        "osrframework/domainfy.py",
         "osrframework/entify.py",
         "osrframework/mailfy.py",
         "osrframework/phonefy.py",
@@ -180,6 +181,7 @@ files_to_copy= {
         os.path.join("config", "accounts.cfg"),
         os.path.join("config", "api_keys.cfg"),
         os.path.join("config", "browser.cfg"),
+        os.path.join("config", "general.cfg"),
     ],
     paths["appPathTransforms"] : [
         os.path.join("osrframework", "alias_generator.py"),

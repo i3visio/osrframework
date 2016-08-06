@@ -297,7 +297,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     # Showing the execution time...
     if not args.quiet:
         startTime= dt.datetime.now()
-        print str(startTime) +"\tStarting the lookup in up to " + str(len(domains))+ " different domains. Be patient!\n"
+        print str(startTime) +"\tStarting the lookup in up to " + str(len(domains))+ " different domains. This may take more than 1 second/query so... Be patient!\n"
 
     # Perform searches, using different Threads
     results = performSearch(domains, args.threads)
@@ -345,6 +345,9 @@ This is free software, and you are welcome to redistribute it under certain cond
 
 
 def getParser():
+    import osrframework.utils.configuration as configuration
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("domainfy")
+
     parser = argparse.ArgumentParser(description='domainfy.py - Checking the existence of domains.', prog='domainfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
@@ -358,14 +361,14 @@ def getParser():
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = ['xls'], action='store', help='output extension for the summary files. Default: xls.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=  ["all", "none"] + TLD.keys(), action='store', help='list of tld types where the nick will be looked for.', required=False, default = ["global"])
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=  ["all", "none"] + TLD.keys(), action='store', help='list of tld types where the nick will be looked for.', required=False, default = DEFAULT_VALUES["tlds"])
     groupProcessing.add_argument('-u', '--user_defined',  metavar='<new_tld>',  nargs='+', action='store', help='list of TLD defined by the user where the nick will be looked for.', required=False, default = [])
 
     # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=16, type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default= int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options

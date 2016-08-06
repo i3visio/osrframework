@@ -6,6 +6,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 0.14.0, 2016/08/08 -- Added domainfy as a tool to verify the existence of domains.
 - Added domainfy.py application to check the existence of several domains.
 - TO-DO. Added osrfconsole script to control de utilities in the framework.
+- Added general.cfg to address issue #92 and, indirectly, issue #156.
 
 0.13.2, 2016/07/23 -- Fixed issue #154: OSRFramework 0.13.1 is installed but throws an error when launching usufy.py.
 - Evilzone and Thepiratebay wrappers have been moved to pending as they are conflicting with Skype.

@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v3.3"
+__version__ = "v4.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -49,38 +49,38 @@ import osrframework.utils.general as general
 # From emailahoy code
 import emailahoy
 from validate_email import validate_email
-            
+
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
 
 EMAIL_DOMAINS = [
-    "126.com", 
-    "163.com", 
-    "189.cn", 
+    "126.com",
+    "163.com",
+    "189.cn",
     "aaathats3as.com",
     "btinternet.com",
     "cocaine.ninja",
     "cock.lu",
-    "cock.email", 
-    "firemail.cc", 
-    "hitler.rocks", 
-    "getbackinthe.kitchen", 
-    "gmail.com", 
-    "hushmail.com", 
-    "keemail.me", 
+    "cock.email",
+    "firemail.cc",
+    "hitler.rocks",
+    "getbackinthe.kitchen",
+    "gmail.com",
+    "hushmail.com",
+    "keemail.me",
     "libero.it",
     "lycos.com",
-    "memeware.net", 
-    "protonmail.com", 
+    "memeware.net",
+    "protonmail.com",
     "rediffmail.com",
-    "tuta.io", 
-    "tutamail.com", 
-    "tutanota.com", 
-    "tutanota.de", 
-    "waifu.club", 
-    "ya.ru", 
-    "yandex.com", 
-    "yeah.net", 
+    "tuta.io",
+    "tutamail.com",
+    "tutanota.com",
+    "tutanota.de",
+    "waifu.club",
+    "ya.ru",
+    "yandex.com",
+    "yeah.net",
     "zoho.com"
 ]
 
@@ -120,17 +120,17 @@ def weCanCheckTheseDomains(email):
     notWorking = [
         "@aol.com",
         "@bk.ru",
-        "@gmx.", 
-        "@hotmail.co", 
+        "@gmx.",
+        "@hotmail.co",
         "@inbox.com",
-        "@latinmail.com", 
-        "@mail.ru", 
-        "@mail2tor.com", 
-        "@outlook.com", 
+        "@latinmail.com",
+        "@mail.ru",
+        "@mail2tor.com",
+        "@outlook.com",
         "@rambler.ru",
         "@starmedia.com",
         "@ukr.net",
-        "@yahoo.", 
+        "@yahoo.",
         "@ymail."
     ]
 
@@ -209,7 +209,7 @@ def multi_run_wrapper(args):
         aux["attributes"].append(domain)
         return aux
     else:
-        return {}        
+        return {}
 
 def performSearch(emails=[], nThreads=16):
     '''
@@ -220,15 +220,15 @@ def performSearch(emails=[], nThreads=16):
         :return:
     '''
     results = []
-    
+
     # Using threads in a pool if we are not running the program in main
     args = []
 
     # Grabbing all the emails that would be validated
     for e in emails:
         if weCanCheckTheseDomains(e):
-            args.append((e))        
-    
+            args.append((e))
+
     # Returning None if no valid domain has been returned
     if len(args) == 0:
         return results
@@ -247,8 +247,8 @@ def performSearch(emails=[], nThreads=16):
     #poolResults = pool.apply_async(multi_run_wrapper,(args))
     poolResults = pool.map(multi_run_wrapper,args)
 
-    pool.close()    
-    
+    pool.close()
+
     # Processing the results
     # ----------------------
     results = []
@@ -259,7 +259,7 @@ def performSearch(emails=[], nThreads=16):
             results.append(res)
 
     return results
-   
+
 def main(args):
     '''
         Main program.
@@ -276,7 +276,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         print
 
     # Commented out as not needed after 0.12.1
-    """ 
+    """
     if sys.platform == 'win32':
         print "WARNING:"
         print "\tmailfy.py seems to be run in a Windows system."
@@ -291,7 +291,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         # processing only the given domains
         domains = args.domains
 
-    if args.create_emails:  
+    if args.create_emails:
         emails = grabEmails(nicksFile = args.create_emails, domains = domains)
     else:
         emails = grabEmails(emails=args.emails, emailsFile = args.emails_file, nicks=args.nicks, nicksFile = args.nicks_file, domains = domains)
@@ -345,6 +345,9 @@ This is free software, and you are welcome to redistribute it under certain cond
 
 
 def getParser():
+    import osrframework.utils.configuration as configuration
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("mailfy")
+
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
@@ -360,12 +363,12 @@ def getParser():
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = ['xls'], action='store', help='output extension for the summary files. Default: xls.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = './results', action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices= ['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default = ["all"])
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices= ['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default = DEFAULT_VALUES["domains"])
     # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = "profiles", action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=16, type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')    
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options
