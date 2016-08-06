@@ -3,6 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.14.0, 2016/08/08 -- Added domainfy as a tool to verify the existence of domains.
+- Added domainfy.py application to check the existence of several domains.
+- TO-DO. Added osrfconsole script to control de utilities in the framework.
+
 0.13.2, 2016/07/23 -- Fixed issue #154: OSRFramework 0.13.1 is installed but throws an error when launching usufy.py.
 - Evilzone and Thepiratebay wrappers have been moved to pending as they are conflicting with Skype.
 - Some changes performed in the way in which Skype logs the messages in the console.
@@ -87,12 +91,12 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fixed issue #93: Issue when installing in Windows v0.11.x. An exception has been added in the general.changePermissionsRecursively function to deal with os.chown issues when running on Windows.
 - Fixed issue #98: Configuration files seem not to be copied correctly in the installation process. In Windows there was a problem with the direction of the slashes. Updated the configuration.py file to address it.
 - Fixed issue #100: With the new installation procedure, networkx should be installed in the system. Added a osrframework/utils/configuration.py file.
-- Transforms adjusted to use a copy of the scripts stored in the transforms folder inside the configuration directory to fix an issue when trying to run the scripts from Maltego, which seems not to be capable of launching them otherwise making calls in the "python usufy.py..." way in Windows systems. 
+- Transforms adjusted to use a copy of the scripts stored in the transforms folder inside the configuration directory to fix an issue when trying to run the scripts from Maltego, which seems not to be capable of launching them otherwise making calls in the "python usufy.py..." way in Windows systems.
 - Added a MANIFEST.in file to include static files in the ./config folder and the configuration of the transforms.
 - Commented logging text in usufy.py.
 - Added the missing script config_api_keys.py which was previously ignored.
 - Changed the maximum number of threads to be opened by OSRFramework transforms in Maltego as this could lead to problems with the applications.
-- Fixed gsmspain.py wrapper for usufy which was not capable of returning a result properly. 
+- Fixed gsmspain.py wrapper for usufy which was not capable of returning a result properly.
 - Deactivated identi.ca and couchsurfing because the platforms seems to be unstable.
 - Added a browser.cfg to let the user configure OSRFramework browser settings such as the way in which it gets connected to the internet or the user agent.
 - Added an api_keys.cfg file to the configuration file where all the API keys will be stored.
@@ -130,7 +134,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - A new error message has been added to aporrealos to avoid false positives when the platform throws errors.
 - hotmail.com had to be deactivated from mailfy.py :(.
 
-0.10.0, 2016/01/30 -- New release with several fixes. 
+0.10.0, 2016/01/30 -- New release with several fixes.
 - New platforms added to usufy: archive, ehow, gamesheep, hubpages, kanogames, newgrounds, nubelo, retailmenot, sidereel, thepiratebay, webtv, worldcarfans.
 - Fixed issues linked to mailfy: #56, #57, #58 and #60.
 - Fixed issue #53: adding tabulate dependency to the requirements.txt file.
@@ -148,17 +152,17 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Removed unused files such as requirements.txt, utils/export.py, utils/timeout.py.
 - Update in the README file.
 
-0.9.14, 2016/01/21 -- Mitigation of several fixes. 
+0.9.14, 2016/01/21 -- Mitigation of several fixes.
 - Fix to issues #46, #47, #48, #49. Mitigating #40, #42, #43, #44, 45.
 - Modification of the Welcome banner for the different utilities. Back to normal.
 
-0.9.13, 2015/11/26 -- Modifications for the Cybercamp. 
+0.9.13, 2015/11/26 -- Modifications for the Cybercamp.
 - Modification of the Welcome banner for the different utilities.
 - Changed the default extension to .xls as stated in the help.
 - Added a new phonefy platform: infotelefonica.es.
 - Modified the name of the listaspam platform from "listspam" to "listaspam".
 
-0.9.12, 2015/11/18 -- Addition of Periscope. 
+0.9.12, 2015/11/18 -- Addition of Periscope.
 - Addition of a wrapper for Periscope.
 - Imported in the setup.py the local osrframework folder to grab the current version number.
 - Fixed some errors in the messages displayed.
