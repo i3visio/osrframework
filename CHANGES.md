@@ -3,10 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.0, 2016/08/08 -- Added domainfy as a tool to verify the existence of domains.
+0.14.0, 2016/08/08 -- Added domainfy as a tool to verify the existence of domains and first release of osrfconsole, a console GUI similar to msfconsole.
 - Added domainfy.py application to check the existence of several domains.
-- TO-DO. Added osrfconsole script to control de utilities in the framework.
+- Added osrfconsole script to control de utilities in the framework to address issue #158.
 - Added general.cfg to address issue #92 and, indirectly, issue #156.
+- Modified the shebang of alias_generator, domainfy, entify, enumeration, mailfy, osrfconsole, phonefy, searchfy and usufy to `#!/usr/bin/env python2`.
 
 0.13.2, 2016/07/23 -- Fixed issue #154: OSRFramework 0.13.1 is installed but throws an error when launching usufy.py.
 - Evilzone and Thepiratebay wrappers have been moved to pending as they are conflicting with Skype.

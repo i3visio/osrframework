@@ -1,4 +1,4 @@
-# !/usr/bin/python
+# !/usr/bin/python2
 # -*- coding: cp1252 -*-
 #
 ##################################################################################
@@ -90,6 +90,7 @@ setup(    name="osrframework",
         "osrframework/phonefy.py",
         "osrframework/searchfy.py",
         "osrframework/usufy.py",
+        "osrframework/osrfconsole.py",
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

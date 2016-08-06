@@ -1,5 +1,5 @@
-#!/usr/bin/python
-# -*- coding: cp1252 -*-
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
 #
 ##################################################################################
 #
@@ -45,12 +45,12 @@ COMMON_WORDS = ["666", "home", "mr", "news",  "official", "real", "xxx"]
 LOCALES = ["ar", "en", "es", "fr", "ru"]
 LEET_TRANSFORMS = {
     "a" : ["4"],
-    "b" : ["8"],    
+    "b" : ["8"],
     "e" : ["3"],
     "i" : ["1"],
-    "l" : ["l"],    
+    "l" : ["l"],
     "o" : ["0"],
-    "s" : ["5"],    
+    "s" : ["5"],
     "t" : ["7"],
     "z" : ["2"]
 }
@@ -70,8 +70,8 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     surname2 = surname2.lower()
     year = year.lower()
     country = country.lower()
-    city = city.lower()         
-    
+    city = city.lower()
+
     # Check if the value provided is a '' string
     if name == '':
         name = None
@@ -80,7 +80,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     if surname2 == '':
         surname2 = None
     if year == '':
-        year = None        
+        year = None
     if city == '':
         city = None
     if country == '':
@@ -89,13 +89,13 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     print "Generation of new aliases..."
 
     lista = []
-    
+
     try:
         tmp = name + "<SEPARATOR>" + surname1 + "<SEPARATOR>" + surname2
         if tmp not in lista: lista.append(tmp)
     except:
         pass # An element is missing
-        
+
     try:
         tmp = surname1 + "<SEPARATOR>" + surname2 + "<SEPARATOR>" + name
         if tmp not in lista: lista.append(tmp)
@@ -534,13 +534,13 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
         if tmp not in lista: lista.append(tmp)
     except:
         pass # An element is missing
-        
+
     try:
         tmp = name[0] + "<SEPARATOR>" + surname1 + "<SEPARATOR>" + city
         if tmp not in lista: lista.append(tmp)
     except:
         pass # An element is missing
-        
+
     try:
         tmp = surname1 + "<SEPARATOR>" + surname2 + "<SEPARATOR>" + name + "<SEPARATOR>" + city
         if tmp not in lista: lista.append(tmp)
@@ -1548,7 +1548,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
         if tmp not in lista: lista.append(tmp)
     except:
         pass # An element is missing
-        
+
     try:
         tmp = name[0] + "<SEPARATOR>" + surname1[0] + "<SEPARATOR>" + surname2 + "<SEPARATOR>" + year[-2:]
         if tmp not in lista: lista.append(tmp)
@@ -2592,7 +2592,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
         if tmp not in lista: lista.append(tmp)
     except:
         pass # An element is missing
-        
+
     try:
         tmp = name[0] + "<SEPARATOR>" + surname1 + "<SEPARATOR>" + year[-2:]
         if tmp not in lista: lista.append(tmp)
@@ -2750,7 +2750,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
 
 
 
-    # Appending Numbers to the nicks 
+    # Appending Numbers to the nicks
     if useLeet:
         for n in lista:
             # This will store the variations of the nicks with all the possible combinations
@@ -2760,24 +2760,24 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
                 try:
                     # Iterating through the list of possible changes found in the array
                     for change in LEET_TRANSFORMS[k]:
-                        # Replacing the option                    
+                        # Replacing the option
                         tmp = n.replace(k, change )
                         if tmp not in listaAdditions: listaAdditions.append(tmp)
-                        
+
                         # Applying all the possible changes
                         newAliases = []
                         for f in possibleChanges:
                             newAliases.append( f.replace(k, change ) )
-                        
+
                         # Adding the new changes
                         possibleChanges += newAliases
-                    
+
                 except:
                     pass # An element is missing
             # Appending the possible combinations which include ALL the possible leet options
             for changedAll in possibleChanges:
                 if changedAll not in listaAdditions: listaAdditions.append(changedAll)
-                
+
     listaFinal = []
 
     # REMOVING THE "<SEPARATOR>" TAGS TO GET THE FINAL NICKNAMES
@@ -2792,7 +2792,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
             except:
                 pass # An element is missing
 
-    
+
     # Sorting list
     listaFinal.sort()
     print
@@ -2829,11 +2829,11 @@ if __name__ == "__main__":
     # Other options
     groupSquatting = parser.add_argument_group('Profile squatting arguments', 'Showing additional configuration options for this program based on the original -s option in usufy.py.')
     groupSquatting.add_argument('--numbers', default=False, action='store_true', help='Adds numbers at the end of the nicknames.')
-    groupSquatting.add_argument('--common_words', default=False, action='store_true', help='Adds some famous words at the end of the nicknames.')    
-    groupSquatting.add_argument('--leet', default=False, action='store_true', help='Adds the leet mode to change \'a\' by \'4\', \'e\' by \'3\', etc.')        
-    groupSquatting.add_argument('--locales', default=False, action='store_true', help='Adds ending linked to countries.')    
-    groupSquatting.add_argument('--extra_words', default=[], action='store', help='Adds new words to the nicknames provided by the user.')        
-    
+    groupSquatting.add_argument('--common_words', default=False, action='store_true', help='Adds some famous words at the end of the nicknames.')
+    groupSquatting.add_argument('--leet', default=False, action='store_true', help='Adds the leet mode to change \'a\' by \'4\', \'e\' by \'3\', etc.')
+    groupSquatting.add_argument('--locales', default=False, action='store_true', help='Adds ending linked to countries.')
+    groupSquatting.add_argument('--extra_words', default=[], action='store', help='Adds new words to the nicknames provided by the user.')
+
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version='%(prog)s '+__version__, help='shows the version of the program and exists.')
@@ -2852,14 +2852,14 @@ if __name__ == "__main__":
         args.year=raw_input("Insert a year (e. g.: birthyear): ".ljust(35, " ")).replace(' ','')
         args.city=raw_input("Insert a city: ".ljust(35, " ")).replace(' ','')
         args.country=raw_input("Insert a country: ".ljust(35, " ")).replace(' ','')
-        
+
         if args.extra_words == []:
             print "Additional transformations to be done"
             print "-------------------------------------"
             print
             inputText=raw_input("Extra words to add (',' separated): ".ljust(35, " ")).replace(' ','')
             extraWords += inputText.lower().split(',')
-        
+
     lista=[]
 
     print
@@ -2869,15 +2869,15 @@ if __name__ == "__main__":
     if args.name != "": print args.name
     if args.surname1 != "": print args.surname1
     if args.surname2 != "": print args.surname2
-    if args.year != "": print args.year    
+    if args.year != "": print args.year
     if args.city != "": print args.city
     if args.country != "": print args.country
     print
 
     main(name = args.name, surname1 = args.surname1, surname2 = args.surname2, city = args.city, country = args.country, year = args.year, useNumbers = args.numbers, useCommonWords = args.common_words, useLeet = args.leet, useLocales = args.locales, extraWords = extraWords )
-    
+
     print
     print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
     print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
     print "Note that otherwise, we won't know about it!"
-    print    
+    print
