@@ -24,7 +24,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.1"
+__version__ = "v0.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -994,8 +994,6 @@ For example, type 'use usufy' to load the usufy util. You can always use the <TA
             OSRFConsoleUsufy().cmdloop()
         else:
             print "[!] Not implemented yet. Try 'help use' to check the available options."
-            return False
-        return True
 
     def complete_use(self, text, line, begidx, endidx):
         if not text:
