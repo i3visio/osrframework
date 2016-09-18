@@ -29,16 +29,16 @@ __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.1"
+__version__ = "v0.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 import argparse
 import datetime as dt
+import dns.resolver
 import json
 import os
 import whois
-import requests
 import sys
 
 # global issues for multiprocessing
@@ -175,7 +175,7 @@ def multi_run_wrapper(domain):
     '''
     is_valid = True
     try:
-        requests.get("http://" + domain["domain"], timeout=1)
+        answers = dns.resolver.query(domain["domain"],'NS')
         #If we arrive here... The domain exists!!
     except Exception, e:
         is_valid = False
