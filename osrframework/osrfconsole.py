@@ -359,12 +359,11 @@ class OSRFConsoleDomainfy(OSRFConsoleUtil):
         """ Function that creates the array with the params that will work with this function"""
         # Creating the parameters as if they were created using the command line
         params = [
-            "-n", self.CONFIG["NICK"]["CURRENT_VALUE"],
-            "-t", self.CONFIG["TLD"]["CURRENT_VALUE"],
+            "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
+            "-t" ] + self.CONFIG["TLD"]["CURRENT_VALUE"].split() + [
             "-T", str(self.CONFIG["THREADS"]["CURRENT_VALUE"]),
             "-o", self.CONFIG["OUTPUT"]["CURRENT_VALUE"],
-            "-e", self.CONFIG["EXTENSION"]["CURRENT_VALUE"]
-        ]
+            "-e" ] + self.CONFIG["EXTENSION"]["CURRENT_VALUE"].split()
 
         # Appending new tlds if provided
         if self.CONFIG["USER_DEFINED"]["CURRENT_VALUE"] != None:
@@ -462,10 +461,10 @@ class OSRFConsoleEntify(OSRFConsoleUtil):
         # Creating the parameters as if they were created using the command line
         params = [
             "-u", self.CONFIG["URL"]["CURRENT_VALUE"],
-            "-r", self.CONFIG["REGEXP"]["CURRENT_VALUE"],
+            "-r" ] + self.CONFIG["REGEXP"]["CURRENT_VALUE"].split() + [
             "-o", self.CONFIG["OUTPUT"]["CURRENT_VALUE"],
-            "-e", self.CONFIG["EXTENSION"]["CURRENT_VALUE"]
-        ]
+            "-e" ] + self.CONFIG["EXTENSION"]["CURRENT_VALUE"].split()
+
         return params
 
     def do_run(self, line):
@@ -564,12 +563,12 @@ class OSRFConsoleMailfy(OSRFConsoleUtil):
         """ Function that creates the array with the params that will work with this function"""
         # Creating the parameters as if they were created using the command line
         params = [
-            "-n", self.CONFIG["NICK"]["CURRENT_VALUE"],
-            "-p", self.CONFIG["PLATFORMS"]["CURRENT_VALUE"],
+            "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
+            "-p" ] + self.CONFIG["PLATFORMS"]["CURRENT_VALUE"].split() + [
             "-T", str(self.CONFIG["THREADS"]["CURRENT_VALUE"]),
             "-o", self.CONFIG["OUTPUT"]["CURRENT_VALUE"],
-            "-e", self.CONFIG["EXTENSION"]["CURRENT_VALUE"]
-        ]
+            "-e" ] + self.CONFIG["EXTENSION"]["CURRENT_VALUE"].split()
+
         return params
 
     def do_run(self, line):
@@ -661,11 +660,11 @@ class OSRFConsolePhonefy(OSRFConsoleUtil):
         """ Function that creates the array with the params that will work with this function"""
         # Creating the parameters as if they were created using the command line
         params = [
-            "-n", self.CONFIG["NUMBER"]["CURRENT_VALUE"],
-            "-p", self.CONFIG["PLATFORMS"]["CURRENT_VALUE"],
+            "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
+            "-p" ] + self.CONFIG["PLATFORMS"]["CURRENT_VALUE"].split() + [
             "-o", self.CONFIG["OUTPUT"]["CURRENT_VALUE"],
-            "-e", self.CONFIG["EXTENSION"]["CURRENT_VALUE"]
-        ]
+            "-e" ] + self.CONFIG["EXTENSION"]["CURRENT_VALUE"].split()
+
         return params
 
     def do_run(self, line):
@@ -757,11 +756,11 @@ class OSRFConsoleSearchfy(OSRFConsoleUtil):
         """ Function that creates the array with the params that will work with this function"""
         # Creating the parameters as if they were created using the command line
         params = [
-            "-q", self.CONFIG["QUERY"]["CURRENT_VALUE"],
-            "-p", self.CONFIG["PLATFORMS"]["CURRENT_VALUE"],
+            "-q" ] + self.CONFIG["QUERY"]["CURRENT_VALUE"].split() + [
+            "-p" ] + self.CONFIG["PLATFORMS"]["CURRENT_VALUE"].split() + [
             "-o", self.CONFIG["OUTPUT"]["CURRENT_VALUE"],
-            "-e", self.CONFIG["EXTENSION"]["CURRENT_VALUE"]
-        ]
+            "-e" ] + self.CONFIG["EXTENSION"]["CURRENT_VALUE"].split()
+
         return params
 
     def do_run(self, line):
@@ -860,12 +859,12 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
         """ Function that creates the array with the params that will work with this function"""
         # Creating the parameters as if they were created using the command line
         params = [
-            "-n", self.CONFIG["NICK"]["CURRENT_VALUE"],
-            "-p", self.CONFIG["PLATFORMS"]["CURRENT_VALUE"],
+            "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
+            "-p" ]  +  self.CONFIG["PLATFORMS"]["CURRENT_VALUE"].split() + [
             "-T", str(self.CONFIG["THREADS"]["CURRENT_VALUE"]),
             "-o", self.CONFIG["OUTPUT"]["CURRENT_VALUE"],
-            "-e", self.CONFIG["EXTENSION"]["CURRENT_VALUE"]
-        ]
+            "-e" ] + self.CONFIG["EXTENSION"]["CURRENT_VALUE"].split()
+
         return params
 
     def do_run(self, line):

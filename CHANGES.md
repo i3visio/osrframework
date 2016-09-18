@@ -8,6 +8,11 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Added osrfconsole script to control de utilities in the framework to address issue #158.
 - Added general.cfg to address issue #92 and, indirectly, issue #156.
 - Modified the shebang of alias_generator, domainfy, entify, enumeration, mailfy, osrfconsole, phonefy, searchfy and usufy to `#!/usr/bin/env python2`.
+- Fixed issue #166: The PLATFORMS variable in osrfconsole does not accept various entries.
+- Fixed issue #165: Osrfconsole back command exists instead of unloading.
+- Fixed issue #159: Adding a Console UI to help beginners.
+- Fixed issue #158: Complementing domain search using whois info in domain finder script.
+- Fixed issue #157: Adding domain search in a new script.
 
 0.13.2, 2016/07/23 -- Fixed issue #154: OSRFramework 0.13.1 is installed but throws an error when launching usufy.py.
 - Evilzone and Thepiratebay wrappers have been moved to pending as they are conflicting with Skype.
