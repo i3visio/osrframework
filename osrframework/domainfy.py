@@ -29,13 +29,13 @@ __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.2"
+__version__ = "v0.3"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 import argparse
 import datetime as dt
-import dns.resolver
+import socket
 import json
 import os
 import whois
@@ -175,12 +175,9 @@ def multi_run_wrapper(domain):
     '''
     is_valid = True
     try:
-        answers = dns.resolver.query(domain["domain"],'NS')
+        ipv4 = socket.gethostbyname(domain["domain"])
         #If we arrive here... The domain exists!!
-    except Exception, e:
-        is_valid = False
 
-    if is_valid:
         aux = {}
         aux["type"] = "i3visio.result"
         aux["value"] = "Domain Info - " + domain["domain"]
@@ -205,8 +202,16 @@ def multi_run_wrapper(domain):
 
         aux["attributes"].append(tmp)
 
-        return aux
-    else:
+        tmp = {}
+        tmp["type"] = "i3visio.ipv4"
+        tmp["value"] =  ipv4
+        tmp["attributes"] = []
+
+        aux["attributes"].append(tmp)
+        
+        return aux        
+    except Exception, e:
+        # The domain just not exist... We simply return an empty JSON
         return {}
 
 def performSearch(domains=[], nThreads=16):

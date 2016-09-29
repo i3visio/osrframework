@@ -160,8 +160,7 @@ setup(    name="osrframework",
         #"pyopenssl",
         #"ndg-httpsclient",
         #"pyasn1"
-        "python-whois",
-        "dnspython"
+        "python-whois"
     ],
 )
 
