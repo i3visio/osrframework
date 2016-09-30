@@ -3,16 +3,20 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.0, 2016/09/29 -- Added domainfy as a tool to verify the existence of domains and first release of osrfconsole, a console GUI similar to msfconsole.
-- Added domainfy.py application to check the existence of several domains using socket.gethostbyname().
-- Added osrfconsole script to control de utilities in the framework to address issue #158.
-- Added general.cfg to address issue #92 and, indirectly, issue #156.
-- Modified the shebang of alias_generator, domainfy, entify, enumeration, mailfy, osrfconsole, phonefy, searchfy and usufy to `#!/usr/bin/env python2`.
-- Fixed issue #166: The PLATFORMS variable in osrfconsole does not accept various entries.
-- Fixed issue #165: Osrfconsole back command exists instead of unloading.
-- Fixed issue #159: Adding a Console UI to help beginners.
-- Fixed issue #158: Complementing domain search using whois info in domain finder script.
-- Fixed issue #157: Adding domain search in a new script.
+0.14.0, 2016/09/30 -- Added domainfy as a tool to verify the existence of domains and first release of osrfconsole, a console GUI similar to msfconsole.
+- Add domainfy.py application to check the existence of several domains using socket.gethostbyname().
+- Add osrfconsole script to control de utilities in the framework to address issue #158.
+- Add general.cfg to address issue #92 and, indirectly, issue #156.
+- Modify the shebang of alias_generator, domainfy, entify, enumeration, mailfy, osrfconsole, phonefy, searchfy and usufy to `#!/usr/bin/env python2`.
+- Fix issue #172: Remove ummahforum platform.
+- Fix issue #171: Dnspython module does not work in Windows.
+- Add feature #170: Add OneName as a new usufy platform.
+- Fix issue #166: The PLATFORMS variable in osrfconsole does not accept various entries.
+- Fix issue #165: Osrfconsole back command exists instead of unloading.
+- Add feature #163: Adding tip.me as a new platform.
+- Add feature #159: Adding a Console UI to help beginners. Osrfconsole.py is released.
+- Add feature #158: Complementing domain search using whois info in domain finder script.
+- Add feature #157: Adding domain search in a new script.
 
 0.13.2, 2016/07/23 -- Fixed issue #154: OSRFramework 0.13.1 is installed but throws an error when launching usufy.py.
 - Evilzone and Thepiratebay wrappers have been moved to pending as they are conflicting with Skype.

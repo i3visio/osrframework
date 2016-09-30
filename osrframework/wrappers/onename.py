@@ -29,48 +29,48 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Ummahforum(Platform):
+class Onename(Platform):
     """ 
-        A <Platform> object for Ummahforum.
+        A <Platform> object for Onename.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Ummahforum"
-        self.tags = ["social", "news"]
+        self.platformName = "Onename"
+        self.tags = ["bitcoin"]
 
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = False
         
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.ummahforum.com/member.php?username=" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "https://onename.com/" + "<usufy>"
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        #self.needsCredentials["searchfy"] = False
         
         #################
         # Valid queries #
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query.
+        # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
@@ -81,8 +81,8 @@ class Ummahforum(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["This user has not registered and therefore does not have a profile to view."]
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["usufy"] = ["User doesn&#39;t seem to exist"]
+        #self.notFoundText["searchfy"] = []
         
         #########################
         # Fields to be searched #
@@ -101,12 +101,11 @@ class Ummahforum(Platform):
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
         
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-        
-        
+
