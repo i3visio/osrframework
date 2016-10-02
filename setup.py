@@ -1,5 +1,5 @@
 # !/usr/bin/python2
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 #
 ##################################################################################
 #
@@ -22,15 +22,27 @@
 
 import os
 import sys
+from setuptools import setup
 
 # Checking if obsolete versions are installed in the machine
 import shutil
 import site
 
+# Get packagesPaths depending on whether the user launched it with sudo or not
+if not os.geteuid() == 0:
+    packagesPaths = site.getusersitepackages()
+    print "[*] The installation has not been launched as superuser."
+else:
+    # This will throw two folders, but we need the first one only:
+    #   ['/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages']
+    packagesPaths = site.getsitepackages()[0]
+    print "[*] The installation is going to be run as superuser."
+
+osrframeworkSystemPath = os.path.join(packagesPaths, "osrframework")
+
+print "[*] The chosen installation path is: " + osrframeworkSystemPath
+
 # Removing old installations first...
-print
-packagesPaths = site.getsitepackages()
-osrframeworkSystemPath = os.path.join(packagesPaths[0], "osrframework")
 if os.path.isdir(osrframeworkSystemPath):
     print "[!] Found an old installation at: " + osrframeworkSystemPath
     try:
@@ -45,14 +57,13 @@ else:
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
-# Importing the local scrips for the setup and taking the new version number
+# Importing the temporal scripts for the setup and taking the new version number
 import osrframework
 NEW_VERSION = osrframework.__version__
 
 import osrframework.utils.configuration as configuration
 
 # Depending on the place in which the project is going to be upgraded
-from setuptools import setup
 try:
     raise Exception('Trying to load the markdown manually!')
     from pypandoc import convert
@@ -72,9 +83,10 @@ except:
 # Creating the application paths
 paths = configuration.getConfigPath()
 
-print "[*] Defining the installation of the osrframework module..."
+print "[*] Launching the installation of the osrframework module..."
 # Launching the setup
-setup(    name="osrframework",
+setup(
+    name="osrframework",
     version=NEW_VERSION,
     description="OSRFramework - A set of GPLv3+ OSINT tools developed by i3visio analysts for online research.",
     author="Felix Brezo and Yaiza Rubio",
@@ -239,7 +251,10 @@ for destiny in files_to_copy.keys():
         if sys.platform == 'win32':
             cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
         elif sys.platform == 'linux2' or sys.platform == 'darwin':
-            cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
+            if not os.geteuid() == 0:
+                cmd = "cp \"" + fileToMove + "\" \"" + destiny + "\""
+            else:
+                cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
         #print cmd
         output = os.popen(cmd).read()
 
