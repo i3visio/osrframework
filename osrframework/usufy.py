@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v4.0"
+__version__ = "v4.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -40,7 +40,7 @@ import argparse
 import json
 import os
 import datetime as dt
-
+import traceback
 
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
@@ -235,13 +235,13 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         profiles = []
 
         for serArray in poolResults:
-            # We need to recover the results and check if they are not an empty json
-            array = json.loads(serArray)
-            for r in array:
-                if r != "{}":
-                    profiles.append(r)
+            # We need to recover the results and check if they are not an empty json or None
+            if serArray != None:
+                array = json.loads(serArray)
+                for r in array:
+                    if r != "{}":
+                        profiles.append(r)
         res+=profiles
-        #res = profiles
     return res
 
 def multi_run_wrapper(args):
@@ -384,11 +384,13 @@ This is free software, and you are welcome to redistribute it under certain cond
                     res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
                 except Exception as e:
                     print "Exception grabbed when processing the nicks: " + str(e)
+                    print traceback.print_stack()
             else:
                 try:
                     res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
                 except Exception as e:
                     print "Exception grabbed when processing the nicks: " + str(e)
+                    print traceback.print_stack()
 
             logger.info("Listing the results obtained...")
             # We are going to iterate over the results...

@@ -7,6 +7,8 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature #95: Nairaland forum has usufy.
 - Add feature #108: Adding coinbase.com as a new platform.
 - Fix issue #173: Setup.py requires being in the sudoers list even when installing for a single user.
+- Patch issue #175: Moved Naver to pending.
+- Patched an issue in usufy.py that may throw errors when None is returned by getPageWrapper (which should just not happen).
 
 0.14.0, 2016/09/30 -- Added domainfy as a tool to verify the existence of domains and first release of osrfconsole, a console GUI similar to msfconsole.
 - Add domainfy.py application to check the existence of several domains using socket.gethostbyname().
