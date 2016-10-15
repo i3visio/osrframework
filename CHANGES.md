@@ -3,7 +3,8 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.1, 2016/10/02 -- Fix issues related to the installation procedure.
+0.14.1, 2016/10/15 -- Fix issues related to the installation procedure and adding some new platforms.
+- Add feature #108: Adding coinbase.com as a new platform.
 - Fix issue #173: Setup.py requires being in the sudoers list even when installing for a single user.
 
 0.14.0, 2016/09/30 -- Added domainfy as a tool to verify the existence of domains and first release of osrfconsole, a console GUI similar to msfconsole.
