@@ -3,6 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+
+0.14.2, 2016/10/15 -- Add features #106 and #107.
+- Add feature #107: Add keybase.io as a new platform.
+- Add feature #106: Add freekabcer as a new platform.
+
 0.14.1, 2016/10/15 -- Fix issues related to the installation procedure and adding some new platforms.
 - Add feature #95: Nairaland forum has usufy.
 - Add feature #108: Adding coinbase.com as a new platform.
