@@ -39,13 +39,17 @@ For more details on this issue, check the [COPYING](COPYING) file.
 3 - Installation
 ----------------
 
-Fast way to do it on any system:
+Fast way to do it on any system for a given user:
 ```
 pip install osrframework
 ```
-Under MacOS or Linux systems, you may need to do this as superuser:
+Under MacOS or Linux systems, you can do this as superuser too...
 ```
 sudo pip install osrframework
+```
+Or install it only for the given user if you do not have sudo permissions:
+```
+pip install osrframework --user
 ```
 This will manage all the dependencies for you.
 
@@ -86,4 +90,3 @@ More details about the authors in the [AUTHORS.md](AUTHORS.md) file.
 Bitcoin Address: [3JJJZU5UvdN2AQrUAeiPM6i7JfRBZNPLhS](bitcoin:1FEdwYGDiuKRfuVCu9reUVS5t6ViGsFJLP?amount=0.01000000&label=3JJJZU5UvdN2AQrUAeiPM6i7JfRBZNPLhS&message=Donate%20Bitcoin%20to%20OSRFramework%20Project)
 
 ![Bitcoin donations to OSRFramework](http://i3visio.com/OSRFramework-donations.png "Donate Bitcoin to OSRFramework developers.")
-
