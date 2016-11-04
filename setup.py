@@ -29,14 +29,21 @@ import shutil
 import site
 
 # Get packagesPaths depending on whether the user launched it with sudo or not
-if not os.geteuid() == 0:
-    packagesPaths = site.getusersitepackages()
-    print "[*] The installation has not been launched as superuser."
-else:
-    # This will throw two folders, but we need the first one only:
-    #   ['/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages']
-    packagesPaths = site.getsitepackages()[0]
+if sys.platform == 'win32':
+    # This will throw two folders, but we need the first one only. Typically:
+    #   ['c:\\Users\\<a_user>\\AppData\\Roaming\\Python\\Python27\\site-packages']
+    packagesPaths = site.getusersitepackages()[0]
     print "[*] The installation is going to be run as superuser."
+else:
+    # We need this verification because Windows does not have a wrapper ofr os.geteuid()
+    if not os.geteuid() == 0:
+        packagesPaths = site.getusersitepackages()
+        print "[*] The installation has not been launched as superuser."
+    else:
+        # This will throw two folders, but we need the first one only:
+        #   ['/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages']
+        packagesPaths = site.getsitepackages()[0]
+        print "[*] The installation is going to be run as superuser."
 
 osrframeworkSystemPath = os.path.join(packagesPaths, "osrframework")
 

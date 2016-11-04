@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.14.3a, 2016/11/04 -- Fix important issue when deploying on Windows after 0.14.0.
+- Fix issue #177. Found an issue when installilng on Windows 0.14.2.
+- Removed temporary files from /tmp when thet are created.
 
 0.14.2, 2016/10/21 -- Add features #106 and #107 and fix #176.
 - Add feature #107: Add keybase.io as a new platform.

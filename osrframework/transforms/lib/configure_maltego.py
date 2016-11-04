@@ -146,7 +146,7 @@ def configureMaltego(transformsConfigFolder = None, base=None, wFolder=None, deb
         shutil.copy2(filePath, backupPath)        
        
     # Remove tmp files.
-    #shutil.rmtree(os.path.join("./", "tmp"))
+    shutil.rmtree(os.path.join("./", "tmp"))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='configure_maltego.py - A function to automatically generate Maltego configuration files.', prog='configure_maltego.py', epilog="", add_help=False)
