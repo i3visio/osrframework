@@ -3,8 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.14.4, 2016/11/06 -- Fix issue #179 with connectingsingles.com.
+- Fix issue #179. Connecting singles has changed its error.
+
 0.14.3, 2016/11/04 -- Fix important issue when deploying on Windows after 0.14.0.
-- Fix issue #177. Found an issue when installilng on Windows 0.14.2.
+- Fix issue #177. Found an issue when installing on Windows 0.14.2.
 - Removed temporary files from /tmp when thet are created.
 
 0.14.2, 2016/10/21 -- Add features #106 and #107 and fix #176.
