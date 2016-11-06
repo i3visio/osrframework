@@ -55,6 +55,16 @@ This will manage all the dependencies for you.
 
 If you needed further information, check the [INSTALL.md](INSTALL.md) file.
 
+NOTE: if you had installed 0.14.3 or earlier versions of the framework on Windows you may face some problems with mailfy.py and the libraries it uses. You should uninstall first dnspython and pyDNS before installing osrframework again:
+```
+# Uninstalling dnspython
+pip uninstall dnspython
+# Uninstalling pydns
+pip uninstall pydns
+# Reinstalling osrframework, upgrading to most recent version
+pip install osrframework --upgrade
+```
+
 4 - Basic usage
 ---------------
 
