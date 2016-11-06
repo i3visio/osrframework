@@ -154,7 +154,6 @@ setup(
         "setuptools",
         "mechanize",
         "Skype4Py",
-        "argparse",
         "requests",
         "python-emailahoy",
         "BeautifulSoup",
@@ -168,7 +167,7 @@ setup(
         "networkx",
         "decorator",
         "validate_email",
-        "pyDNS",
+        "pydns",
         "tabulate",
         "oauthlib>=1.0.0",
         # Added to dinamically import wrappers:
@@ -179,8 +178,7 @@ setup(
         #"pyopenssl",
         #"ndg-httpsclient",
         #"pyasn1"
-        "python-whois",
-        "dnspython"
+        "python-whois"
     ],
 )
 
