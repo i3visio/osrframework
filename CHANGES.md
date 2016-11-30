@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.14.5a, 2016/11/30 -- [TODO: To be defined].
+- Fix issue when storing data with enumeration.py when the URL to be processed contained a "/".
+
 0.14.4, 2016/11/06 -- Fix issues #178 and #179 with connectingsingles.com.
 - Fix issue #178: Mailfy not to working on Windows.
 - Fix issue #179: Connecting singles has changed its error.

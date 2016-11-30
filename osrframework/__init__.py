@@ -23,4 +23,4 @@ import osrframework.utils.logger
 
 # Calling the logger when being imported
 osrframework.utils.logger.setupLogger(loggerName="osrframework")
-__version__="0.14.4"
+__version__="0.14.5a"
