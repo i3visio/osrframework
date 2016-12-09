@@ -20,9 +20,6 @@
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
-__version__ = "1.0"
-
 import argparse
 import json
 import re
@@ -32,16 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Demo(Platform):
+class Cardinghispano(Platform):
     """ 
-        A <Platform> object for Demo.
+        A <Platform> object for Cardinghispano.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Demo"
-        self.tags = ["demo"]
+        self.platformName = "Cardinghispano"
+        self.tags = ["carding"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +54,7 @@ class Demo(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://demo.demo/" + "<usufy>"
+        self.url["usufy"] = "http://cardinghispano.net/members/?username=" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +81,7 @@ class Demo(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<error>THIS IS THE ERROR MESSAGE</error>"]
+        self.notFoundText["usufy"] = ["El miembro específicado no pudo ser encontrado. Por favor ingrese el nombre completo del miembro."]
         #self.notFoundText["searchfy"] = []
         
         #########################

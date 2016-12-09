@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
+__author__ = "Lucas Sánchez"
 __version__ = "1.0"
 
 import argparse
@@ -32,16 +32,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Demo(Platform):
+class MercadoLibre(Platform):
     """ 
-        A <Platform> object for Demo.
+        A <Platform> object for MercadoLibre.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Demo"
-        self.tags = ["demo"]
+        self.platformName = "MercadoLibre"
+        self.tags = ["e-commerce"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +57,7 @@ class Demo(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://demo.demo/" + "<usufy>"
+        self.url["usufy"] = "http://perfil.mercadolibre.com.ar/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Demo(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<error>THIS IS THE ERROR MESSAGE</error>"]
+        self.notFoundText["usufy"] = ["<h2>Usuario no encontrado</h2>", "<h2>Usuário não encontrado</h2>"]
         #self.notFoundText["searchfy"] = []
         
         #########################

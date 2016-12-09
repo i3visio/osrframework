@@ -3,10 +3,16 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.5a, 2016/12/09 -- Fix issues #180 and #183.
+0.14.5a, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, Gytorrents and MercadoLibre. Fix issues #180 and #183.
+- Add feature #111: Adding Zotero as a new wrapper.
+- Add feature: Add leakforums wrapper.
+- Add feature: Add cardinghispano wrapper.
+- Add feature: Add gytorrents wrapper.
+- Add feature: Add mercadolibre wrapper.
+- Add __author__ and __version__ to the wrappers template.
 - Fix issue #180: Artician wrapper is not working. Moved to pending.
 - Fix issue #183: Web.tv has changed its error.
-- Grab database error in anarchy101.py wrapper.
+- Fix issue: Grab database error in anarchy101.py wrapper.
 - Issue #181, required no action.
 
 0.14.4, 2016/11/06 -- Fix issues #178 and #179 with connectingsingles.com.
