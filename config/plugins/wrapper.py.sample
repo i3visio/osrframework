@@ -20,6 +20,9 @@
 #
 ##################################################################################
 
+__author__ = "John Doe <johndoe@mailcatch.com>"
+__version__ = "1.0"
+
 import argparse
 import json
 import re
