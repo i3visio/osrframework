@@ -29,17 +29,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Anarchy101(Platform):
+class Artician(Platform):
     """ 
-        A <Platform> object for Anarchy101.
+        A <Platform> object for Artician.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Anarchy101"
-        # Add the tags for the platform
-        self.tags = ["activism"]
+        self.platformName = "Artician"
+        self.tags = ["professional", "image"]
 
         ########################
         # Defining valid modes #
@@ -55,7 +54,7 @@ class Anarchy101(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.anarchy101.org/user/" + "<usufy>"
+        self.url["usufy"] = "http://" + "<usufy>" + ".artician.com"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -73,7 +72,7 @@ class Anarchy101(Platform):
         self.validQuery = {}
         # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
+        self.validQuery["usufy"] = "[^@]+"
         #self.validQuery["searchfy"] = ".*"
         
         ###################
@@ -82,7 +81,7 @@ class Anarchy101(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["User not found", "Could not establish database connection. Please check the username"]   
+        self.notFoundText["usufy"] = ["<title>Sorry, This user does not exist in Artician Land</title>"]   
         #self.notFoundText["searchfy"] = []        
         
         #########################
@@ -98,23 +97,7 @@ class Anarchy101(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        # User
-        self.fieldsRegExp["usufy"]["i3visio.profile.anarchy101"] = {"start": "var qa_request='user/", "end": "';"}
-        # Member for
-        self.fieldsRegExp["usufy"]["@member_for"] = {"start": "Member for:\n\t\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@type"] = {"start": "Type:\n\t\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "Full name:\n\t\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "Location:\n\t\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["i3visio.uri.home"] = {"start": "Website:\n\t\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\">", "end": "</SPAN>"}
-        # About
-        self.fieldsRegExp["usufy"]["i3visio.text"] = {"start": "About:\n\t\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@score"] = {"start": "Score:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-points\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@questions"] = {"start": "Questions:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-q-posts\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@answers"] = {"start": "Answers:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-a-posts\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@¢omments"] = {"start": "Comments:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-c-posts\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@voted_on"] = {"start": "Voted on:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-q-posts\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@gave_out"] = {"start": "Gave out:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-upvotes\">", "end": "</SPAN>"}
-        self.fieldsRegExp["usufy"]["@received"] = {"start": "Received:\n\t\t\t\t\t\t</TD>\n\t\t\t\t\t\t<TD CLASS=\"qa-form-wide-data\">\n\t\t\t\t\t\t\t<SPAN CLASS=\"qa-form-wide-static\"><SPAN CLASS=\"qa-uf-user-upvoteds\">", "end": "</SPAN>"}        
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
@@ -129,4 +112,4 @@ class Anarchy101(Platform):
 
 
         
-
+                        

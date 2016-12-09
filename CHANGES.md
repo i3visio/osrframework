@@ -3,8 +3,14 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.14.5a, 2016/12/09 -- Fix issues #180 and #183.
+- Fix issue #180: Artician wrapper is not working. Moved to pending.
+- Fix issue #183: Web.tv has changed its error.
+- Grab database error in anarchy101.py wrapper.
+- Issue #181, required no action.
+
 0.14.4, 2016/11/06 -- Fix issues #178 and #179 with connectingsingles.com.
-- Fix issue #178: Mailfy not to working on Windows.
+- Fix issue #178: Mailfy not working on Windows.
 - Fix issue #179: Connecting singles has changed its error.
 
 0.14.3, 2016/11/04 -- Fix important issue when deploying on Windows after 0.14.0.
