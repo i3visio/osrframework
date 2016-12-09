@@ -29,50 +29,50 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Artician(Platform):
+class Forominecraft(Platform):
     """ 
-        A <Platform> object for Artician.
+        A <Platform> object for Forominecraft.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Artician"
-        self.tags = ["professional", "image"]
+        self.platformName = "Forominecraft"
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
+        self.isValidMode["searchfy"] = False
         
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://" + "<usufy>" + ".artician.com"
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "http://forominecraft.com/members/" + "<usufy>"
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
+        #self.needsCredentials["searchfy"] = False
         
         #################
         # Valid queries #
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query.
+        # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = "[^@]+"
+        self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
         
         ###################
@@ -81,8 +81,8 @@ class Artician(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Sorry, This user does not exist in Artician Land</title>"]   
-        #self.notFoundText["searchfy"] = []        
+        self.notFoundText["usufy"] = ["<title>Foro Minecraft</title>"]
+        #self.notFoundText["searchfy"] = []
         
         #########################
         # Fields to be searched #
@@ -98,11 +98,10 @@ class Artician(Platform):
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-        
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
         
         ################
         # Fields found #
@@ -110,6 +109,3 @@ class Artician(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
 
-
-        
-                        

@@ -37,7 +37,7 @@ class Foodspotting(Platform):
         """ 
             Constructor... 
         """
-        self.platformName = "Foodspotting2"
+        self.platformName = "Foodspotting"
         self.tags = ["opinions"]
 
         ########################

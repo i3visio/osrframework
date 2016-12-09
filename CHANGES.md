@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.5b, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forosspyware, Bubok, etc. (up to 22 new wrappers). 
+0.14.5b, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
 - Add feature #142: Adding angel.co as a new usufy platform.
 - Add feature #111: Adding Zotero as a new wrapper.
@@ -18,7 +18,6 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add ccm wrapper.
 - Add feature: Add espaciolinux wrapper.
 - Add feature: Add forocompraventa wrapper.
-- Add feature: Add forominecraft wrapper.
 - Add feature: Add foroptc wrapper.
 - Add feature: Add foros24h wrapper.
 - Add feature: Add forosspyware wrapper.
@@ -30,6 +29,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add __author__ and __version__ to the wrappers template.
 - Fix issue #183: Web.tv has changed its error.
 - Fix issue #180: Artician wrapper is not working. Moved to pending.
+- Put in quarantine: unsystem and forominecraft.
 - Fix issue: Grab database error in anarchy101.py wrapper.
 - Issue #181, required no action.
 
