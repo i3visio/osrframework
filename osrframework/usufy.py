@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v4.1"
+__version__ = "v4.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -70,34 +70,43 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     if fFuzzStruct == None:
         # Loading these structures by default
         fuzzingStructures = [
-                    "http://<USERNAME>.<DOMAIN>",
-                    "http://<USERNAME>.<DOMAIN>/user/",
                     "http://<DOMAIN>/<USERNAME>",
-                    "http://<DOMAIN>/user/<USERNAME>",
-                    "http://<DOMAIN>/users/<USERNAME>",
-                    "http://<DOMAIN>/en/users/<USERNAME>",
-                    "http://<DOMAIN>/profil/<USERNAME>",
-                    "http://<DOMAIN>/profile/<USERNAME>",
-                    "http://<DOMAIN>/members/<USERNAME>",
-                    "http://<DOMAIN>/channel/<USERNAME>",
-                    "http://<DOMAIN>/u/<USERNAME>",
-                    "http://<DOMAIN>/home/<USERNAME>",
-                    "http://<DOMAIN>/people/<USERNAME>",
-                    "http://<DOMAIN>/usr/<USERNAME>",
                     "http://<DOMAIN>/~<USERNAME>",
-                    "http://<DOMAIN>/user-<USERNAME>",
+                    "http://<DOMAIN>/?action=profile;user=<USERNAME>",
                     "http://<DOMAIN>/causes/author/<USERNAME>",
-                    "http://<DOMAIN>/profile/page/<USERNAME>",
+                    "http://<DOMAIN>/channel/<USERNAME>",
+                    "http://<DOMAIN>/community/profile/<USERNAME>",
                     "http://<DOMAIN>/component/comprofiler/userprofiler/<USERNAME>",
-                    "http://<DOMAIN>/social/usuarios/<USERNAME>",
-                    "http://<DOMAIN>/mi-espacio/<USERNAME>",
+                    "http://<DOMAIN>/details/@<USERNAME>",
+                    "http://<DOMAIN>/foros/member.php?username=<USERNAME>",
+                    "http://<DOMAIN>/forum/member/<USERNAME>",
+                    "http://<DOMAIN>/forum/member.php?username=<USERNAME>",
                     "http://<DOMAIN>/forum/profile.php?mode=viewprofile&u=<USERNAME>",
+                    "http://<DOMAIN>/home/<USERNAME>",
                     "http://<DOMAIN>/index.php?action=profile;user=<USERNAME>",
+                    "http://<DOMAIN>/member_profile.php?u=<USERNAME>",
                     "http://<DOMAIN>/member.php?username=<USERNAME>",
                     "http://<DOMAIN>/members/?username=<USERNAME>",
-                    "http://<DOMAIN>/forum/member.php?username=<USERNAME>",
-                    "http://<DOMAIN>/member.php?username=<USERNAME>",
+                    "http://<DOMAIN>/members/<USERNAME>",
+                    "http://<DOMAIN>/members/view/<USERNAME>",
+                    "http://<DOMAIN>/mi-espacio/<USERNAME>",
+                    "http://<DOMAIN>/u/<USERNAME>",
+                    "http://<DOMAIN>/user-<USERNAME>",
+                    "http://<DOMAIN>/user/<USERNAME>",
+                    "http://<DOMAIN>/user/<USERNAME>.html",
+                    "http://<DOMAIN>/users/<USERNAME>",
+                    "http://<DOMAIN>/usr/<USERNAME>",
+                    "http://<DOMAIN>/usuario/<USERNAME>",
+                    "http://<DOMAIN>/usuarios/<USERNAME>",
+                    "http://<DOMAIN>/en/users/<USERNAME>",
+                    "http://<DOMAIN>/people/<USERNAME>",
+                    "http://<DOMAIN>/profil/<USERNAME>",
+                    "http://<DOMAIN>/profile/<USERNAME>",
+                    "http://<DOMAIN>/profile/page/<USERNAME>",
                     "http://<DOMAIN>/rapidforum/index.php?action=profile;user=<USERNAME>",
+                    "http://<DOMAIN>/social/usuarios/<USERNAME>",
+                    "http://<USERNAME>.<DOMAIN>",
+                    "http://<USERNAME>.<DOMAIN>/user/"
                 ]
     else:
         try:

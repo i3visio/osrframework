@@ -3,7 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.5b, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
+0.15.0a, 2016/XX/XX -- New release.
+- Add some new structures to the usufy fuzzer.
+
+0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
 - Add feature #142: Adding angel.co as a new usufy platform.
 - Add feature #111: Adding Zotero as a new wrapper.
