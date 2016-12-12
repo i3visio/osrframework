@@ -90,6 +90,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
                     "http://<DOMAIN>/members/<USERNAME>",
                     "http://<DOMAIN>/members/view/<USERNAME>",
                     "http://<DOMAIN>/mi-espacio/<USERNAME>",
+                    "http://<DOMAIN>/u<USERNAME>",
                     "http://<DOMAIN>/u/<USERNAME>",
                     "http://<DOMAIN>/user-<USERNAME>",
                     "http://<DOMAIN>/user/<USERNAME>",
