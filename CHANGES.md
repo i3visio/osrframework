@@ -3,7 +3,23 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.5b, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
+0.14.6b, 2016/12/XX -- Add new wrappers to usufy. 
+- Add feature #186: Add translate.hola.org as a new usufy wrapper.
+- Add feature #185: Add meteor.com as a new platform.
+- Add feature #174: Add emoneyspace as a new platform.
+- Add feature #77: Add Blogmarks as a new platform.
+- Add feature #76: Add Smugmug as a new platform.
+- Add feature #75: Add Typepad as a new platform.
+- Add feature #17: Addition of Gravatar.
+- Add feature: Add Buddypic wrapper.
+- Add feature: Add Carder wrapper.
+- Add feature: Add Csu wrapper.
+- Add feature: Add Realcarders wrapper.
+- Add feature: Add SingleTrackWorld wrapper.
+- Add feature: Add TranslateHola wrapper.
+- Add feature: Add Warrior wrapper.                                                    
+                                                    
+0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
 - Add feature #142: Adding angel.co as a new usufy platform.
 - Add feature #111: Adding Zotero as a new wrapper.
