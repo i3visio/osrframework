@@ -3,7 +3,8 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.14.6b, 2016/12/XX -- Add new wrappers to usufy. 
+0.14.6b, 2016/12/XX -- Add new wrappers to usufy and mailfy. 
+- Add feature #189: Add protonmail.ch as a new mailfy wrapper.
 - Add feature #186: Add translate.hola.org as a new usufy wrapper.
 - Add feature #185: Add meteor.com as a new platform.
 - Add feature #174: Add emoneyspace as a new platform.
@@ -18,6 +19,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add SingleTrackWorld wrapper.
 - Add feature: Add TranslateHola wrapper.
 - Add feature: Add Warrior wrapper.                                                    
+- Add feature: Add me.com, icloud.com, noob.com, seznam.cz and wp.pl to mailfy.
                                                     
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
