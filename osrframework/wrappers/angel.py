@@ -84,7 +84,7 @@ class Angel(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['<title>Page not found - 404 - AngelList</title>']
+        self.notFoundText["usufy"] = ['<title>Page not found - 404 - AngelList</title>', 'IP Blocked']
         #self.notFoundText["searchfy"] = []
         
         #########################
