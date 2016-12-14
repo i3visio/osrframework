@@ -147,7 +147,7 @@ class Platform():
                     return self.baseURL+word, word
             else:
                 try:
-                    return self.url[mode].replace("<"+mode+">", word.replace(' ', '+')), word
+                    return self.url[mode].replace("<"+mode+">", urllib.pathname2url(word)), word
                 except:
                     pass   
         except:

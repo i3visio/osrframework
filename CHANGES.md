@@ -4,6 +4,7 @@ OSRFramework Changelog
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
 0.15.0a, 2016/XX/XX -- New release.
+- Fix issue #121 by urlencoding each and every parameter provided to usufy, searchfy and phonefy.
 - Add some new structures to the usufy fuzzer.
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
