@@ -64,7 +64,7 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
 
                 data = i3Browser.recoverURL(newQuery)
                 print "Data recovered..."
-                filename = domain + "_" + "-profile_" + str(index).rjust(10, "0") +".html"
+                filename = domain.replace("/", "|") + "_" + "-profile_" + str(index).rjust(10, "0") +".html"
                 if urlDict[url] != None:
                     if urlDict[url] in data:
                         print "Storing resource as:\t" + filename + "..."
