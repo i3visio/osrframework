@@ -8,6 +8,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Patch bug #188: Capture exceptions when errors are found in the configuration files bug deployment.
 - Add feature: Custom errors for OSRFramework.
 - Add feature: Some new structures for the usufy fuzzer.
+- Add feature: let users configure the connections to an HTTP and an HTTPS proxy.
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
