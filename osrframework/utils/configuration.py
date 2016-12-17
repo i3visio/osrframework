@@ -105,10 +105,10 @@ def returnListOfConfigurationValues(util):
 
     # Checking if the configuration file exists
     if not os.path.exists(configPath):
-        try:
-            # Copy the data from the default folder
-            defaultConfigPath = os.path.join(getConfigPath()["appPathDefaults"], "general.cfg")
+        # Copy the data from the default folder
+        defaultConfigPath = os.path.join(getConfigPath()["appPathDefaults"], "general.cfg")
 
+        try:
             # Recovering default file
             with open(defaultConfigPath) as iF:
                 cont = iF.read()
@@ -116,7 +116,7 @@ def returnListOfConfigurationValues(util):
                 with open(configPath, "w") as oF:
                     oF.write(cont)
         except Exception, e:
-            raise errors.DefaultConfigurationFileNotFoundError(configPath, os.path.join(getConfigPath()["appPathDefaults"], "general.cfg"));
+            raise errors.DefaultConfigurationFileNotFoundError(configPath, defaultConfigPath);
 
     # Reading the configuration file
     config = ConfigParser.ConfigParser()

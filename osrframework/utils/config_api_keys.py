@@ -38,16 +38,16 @@ def returnListOfAPIKeys():
 
     # Checking if the configuration file exists
     if not os.path.exists(configPath):
+        # Copy the data from the default folder
+        defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "api_keys.cfg")
+        
         try:
-            # Copy the data from the default folder
-            defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "api_keys.cfg")
-
             with open(defaultConfigPath) as iF:
                 cont = iF.read()
                 with open(configPath, "w") as oF:
                     oF.write(cont)
         except Exception, e:
-            raise errors.ConfigurationFileNotFoundError(configPath, os.path.join(getConfigPath()["appPathDefaults"], "api_keys.cfg"));
+            raise errors.ConfigurationFileNotFoundError(configPath, defaultConfigPath);
             return dictAPIKeys
 
     # Reading the configuration file

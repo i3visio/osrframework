@@ -40,16 +40,16 @@ def returnListOfCreds():
 
     # Checking if the configuration file exists
     if not os.path.exists(configPath):
-        try:
-            # Copy the data from the default folder
-            defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "accounts.cfg")
+        # Copy the data from the default folder
+        defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "accounts.cfg")
 
+        try:
             with open(defaultConfigPath) as iF:
                 cont = iF.read()
                 with open(configPath, "w") as oF:
                     oF.write(cont)
         except Exception, e:
-            raise errors.ConfigurationFileNotFoundError(configPath, os.path.join(getConfigPath()["appPathDefaults"], "accounts.cfg"));
+            raise errors.ConfigurationFileNotFoundError(configPath, defaultConfigPath);
             return listCreds
 
     # Reading the configuration file
