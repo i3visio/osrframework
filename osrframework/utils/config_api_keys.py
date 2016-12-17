@@ -20,10 +20,11 @@
 #
 ##################################################################################
 
-import os
 import ConfigParser
+import os
 
 import osrframework.utils.configuration as configuration
+import osrframework.utils.errors as errors
 
 def returnListOfAPIKeys():
     '''
@@ -31,7 +32,7 @@ def returnListOfAPIKeys():
     '''
 
     dictAPIKeys = {}
-    
+
     # If a api_keys.cfg has not been found, creating it by copying from default
     configPath = os.path.join(configuration.getConfigPath()["appPath"], "api_keys.cfg")
 
@@ -40,15 +41,13 @@ def returnListOfAPIKeys():
         try:
             # Copy the data from the default folder
             defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "api_keys.cfg")
-     
-            with open(configPath, "w") as oF:
-                with open(defaultConfigPath) as iF:
-                    cont = iF.read()
-                    oF.write(cont)        
+
+            with open(defaultConfigPath) as iF:
+                cont = iF.read()
+                with open(configPath, "w") as oF:
+                    oF.write(cont)
         except Exception, e:
-            print "WARNING. No configuration file could be found and the default file was not found either, so NO API keys have been loaded."
-            print str(e)
-            print
+            raise errors.ConfigurationFileNotFoundError(configPath, os.path.join(getConfigPath()["appPathDefaults"], "api_keys.cfg"));
             return dictAPIKeys
 
     # Reading the configuration file
@@ -59,22 +58,18 @@ def returnListOfAPIKeys():
     for platform in config.sections():
         # Initializing values
         platform_api = {}
-        
+
         incomplete = False
-        
+
         # Iterating through parametgers
         for (param, value) in config.items(platform):
             if value == '':
                 incomplete = True
                 break
             platform_api[param] = value
-            
-        # Appending credentials if possible
-        try:
-            if not incomplete:
-                # Loading the info in the dict
-                dictAPIKeys[platform] = platform_api
-        except:
-            pass
-    
+
+        # Loading the info in the dict
+        if not incomplete:
+            dictAPIKeys[platform] = platform_api
+
     return dictAPIKeys

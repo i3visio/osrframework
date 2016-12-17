@@ -22,6 +22,7 @@
 
 import os
 import sys
+import osrframework.utils.errors as errors
 
 def changePermissionsRecursively(path, uid, gid):
     """
@@ -108,15 +109,14 @@ def returnListOfConfigurationValues(util):
             # Copy the data from the default folder
             defaultConfigPath = os.path.join(getConfigPath()["appPathDefaults"], "general.cfg")
 
-            with open(configPath, "w") as oF:
-                with open(defaultConfigPath) as iF:
-                    cont = iF.read()
+            # Recovering default file
+            with open(defaultConfigPath) as iF:
+                cont = iF.read()
+                # Moving its contents as the default values
+                with open(configPath, "w") as oF:
                     oF.write(cont)
         except Exception, e:
-            print "ERROR. No configuration file could be found and the default file was not found either, so NO API keys have been loaded."
-            print str(e)
-            print "Check if the following path exists and, if not, reinstall the framework:\n\t" + os.path.join(getConfigPath()["appPathDefaults"], "general.cfg")
-            sys.exit()
+            raise errors.DefaultConfigurationFileNotFoundError(configPath, os.path.join(getConfigPath()["appPathDefaults"], "general.cfg"));
 
     # Reading the configuration file
     config = ConfigParser.ConfigParser()

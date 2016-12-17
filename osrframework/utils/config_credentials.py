@@ -22,14 +22,16 @@
 
 import ConfigParser
 import os
+
 import osrframework.utils.configuration as configuration
+import osrframework.utils.errors as errors
 
 def returnListOfCreds():
     '''
-        :return:    
-            A list of tuples containing in the first the name of the platform, 
+        :return:
+            A list of tuples containing in the first the name of the platform,
             as read from the accounts.cfg file in the application folder. E. g.:
-            
+
             listCreds.append(("<platform>", "<username>", "<password>"))
     '''
     listCreds = []
@@ -41,15 +43,13 @@ def returnListOfCreds():
         try:
             # Copy the data from the default folder
             defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "accounts.cfg")
-     
-            with open(configPath, "w") as oF:
-                with open(defaultConfigPath) as iF:
-                    cont = iF.read()
-                    oF.write(cont)        
+
+            with open(defaultConfigPath) as iF:
+                cont = iF.read()
+                with open(configPath, "w") as oF:
+                    oF.write(cont)
         except Exception, e:
-            print "WARNING. No configuration file could be found and the default file was not found either, so NO credentials have been loaded."
-            print str(e)
-            print
+            raise errors.ConfigurationFileNotFoundError(configPath, os.path.join(getConfigPath()["appPathDefaults"], "accounts.cfg"));
             return listCreds
 
     # Reading the configuration file
@@ -60,21 +60,21 @@ def returnListOfCreds():
     for platform in config.sections():
         # Initializing values
         creds = {}
-        
+
         incomplete = False
-        
+
         # Iterating through parametgers
         for (param, value) in config.items(platform):
             if value == '':
                 incomplete = True
                 break
             creds[param] = value
-            
+
         # Appending credentials if possible
         try:
             if not incomplete:
-                listCreds.append((platform, creds["login"], creds["password"]))        
+                listCreds.append((platform, creds["login"], creds["password"]))
         except:
             pass
-    
+
     return listCreds
