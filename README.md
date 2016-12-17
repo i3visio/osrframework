@@ -51,11 +51,24 @@ Or install it only for the given user if you do not have sudo permissions:
 ```
 pip install osrframework --user
 ```
-This will manage all the dependencies for you.
+This will manage all the dependencies for you. If you needed further information, check the [INSTALL.md](doc/INSTALL.md) file.
 
-If you needed further information, check the [INSTALL.md](doc/INSTALL.md) file.
+### Installing using virtualenv
 
-NOTE: if you had installed 0.14.3 or earlier versions of the framework on Windows you may face some problems with mailfy.py and the libraries it uses. You should uninstall first dnspython and pyDNS before installing osrframework again:
+You can also try to install it with `virtualenv` so as to avoid problems with dependencies with other libraries. To do so, first you will need to install `virtualenv` using `pip`.
+```
+pip install virtualenv --user
+virtualenv osrf-virtualenv
+source osrf-virtualenv/bin/activate
+```
+Now in the new virtual environment you would be able to install osrframework easily:
+```
+(osrf-virtualenv)$ pip install osrframework
+```
+
+### Note for those with OSRFramework <= 0.14.3
+
+If you had installed 0.14.3 or earlier versions of the framework on Windows you may face some problems with mailfy.py and the libraries it uses. You should uninstall first dnspython and pyDNS before installing osrframework again:
 ```
 # Uninstalling dnspython
 pip uninstall dnspython
