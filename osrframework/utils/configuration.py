@@ -138,7 +138,10 @@ def returnListOfConfigurationValues(util):
                     value = value.split(' ')
                 # Converting threads to int
                 elif param == "threads":
-                    value = int(value)
+                    try:
+                        value = int(value)
+                    except Exception as err:
+                        raise errors.ConfigurationParameterNotValidError(configPath, section, param, value)
                 VALUES[param] = value
             break
 
