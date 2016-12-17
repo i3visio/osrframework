@@ -3,3 +3,4 @@ recursive-include config/plugins *sample
 recursive-include osrframework/transforms/lib/osrframework-maltego-settings *
 recursive-include osrframework/transforms/lib *txt
 include *md
+recursive-include doc *md

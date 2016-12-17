@@ -53,7 +53,7 @@ pip install osrframework --user
 ```
 This will manage all the dependencies for you.
 
-If you needed further information, check the [INSTALL.md](INSTALL.md) file.
+If you needed further information, check the [INSTALL.md](doc/INSTALL.md) file.
 
 NOTE: if you had installed 0.14.3 or earlier versions of the framework on Windows you may face some problems with mailfy.py and the libraries it uses. You should uninstall first dnspython and pyDNS before installing osrframework again:
 ```
@@ -90,13 +90,9 @@ OSRFramework will look for the configuration settings stored there. You can add 
 5 - HACKING
 -----------
 
-If you want to extend the functionalities of OSRFramework and you do not know where to start from, check the [HACKING.md](HACKING.md) file.
+If you want to extend the functionalities of OSRFramework and you do not know where to start from, check the [HACKING.md](doc/HACKING.md) file.
 
 6 - AUTHORS
 -----------
 
 More details about the authors in the [AUTHORS.md](AUTHORS.md) file.
-
-Bitcoin Address: [3JJJZU5UvdN2AQrUAeiPM6i7JfRBZNPLhS](bitcoin:1FEdwYGDiuKRfuVCu9reUVS5t6ViGsFJLP?amount=0.01000000&label=3JJJZU5UvdN2AQrUAeiPM6i7JfRBZNPLhS&message=Donate%20Bitcoin%20to%20OSRFramework%20Project)
-
-![Bitcoin donations to OSRFramework](http://i3visio.com/OSRFramework-donations.png "Donate Bitcoin to OSRFramework developers.")
