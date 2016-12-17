@@ -32,16 +32,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Angel(Platform):
-    """ 
-        A <Platform> object for Angel.
+class Emoneyspace(Platform):
+    """
+        A <Platform> object for Emoneyspace.
     """
     def __init__(self):
-        """ 
-            Constructor... 
         """
-        self.platformName = "Angel"
-        self.tags = ["jobs", "e-commerce"]
+            Constructor...
+        """
+        self.platformName = "Emoneyspace"
+        self.tags = ["forum", "economy"]
 
         ########################
         # Defining valid modes #
@@ -50,14 +50,14 @@ class Angel(Platform):
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
         self.isValidMode["searchfy"] = False
-        
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://angel.co/" + "<usufy>"
+        self.url["usufy"] = "http://www.emoneyspace.com/forum/index.php?action=profile;user=" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -67,7 +67,7 @@ class Angel(Platform):
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
         #self.needsCredentials["searchfy"] = False
-        
+
         #################
         # Valid queries #
         #################
@@ -77,42 +77,37 @@ class Angel(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['<title>Page not found - 404 - AngelList</title>', 'IP Blocked']
+        self.notFoundText["usufy"] = ["The user whose profile you are trying to view does not exist"]
         #self.notFoundText["searchfy"] = []
-        
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] =  "<title>(.+) - AngelList</title>"
-        self.fieldsRegExp["usufy"]["i3visio.domain"] =  'data-field="online_bio_url" rel="me nofollow noopener noreferrer" target="_blank">([^<]+)</a></span></div>'
-        self.fieldsRegExp["usufy"]["i3visio.alias_twitter"] =  'href="http://twitter.com/([^\"]+)" class="icon link_el fontello-twitter"'
-        self.fieldsRegExp["usufy"]["i3visio.alias_facebook"] =  'href="http://www.facebook.com/([^\"]+)" class="icon link_el fontello-facebook"'
-        self.fieldsRegExp["usufy"]["i3visio.alias_linkedin"] =  'href="http://www.linkedin.com/in/([^\"]+)" class="icon link_el fontello-linkedin"'
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-        
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-

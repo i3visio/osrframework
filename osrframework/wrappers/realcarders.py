@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__author__ = "i3visio"
+__author__ = "John Doe <johndoe@mailcatch.com>"
 __version__ = "1.0"
 
 import argparse
@@ -32,16 +32,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Angel(Platform):
+class Realcarders(Platform):
     """ 
-        A <Platform> object for Angel.
+        A <Platform> object for Realcarders.
     """
     def __init__(self):
         """ 
             Constructor... 
         """
-        self.platformName = "Angel"
-        self.tags = ["jobs", "e-commerce"]
+        self.platformName = "Realcarders"
+        self.tags = ["carding"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +57,7 @@ class Angel(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://angel.co/" + "<usufy>"
+        self.url["usufy"] = "http://realcarders.us/member.php?username=" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Angel(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['<title>Page not found - 404 - AngelList</title>', 'IP Blocked']
+        self.notFoundText["usufy"] = ["This user has not registered and therefore does not have a profile to view."]
         #self.notFoundText["searchfy"] = []
         
         #########################
@@ -100,11 +100,7 @@ class Angel(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] =  "<title>(.+) - AngelList</title>"
-        self.fieldsRegExp["usufy"]["i3visio.domain"] =  'data-field="online_bio_url" rel="me nofollow noopener noreferrer" target="_blank">([^<]+)</a></span></div>'
-        self.fieldsRegExp["usufy"]["i3visio.alias_twitter"] =  'href="http://twitter.com/([^\"]+)" class="icon link_el fontello-twitter"'
-        self.fieldsRegExp["usufy"]["i3visio.alias_facebook"] =  'href="http://www.facebook.com/([^\"]+)" class="icon link_el fontello-facebook"'
-        self.fieldsRegExp["usufy"]["i3visio.alias_linkedin"] =  'href="http://www.linkedin.com/in/([^\"]+)" class="icon link_el fontello-linkedin"'
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

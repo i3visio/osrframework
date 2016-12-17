@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v4.0"
+__version__ = "v4.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -67,17 +67,22 @@ EMAIL_DOMAINS = [
     "getbackinthe.kitchen",
     "gmail.com",
     "hushmail.com",
+    "icloud.com",
     "keemail.me",
-    "libero.it",
     "lycos.com",
+    "me.com",
     "memeware.net",
+    "noob.com",
+    "protonmail.ch",
     "protonmail.com",
     "rediffmail.com",
+    "seznam.cz",
     "tuta.io",
     "tutamail.com",
     "tutanota.com",
     "tutanota.de",
     "waifu.club",
+    "wp.pl",
     "ya.ru",
     "yandex.com",
     "yeah.net",
@@ -120,14 +125,17 @@ def weCanCheckTheseDomains(email):
     notWorking = [
         "@aol.com",
         "@bk.ru",
+        "@breakthru.com",
         "@gmx.",
         "@hotmail.co",
         "@inbox.com",
         "@latinmail.com",
+        "@libero.it",
         "@mail.ru",
         "@mail2tor.com",
         "@outlook.com",
         "@rambler.ru",
+        "@rocketmail.com",
         "@starmedia.com",
         "@ukr.net",
         "@yahoo.",

@@ -3,12 +3,32 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.15.0a, 2016/12/XX -- New release.
+0.15.0a, 2016/12/21 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
+- Add feature #190: Add a new error message to angel.co.
+- Add feature #189: Add protonmail.ch as a new mailfy wrapper.
+- Add feature #186: Add translate.hola.org as a new usufy wrapper.
+- Add feature #185: Add meteor.com as a new platform.
+- Add feature #174: Add emoneyspace as a new platform.
+- Add feature #77: Add Blogmarks as a new platform.
+- Add feature #76: Add Smugmug as a new platform.
+- Add feature #75: Add Typepad as a new platform.
+- Add feature #17: Addition of Gravatar.
+- Add feature: Add Buddypic wrapper.
+- Add feature: Add Carder wrapper.
+- Add feature: Add Csu wrapper.
+- Add feature: Add Realcarders wrapper.
+- Add feature: Add SingleTrackWorld wrapper.
+- Add feature: Add TranslateHola wrapper.
+- Add feature: Add Warrior wrapper.                                                    
+- Add feature: Add me.com, icloud.com, noob.com, seznam.cz and wp.pl to mailfy.
+- Add feature: Add second level TLDs to domainfy for CCTLD *.nz, *.pe, *.py and *.uk.
 - Add feature: Custom errors for OSRFramework.
 - Add feature: Some new structures for the usufy fuzzer.
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy.
 - Fix issue #121 by urlencoding each and every parameter provided to usufy, searchfy and phonefy. Indirectly fixes issue #91.
 - Fix issue #188: Capture exceptions when errors are found in the configuration files bug deployment.
+- Fix issue #169: searchfy.py --maltego doesn't disable banner.
+- Fix issue: Remove libero.it from mailfy as it is no longer working.
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
