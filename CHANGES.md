@@ -21,6 +21,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add TranslateHola wrapper.
 - Add feature: Add Warrior wrapper.                                                    
 - Add feature: Add me.com, icloud.com, noob.com, seznam.cz and wp.pl to mailfy.
+- Add feature: Add second level TLDs to domainfy for CCTLD *.nz, *.pe, *.py and *.uk.
 - Fix bug #169: searchfy.py --maltego doesn't disable banner.
 - Fix bug: Remove libero.it from mailfy as it is no longer working.
 

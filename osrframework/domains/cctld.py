@@ -191,9 +191,23 @@ tld = {
     ".nr", #  Nauru
     ".nu", #  Niue
     ".nz", #  New Zealand
+    ".ac.nz", #  New Zealand
+    ".co.nz", #  New Zealand
+    ".geek.nz", #  New Zealand
+    ".gen.nz", #  New Zealand
+    ".kiwi.nz", #  New Zealand
+    ".maori.nz", #  New Zealand
+    ".net.nz", #  New Zealand
+    ".org.nz", #  New Zealand
+    ".school.nz", #  New Zealand
     ".om", #  Oman
     ".pa", #  Panama
     ".pe", #  Peru
+    ".com.pe", #  Peru
+    ".edu.pe", #  Peru
+    ".net.pe", #  Peru
+    ".nom.pe", #  Peru
+    ".org.pe", #  Peru
     ".pf", #  French Polynesia
     ".pg", #  Papua New Guinea
     ".ph", #  Philippines
@@ -205,7 +219,11 @@ tld = {
     ".ps", #  Palestine[27]
     ".pt", #  Portugal
     ".pw", #  Palau
-    ".py", #  Paraguay
+    ".com.py", #  Paraguay
+    ".coop.py", #  Paraguay
+    ".edu.py", #  Paraguay
+    ".net.py", #  Paraguay
+    ".org.py", #  Paraguay
     ".qa", #  Qatar
     ".re", #  Réunion
     ".ro", #  Romania
@@ -253,7 +271,14 @@ tld = {
     ".tz", #  Tanzania
     ".ua", #  Ukraine
     ".ug", #  Uganda
-    ".uk", #  United Kingdom
+    ".ac.uk", #  United Kingdom
+    ".ltd.uk", #  United Kingdom
+    ".me.uk", #  United Kingdom
+    ".net.uk", #  United Kingdom
+    ".nhs.uk", #  United Kingdom
+    ".org.uk", #  United Kingdom
+    ".plc.uk", #  United Kingdom
+    ".sch.uk", #  United Kingdom
     ".us", #  United States of America
     ".uy", #  Uruguay
     ".uz", #  Uzbekistan
