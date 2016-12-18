@@ -21,7 +21,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add SingleTrackWorld wrapper.
 - Add feature: Add TranslateHola wrapper.
 - Add feature: Add Warrior wrapper.                                                    
-- Add feature: Add me.com, icloud.com, noob.com, seznam.cz and wp.pl to mailfy.
+- Add feature: Add me.com, icloud.com and seznam.cz to mailfy.
 - Add feature: Add second level TLDs to domainfy for CCTLD *.nz, *.pe, *.py and *.uk.
 - Add feature: Custom errors for OSRFramework.
 - Add feature: Some new structures for the usufy fuzzer.
@@ -30,6 +30,8 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue #188: Capture exceptions when errors are found in the configuration files bug deployment.
 - Fix issue #169: searchfy.py --maltego doesn't disable banner.
 - Fix issue: Remove libero.it from mailfy as it is no longer working.
+- Fix issue: Deactivate false possitives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server.
+- Fix issue: Deactivate false possitives in mailfy for noob.com and wp.pl.
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
 - Add feature #148: Adding Inkonsky as a new platform.
