@@ -9,6 +9,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature #186: Add translate.hola.org as a new usufy wrapper.
 - Add feature #185: Add meteor.com as a new platform.
 - Add feature #174: Add emoneyspace as a new platform.
+- Add feature #161: Making osrfconsole use config values in <OSRFrameworkHOME>/general.cfg.
 - Add feature #77: Add Blogmarks as a new platform.
 - Add feature #76: Add Smugmug as a new platform.
 - Add feature #75: Add Typepad as a new platform.

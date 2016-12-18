@@ -24,7 +24,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.2"
+__version__ = "v0.3"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -310,6 +310,8 @@ class OSRFConsoleDomainfy(OSRFConsoleUtil):
     # Defining the character to create hyphens
     ruler = '-'
 
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("domainfy")
+
     # Defining the configuration for this module
     CONFIG = {}
     CONFIG["NICK"] = {
@@ -321,37 +323,37 @@ class OSRFConsoleDomainfy(OSRFConsoleUtil):
     }
     CONFIG["TLD"] = {
         "DESCRIPTION" : "Types of TLD to be verified",
-        "CURRENT_VALUE" : "global",
+        "CURRENT_VALUE" : DEFAULT_VALUES["tlds"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["tlds"],
         "REQUIRED" : False,
-        "DEFAULT_VALUE" : "global",
         "OPTIONS" : domainfy.TLD.keys(),
     }
     CONFIG["THREADS"] = {
         "DESCRIPTION" : "Number of threads to use.",
-        "CURRENT_VALUE" : 16,
-        "DEFAULT_VALUE" : 16,
+        "CURRENT_VALUE" : DEFAULT_VALUES["threads"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["threads"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["OUTPUT"] = {
         "DESCRIPTION" : "The path to the output folder where the files will be created.",
-        "CURRENT_VALUE" : "./",
-        "DEFAULT_VALUE" : "./",
+        "CURRENT_VALUE" : DEFAULT_VALUES["output_folder"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["output_folder"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["EXTENSION"] = {
         "DESCRIPTION" : "The default extension of the files to be written.",
-        "CURRENT_VALUE" : "csv",
-        "DEFAULT_VALUE" : "csv",
+        "CURRENT_VALUE" : DEFAULT_VALUES["extension"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["extension"],
         "REQUIRED" : False,
         "OPTIONS" : ['csv', 'xls', 'xlsx', 'json', 'gml']
     }
     CONFIG["USER_DEFINED"] = {
         "DESCRIPTION" : "Other TLD to be verified. Note that it should start with a '.'.",
         "CURRENT_VALUE" : None,
-        "REQUIRED" : False,
         "DEFAULT_VALUE" : None,
+        "REQUIRED" : False,
         "OPTIONS" : [],
     }
 
@@ -425,6 +427,8 @@ class OSRFConsoleEntify(OSRFConsoleUtil):
     # Defining the character to create hyphens
     ruler = '-'
 
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("entify")
+
     # Defining the configuration for this module
     CONFIG = {}
     CONFIG["URL"] = {
@@ -437,21 +441,21 @@ class OSRFConsoleEntify(OSRFConsoleUtil):
     CONFIG["REGEXP"] = {
         "DESCRIPTION" : "The regular expressions to be checked.",
         "CURRENT_VALUE" : "all",
-        "REQUIRED" : False,
         "DEFAULT_VALUE" : "all",
+        "REQUIRED" : False,
         "OPTIONS" : regexp_selection.getAllRegexpNames(),
     }
     CONFIG["OUTPUT"] = {
         "DESCRIPTION" : "The path to the output folder where the files will be created.",
-        "CURRENT_VALUE" : "./",
-        "DEFAULT_VALUE" : "./",
+        "CURRENT_VALUE" : DEFAULT_VALUES["output_folder"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["output_folder"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["EXTENSION"] = {
         "DESCRIPTION" : "The default extension of the files to be written.",
-        "CURRENT_VALUE" : "csv",
-        "DEFAULT_VALUE" : "csv",
+        "CURRENT_VALUE" : DEFAULT_VALUES["extension"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["extension"],
         "REQUIRED" : False,
         "OPTIONS" : ['csv', 'xls', 'xlsx', 'json', 'gml']
     }
@@ -521,6 +525,8 @@ class OSRFConsoleMailfy(OSRFConsoleUtil):
     # Defining the character to create hyphens
     ruler = '-'
 
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("mailfy")
+
     # Defining the configuration for this module
     CONFIG = {}
     CONFIG["NICK"] = {
@@ -532,29 +538,29 @@ class OSRFConsoleMailfy(OSRFConsoleUtil):
     }
     CONFIG["PLATFORMS"] = {
         "DESCRIPTION" : "Platforms to be checked.",
-        "CURRENT_VALUE" : "all",
+        "CURRENT_VALUE" : DEFAULT_VALUES["domains"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["domains"],
         "REQUIRED" : False,
-        "DEFAULT_VALUE" : "all",
         "OPTIONS" : mailfy.EMAIL_DOMAINS,
     }
     CONFIG["THREADS"] = {
         "DESCRIPTION" : "Number of threads to use.",
-        "CURRENT_VALUE" : 32,
-        "DEFAULT_VALUE" : 32,
+        "CURRENT_VALUE" : DEFAULT_VALUES["threads"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["threads"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["OUTPUT"] = {
         "DESCRIPTION" : "The path to the output folder where the files will be created.",
-        "CURRENT_VALUE" : "./",
-        "DEFAULT_VALUE" : "./",
+        "CURRENT_VALUE" : DEFAULT_VALUES["output_folder"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["output_folder"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["EXTENSION"] = {
         "DESCRIPTION" : "The default extension of the files to be written.",
-        "CURRENT_VALUE" : "csv",
-        "DEFAULT_VALUE" : "csv",
+        "CURRENT_VALUE" : DEFAULT_VALUES["extension"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["extension"],
         "REQUIRED" : False,
         "OPTIONS" : ['csv', 'xls', 'xlsx', 'json', 'gml']
     }
@@ -625,6 +631,8 @@ class OSRFConsolePhonefy(OSRFConsoleUtil):
     # Defining the character to create hyphens
     ruler = '-'
 
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("phonefy")
+
     # Defining the configuration for this module
     CONFIG = {}
     CONFIG["NUMBER"] = {
@@ -636,22 +644,22 @@ class OSRFConsolePhonefy(OSRFConsoleUtil):
     }
     CONFIG["PLATFORMS"] = {
         "DESCRIPTION" : "Platforms to be checked.",
-        "CURRENT_VALUE" : "all",
+        "CURRENT_VALUE" : DEFAULT_VALUES["platforms"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["platforms"],
         "REQUIRED" : False,
-        "DEFAULT_VALUE" : "all",
         "OPTIONS" : platform_selection.getAllPlatformNames("phonefy"),
     }
     CONFIG["OUTPUT"] = {
         "DESCRIPTION" : "The path to the output folder where the files will be created.",
-        "CURRENT_VALUE" : "./",
-        "DEFAULT_VALUE" : "./",
+        "CURRENT_VALUE" : DEFAULT_VALUES["output_folder"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["output_folder"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["EXTENSION"] = {
         "DESCRIPTION" : "The default extension of the files to be written.",
-        "CURRENT_VALUE" : "csv",
-        "DEFAULT_VALUE" : "csv",
+        "CURRENT_VALUE" : DEFAULT_VALUES["extension"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["extension"],
         "REQUIRED" : False,
         "OPTIONS" : ['csv', 'xls', 'xlsx', 'json', 'gml']
     }
@@ -721,6 +729,8 @@ class OSRFConsoleSearchfy(OSRFConsoleUtil):
     # Defining the character to create hyphens
     ruler = '-'
 
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("searchfy")
+
     # Defining the configuration for this module
     CONFIG = {}
     CONFIG["QUERY"] = {
@@ -732,22 +742,22 @@ class OSRFConsoleSearchfy(OSRFConsoleUtil):
     }
     CONFIG["PLATFORMS"] = {
         "DESCRIPTION" : "Platforms to be checked.",
-        "CURRENT_VALUE" : "all",
+        "CURRENT_VALUE" : DEFAULT_VALUES["platforms"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["platforms"],
         "REQUIRED" : False,
-        "DEFAULT_VALUE" : "all",
         "OPTIONS" : platform_selection.getAllPlatformNames("searchfy"),
     }
     CONFIG["OUTPUT"] = {
         "DESCRIPTION" : "The path to the output folder where the files will be created.",
-        "CURRENT_VALUE" : "./",
-        "DEFAULT_VALUE" : "./",
+        "CURRENT_VALUE" : DEFAULT_VALUES["output_folder"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["output_folder"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["EXTENSION"] = {
         "DESCRIPTION" : "The default extension of the files to be written.",
-        "CURRENT_VALUE" : "csv",
-        "DEFAULT_VALUE" : "csv",
+        "CURRENT_VALUE" : DEFAULT_VALUES["extension"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["extension"],
         "REQUIRED" : False,
         "OPTIONS" : ['csv', 'xls', 'xlsx', 'json', 'gml']
     }
@@ -817,6 +827,8 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
     # Defining the character to create hyphens
     ruler = '-'
 
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("usufy")
+
     # Defining the configuration for this module
     CONFIG = {}
     CONFIG["NICK"] = {
@@ -828,29 +840,29 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
     }
     CONFIG["PLATFORMS"] = {
         "DESCRIPTION" : "Platforms to be checked.",
-        "CURRENT_VALUE" : "all",
+        "CURRENT_VALUE" : DEFAULT_VALUES["platforms"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["platforms"],
         "REQUIRED" : False,
-        "DEFAULT_VALUE" : "all",
         "OPTIONS" : platform_selection.getAllPlatformNames("usufy"),
     }
     CONFIG["THREADS"] = {
         "DESCRIPTION" : "Number of threads to use.",
-        "CURRENT_VALUE" : 32,
-        "DEFAULT_VALUE" : 32,
+        "CURRENT_VALUE" : DEFAULT_VALUES["threads"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["threads"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["OUTPUT"] = {
         "DESCRIPTION" : "The path to the output folder where the files will be created.",
-        "CURRENT_VALUE" : "./",
-        "DEFAULT_VALUE" : "./",
+        "CURRENT_VALUE" : DEFAULT_VALUES["output_folder"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["output_folder"],
         "REQUIRED" : False,
         "OPTIONS" : []
     }
     CONFIG["EXTENSION"] = {
         "DESCRIPTION" : "The default extension of the files to be written.",
-        "CURRENT_VALUE" : "csv",
-        "DEFAULT_VALUE" : "csv",
+        "CURRENT_VALUE" : DEFAULT_VALUES["extension"],
+        "DEFAULT_VALUE" : DEFAULT_VALUES["extension"],
         "REQUIRED" : False,
         "OPTIONS" : ['csv', 'xls', 'xlsx', 'json', 'gml']
     }
