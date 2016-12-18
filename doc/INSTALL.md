@@ -72,10 +72,6 @@ However, note that both approaches may interfere with other libraries that you m
 
 If you have already tested that Python 2.7.x and Pip are installed, this is easy too:
 ```
-pip install osrframework --user
-```
-Or even:
-```
 pip install osrframework
 ```
 

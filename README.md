@@ -39,17 +39,17 @@ For more details on this issue, check the [COPYING](COPYING) file.
 3 - Installation
 ----------------
 
-Fast way to do it on any system for a given user:
+Fast way to do it on any system for a given user (use `sudo` or `virtualenv` in GNU/Linux or Mac):
 ```
-pip install osrframework --user
+pip install osrframework
 ```
 You can upgrade to the latest release of the framework with:
 ```
-pip install osrframework --user --upgrade
+pip install osrframeworkr --upgrade
 ```
-This will manage all the dependencies for you and install the latest version of the framework for this user.
+This will manage all the dependencies for you and install the latest version of the framework.
 
-If you needed further information on how to install OSRFramework on GNU/Linux, Windows or MacOS, check the [INSTALL.md](doc/INSTALL.md) file where we provide additional details.
+If you needed further information on how to install OSRFramework on GNU/Linux (you will need to add `export PATH=$PATH:$HOME/.local/bin` to your `~/.bashrc_profile`), MacOS or Windows, check the [INSTALL.md](doc/INSTALL.md) file where we provide additional details.
 
 4 - Basic usage
 ---------------
