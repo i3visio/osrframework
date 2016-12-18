@@ -41,42 +41,15 @@ For more details on this issue, check the [COPYING](COPYING) file.
 
 Fast way to do it on any system for a given user:
 ```
-pip install osrframework
-```
-Under MacOS or Linux systems, you can do this as superuser too...
-```
-sudo pip install osrframework
-```
-Or install it only for the given user if you do not have sudo permissions:
-```
 pip install osrframework --user
 ```
-This will manage all the dependencies for you. If you needed further information, check the [INSTALL.md](doc/INSTALL.md) file.
+You can upgrade to the latest release of the framework with:
+```
+pip install osrframework --user --upgrade
+```
+This will manage all the dependencies for you and install the latest version of the framework for this user.
 
-### Installing using virtualenv
-
-You can also try to install it with `virtualenv` so as to avoid problems with dependencies with other libraries. To do so, first you will need to install `virtualenv` using `pip`.
-```
-pip install virtualenv --user
-virtualenv osrf-virtualenv
-source osrf-virtualenv/bin/activate
-```
-Now in the new virtual environment you would be able to install osrframework easily:
-```
-(osrf-virtualenv)$ pip install osrframework
-```
-
-### Note for those with OSRFramework <= 0.14.3
-
-If you had installed 0.14.3 or earlier versions of the framework on Windows you may face some problems with mailfy.py and the libraries it uses. You should uninstall first dnspython and pyDNS before installing osrframework again:
-```
-# Uninstalling dnspython
-pip uninstall dnspython
-# Uninstalling pydns
-pip uninstall pydns
-# Reinstalling osrframework, upgrading to most recent version
-pip install osrframework --upgrade
-```
+If you needed further information on how to install OSRFramework on GNU/Linux, Windows or MacOS, check the [INSTALL.md](doc/INSTALL.md) file where we provide additional details.
 
 4 - Basic usage
 ---------------
@@ -86,11 +59,12 @@ If everything went correctly (we hope so!), it's time for trying usufy.py, mailf
 usufy.py -n i3visio febrezo yrubiosec -p twitter facebook
 searchfy.py -q "i3visio"
 mailfy.py -n i3visio
+osrfconsole.py
 ```
 
 Type -h or --help to get more information about which are the parameters of each application.
 
-You can find the configuration files in a folder created in your user home:
+You can find the configuration files in a folder created in your user home to define the default behaviour of the applications:
 ```
 # Configuration files for Linux and MacOS
 ~/.config/OSRFramework/
