@@ -28,6 +28,8 @@ from setuptools import setup
 import shutil
 import site
 
+IS_VIRTUAL_ENV = False
+
 # Get packagesPaths depending on whether the user launched it with sudo or not
 if sys.platform == 'win32':
     # This will throw two folders, but we need the first one only. Typically:
@@ -37,30 +39,36 @@ if sys.platform == 'win32':
 else:
     # We need this verification because Windows does not have a wrapper ofr os.geteuid()
     if not os.geteuid() == 0:
-        packagesPaths = site.getusersitepackages()
-        print "[*] The installation has not been launched as superuser."
+        try:
+            packagesPaths = site.getusersitepackages()
+            print "[*] The installation has not been launched as superuser."
+        except:
+            IS_VIRTUAL_ENV = True
     else:
         # This will throw two folders, but we need the first one only:
         #   ['/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages']
         packagesPaths = site.getsitepackages()[0]
         print "[*] The installation is going to be run as superuser."
 
-osrframeworkSystemPath = os.path.join(packagesPaths, "osrframework")
+if not IS_VIRTUAL_ENV:
+    osrframeworkSystemPath = os.path.join(packagesPaths, "osrframework")
 
-print "[*] The chosen installation path is: " + osrframeworkSystemPath
+    print "[*] The chosen installation path is: " + osrframeworkSystemPath
 
-# Removing old installations first...
-if os.path.isdir(osrframeworkSystemPath):
-    print "[!] Found an old installation at: " + osrframeworkSystemPath
-    try:
-        shutil.rmtree(osrframeworkSystemPath)
-        print "[*] Successfully removed the old installation. Installation will resume now to upgrade it..."
-    except Exception as e:
-        print str(e)
-        print "[E] The installed version of OSRFramework cannot be removed. Try to remove it manually in your python installation under 'local/lib/python2.7/dist-packages/'."
-        print sys.exit()
+    # Removing old installations first...
+    if os.path.isdir(osrframeworkSystemPath):
+        print "[!] Found an old installation at: " + osrframeworkSystemPath
+        try:
+            shutil.rmtree(osrframeworkSystemPath)
+            print "[*] Successfully removed the old installation. Installation will resume now to upgrade it..."
+        except Exception as e:
+            print str(e)
+            print "[E] The installed version of OSRFramework cannot be removed. Try to remove it manually in your python installation under 'local/lib/python2.7/dist-packages/'."
+            print sys.exit()
+    else:
+        print "[*] No OSRFramework installation found in the system."
 else:
-    print "[*] No OSRFramework installation found in the system."
+    print "[*] OSRFramework seems to be installed using `virtualenv`."
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
