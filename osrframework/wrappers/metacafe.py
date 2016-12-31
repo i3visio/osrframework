@@ -30,12 +30,12 @@ import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 class Metacafe(Platform):
-    """ 
+    """
         A <Platform> object for Metacafe.
     """
     def __init__(self):
-        """ 
-            Constructor... 
+        """
+            Constructor...
         """
         self.platformName = "Metacafe"
         self.tags = ["video"]
@@ -43,28 +43,28 @@ class Metacafe(Platform):
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
-        
+        self.isValidMode["searchfy"] = False
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.metacafe.com/channels/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "http://www.metacafe.com/channels/" + "<usufy>"
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
-        
+        #self.needsCredentials["searchfy"] = False
+
         #################
         # Valid queries #
         #################
@@ -74,26 +74,26 @@ class Metacafe(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<span>Channel is temporarily not available</span>"]
-        #self.notFoundText["searchfy"] = []        
-        
+        self.notFoundText["usufy"] = ["<h1>Channel is temporarily not available</h1>"]
+        #self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -101,8 +101,8 @@ class Metacafe(Platform):
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+
         ################
         # Fields found #
         ################
