@@ -3,7 +3,7 @@ OSRFramework
 
 OSRFramework: Open Sources Research Framework
 
-Copyright (C) 2016  F. Brezo and Y. Rubio, i3visio
+Copyright (C) 2014-2017  F. Brezo and Y. Rubio, i3visio
 
 [![Version in PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
 [![Downloads/Month in PyPI](https://img.shields.io/pypi/dm/osrframework.svg)]()

@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.15.0a, 2016/12/21 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
+0.15.0, 2016/12/31 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
 - Add feature #190: Add a new error message to angel.co.
 - Add feature #189: Add protonmail.ch as a new mailfy wrapper.
 - Add feature #186: Add translate.hola.org as a new usufy wrapper.
@@ -26,10 +26,15 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework.
 - Add feature: Some new structures for the usufy fuzzer.
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy.
+- Fix issue #200: Deactivate Youku usufy wrapper
+- Fix issue #199: Deactivate Gytorrents usufy wrapper
+- Fix issue #198: Change Web.tv error message
+- Fix issue #197: Change Metacafe error message
 - Fix issue #188: Capture exceptions when errors are found in the configuration files bug deployment.
 - Fix issue #182: Cannot install in virtualenv.
 - Fix issue #169: searchfy.py --maltego doesn't disable banner.
 - Fix issue #121 by urlencoding each and every parameter provided to usufy, searchfy and phonefy. Indirectly fixes issue #91.
+- Fix issue: Remove Nubelo wrapper.
 - Fix issue: Remove libero.it from mailfy as it is no longer working.
 - Fix issue: Deactivate false positives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server as well as other false positives in mailfy for noob.com and wp.pl.
 
