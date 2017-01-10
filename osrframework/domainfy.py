@@ -3,8 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio
-#       (i3visio, contacto@i3visio.com)
+#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -345,6 +344,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         print "Note that otherwise, we won't know about it!"
         print
 
+    return results
 
 def getParser():
     import osrframework.utils.configuration as configuration

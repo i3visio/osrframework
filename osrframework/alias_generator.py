@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
 #
 #    This program is free software. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,15 +21,15 @@
 ##################################################################################
 
 '''
-alias_generator.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
+alias_generator.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
 '''
 __author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2016, i3visio"
+__copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v1.0.0"
+__version__ = "v1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 

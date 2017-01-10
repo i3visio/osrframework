@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.15.0, 2016/12/31 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
+0.15.0, 2017/01/11 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
 - Add feature #190: Add a new error message to angel.co.
 - Add feature #189: Add protonmail.ch as a new mailfy wrapper.
 - Add feature #186: Add translate.hola.org as a new usufy wrapper.
@@ -26,6 +26,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework.
 - Add feature: Some new structures for the usufy fuzzer.
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy.
+- Fix issue #205: Return in each main file a Json with the results instead of nothing
 - Fix issue #204: Fix error messages shown in domainfy.py
 - Fix issue #200: Deactivate Youku usufy wrapper
 - Fix issue #199: Deactivate Gytorrents usufy wrapper
