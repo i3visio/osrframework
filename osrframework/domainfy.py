@@ -3,7 +3,8 @@
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio
+#       (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,15 +22,15 @@
 ##################################################################################
 
 '''
-domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
+domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
 '''
 __author__ = "Felix Brezo, Yaiza Rubio"
-__copyright__ = "Copyright 2016, i3visio"
+__copyright__ = "Copyright 2016-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.3"
+__version__ = "v0.4"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -87,53 +88,52 @@ def getWhoisInfo(domain):
     new = []
     try:
         info = whois.whois(domain)
+
+        # Grabbing the emails
+        try:
+            emails = {}
+            emails["type"] = "i3visio.email"
+            emails["value"] = str(info.emails)
+            emails["attributes"] = []
+            new.append(emails)
+        except:
+            pass
+
+        # Grabbing the country
+        try:
+            tmp = {}
+            tmp["type"] = "i3visio.location.country"
+            tmp["value"] = str(info.country)
+            tmp["attributes"] = []
+            new.append(tmp)
+        except:
+            pass
+
+        # Grabbing the regitrar
+        try:
+            tmp = {}
+            tmp["type"] = "i3visio.registrar"
+            tmp["value"] = str(info.registrar)
+            tmp["attributes"] = []
+            new.append(tmp)
+        except:
+            pass
+
+        # Grabbing the regitrar
+        try:
+            tmp = {}
+            tmp["type"] = "i3visio.fullname"
+            try:
+                tmp["value"] = str(info.name)
+            except:
+                tmp["value"] = info.name
+            tmp["attributes"] = []
+            new.append(tmp)
+        except:
+            pass
     except:
         # Sth happened...
         return new
-
-    # Grabbing the emails
-    try:
-        emails = {}
-        emails["type"] = "i3visio.email"
-        emails["value"] = str(info.emails)
-        emails["attributes"] = []
-        new.append(emails)
-    except:
-        pass
-
-    # Grabbing the country
-    try:
-        tmp = {}
-        tmp["type"] = "i3visio.location.country"
-        tmp["value"] = str(info.country)
-        tmp["attributes"] = []
-        new.append(tmp)
-    except:
-        pass
-
-    # Grabbing the regitrar
-    try:
-        tmp = {}
-        tmp["type"] = "i3visio.registrar"
-        tmp["value"] = str(info.registrar)
-        tmp["attributes"] = []
-        new.append(tmp)
-    except:
-        pass
-
-    # Grabbing the regitrar
-    try:
-        tmp = {}
-        tmp["type"] = "i3visio.fullname"
-        try:
-            tmp["value"] = str(info.name)
-        except:
-            tmp["value"] = info.name
-        tmp["attributes"] = []
-        new.append(tmp)
-    except:
-        pass
-
 
     return new
 
@@ -208,8 +208,8 @@ def multi_run_wrapper(domain):
         tmp["attributes"] = []
 
         aux["attributes"].append(tmp)
-        
-        return aux        
+
+        return aux
     except Exception, e:
         # The domain just not exist... We simply return an empty JSON
         return {}

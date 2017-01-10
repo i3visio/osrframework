@@ -26,6 +26,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework.
 - Add feature: Some new structures for the usufy fuzzer.
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy.
+- Fix issue #204: Fix error messages shown in domainfy.py
 - Fix issue #200: Deactivate Youku usufy wrapper
 - Fix issue #199: Deactivate Gytorrents usufy wrapper
 - Fix issue #198: Change Web.tv error message
@@ -38,7 +39,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue: Remove libero.it from mailfy as it is no longer working.
 - Fix issue: Deactivate false positives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server as well as other false positives in mailfy for noob.com and wp.pl.
 
-0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers). 
+0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers).
 - Add feature #148: Adding Inkonsky as a new platform.
 - Add feature #142: Adding angel.co as a new usufy platform.
 - Add feature #111: Adding Zotero as a new wrapper.
