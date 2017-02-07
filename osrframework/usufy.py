@@ -463,11 +463,10 @@ This is free software, and you are welcome to redistribute it under certain cond
                         logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
                         os.makedirs(args.output_folder)
 
-                # Grabbing the results
-                fileHeader = os.path.join(args.output_folder, args.file_header)
+                    # Grabbing the results
+                    fileHeader = os.path.join(args.output_folder, args.file_header)
 
-                # Iterating through the given extensions to print its values
-                if not args.maltego:
+                    # Iterating through the given extensions to print its values
                     for ext in args.extension:
                         # Generating output files
                         general.exportUsufy(res, ext, fileHeader)
@@ -475,9 +474,8 @@ This is free software, and you are welcome to redistribute it under certain cond
             # Generating the Maltego output
             if args.maltego:
                 general.listToMaltego(res)
-
             # Printing the results if requested
-            if not args.maltego:
+            else:
                 print "A summary of the results obtained are shown in the following table:"
                 #print res
                 print unicode(general.usufyToTextExport(res))
@@ -492,8 +490,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                     # Showing the output files
                     print "\t-" + fileHeader + "." + ext
 
-            # Showing the execution time...
-            if not args.maltego:
+                # Showing the execution time...
                 print
                 endTime= dt.datetime.now()
                 print str(endTime) +"\tFinishing execution..."
@@ -502,8 +499,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                 print "Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(listPlatforms)) +" seconds"
                 print
 
-            # Urging users to place an issue on Github...
-            if not args.maltego:
+                # Urging users to place an issue on Github...
                 print
                 print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
                 print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."

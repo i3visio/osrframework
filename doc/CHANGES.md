@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.15.0, 2017/01/11 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
+0.15.0, 2017/02/97 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
 - Add feature #190: Add a new error message to angel.co.
 - Add feature #189: Add protonmail.ch as a new mailfy wrapper.
 - Add feature #186: Add translate.hola.org as a new usufy wrapper.
@@ -39,6 +39,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue: Remove Nubelo wrapper.
 - Fix issue: Remove libero.it from mailfy as it is no longer working.
 - Fix issue: Deactivate false positives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server as well as other false positives in mailfy for noob.com and wp.pl.
+- Fix issue: Remove default proxies for HTTP and HTTPS.
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers).
 - Add feature #148: Adding Inkonsky as a new platform.
