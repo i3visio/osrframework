@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2016-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v0.4"
+__version__ = "v5.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -53,6 +53,8 @@ import osrframework.domains.cctld as cctld
 import osrframework.domains.generic_tld as generic_tld
 import osrframework.domains.geographic_tld as geographic_tld
 import osrframework.domains.brand_tld as brand_tld
+
+import signal
 
 # Defining the TLD dictionary based on <https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains>
 TLD = {}
@@ -163,7 +165,7 @@ def createDomains(tlds, nicks=None, nicksFile=None):
     return domain_candidates
 
 
-def multi_run_wrapper(domain):
+def pool_function(domain):
     '''
         Wrapper for being able to launch all the threads of getPageWrapper.
         :param domain: We receive the parameters as a dictionary.
@@ -208,10 +210,9 @@ def multi_run_wrapper(domain):
 
         aux["attributes"].append(tmp)
 
-        return aux
-    except Exception, e:
-        # The domain just not exist... We simply return an empty JSON
-        return {}
+        return {"platform" : str(domain), "status": "DONE", "data": aux}
+    except Exception as e:
+        return {"platform" : str(domain), "status": "ERROR", "data": {}}
 
 def performSearch(domains=[], nThreads=16):
     '''
@@ -236,25 +237,49 @@ def performSearch(domains=[], nThreads=16):
 
     # Launching the Pool
     # ------------------
-    #logger.info("Launching " + str(nThreads) + " different threads...")
-    # We define the pool
+    # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
+    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     pool = Pool(nThreads)
+    signal.signal(signal.SIGINT, original_sigint_handler)
 
-    # We call the wrapping function with all the args previously generated
-    #poolResults = pool.apply_async(multi_run_wrapper,(args))
-    poolResults = pool.map(multi_run_wrapper, domains)
+    poolResults = []
+    try:
+        def log_result(result):
+            # This is called whenever foo_pool(i) returns a result.
+            # result_list is modified only by the main process, not the pool workers.
+            poolResults.append(result)
 
-    pool.close()
+        for d in domains:
+            # We need to create all the arguments that will be needed
+            parameters = ( d, )
+            pool.apply_async (pool_function, args= parameters, callback = log_result )
 
-    # Processing the results
-    # ----------------------
-    results = []
+        # Waiting for results to be finished
+        while len(poolResults) < len(domains):
+            pass
+        # Closing normal termination
+        pool.close()
+    except KeyboardInterrupt:
+        print "\nProcess manually stopped by the user. Terminating workers.\n"
+        pool.terminate()
+        print "The following domains where not processed:"
+        for d in domains:
+            processed = False
+            for processedDomain in poolResults:
+                if str(d) == processedDomain["platform"]:
+                    processed = True
+                    break
+            if not processed:
+                print "\t- " + str(d)
+        print "\n"
+    pool.join()
 
-    for res in poolResults:
-        # Recovering the results and check if they are not an empty json
-        if res != {}:
-            results.append(res)
-
+    for serArray in poolResults:
+        data = serArray["data"]
+        # We need to recover the results and check if they are not an empty json or None
+        if data != None:
+            if data != {}:
+                results.append(data)
     return results
 
 def main(args):

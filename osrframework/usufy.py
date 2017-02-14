@@ -276,13 +276,9 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                         processed = True
                         break
                 if not processed:
-                    print "- " + str(p)
+                    print "\t- " + str(p)
             print "\n"
         pool.join()
-        """except Exception as e:
-            print "\nUserInterrupted exception."
-            pool.terminate()
-            pool.join()"""
 
         profiles = []
 
