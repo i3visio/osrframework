@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v4.3"
+__version__ = "v5.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -55,6 +55,9 @@ import osrframework.utils.general as general
 # logging imports
 import osrframework.utils.logger
 import logging
+
+# Preparing to capture interruptions smoothly
+import signal
 
 def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     '''
@@ -191,6 +194,19 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
         print "ERROR: something happened when processing " + str(p) +". You may like to deactivate this wrapper if the error persist."
         return []
 
+
+def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
+    '''
+        Wrapper for being able to launch all the threads of getPageWrapper.
+        :param args: We receive the parameters for getPageWrapper as a tuple.
+    '''
+    try:
+        res = getPageWrapper(p, nick, rutaDescarga, avoidProcessing, avoidDownload, outQueue)
+        return {"platform" : str(p), "status": "DONE", "data": res}
+    except Exception as e:
+        print "\tERROR: " + str(p)
+        return {"platform" : str(p), "status": "ERROR", "data": []}
+
 def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, maltego=False, verbosity=1, logFolder="./logs"):
     '''
         Method that receives as a parameter a series of nicks and verifies whether those nicks have a profile associated in different social networks.
@@ -220,55 +236,66 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
     for nick in nicks:
         logger.info("Looking for '" + nick + "' in " + str(len(platforms)) + " different platforms:\n" +str( [ str(plat) for plat in platforms ] ) )
 
-
-        # Using threads in a pool if we are not running the program in main
-        args = []
-        # We need to create all the arguments that will be needed
-        #print platforms
-        for plat in platforms:
-            args.append (( plat, nick, rutaDescarga, avoidProcessing, avoidDownload))
-
         # If the process is executed by the current app, we use the Processes. It is faster than pools.
         if nThreads <= 0 or nThreads > len(platforms):
             nThreads = len(platforms)
-
         logger.info("Launching " + str(nThreads) + " different threads...")
-        # We define the pool
+
+        # Using threads in a pool if we are not running the program in main
+        # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
+        original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
         pool = Pool(nThreads)
+        signal.signal(signal.SIGINT, original_sigint_handler)
 
-        # We call the wrapping function with all the args previously generated
-        #poolResults = pool.apply_async(multi_run_wrapper,(args))
-        poolResults = pool.map(multi_run_wrapper,args)
+        poolResults = []
+        try:
+            def log_result(result):
+                # This is called whenever foo_pool(i) returns a result.
+                # result_list is modified only by the main process, not the pool workers.
+                poolResults.append(result)
 
-        pool.close()
+            for plat in platforms:
+                # We need to create all the arguments that will be needed
+                parameters = ( plat, nick, rutaDescarga, avoidProcessing, avoidDownload, )
+                pool.apply_async (pool_function, args= parameters, callback = log_result )
+
+            # Waiting for results to be finished
+            while len(poolResults) < len(platforms):
+                #print "Waiiting to finish all!"
+                pass
+            # Closing normal termination
+            pool.close()
+        except KeyboardInterrupt:
+            print "\nProcess manually stopped by the user. Terminating workers.\n"
+            pool.terminate()
+            print "The following platforms where not processed:"
+            for p in platforms:
+                processed = False
+                for processedPlatform in poolResults:
+                    if str(p) == processedPlatform["platform"]:
+                        processed = True
+                        break
+                if not processed:
+                    print "- " + str(p)
+            print "\n"
+        pool.join()
+        """except Exception as e:
+            print "\nUserInterrupted exception."
+            pool.terminate()
+            pool.join()"""
 
         profiles = []
 
         for serArray in poolResults:
+            data = serArray["data"]
             # We need to recover the results and check if they are not an empty json or None
-            if serArray != None:
-                array = json.loads(serArray)
+            if data != None:
+                array = json.loads(data)
                 for r in array:
                     if r != "{}":
                         profiles.append(r)
         res+=profiles
     return res
-
-def multi_run_wrapper(args):
-    '''
-        Wrapper for being able to launch all the threads of getPageWrapper.
-        :param args: We receive the parameters for getPageWrapper as a tuple.
-    '''
-    #startTime= dt.datetime.now()
-    #print "STARTED:\t", str(args[0])
-
-    res = getPageWrapper(*args)
-
-    #endTime = dt.datetime.now()
-    #print "COMPLETED:\t", str(args[0]), "\t", str(endTime-startTime)
-
-    return res
-
 
 def main(args):
     '''
@@ -361,7 +388,8 @@ This is free software, and you are welcome to redistribute it under certain cond
             # Showing the execution time...
             if not args.maltego:
                 startTime= dt.datetime.now()
-                print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!\n"
+                print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!"
+                print "Press [Ctrl + C] to stop...\n"
 
             # Defining the list of users to monitor
             nicks = []
@@ -390,11 +418,11 @@ This is free software, and you are welcome to redistribute it under certain cond
                         logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
                         os.makedirs(args.output_folder)
                 # Launching the process...
-                try:
-                    res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
-                except Exception as e:
-                    print "Exception grabbed when processing the nicks: " + str(e)
-                    print traceback.print_stack()
+                ###try:
+                res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
+                ###except Exception as e:
+                    ###print "Exception grabbed when processing the nicks: " + str(e)
+                    ###print traceback.print_stack()
             else:
                 try:
                     res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
