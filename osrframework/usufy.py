@@ -268,7 +268,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         except KeyboardInterrupt:
             print "\nProcess manually stopped by the user. Terminating workers.\n"
             pool.terminate()
-            print "The following platforms where not processed:"
+            print "The following platforms were not processed:"
             for p in platforms:
                 processed = False
                 for processedPlatform in poolResults:
@@ -282,6 +282,8 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
 
         profiles = []
 
+        # Processing the results
+        # ----------------------
         for serArray in poolResults:
             data = serArray["data"]
             # We need to recover the results and check if they are not an empty json or None
@@ -385,7 +387,9 @@ This is free software, and you are welcome to redistribute it under certain cond
             if not args.maltego:
                 startTime= dt.datetime.now()
                 print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!"
-                print "Press [Ctrl + C] to stop...\n"
+                print
+                print "Press <Ctrl + C> to stop..."
+                print
 
             # Defining the list of users to monitor
             nicks = []

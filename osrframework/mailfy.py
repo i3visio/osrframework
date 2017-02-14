@@ -29,10 +29,9 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v4.2"
+__version__ = "v5.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
-
 
 import argparse
 import datetime as dt
@@ -49,6 +48,8 @@ import osrframework.utils.general as general
 # From emailahoy code
 import emailahoy
 from validate_email import validate_email
+
+import signal
 
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
@@ -188,10 +189,7 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
                     email_candidates.append(n+"@"+d)
     return email_candidates
 
-
-
-
-def multi_run_wrapper(args):
+def pool_function(args):
     '''
         Wrapper for being able to launch all the threads of getPageWrapper.
         :param args: We receive the parameters for getPageWrapper as a tuple.
@@ -215,9 +213,10 @@ def multi_run_wrapper(args):
         aux["attributes"].append(email)
         aux["attributes"].append(alias)
         aux["attributes"].append(domain)
-        return aux
+
+        return {"platform" : str(domain), "status": "DONE", "data": aux}
     else:
-        return {}
+        return {"platform" : str(domain), "status": "DONE", "data": {}}
 
 def performSearch(emails=[], nThreads=16):
     '''
@@ -247,24 +246,52 @@ def performSearch(emails=[], nThreads=16):
 
     # Launching the Pool
     # ------------------
-    #logger.info("Launching " + str(nThreads) + " different threads...")
-    # We define the pool
+    # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
+    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     pool = Pool(nThreads)
+    signal.signal(signal.SIGINT, original_sigint_handler)
 
-    # We call the wrapping function with all the args previously generated
-    #poolResults = pool.apply_async(multi_run_wrapper,(args))
-    poolResults = pool.map(multi_run_wrapper,args)
+    poolResults = []
+    try:
+        def log_result(result):
+            # This is called whenever foo_pool(i) returns a result.
+            # result_list is modified only by the main process, not the pool workers.
+            poolResults.append(result)
 
-    pool.close()
+        for m in emails:
+            # We need to create all the arguments that will be needed
+            parameters = ( m, )
+            pool.apply_async (pool_function, args= parameters, callback = log_result )
+
+        # Waiting for results to be finished
+        while len(poolResults) < len(emails):
+            pass
+        # Closing normal termination
+        pool.close()
+    except KeyboardInterrupt:
+        print "\nProcess manually stopped by the user. Terminating workers.\n"
+        pool.terminate()
+        print "The following emails were not processed:"
+        for m in emails:
+            processed = False
+            for email in poolResults:
+                if str(m) == email["platform"]:
+                    processed = True
+                    break
+            if not processed:
+                print "\t- " + str(m)
+        print "\n"
+    pool.join()
 
     # Processing the results
     # ----------------------
-    results = []
+    for serArray in poolResults:
+        data = serArray["data"]
+        # We need to recover the results and check if they are not an empty json or None
+        if data != None and data != {}:
+            results.append(data)
 
-    for res in poolResults:
-        # Recovering the results and check if they are not an empty json
-        if res != {}:
-            results.append(res)
+    pool.close()
 
     return results
 
@@ -309,7 +336,9 @@ This is free software, and you are welcome to redistribute it under certain cond
     if not args.quiet:
         startTime= dt.datetime.now()
         print str(startTime) +"\tStarting search of the following " + str(len(emails))+ " different emails: "+ str(emails) + ". Be patient!\n"
-
+        print
+        print "Press <Ctrl + C> to stop..."
+        print
     # Perform searches, using different Threads
     results = performSearch(emails, args.threads)
 
