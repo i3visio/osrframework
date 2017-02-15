@@ -48,6 +48,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Patch issue #217: Plancast takes too much time to be processed (moved to pending)
 - Patch issue #216: Aporrealos takes too much time to be processed (moved to pending)
 - Patch issue #215: Artbreak takes too much time to be processed (moved to pending)
+- Patch issue #214: Gitorious takes too much time to be processed (moved to pending)
 - Patch issue #211: Dailymail throws false positives (moved to pending)
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers).
