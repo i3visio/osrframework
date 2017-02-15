@@ -45,6 +45,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue: Deactivate false positives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server as well as other false positives in mailfy for noob.com and wp.pl
 - Fix issue: Remove default proxies for HTTP and HTTPS
 - Patch issue #218: CSU throws false positives (moved to pending)
+- Patch issue #216: Aporrealos takes too much time to be processed (moved to pending)
 - Patch issue #211: Dailymail throws false positives (moved to pending)
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers).
