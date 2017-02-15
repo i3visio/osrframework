@@ -87,54 +87,54 @@ def getWhoisInfo(domain):
         :result:
     '''
     new = []
+
+    info = whois.whois(domain)
+
+    if info.status == None:
+        raise Exception("UnknownDomainError: " + domain + " could not be resolved.")
+
+    # Grabbing the emails
     try:
-        info = whois.whois(domain)
-
-        # Grabbing the emails
-        try:
-            emails = {}
-            emails["type"] = "i3visio.email"
-            emails["value"] = str(info.emails)
-            emails["attributes"] = []
-            new.append(emails)
-        except:
-            pass
-
-        # Grabbing the country
-        try:
-            tmp = {}
-            tmp["type"] = "i3visio.location.country"
-            tmp["value"] = str(info.country)
-            tmp["attributes"] = []
-            new.append(tmp)
-        except:
-            pass
-
-        # Grabbing the regitrar
-        try:
-            tmp = {}
-            tmp["type"] = "i3visio.registrar"
-            tmp["value"] = str(info.registrar)
-            tmp["attributes"] = []
-            new.append(tmp)
-        except:
-            pass
-
-        # Grabbing the regitrar
-        try:
-            tmp = {}
-            tmp["type"] = "i3visio.fullname"
-            try:
-                tmp["value"] = str(info.name)
-            except:
-                tmp["value"] = info.name
-            tmp["attributes"] = []
-            new.append(tmp)
-        except:
-            pass
+        emails = {}
+        emails["type"] = "i3visio.email"
+        emails["value"] = str(info.emails)
+        emails["attributes"] = []
+        new.append(emails)
     except:
-        # Sth happened...
-        return new
+        pass
+
+    # Grabbing the country
+    try:
+        tmp = {}
+        tmp["type"] = "i3visio.location.country"
+        tmp["value"] = str(info.country)
+        tmp["attributes"] = []
+        new.append(tmp)
+    except:
+        pass
+
+    # Grabbing the regitrar
+    try:
+        tmp = {}
+        tmp["type"] = "i3visio.registrar"
+        tmp["value"] = str(info.registrar)
+        tmp["attributes"] = []
+        new.append(tmp)
+    except:
+        pass
+
+    # Grabbing the regitrar
+    try:
+        tmp = {}
+        tmp["type"] = "i3visio.fullname"
+        try:
+            tmp["value"] = str(info.name)
+        except:
+            tmp["value"] = info.name
+        tmp["attributes"] = []
+        new.append(tmp)
+    except:
+        pass
 
     return new
 
@@ -178,17 +178,16 @@ def pool_function(domain):
     try:
         ipv4 = socket.gethostbyname(domain["domain"])
         #If we arrive here... The domain exists!!
-
         aux = {}
         aux["type"] = "i3visio.result"
         aux["value"] = "Domain Info - " + domain["domain"]
         # Performing whois info
         try:
             aux["attributes"] = getWhoisInfo(domain["domain"])
-        except:
+        except Exception as e:
             # If something happened... Well, we'll return an empty attributes array.
             aux["attributes"] = []
-
+            return {"platform" : str(domain), "status": "ERROR", "data": {}}
         tmp = {}
         tmp["type"] = "i3visio.domain"
         tmp["value"] =  domain["domain"]
@@ -289,7 +288,7 @@ def main(args):
 
         :param args: Arguments received in the command line.
     '''
-    sayingHello = """domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
+    sayingHello = """domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:
@@ -324,7 +323,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     # Showing the execution time...
     if not args.quiet:
         startTime= dt.datetime.now()
-        print str(startTime) +"\tStarting the lookup in up to " + str(len(domains))+ " different domains. This may take more than 1 second/query so... Be patient!\n"
+        print str(startTime) +"\tStarting the lookup in up to " + str(len(domains))+ " different domains. This may take more than 1 second/query so... Be patient!"
         print
         print "\tPress <Ctrl + C> to stop..."
         print
