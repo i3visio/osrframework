@@ -81,7 +81,7 @@ class Badoo(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Haz Contactos Nuevos en Badoo"]
+        self.notFoundText["usufy"] = ["<title>Badoo</title>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################
