@@ -30,7 +30,6 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework
 - Add feature: Some new structures for the usufy fuzzer
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy
-- Fix issue #218: CSU throws false positives
 - Fix issue #205: Return in each main file a Json with the results instead of nothing
 - Fix issue #204: Fix error messages shown in domainfy.py
 - Fix issue #200: Deactivate Youku usufy wrapper
@@ -45,6 +44,8 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue: Remove libero.it from mailfy as it is no longer working
 - Fix issue: Deactivate false positives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server as well as other false positives in mailfy for noob.com and wp.pl
 - Fix issue: Remove default proxies for HTTP and HTTPS
+- Patch issue #218: CSU throws false positives (moved to pending)
+- Patch issue #211: Dailymail throws false positives (moved to pending)
 
 0.14.5, 2016/12/09 -- Add Zotero, Leakforums, CardingHispano, MercadoLibre, Angel, Forospyware, Bubok, etc. (up to 22 new wrappers).
 - Add feature #148: Adding Inkonsky as a new platform.
