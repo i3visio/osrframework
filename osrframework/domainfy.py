@@ -53,6 +53,7 @@ import osrframework.domains.cctld as cctld
 import osrframework.domains.generic_tld as generic_tld
 import osrframework.domains.geographic_tld as geographic_tld
 import osrframework.domains.brand_tld as brand_tld
+import osrframework.domains.other_subdomains as other_subdomains
 
 import signal
 
@@ -68,6 +69,8 @@ TLD["generic"] = generic_tld.tld
 TLD["geographic"] = geographic_tld.tld
 # Brand TLD
 TLD["brand"] = brand_tld.tld
+# Brand TLD
+TLD["other"] = other_subdomains.tld
 
 def getNumberTLD():
     '''

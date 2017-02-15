@@ -17,6 +17,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature #17: Addition of Gravatar.
 - Add feature: Add exclude option via the command line to usufy, mailfy, domainfy, searchfy and phonefy.
 - Add feature: Add exclude option via the configuration file to usufy, mailfy, domainfy, searchfy and phonefy.
+- Add feature: Add other common subdomains to domainfy under the domains/other_subdomains.py
 - Add feature: Add Buddypic wrapper.
 - Add feature: Add Carder wrapper.
 - Add feature: Add Csu wrapper.
