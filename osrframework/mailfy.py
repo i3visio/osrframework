@@ -158,7 +158,7 @@ def weCanCheckTheseDomains(email):
         print "WARNING: the domain of '" + email + "' will not be safely verified."
     return True
 
-def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS):
+def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS, excludeDomains = []):
     '''
         Method that globally permits to grab the emails.
 
@@ -180,13 +180,15 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
     elif nicks != None:
         for n in nicks:
             for d in domains:
-                email_candidates.append(n+"@"+d)
+                if d not in excludeDomains:
+                    email_candidates.append(n+"@"+d)
     elif nicksFile != None:
         with open(nicksFile, "r") as iF:
             nicks = iF.read().splitlines()
             for n in nicks:
                 for d in domains:
-                    email_candidates.append(n+"@"+d)
+                    if d not in excludeDomains:
+                        email_candidates.append(n+"@"+d)
     return email_candidates
 
 def pool_function(args):
@@ -323,13 +325,16 @@ This is free software, and you are welcome to redistribute it under certain cond
     if "all" in args.domains:
         domains = EMAIL_DOMAINS
     else:
-        # processing only the given domains
-        domains = args.domains
+        # processing only the given domains and excluding the ones provided
+        domains = []
+        for d in args.domains:
+            if d not in args.exclude:
+                domains.append(d)
 
     if args.create_emails:
-        emails = grabEmails(nicksFile = args.create_emails, domains = domains)
+        emails = grabEmails(nicksFile=args.create_emails, domains=domains, excludeDomains=args.exclude)
     else:
-        emails = grabEmails(emails=args.emails, emailsFile = args.emails_file, nicks=args.nicks, nicksFile = args.nicks_file, domains = domains)
+        emails = grabEmails(emails=args.emails, emailsFile=args.emails_file, nicks=args.nicks, nicksFile=args.nicks_file, domains=domains, excludeDomains=args.exclude)
 
 
     # Showing the execution time...
@@ -401,11 +406,12 @@ def getParser():
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices= ['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default = DEFAULT_VALUES["domains"])
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default=DEFAULT_VALUES["domains"])
+    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=DEFAULT_VALUES["exclude_domains"], action='store', help="select the domains to be excluded from the search.")
     # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 

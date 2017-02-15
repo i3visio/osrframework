@@ -122,7 +122,7 @@ def returnListOfConfigurationValues(util):
     config = ConfigParser.ConfigParser()
     config.read(configPath)
 
-    LISTS = ["tlds", "domains", "platforms", "extension"]
+    LISTS = ["tlds", "domains", "platforms", "extension", "exclude_platforms", "exclude_domains"]
 
     # Iterating through all the sections, which contain the platforms
     for section in config.sections():
@@ -131,10 +131,13 @@ def returnListOfConfigurationValues(util):
             # Iterating through parameters
             for (param, value) in config.items(section):
                 if value == '':
-                    incomplete = True
-                    break
+                    # Manually setting an empty value
+                    if param in LISTS:
+                        value = []
+                    else:
+                        value = ""
                 # Splitting the parameters to create the arrays when needed
-                if param in LISTS:
+                elif param in LISTS:
                     value = value.split(' ')
                 # Converting threads to int
                 elif param == "threads":

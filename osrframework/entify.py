@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v2.0"
+__version__ = "v5.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -209,13 +209,13 @@ def main(args):
     # From now on, the logger can be recovered like this:
     logger = logging.getLogger("osrframework.entify")
 
-    logger.info("""entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014
+    logger.info("""entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.""")
 
     logger.info("Selecting the regular expressions to be analysed...")
 
-    sayingHello = """entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
+    sayingHello = """entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:

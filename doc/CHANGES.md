@@ -15,6 +15,8 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature #76: Add Smugmug as a new platform.
 - Add feature #75: Add Typepad as a new platform.
 - Add feature #17: Addition of Gravatar.
+- Add feature: Add exclude option via the command line to usufy, mailfy, domainfy, searchfy and phonefy.
+- Add feature: Add exclude option via the configuration file to usufy, mailfy, domainfy, searchfy and phonefy.
 - Add feature: Add Buddypic wrapper.
 - Add feature: Add Carder wrapper.
 - Add feature: Add Csu wrapper.
