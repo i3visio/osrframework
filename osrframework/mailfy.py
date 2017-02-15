@@ -274,6 +274,7 @@ def performSearch(emails=[], nThreads=16):
         print "\nProcess manually stopped by the user. Terminating workers.\n"
         pool.terminate()
         print "The following emails were not processed:"
+        pending = ""
         for m in emails:
             processed = False
             for email in poolResults:
@@ -282,7 +283,15 @@ def performSearch(emails=[], nThreads=16):
                     break
             if not processed:
                 print "\t- " + str(m)
-        print "\n"
+                pending += str(m)
+
+        print
+        print "[!] If you want to relaunch the app with these domains you can always run the command with: "
+        print "\t mailfy.py ... -d " + ending
+        print
+        print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
+        print "\t mailfy.py ... -x " + ending
+        print
     pool.join()
 
     # Processing the results

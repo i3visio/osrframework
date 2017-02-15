@@ -265,6 +265,7 @@ def performSearch(domains=[], nThreads=16):
         print "\nProcess manually stopped by the user. Terminating workers.\n"
         pool.terminate()
         print "The following domains were not processed:"
+        pending = ""
         for d in domains:
             processed = False
             for processedDomain in poolResults:
@@ -273,8 +274,16 @@ def performSearch(domains=[], nThreads=16):
                     break
             if not processed:
                 print "\t- " + str(d)
-        print "\n"
+                pending += str(d)
+        print
+        print "[!] If you want to relaunch the app with these domains you can always run the command with: "
+        print "\t domainfy.py ... -t none -u " + ending
+        print
+        print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
+        print "\t domainfy.py ... -x " + ending
+        print
     pool.join()
+
 
     # Processing the results
     # ----------------------

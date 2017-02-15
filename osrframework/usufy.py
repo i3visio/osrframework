@@ -266,9 +266,10 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
             # Closing normal termination
             pool.close()
         except KeyboardInterrupt:
-            print "\nProcess manually stopped by the user. Terminating workers.\n"
+            print "\n[!] Process manually stopped by the user. Terminating workers.\n"
             pool.terminate()
-            print "The following platforms were not processed:"
+            print "[!] The following platforms were not processed:"
+            pending = ""
             for p in platforms:
                 processed = False
                 for processedPlatform in poolResults:
@@ -277,7 +278,14 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                         break
                 if not processed:
                     print "\t- " + str(p)
-            print "\n"
+                    pending += str(p).lower()
+            print
+            print "[!] If you want to relaunch the app with these platforms you can always run the command with: "
+            print "\t usufy.py ... -p " + ending
+            print
+            print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
+            print "\t usufy.py ... -x " + ending
+            print
         pool.join()
 
         profiles = []
@@ -561,7 +569,7 @@ def getParser():
     groupPlatforms.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=DEFAULT_VALUES["platforms"], action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(platOptions) + '. More than one option can be selected.')
     groupPlatforms.add_argument('-t', '--tags', metavar='<tag>', default = [], nargs='+', required=False, action='store', help='select the list of tags that fit the platforms in which you want to perform the search. More than one option can be selected.')
     groupPlatforms.add_argument('-x', '--exclude', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=DEFAULT_VALUES["exclude_platforms"], action='store', help='select the platforms that you want to exclude from the processing.')
-    
+
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')
     groupProcessing.add_argument('--avoid_download', required=False, action='store_true', default=False, help='argument to force usufy NOT to store the downloadable version of the profiles.')
