@@ -388,7 +388,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                 startTime= dt.datetime.now()
                 print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!"
                 print
-                print "Press <Ctrl + C> to stop..."
+                print "\tPress <Ctrl + C> to stop..."
                 print
 
             # Defining the list of users to monitor

@@ -337,7 +337,7 @@ This is free software, and you are welcome to redistribute it under certain cond
         startTime= dt.datetime.now()
         print str(startTime) +"\tStarting search of the following " + str(len(emails))+ " different emails: "+ str(emails) + ". Be patient!\n"
         print
-        print "Press <Ctrl + C> to stop..."
+        print "\tPress <Ctrl + C> to stop..."
         print
     # Perform searches, using different Threads
     results = performSearch(emails, args.threads)
