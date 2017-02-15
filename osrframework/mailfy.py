@@ -301,7 +301,7 @@ def main(args):
 
         :param args: Arguments received in the command line.
     '''
-    sayingHello = """mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
+    sayingHello = """mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:
@@ -335,7 +335,7 @@ This is free software, and you are welcome to redistribute it under certain cond
     # Showing the execution time...
     if not args.quiet:
         startTime= dt.datetime.now()
-        print str(startTime) +"\tStarting search of the following " + str(len(emails))+ " different emails: "+ str(emails) + ". Be patient!\n"
+        print str(startTime) +"\tStarting search of the following " + str(len(emails))+ " different emails: "+ str(emails) + ". Be patient!"
         print
         print "\tPress <Ctrl + C> to stop..."
         print
