@@ -308,7 +308,7 @@ def main(args):
     if not args.maltego:
         print banner.text
 
-        sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
+        sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
         logger.info(sayingHello)

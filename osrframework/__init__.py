@@ -2,7 +2,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2014-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #	OSRFramework is free software: you can redistribute it and/or modify
 #	it under the terms of the GNU General Public License as published by
@@ -23,4 +23,4 @@ import osrframework.utils.logger
 
 # Calling the logger when being imported
 osrframework.utils.logger.setupLogger(loggerName="osrframework")
-__version__="0.15.0rc3"
+__version__="0.15.0rc4"
