@@ -30,6 +30,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework
 - Add feature: Some new structures for the usufy fuzzer
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy
+- Fix issue #212: Badoo throws false positives
 - Fix issue #210: Gsmspain throws false positives
 - Fix issue #208: Web.tv throws false positives
 - Fix issue #205: Return in each main file a Json with the results instead of nothing
@@ -42,6 +43,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue #182: Cannot install in virtualenv
 - Fix issue #169: searchfy.py --maltego doesn't disable banner
 - Fix issue #121 by urlencoding each and every parameter provided to usufy, searchfy and phonefy. Indirectly fixes issue #91
+- Fix issue: Update user-agent to a more modern one
 - Fix issue: Remove Nubelo wrapper
 - Fix issue: Remove libero.it from mailfy as it is no longer working
 - Fix issue: Deactivate false positives in mailfy for aaathats3as.com, cocaine.ninja, cock.lu, cock.email, firemail.cc, getbackinthe.kitchen, hitler.rocks, memeware.net and waifu.club from cock.li server as well as other false positives in mailfy for noob.com and wp.pl

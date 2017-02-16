@@ -93,7 +93,7 @@ class Browser():
                 print str(e)
                 print
                 # Storing configuration as default
-                self.userAgents = ['Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0']
+                self.userAgents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
                 self.proxies = {}
 
                 return None
@@ -113,7 +113,7 @@ class Browser():
                         if value != '':
                             self.userAgents.append(value)
                         else:
-                            self.userAgents = ['Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0']
+                            self.userAgents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
                     if param == "timeout":
                         try:
                             self.timeout = int(value)
@@ -139,7 +139,7 @@ class Browser():
                 except:
                     # We are not adding this protocol to be proxied
                     pass
-                    
+
     def recoverURL(self,url):
         """
             Public method to recover a resource.
