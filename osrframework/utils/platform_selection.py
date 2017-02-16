@@ -71,15 +71,20 @@ def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatfor
     allPlatformsList = getAllPlatformObjects(mode)
 
     platformList = []
+
+    # Last condition: checking if "all" has been provided
+    if "all" in platformNames:
+        for plat in allPlatformsList:
+            if str(plat.platformName).lower() not in excludePlatformNames:
+                platformList.append(plat)
+        return platformList
     # going through the regexpList
-    for plat in allPlatformsList:
-        added = False
-        if str(plat.platformName).lower() not in excludePlatformNames:
-            for name in platformNames:
+    for name in platformNames:
+        if name not in excludePlatformNames:
+            for plat in allPlatformsList:
                 # Verifying if the parameter was provided
                 if name == str(plat.platformName).lower():
                     platformList.append(plat)
-                    added = True
                     break
 
                 # We need to perform additional checks to verify the Wikipedia platforms, which are called with a single parameter
@@ -90,17 +95,11 @@ def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatfor
                 except:
                     pass
 
-                if not added:
-                    # Verifying if any of the platform tags match the original tag
-                    for t in plat.tags:
-                        if t in tags:
-                            platformList.append(plat)
-                            added = True
-                            break
-
-                    # Last condition: checking if "all" has been provided
-                    if not added and "all" in platformNames:
+                # Verifying if any of the platform tags match the original tag
+                for t in plat.tags:
+                    if t in tags:
                         platformList.append(plat)
+                        break
 
     """if len(platformList) == 0:
         print "[!] You have excluded all the platforms! The program will assume you wanted to use -p 'all'. ;)"
