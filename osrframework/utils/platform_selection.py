@@ -31,14 +31,13 @@ import osrframework.utils.credentials as credentials
 import osrframework.utils.configuration as configuration
 
 def getAllPlatformNames(mode):
-    '''
-        Method that defines the whole list of available parameters.
+    """Method that defines the whole list of available parameters.
 
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
 
         Return values:
             Returns a list [] of strings for the platform objects.
-    '''
+    """
     # Recovering all the possible platforms installed
     allPlatforms = getAllPlatformObjects(mode=mode)
     # Defining the platOptions
@@ -58,15 +57,14 @@ def getAllPlatformNames(mode):
 
 
 def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatformNames=[]):
-    '''
-        Method that recovers the names of the <Platforms> in a given list.
+    """Method that recovers the names of the <Platforms> in a given list.
 
         :param platformNames:    List of strings containing the possible platforms.
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
         :param tags:    Just in case the method to select the candidates is a series of tags.
         :param excludePlatformNames:    List of strings to be excluded from the search.
         :return:    Array of <Platforms> classes.
-    '''
+    """
 
     allPlatformsList = getAllPlatformObjects(mode)
 
@@ -104,15 +102,33 @@ def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatfor
                             break
     return platformList
 
+def getAllPlatformNamesByTag (mode = None):
+    """Returns the platforms in the framework grouped by tags.
+        :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+    """
+    tags = {}
+
+    allPlatformsList = getAllPlatformObjects(mode)
+
+    # Iterating the list of platforms to collect the tags
+    for plat in allPlatformsList:
+        # Grabbing the tags and providing them
+        for t in plat.tags:
+            if t not in tags.keys():
+                tags[t] = [str(plat)]
+            else:
+                tags[t].append(str(plat))
+
+    return tags
+
 
 def getAllPlatformObjects(mode = None):
-    '''
-        Method that recovers ALL the list of <Platform> classes to be processed....
+    """Method that recovers ALL the list of <Platform> classes to be processed....
 
         :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
 
         :return:    Returns a list [] of <Platform> objects.
-    '''
+    """
 
     listAll = []
 

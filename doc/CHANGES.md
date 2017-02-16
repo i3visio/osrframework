@@ -30,6 +30,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework
 - Add feature: Some new structures for the usufy fuzzer
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy
+- Add feature: Let users see the list of tags that they can use to select the platforms.
 - Fix issue #219: 0.15.0rc9 raises an exception if it has upgraded
 - Fix issue #212: Badoo throws false positives
 - Fix issue #210: Gsmspain throws false positives
@@ -44,6 +45,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue #182: Cannot install in virtualenv
 - Fix issue #169: searchfy.py --maltego doesn't disable banner
 - Fix issue #121 by urlencoding each and every parameter provided to usufy, searchfy and phonefy. Indirectly fixes issue #91
+- Fix issue: Reactivate tag search in usufy.
 - Fix issue: Remove autoopen Skype client if it is not already opened.
 - Fix issue: Update user-agent to a more modern one
 - Fix issue: Remove Nubelo wrapper

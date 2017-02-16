@@ -389,6 +389,20 @@ This is free software, and you are welcome to redistribute it under certain cond
                 strTimes += str(e) + "\t" + str(res[e]) + "\n"
             logger.info(strTimes)
             return strTimes
+
+        # showing the tags of the usufy platforms
+        elif args.show_tags:
+            logger.info("Collecting the list of tags...")
+            tags = platform_selection.getAllPlatformNamesByTag("usufy")
+            logger.info(json.dumps(tags, indent=2))
+            print "This is the list of platforms grouped by tag."
+            print
+            print json.dumps(tags, indent=2, sort_keys=True)
+            print
+            print "[Tip] Remember that you can always launch the platform using the -t option followed by any of the aforementioned."
+            print
+            return tags
+
         # Executing the corresponding process...
         else:
             # Showing the execution time...
@@ -568,6 +582,7 @@ def getParser():
     groupMainOptions.add_argument('-f', '--fuzz', metavar='<path_to_fuzzing_list>', action='store', type=argparse.FileType('r'), help='this option will try to find usufy-like URLs. The list of fuzzing platforms in the file should be (one per line): <BASE_DOMAIN>\t<VALID_NICK>')
     groupMainOptions.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
     groupMainOptions.add_argument('-n', '--nicks', metavar='<nick>', nargs='+', action='store', help = 'the list of nicks to process (at least one is required).')
+    groupMainOptions.add_argument('--show_tags',  action='store_true', default=False, help='it will show the platforms grouped by tags.')
 
     # Selecting the platforms where performing the search
     groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
@@ -583,7 +598,7 @@ def getParser():
     groupProcessing.add_argument('--nonvalid', metavar='<not_valid_characters>', required=False, default = '\\|<>=', action='store', help="string containing the characters considered as not valid for nicknames." )
     groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
+    groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the uris returned in the default web browser.')
     # Getting a sample header for the output files
