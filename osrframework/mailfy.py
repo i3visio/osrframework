@@ -283,7 +283,7 @@ def performSearch(emails=[], nThreads=16):
                     break
             if not processed:
                 print "\t- " + str(m)
-                pending += str(m)
+                pending += " " + str(m)
 
         print
         print "[!] If you want to relaunch the app with these domains you can always run the command with: "

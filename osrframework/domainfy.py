@@ -274,7 +274,7 @@ def performSearch(domains=[], nThreads=16):
                     break
             if not processed:
                 print "\t- " + str(d)
-                pending += str(d)
+                pending += " " + str(d)
         print
         print "[!] If you want to relaunch the app with these domains you can always run the command with: "
         print "\t domainfy.py ... -t none -u " + pending

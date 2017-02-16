@@ -278,7 +278,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                         break
                 if not processed:
                     print "\t- " + str(p)
-                    pending += str(p).lower()
+                    pending += " " + str(p).lower()
             print
             print "[!] If you want to relaunch the app with these platforms you can always run the command with: "
             print "\t usufy.py ... -p " + pending
