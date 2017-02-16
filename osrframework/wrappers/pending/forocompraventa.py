@@ -62,7 +62,7 @@ class Forocompraventa(Platform):
         ######################################
         self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
-        self.needsCredentials["usufy"] = False
+        self.needsCredentials["usufy"] = True
         #self.needsCredentials["searchfy"] = False
         
         #################
