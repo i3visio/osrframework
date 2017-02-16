@@ -26,8 +26,8 @@ import Skype4Py
 import sys
 
 def checkInSkype(query=None):
-    ''' 
-        Method that checks if the given email is associated to any Skype account using the Skype4Py API. 
+    '''
+        Method that checks if the given email is associated to any Skype account using the Skype4Py API.
 
         :param query:    query to be performed to verify.
 
@@ -42,10 +42,13 @@ def checkInSkype(query=None):
 
         # Start Skype if it's not already running.
         try:
-            #print "[*] Checking if Skype is running..."
+            # Checking if Skype is running...
             if not skype.Client.IsRunning:
-                print "[!] Skype is NOT running. Trying to open the client..."
-                skype.Client.Start()
+                print "[!] Skype is NOT running... Open it and try again."
+                print
+                # Commented to avoid messages. Users should manually open the app
+                #skype.Client.Start()
+                return jsonData
 
             # Set our application name.
             skype.FriendlyName = 'OSRFramework - Skype'
@@ -66,7 +69,7 @@ def checkInSkype(query=None):
                 skype.OnAttachmentStatus = new_skype_status
 
                 #print "[*] We will try to perform the Skype searches now..."
-                try:    
+                try:
                     # Search for users and display their Skype name, full name
                     # and country.
 
@@ -75,17 +78,17 @@ def checkInSkype(query=None):
                     #print "[*] Results found: " + str(len(resultados))
                     for user in resultados:
                         userData = {}
-                    
+
                         userData ["type"] = "i3visio.profile"
                         userData ["value"] = "Skype - " + user.Handle
                         userData ["attributes"] = []
-                        atts = {}	            
+                        atts = {}
                         atts ["i3visio.platform"] = "Skype"
                         atts ["i3visio.search"] = query
                         try:
                             if str(user.Handle) != "":
                                 atts ["i3visio.alias"] = str(user.Handle)
-                            if str(user.Aliases) != "[]":                    
+                            if str(user.Aliases) != "[]":
                                 atts ["i3visio.aliases"] = str(user.Aliases)
                             if str(user.Homepage) != "":
                                 atts ["i3visio.uri.homepage"] = str(user.Homepage)
@@ -123,33 +126,31 @@ def checkInSkype(query=None):
                             aux["attributes"] = []
                             userData ["attributes"].append(aux)
                         jsonData.append(userData)
-                    #print "[* ] We are in checkInSkype.py: " + str(jsonData) 
+                    #print "[* ] We are in checkInSkype.py: " + str(jsonData)
 
                 except Exception as e:
                     print "[!] WARNING. Something happened when performing the search in Skype."
-                    print "[!] Exception grabbed: " + str(e) 
-                    print "[!] In spite of this message, execution is going on."
+                    print "[!] Exception grabbed: " + str(e)
                     print
 
             except Exception as e:
                 print "[!] WARNING. Something happened when trying to attach OSRFramework to a valid Skype session."
-                print "[!] Exception grabbed: " + str(e) 
-                print "[!] In spite of this message, execution is going on."
+                print "[!] Exception grabbed: " + str(e)
+                print "[!] Are you logged in?"
                 print
 
         except Exception as e:
             print "[!] WARNING. Something happened when trying to create a valid Skype session."
-            print "[!] Exception grabbed: " + str(e) 
+            print "[!] Exception grabbed: " + str(e)
             print "[!] This usually happens when you do NOT have any version of Skype installed in this machine."
-            print "[!] In spite of this message, execution is going on."
             print
 
     except Exception as e:
         print "WARNING. Something happened when trying to link to a valid Skype session."
-        print "Exception grabbed: " + str(e) 
+        print "Exception grabbed: " + str(e)
         print "This usually happens when you do NOT have any version of Skype logged in in this machine. Although you may omit this message, you can also fix it by: "
-        print "\ta) Install any version of Skype log in"
-        print "\tb) If Skype is installed, the log in window will be appearing. You will need to log in and perform the search again (or run it with '-p skype' only) to get results from Skype."        
+        print "\ta) Install any version of Skype and log in"
+        print "\tb) If Skype is installed, the log in window will be appearing. You will need to log in and perform the search again (or run it with '-p skype' only) to get results from Skype."
         print "In spite of this message, execution is going on."
         print
 
@@ -162,12 +163,12 @@ if __name__ == "__main__":
     # Adding the main options
     # Defining the mutually exclusive group for the main options
     general = parser.add_mutually_exclusive_group(required=True)
-    general.add_argument('-q', '--query', metavar='<text_to_search>', action='store', help='query to be launched.')        
-    
+    general.add_argument('-q', '--query', metavar='<text_to_search>', action='store', help='query to be launched.')
+
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
 
-    args = parser.parse_args()        
-    
+    args = parser.parse_args()
+
     print json.dumps(checkInSkype(args.query), indent = 2)
