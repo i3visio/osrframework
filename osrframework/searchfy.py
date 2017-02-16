@@ -128,6 +128,11 @@ This is free software, and you are welcome to redistribute it under certain cond
 def getParser():
     import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("searchfy")
+    # Capturing errors just in case the option is not found in the configuration
+    try:
+        excludeList = [DEFAULT_VALUES["exclude_platforms"]]
+    except:
+        excludeList = []
 
     parser = argparse.ArgumentParser(description='searchfy.py - Piece of software that performs a query on the platforms in OSRFramework.', prog='searchfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
@@ -152,7 +157,7 @@ def getParser():
     groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default=DEFAULT_VALUES["platforms"] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')
     groupProcessing.add_argument('--process', required=False, default =False ,action='store_true', help='whether to process the info in the profiles recovered. NOTE: this would be much slower.')
     groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the URIs returned in the default web browser.')
-    groupProcessing.add_argument('-x', '--exclude', metavar='<platform>', choices=listAll, nargs='+', required=False, default=DEFAULT_VALUES["exclude_platforms"], action='store', help='select the platforms that you want to exclude from the processing.')
+    groupProcessing.add_argument('-x', '--exclude', metavar='<platform>', choices=listAll, nargs='+', required=False, default=excludeList, action='store', help='select the platforms that you want to exclude from the processing.')
 
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')

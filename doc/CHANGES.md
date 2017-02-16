@@ -30,6 +30,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Custom errors for OSRFramework
 - Add feature: Some new structures for the usufy fuzzer
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy
+- Fix issue #219: 0.15.0rc9 raises an exception if it has upgraded
 - Fix issue #212: Badoo throws false positives
 - Fix issue #210: Gsmspain throws false positives
 - Fix issue #208: Web.tv throws false positives

@@ -287,10 +287,10 @@ def performSearch(emails=[], nThreads=16):
 
         print
         print "[!] If you want to relaunch the app with these domains you can always run the command with: "
-        print "\t mailfy.py ... -d " + ending
+        print "\t mailfy.py ... -d " + pending
         print
         print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-        print "\t mailfy.py ... -x " + ending
+        print "\t mailfy.py ... -x " + pending
         print
     pool.join()
 
@@ -399,6 +399,11 @@ This is free software, and you are welcome to redistribute it under certain cond
 def getParser():
     import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("mailfy")
+    # Capturing errors just in case the option is not found in the configuration
+    try:
+        excludeList = [DEFAULT_VALUES["exclude_domains"]]
+    except:
+        excludeList = []
 
     parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
@@ -418,7 +423,7 @@ def getParser():
     groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default=DEFAULT_VALUES["domains"])
-    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=DEFAULT_VALUES["exclude_domains"], action='store', help="select the domains to be excluded from the search.")
+    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=excludeList, action='store', help="select the domains to be excluded from the search.")
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')

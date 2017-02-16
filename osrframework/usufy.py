@@ -281,10 +281,10 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                     pending += str(p).lower()
             print
             print "[!] If you want to relaunch the app with these platforms you can always run the command with: "
-            print "\t usufy.py ... -p " + ending
+            print "\t usufy.py ... -p " + pending
             print
             print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-            print "\t usufy.py ... -x " + ending
+            print "\t usufy.py ... -x " + pending
             print
         pool.join()
 
@@ -547,6 +547,11 @@ This is free software, and you are welcome to redistribute it under certain cond
 def getParser():
     import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("usufy")
+    # Capturing errors just in case the option is not found in the configuration
+    try:
+        excludeList = [DEFAULT_VALUES["exclude_platforms"]]
+    except:
+        excludeList = []
 
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
@@ -568,7 +573,7 @@ def getParser():
     groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
     groupPlatforms.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=DEFAULT_VALUES["platforms"], action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(platOptions) + '. More than one option can be selected.')
     groupPlatforms.add_argument('-t', '--tags', metavar='<tag>', default = [], nargs='+', required=False, action='store', help='select the list of tags that fit the platforms in which you want to perform the search. More than one option can be selected.')
-    groupPlatforms.add_argument('-x', '--exclude', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=DEFAULT_VALUES["exclude_platforms"], action='store', help='select the platforms that you want to exclude from the processing.')
+    groupPlatforms.add_argument('-x', '--exclude', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=excludeList, action='store', help='select the platforms that you want to exclude from the processing.')
 
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')

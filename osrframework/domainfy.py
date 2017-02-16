@@ -277,10 +277,10 @@ def performSearch(domains=[], nThreads=16):
                 pending += str(d)
         print
         print "[!] If you want to relaunch the app with these domains you can always run the command with: "
-        print "\t domainfy.py ... -t none -u " + ending
+        print "\t domainfy.py ... -t none -u " + pending
         print
         print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-        print "\t domainfy.py ... -x " + ending
+        print "\t domainfy.py ... -x " + pending
         print
     pool.join()
 
@@ -391,6 +391,11 @@ This is free software, and you are welcome to redistribute it under certain cond
 def getParser():
     import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("domainfy")
+    # Capturing errors just in case the option is not found in the configuration
+    try:
+        excludeList = [DEFAULT_VALUES["exclude_platforms"]]
+    except:
+        excludeList = []
 
     parser = argparse.ArgumentParser(description='domainfy.py - Checking the existence of domains.', prog='domainfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
@@ -409,7 +414,7 @@ def getParser():
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=["all", "none"] + TLD.keys(), action='store', help='List of tld types where the nick will be looked for.', required=False, default=DEFAULT_VALUES["tlds"])
     groupProcessing.add_argument('-u', '--user_defined',  metavar='<new_tld>',  nargs='+', action='store', help='Additional TLD that will be searched.', required=False, default = DEFAULT_VALUES["user_defined"])
-    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=DEFAULT_VALUES["exclude_domains"], action='store', help="select the domains to be avoided. The format should include the initial '.'.")
+    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=excludeList, action='store', help="select the domains to be avoided. The format should include the initial '.'.")
 
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
