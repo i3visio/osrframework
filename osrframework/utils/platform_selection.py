@@ -72,39 +72,36 @@ def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatfor
 
     platformList = []
 
-    # Last condition: checking if "all" has been provided
-    if "all" in platformNames:
+    # Tags has priority over platform
+    if "all" in platformNames and len(tags) == 0:
+        # Last condition: checking if "all" has been provided
         for plat in allPlatformsList:
             if str(plat.platformName).lower() not in excludePlatformNames:
                 platformList.append(plat)
         return platformList
-    # going through the regexpList
-    for name in platformNames:
-        if name not in excludePlatformNames:
-            for plat in allPlatformsList:
-                # Verifying if the parameter was provided
-                if name == str(plat.platformName).lower():
-                    platformList.append(plat)
-                    break
-
-                # We need to perform additional checks to verify the Wikipedia platforms, which are called with a single parameter
-                try:
-                    if name == str(plat.parameterName).lower():
-                        platformList.append(plat)
-                        break
-                except:
-                    pass
-
-                # Verifying if any of the platform tags match the original tag
-                for t in plat.tags:
-                    if t in tags:
+    else:
+        # going through the regexpList
+        for name in platformNames:
+            if name not in excludePlatformNames:
+                for plat in allPlatformsList:
+                    # Verifying if the parameter was provided
+                    if name == str(plat.platformName).lower():
                         platformList.append(plat)
                         break
 
-    """if len(platformList) == 0:
-        print "[!] You have excluded all the platforms! The program will assume you wanted to use -p 'all'. ;)"
-        return allPlatformsList
-    """
+                    # We need to perform additional checks to verify the Wikipedia platforms, which are called with a single parameter
+                    try:
+                        if name == str(plat.parameterName).lower():
+                            platformList.append(plat)
+                            break
+                    except:
+                        pass
+
+                    # Verifying if any of the platform tags match the original tag
+                    for t in plat.tags:
+                        if t in tags:
+                            platformList.append(plat)
+                            break
     return platformList
 
 
