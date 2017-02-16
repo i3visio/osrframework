@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.15.0, 2017/02/14 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
+0.15.0, 2017/02/16 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
 - Add feature #206: Appropiately capturing Ctrl + C Exceptions to stop the execution feature
 - Add feature #190: Add a new error message to angel.co
 - Add feature #189: Add protonmail.ch as a new mailfy wrapper
