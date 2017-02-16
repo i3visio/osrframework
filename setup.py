@@ -203,6 +203,8 @@ except:
 print "[*] Copying relevant files..."
 files_to_copy= {
     paths["appPath"] : [
+        os.path.join("config", "browser.cfg"),
+        os.path.join("config", "general.cfg"),
     ],
     paths["appPathDefaults"] : [
         os.path.join("config", "accounts.cfg"),

@@ -45,8 +45,9 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Fix issue #182: Cannot install in virtualenv
 - Fix issue #169: searchfy.py --maltego doesn't disable banner
 - Fix issue #121 by urlencoding each and every parameter provided to usufy, searchfy and phonefy. Indirectly fixes issue #91
-- Fix issue: Reactivate tag search in usufy.
-- Fix issue: Remove autoopen Skype client if it is not already opened.
+- Fix issue: Overwrite previous browser.cfg and general.cfg files
+- Fix issue: Reactivate tag search in usufy
+- Fix issue: Remove autoopen Skype client if it is not already opened
 - Fix issue: Update user-agent to a more modern one
 - Fix issue: Remove Nubelo wrapper
 - Fix issue: Remove libero.it from mailfy as it is no longer working
