@@ -81,7 +81,7 @@ class Webtv(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['>News Feed </a></li>']
+        self.notFoundText["usufy"] = ['- web.tv</title>']
         #self.notFoundText["searchfy"] = []
 
         #########################

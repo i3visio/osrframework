@@ -31,6 +31,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Some new structures for the usufy fuzzer
 - Add feature: Let users configure the connections to an HTTP and an HTTPS proxy
 - Fix issue #210: Gsmspain throws false positives
+- Fix issue #208: Web.tv throws false positives
 - Fix issue #205: Return in each main file a Json with the results instead of nothing
 - Fix issue #204: Fix error messages shown in domainfy.py
 - Fix issue #200: Deactivate Youku usufy wrapper
