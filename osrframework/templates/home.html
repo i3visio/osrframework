@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{% include '_banner.html' %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+	<head>
+
+        {% include '_shared-headers.html' %}
+
+    </head>
+
+    <body>
+
+        {% include '_menu-top.html' %}
+
+        <div id="body" class="grid clearfix">
+            <ul class="tabs">
+                <li><a href="#type-main"> A GUI for i3visio's OSRFramework</a></li>
+            </ul>
+            <div id="type-main" class="tab-content">
+                <div class="col_6">
+                    <h4><i class="fa fa-users"></i> Hi! This is... Explorify!</h4>
+
+                    <!-- Brief introduction -->
+                    <p>Explorify wouldn't be what it is without <b>OSRFramework</b>. As a <a href="https://www.gnu.org/licenses/agpl-3.0-standalone.html">GNU AGPLv3+</a> set of libraries, it has been by us (we use the shared name of <a href="https://i3visio.com">i3visio</a>) to perform Open Source Intelligence tasks that we (like maybe you) face everyday. They include references to a bunch of different applications related to username checking, DNS lookups, information leaks research, deep web search, regular expressions extraction and many others.</p>
+                    <p>In OSRFramework you can use <code>usufy.py</code> to look for the existence of a given alias in different platforms, <code>domainfy.py</code> to check whether certain domains are registered or <code>mailfy.py</code> to check the existence of an email address. We know that privacy matters and you don't have to trust us: you can always check what the application does in the <a href="https://github.com/i3visio/osrframework">Github repo</a> because it is free software. Help is always welcome there but, in any case, you can always invite us for a beer <i class="fa fa-beer"></i>!</p>
+
+                    <center>
+                        <a class="button blue" href="/collector"><i class="fa fa-search"></i> Start researching now!</a>
+                    </center>
+
+                    <h6>OSRFramework status</h6>
+
+                    <!-- Success -->
+                    <div class="notice success">
+                        <i class="fa fa-thumbs-up "></i> OSRFramework is updated to the latest version.
+                    </div>
+
+                </div>
+                <div class="col_6">
+                    <center>
+                    <img src="./img/osrframework-v0.5.png" width="375px" height="450px">
+                    </center>
+                </div>
+            </div>
+        </div>
+
+        {% include '_footer.html' %}
+
+    </body>
+</html>

@@ -34,6 +34,7 @@ import json
 import os
 import time
 import shlex
+import sys
 
 # Server code
 import flask
@@ -62,7 +63,37 @@ app = Flask(__name__, static_url_path='')
 
 @app.route("/")
 def index():
-    return render_template('home.html')
+    return render_template('home.html', mt_home='class=current')
+
+
+@app.route("/research")
+def research():
+    return render_template('research.html', mt_research='class=current', mr_main='class=current')
+
+@app.route("/research/usufy")
+def research_usufy():
+    return render_template('research-usufy.html', mt_research='class=current', mr_usufy='class=current')
+
+
+@app.route("/research/domainfy")
+def research_domainfy():
+    return render_template('research-domainfy.html', mt_research='class=current', mr_domainfy='class=current')
+
+
+@app.route("/research/searchfy")
+def research_searchfy():
+    return render_template('research-searchfy.html', mt_research='class=current', mr_searchfy='class=current')
+
+
+@app.route("/research/phonefy")
+def research_phonefy():
+    return render_template('research-phonefy.html', mt_research='class=current', mr_phonefy='class=current')
+
+
+@app.route("/research/mailfy")
+def research_mailfy():
+    return render_template('research-mailfy.html', mt_research='class=current', mr_mailfy='class=current')
+
 
 @app.route("/info")
 def getInfo():
@@ -165,69 +196,33 @@ def _getServerTime():
 def general_error(error):
     """400 Bad Request. The server cannot or will not process the request due to an apparent client error (e.g., malformed request syntax, too large size, invalid request message framing, or deceptive request routing).
     """
-    # Grabbing current Time
-    osrfTimestamp, osrfDate = _getServerTime()
-
-    return flask.Response(
-        json.dumps({
-                'code': 400,
-                'content': {},
-                'date': osrfDate,
-                'description': 'Client Error: 400 Bad Request. The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing)',
-                'timestamp': osrfTimestamp
-            },
-            indent=2,
-            sort_keys=True
-        ),
-        status=400,
-        mimetype="application/json"
-    )
+    return render_template(
+        'error.html',
+        errorCode='400',
+        errorDescription="Client Error: 400 Bad Request. The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing)."
+    ), 400
 
 
 @app.errorhandler(403)
 def not_found_error(error):
     """403 Forbidden. The request was a valid request, but the server is refusing to respond to it. The user might be logged in but does not have the necessary permissions for the resource.
     """
-    # Grabbing current Time
-    osrfTimestamp, osrfDate = _getServerTime()
-
-    return flask.Response(
-        json.dumps({
-                'code': 403,
-                'content': {},
-                'date': osrfDate,
-                'description': 'Client Error: 403 Forbidden. The request was a valid request, but the server is refusing to respond to it. Have you provided a correct secret_token?',
-                'timestamp': osrfTimestamp
-            },
-            indent=2,
-            sort_keys=True
-        ),
-        status=403,
-        mimetype="application/json"
-    )
+    return render_template(
+        'error.html',
+        errorCode='403',
+        errorDescription='Client Error: 403 Forbidden. The request was a valid request, but the server is refusing to respond to it.'
+    ), 403
 
 
 @app.errorhandler(404)
 def not_found_error(error):
     """404 Not Found. Thee requested resource could not be found but may be available in the future. Subsequent requests by the client are permissible.
     """
-    # Grabbing current Time
-    osrfTimestamp, osrfDate = _getServerTime()
-
-    return flask.Response(
-        json.dumps({
-                'code': 404,
-                'content': {},
-                'date': osrfDate,
-                'description': 'Client Error: 404 Not Found. The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.',
-                'timestamp': osrfTimestamp
-            },
-            indent=2,
-            sort_keys=True
-        ),
-        status=404,
-        mimetype="application/json"
-    )
+    return render_template(
+        'error.html',
+        errorCode='404',
+        errorDescription='Client Error: 404 Not Found. The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.',
+    ), 404
 
 
 # --------------
