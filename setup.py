@@ -118,6 +118,7 @@ setup(
         "osrframework/searchfy.py",
         "osrframework/usufy.py",
         "osrframework/osrfconsole.py",
+        "osrframework/osrframework-server.py",
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

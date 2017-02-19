@@ -56,14 +56,12 @@ def changePermissionsRecursively(path, uid, gid):
             changePermissionsRecursively(itempath, uid, gid)
 
 def getConfigPath(configFileName = None):
-    """
-        Auxiliar function to get the configuration paths depending on the system.
+    """ Auxiliar function to get the configuration paths depending on the system.
 
         Returns a dictionary with the following keys: appPath, appPathDefaults, appPathTransforms, appPathPlugins, appPathPatterns, appPathPatterns.
     """
     paths = {}
     applicationPath = "./"
-
 
     # Returning the path of the configuration folder
     if sys.platform == 'win32':
@@ -92,8 +90,7 @@ def getConfigPath(configFileName = None):
 import ConfigParser
 
 def returnListOfConfigurationValues(util):
-    '''
-        Method that recovers the configuration information about each and every program.
+    ''' Method that recovers the configuration information about each and every program.
         :param util: Any of the utils that are contained in the framework: domainfy, entify, mailfy, phonefy, searchfy, usufy.
         :return: A dictionary containing the default configuration.
     '''
