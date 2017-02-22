@@ -45,7 +45,7 @@ pip install osrframework
 ```
 You can upgrade to the latest release of the framework with:
 ```
-pip install osrframeworkr --upgrade
+pip install osrframework --upgrade
 ```
 This will manage all the dependencies for you and install the latest version of the framework.
 
