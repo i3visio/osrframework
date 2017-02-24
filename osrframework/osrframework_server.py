@@ -95,6 +95,7 @@ def research_mailfy():
     return render_template('research-mailfy.html', mt_research='class=current', mr_mailfy='class=current')
 
 
+<<<<<<< HEAD
 @app.route("/info")
 def getInfo():
     info = {
@@ -111,6 +112,44 @@ def getInfo():
         ),
         status=200,
         mimetype="application/json"
+=======
+
+@app.route('/research/<program>', methods=['POST'])
+def run(program):
+    """Loading OSRFramework output...
+    """
+    # Grabbing the text search...
+    strParams = request.form['tex_command']
+
+    if strParams != None:
+        # Splitting the query
+        params = shlex.split(strParams)
+
+        # Selecting the appropriate program
+        if program == "domainfy":
+            args = domainfy.getParser().parse_args(params)
+        elif  program == "entify":
+            args = entify.getParser().parse_args(params)
+        elif program == "mailfy":
+            args = mailfy.getParser().parse_args(params)
+        elif program == "phonefy":
+            args = phonefy.getParser().parse_args(params)
+        elif program == "searchfy":
+            args = searchfy.getParser().parse_args(params)
+        elif program == "usufy":
+            args = usufy.getParser().parse_args(params)
+            print args
+        # Return output. text/html is required for most browsers to show the text
+        answer = runQuery(program=program, args=args)
+    else:
+        pass
+        answer = {}
+
+    return render_template(
+        'research-' + program + '.html',
+        mt_research='class=current',
+        text_results=general.usufyToTextExport(answer)
+>>>>>>> 162017d... Remove current mark after performing a search
     )
 
 
