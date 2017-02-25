@@ -65,8 +65,8 @@ app = Flask(__name__, static_url_path='')
 def index():
     return render_template('home.html', mt_home='class=current')
 
-
 @app.route("/research")
+<<<<<<< HEAD
 def research():
     return render_template('research.html', mt_research='class=current', mr_main='class=current')
 
@@ -93,6 +93,68 @@ def research_phonefy():
 @app.route("/research/mailfy")
 def research_mailfy():
     return render_template('research-mailfy.html', mt_research='class=current', mr_mailfy='class=current')
+=======
+@app.route("/research/<program>")
+def research(program=None):
+    if not program:
+        return render_template('research.html', mt_research='class=current', mr_main='class=current')
+    else:
+        params = request.args.get('query_text')
+        return render_template('research-' + program + '.html', mt_research='class=current', query_text=params)
+
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = set(['csv'])
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/explore", methods=['GET', 'POST'])
+def explore():
+    # Based on http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            notice = {
+                "icon": "warning",
+                "message": "No file was selected." ,
+                "type": "warning"
+            }
+            return render_template('explore.html', mt_explore='class=current', alert=notice)
+
+        # Checking if the file name is permitted
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+
+            # TODO: pretty unsafe as it is now
+            # Recovering the loadedData: !
+            global loadedData
+            loadedData["csv"] = ""
+            everything = file.stream.read().splitlines()
+            for i, line in enumerate(everything):
+                loadedData["csv"] += line
+                # Checking if it is the last line. This is done to avoid extra lines.
+                if i+1 != len (everything):
+                    loadedData["csv"] += "\n"
+
+            return render_template('explore.html', mt_explore='class=current', csvData=loadedData["csv"])
+        else:
+            notice = {
+                "icon": "close",
+                "message": "This is not a valid extension. We only support CSV files.",
+                "type": "error"
+            }
+            return render_template('explore.html', mt_explore='class=current', alert=notice)
+    else:
+        return render_template('explore.html', mt_explore='class=current')
+>>>>>>> dd8ddc3... Add research buttons to Keshif Browser
 
 
 <<<<<<< HEAD

@@ -1,0 +1,404 @@
+<!-- Keshif Scripts -->
+<!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
+<script type="text/javascript" src="/js/jsapi.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/d3.3.5.5.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/keshif.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/papaparse.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/demo.js" charset="utf-8"></script>
+<!-- Keshif CSS -->
+<link rel="stylesheet" href="/css/keshif.css" type="text/css">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/keshif-style.css" type="text/css">
+
+
+<!-- The main javascript starts here -->
+<!-- TODO:
+    - Save this javascript onto a different .js file
+    - Create a ./lib/lang.js to store the values of the interface in different languages
+-->
+<script type="text/javascript">
+    // Events when charging
+    $(document).ready( function(){
+        // Help in: <http://stackoverflow.com/questions/13261970/how-to-get-the-absolute-path-of-the-current-javascript-file-name>
+        // Grabbing the attributes
+        var attributes = document.location.search;
+        // Splitting the attributes using the '?' as a marker
+        var splittedAttributes = attributes.split("&");
+        // Initializing values
+        var lang = "en";
+        var folder = null;
+        var sheet = null;
+        var extension = null;
+
+        // Grabbing the new attributes
+        if (splittedAttributes.length > 1) {
+            // Iterating to grab the configuration
+            for (i = 1; i < splittedAttributes.length; i++) {
+                // splitting the attribute sin a pair type, value
+                var list = splittedAttributes[i].split("=");
+
+                var type = list[0];
+                var value = list[1];
+
+                if (type == "lang") {
+                    lang=value;
+                } else if (type == "folder"){
+                    folder=value;
+                } else if (type == "sheet"){
+                    sheet=value;
+                } else if (type == "extension"){
+                    extension=value;
+                }
+            }
+        }
+
+        // Storing the language
+        if(lang==="es"){
+            // Loading Keshif interface texts
+            kshf.lang.cur = kshf.lang.es;
+            // TODO: Loading Explorify interface texts
+            //explorify.lang.cur = explorify.lang.es;
+        } else if(lang==="fr"){
+            // Loading Keshif interface texts
+            kshf.lang.cur = kshf.lang.fr;
+            // TODO: Loading Explorify interface texts
+            //explorify.lang.cur = explorify.lang.fr;
+        } else {
+            // Loading Keshif interface texts
+            kshf.lang.cur = kshf.lang.en;
+            // TODO: Loading Explorify interface texts
+            //explorify.lang.cur = explorify.lang.en;
+        }
+
+        // Requesting a new path to the csv file if any of the files is missing
+        if (folder==null || sheet==null || extension==null ) {
+            // TODO: make a call to grab a new file because something was missing
+
+        }
+        // Loading this in the welcome tab
+        browser = new kshf.Browser({
+            domID: "#chart_div",
+            /*
+                *********************************************************
+                 Defining general attributes for the browser
+                *********************************************************
+            */
+            leftPanelLabelWidth: 80,
+            rightPanelLabelWidth: 80,
+            itemName: " registers loaded",
+            /*
+                *********************************************************
+                 Grabbing the sources
+                *********************************************************
+            */
+            source: {
+                //url: "http://localhost:30030/",
+                dirPath: "/get_temporal_data/", //folder, //"../",
+                fileType: "csv", // extension, //"csv",
+                sheets: "profiles",  //sheet//,"profiles",
+            },
+            /*
+                *********************************************************
+                 Defining the summaries here
+                *********************************************************
+            */
+            summaries: [
+                // Panel izquierdo
+                {
+                    title: "Platform",
+                    layout: 'left',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data.i3visio_platform;
+                    },
+                },
+                {
+                    title: "Language",
+                    layout: 'left',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._language
+                    },
+                },
+                {
+                    title: "# of Publications",
+                    layout: 'left',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._publications_count;
+                    },
+                },
+                {
+                    title: "# of Friends",
+                    layout: 'left',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._friends_count;
+                    },
+                },
+                {
+                    title: "# of Followers",
+                    layout: 'left',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._followers_count;
+                    },
+                },
+                {
+                    title: "# of Favorites",
+                    layout: 'left',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._favourites_count;
+                    },
+                },
+                {
+                    title: "# of Times Listed",
+                    layout: 'left',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._listed_count;
+                    },
+                },
+                {
+                    title: "Private Profiles",
+                    layout: 'left',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._protected;
+                    },
+                },
+                {
+                    title: "Verified Profiles",
+                    layout: 'left',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._verified;
+                    },
+                },
+                {
+                    title: "Geolocation Active",
+                    layout: 'left',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._geoenabled;
+                    },
+                },
+                // Panel derecho
+                {
+                    title: "Country",
+                    layout: 'right',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data["i3visio_location.country"]
+                    },
+                },
+                {
+                    title: "Region",
+                    layout: 'right',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data["i3visio_location.province"]
+                    },
+                },
+                {
+                    title: "City",
+                    layout: 'right',
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data["i3visio_location.city"]
+                    },
+                },
+                {
+                    title: "Time Zone",
+                    layout: 'right',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data._time_zone
+                    },
+                },
+                {
+                    title: "Registrar",
+                    layout: 'right',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data.i3visio_registrar
+                    },
+                },
+                {
+                    title: "TLD Type",
+                    layout: 'right',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data.i3visio_tld_type
+                    },
+                },
+                {
+                    title: "IPv4",
+                    layout: 'right',
+                    collapsed: true,
+                    value: function(){
+                        return kshf.dt_id.profiles[this.id].data.i3visio_ipv4
+                    },
+                },
+            ],
+            /*
+                *********************************************************
+                 Defining the central tab
+                *********************************************************
+            */
+            itemDisplay: {
+                // The organization of the central display. Commented it will be a list
+                displayType: 'grid',
+                // Sorting the display by the selected column
+                sortingOpts: [
+                    {
+                        title: "_friends_count",
+                        inverse: false
+                    },
+                    {
+                        title: "_followers_count",
+                        inverse: false
+                    },
+                    {
+                        title: "_publications_count",
+                        inverse: false
+                    },
+                    {
+                        title: "_favourites_count",
+                        inverse: false
+                    },
+                    {
+                        title: "_listed_count",
+                        inverse: false
+                    },
+                ],
+                // Configuring the search
+                textSearch: {
+                    // Message to be shown in the display
+                    title: "<write here the username to look by it>",
+                    value: function () {
+                        var user = kshf.dt_id.profiles[this.id];
+                        if (user.data.i3visio_alias == "[N/A]") {
+                            return user.data.i3visio_fullname;
+                        }
+                        return user.data.i3visio_alias;
+                    }
+                },
+
+                recordView: function(){
+                    // Grabbing each user
+                    var record = kshf.dt_id.profiles[this.id];
+
+                    // Printing the results
+                    var visibleHTML = "";
+                    if (record.data.i3visio_platform != "[N/A]" && record.data.i3visio_alias != "[N/A]") {
+                        // This is a user
+                        visibleHTML = "<span class='thumbnail'><img class='thumbImg'></a></span>";
+                        visibleHTML += "<span class='regTitle'>" + record.data.i3visio_alias + "</span></br>";
+                        visibleHTML += "<span class='regSubtitle'> " + record.data.i3visio_platform + "</span></br>";
+                        visibleHTML += "<center>";
+                        visibleHTML += '<span class="tooltip-right" title="View profile in '+ record.data.i3visio_platform + '."><a class="button green small" target="_blank" rel="noopener noreferrer" href="' + record.data.i3visio_uri + '"><i class="fa fa-eye"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch usufy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/usufy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-user"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch mailfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/mailfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch domainfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/domainfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-globe"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch searchfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/searchfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-search"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Phonefy cannot be launched."><a class="button small"><i class="fa fa-phone"></i></a></span>';
+                        visibleHTML += "</center>";
+                    }
+
+                    else if (record.data.i3visio_domain != "[N/A]" && record.data.i3visio_ipv4 != "[N/A]") {
+                        // This is a domain!
+                        visibleHTML = "<span class='thumbnail'><img class='thumbImg'></a></span>";
+                        visibleHTML += "<span class='regTitle'>"+record.data.i3visio_domain+"</span></br>";
+                        visibleHTML += "<span class='regSubtitle'> "+record.data.i3visio_registrar+"</span></br>";
+                        visibleHTML += "<center>";
+                        visibleHTML += '<span class="tooltip-right" title="Open '+ record.data.i3visio_domain +'."><a class="button green small" target="_blank" rel="noopener noreferrer" href="'+record.data.i3visio_domain+'"><i class="fa fa-eye"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch usufy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/usufy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-user"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch mailfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/mailfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch domainfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/domainfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-globe"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch searchfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/searchfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-search"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Phonefy cannot be launched."><a class="button small"><i class="fa fa-phone"></i></a></span>';
+                        visibleHTML += "</center>";
+                    }
+                    else if (record.data.i3visio_domain != "[N/A]") {
+                        // This is a mail!
+                        visibleHTML = "<span class='thumbnail'><img class='thumbImg'></a></span>";
+                        visibleHTML += "<span class='regTitle'>"+record.data.i3visio_email+"</span></br>";
+                        visibleHTML += "<span class='regSubtitle'> "+record.data.i3visio_alias+"</span></br>";
+                        visibleHTML += "</center>";
+                        visibleHTML += '<span class="tooltip-right" title="Send an email '+ record.data.i3visio_domain +'."><a class="button green small" target="_blank" rel="noopener noreferrer" href="mailto://'+record.data.i3visio_mail+'"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch usufy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/usufy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-user"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch mailfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/mailfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch domainfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/domainfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-globe"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch searchfy for ' + record.data.i3visio_email + '."><a class="button blue small" href="/research/searchfy?query_text=' + record.data.i3visio_email  + '#tab-ui"><i class="fa fa-search"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Phonefy cannot be launched."><a class="button small"><i class="fa fa-phone"></i></a></span>';
+                        visibleHTML += "</center>";
+                    }
+                    else if (record.data.i3visio_fullname != "[N/A]") {
+                        // This is a phone!
+                        visibleHTML = "<span class='thumbnail'><img class='thumbImg'></a></span>";
+                        visibleHTML += "<span class='regTitle'>"+record.data.i3visio_email+"</span></br>";
+                        visibleHTML += "<span class='regSubtitle'> "+record.data.i3visio_alias+"</span></br>";
+                        visibleHTML += "</center>";
+                        visibleHTML += '<span class="tooltip-right" title="Send an email '+ record.data.i3visio_domain +'."><a class="button green small" target="_blank" rel="noopener noreferrer" href="mailto://'+record.data.i3visio_mail+'"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Usufy cannot be launched."><a class="button small"><i class="fa fa-user"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Mailfy cannot be launched."><a class="button small"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Domainfy cannot be launched."><a class="button small"><i class="fa fa-globe"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch searchfy for ' + record.data.i3visio_email + '."><a class="button blue small" href="/research/searchfy?query_text=' + record.data.i3visio_email  + '#tab-ui"><i class="fa fa-search"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Phonefy cannot be launched."><a class="button small"><i class="fa fa-phone"></i></a></span>';
+                        visibleHTML += "</center>";
+                    }
+                    else {
+                        // Any other case...
+                        visibleHTML = "<span class='thumbnail'><img class='thumbImg'></a></span>";
+                        visibleHTML += "<span class='regTitle'>"+record.data.i3visio_alias+"</span></br>";
+                        visibleHTML += "<span class='regSubtitle'> "+record.data.i3visio_platform+"</span></br>";
+                        visibleHTML += "</center>";
+                        visibleHTML += '<span class="tooltip-right" title="View profile in '+ record.data.i3visio_platform + '."><a class="button green small" target="_blank" rel="noopener noreferrer" href="' + record.data.i3visio_uri + '"><i class="fa fa-eye"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch usufy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/usufy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-user"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch mailfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/mailfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-envelope"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch domainfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/domainfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-globe"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Launch searchfy for ' + record.data.i3visio_alias + '."><a class="button blue small" href="/research/searchfy?query_text=' + record.data.i3visio_alias  + '#tab-ui"><i class="fa fa-search"></i></a></span>';
+                        visibleHTML += '<span class="tooltip-right" title="Phonefy cannot be launched."><a class="button small"><i class="fa fa-phone"></i></a></span>';
+                        visibleHTML += "</center>";
+
+                    }
+
+                    return visibleHTML;
+                },
+                /*
+                    *********************************************************
+                     Grabbing the profile url
+                    *********************************************************
+                */
+                visibleCb: function(d){
+                    var record = kshf.dt_id.profiles[this.id];
+                    // Grabbing the URL stored in one of the columns
+                    var imgUrl = record.data.i3visio_uri_image_profile;
+
+                    // Confirming the image url
+                    if (imgUrl == null) {
+                        // If it does not exist, we will set it a default one
+                        if (record.data.i3visio_platform != "[N/A]" && record.data.i3visio_alias != "[N/A]") {
+                            // This is a user
+                            imgUrl = "/img/user.png";
+                        }
+                        else if (record.data.i3visio_domain != "[N/A]" && record.data.i3visio_alias != "[N/A]") {
+                            // This is a mail!
+                            imgUrl = "/img/mail.png";
+                        }
+                        else if (record.data.i3visio_domain != "[N/A]") {
+                            // This is a domain!
+                            imgUrl = "/img/globe.png";
+                        }
+                        else if (record.data.i3visio_fullname != "[N/A]") {
+                            // This is a domain!
+                            imgUrl = "/img/phone.png";
+                        }
+                        else {
+                            imgUrl = "/img/other.png";
+                        }
+                    }
+
+                    // Showing the image
+                    d3.select(d.DOM.record).select("img").attr("src",imgUrl);
+                    d3.select(d.DOM.record).select("img").attr("width","64");
+                    d3.select(d.DOM.record).select("img").attr("height","128");
+                },
+            },
+        });
+    });
+</script>
