@@ -4,6 +4,15 @@ OSRFramework Changelog
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
 0.16.0, 2017/03/01 -- New major release after participation in the Mobile World Congress Event.
+- Add feature #201: Add Mozilla as a new usufy platform
+- Add feature #196: Add Goblinrefuge as a new usufy platform
+- Add feature #195: Add NotABug as a new usufy platform
+- Add feature #193: Add Crowdin as a new usufy platform
+- Add feature #143: Consider adding beBee to supported platforms
+- Add feature: Add Affilorama as a new usufy platform
+- Add feature: Add Moneymaker as a new usufy platform
+- Add feature: Add Reddit as a new usufy platform
+- Add feature: Add V7n as a new usufy platform
 - Add new subdomains to domainfy in the category other.
 
 0.15.0, 2017/02/16 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
