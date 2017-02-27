@@ -41,7 +41,7 @@ class Mig(Platform):
             Constructor...
         """
         self.platformName = "Mig"
-        self.tags = ["games"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

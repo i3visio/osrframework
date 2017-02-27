@@ -55,6 +55,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add Dzone as a new usufy platform
 - Add feature: Add Dreamstime as a new usufy platform
 - Add feature: Add Myfitnesspal as a new usufy platform
+- Add feature: Add Datpiff as a new usufy platform
 - Add new subdomains to domainfy in the category other
 
 0.15.0, 2017/02/16 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.

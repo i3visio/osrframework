@@ -41,7 +41,7 @@ class Goblinrefuge(Platform):
             Constructor...
         """
         self.platformName = "Goblinrefuge"
-        self.tags = ["media"]
+        self.tags = ["video", "audio", "image"]
 
         ########################
         # Defining valid modes #

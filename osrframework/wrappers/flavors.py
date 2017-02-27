@@ -41,7 +41,7 @@ class Flavors(Platform):
             Constructor... 
         """
         self.platformName = "Flavors"
-        self.tags = ["website"]
+        self.tags = ["online"]
 
         ########################
         # Defining valid modes #

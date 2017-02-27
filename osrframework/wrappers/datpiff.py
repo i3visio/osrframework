@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -32,16 +32,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Warrior(Platform):
-    """ 
-        A <Platform> object for Warrior.
+class Datpiff(Platform):
+    """
+        A <Platform> object for Datpiff.
     """
     def __init__(self):
-        """ 
-            Constructor... 
         """
-        self.platformName = "Warrior"
-        self.tags = ["varios"]
+            Constructor...
+        """
+        self.platformName = "Datpiff"
+        self.tags = ["social"]
 
         ########################
         # Defining valid modes #
@@ -50,14 +50,14 @@ class Warrior(Platform):
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
         self.isValidMode["searchfy"] = False
-        
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.warriorforum.com/members/" + "<usufy>" + ".html"
+        self.url["usufy"] = "http://www.datpiff.com/profile/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -67,7 +67,7 @@ class Warrior(Platform):
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
         #self.needsCredentials["searchfy"] = False
-        
+
         #################
         # Valid queries #
         #################
@@ -77,26 +77,26 @@ class Warrior(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["This user has not registered and therefore does not have a profile to view."]
+        self.notFoundText["usufy"] = ["<title>DatPiff :: Community - Coming Soon</title>"]
         #self.notFoundText["searchfy"] = []
-        
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -105,10 +105,9 @@ class Warrior(Platform):
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-        
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-

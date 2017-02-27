@@ -41,7 +41,7 @@ class Paypal(Platform):
             Constructor...
         """
         self.platformName = "Paypal"
-        self.tags = ["payment"]
+        self.tags = ["payments"]
 
         ########################
         # Defining valid modes #

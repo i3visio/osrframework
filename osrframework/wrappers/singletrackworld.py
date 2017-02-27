@@ -41,7 +41,7 @@ class Singletrackworld(Platform):
             Constructor... 
         """
         self.platformName = "Singletrackworld"
-        self.tags = ["arabe"]
+        self.tags = ["sports"]
 
         ########################
         # Defining valid modes #

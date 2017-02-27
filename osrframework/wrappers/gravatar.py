@@ -41,7 +41,7 @@ class Gravatar(Platform):
             Constructor...
         """
         self.platformName = "Gravatar"
-        self.tags = ["social"]
+        self.tags = ["identity"]
 
         ########################
         # Defining valid modes #

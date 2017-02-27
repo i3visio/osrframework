@@ -38,7 +38,7 @@ class Losviajeros(Platform):
             Constructor... 
         """
         self.platformName = "Losviajeros"
-        self.tags = ["viajes"]
+        self.tags = ["trips"]
 
         ########################
         # Defining valid modes #

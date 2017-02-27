@@ -38,7 +38,7 @@ class Bubok(Platform):
             Constructor... 
         """
         self.platformName = "Bubok"
-        self.tags = ["libros"]
+        self.tags = ["books"]
 
         ########################
         # Defining valid modes #

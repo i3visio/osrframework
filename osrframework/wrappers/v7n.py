@@ -41,7 +41,7 @@ class V7n(Platform):
             Constructor...
         """
         self.platformName = "V7n"
-        self.tags = ["developer"]
+        self.tags = ["development"]
 
         ########################
         # Defining valid modes #

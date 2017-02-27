@@ -41,7 +41,7 @@ class IFunny(Platform):
             Constructor... 
         """
         self.platformName = "IFunny"
-        self.tags = ["images"]
+        self.tags = ["image"]
 
         ########################
         # Defining valid modes #

@@ -38,7 +38,7 @@ class Ethereum(Platform):
             Constructor... 
         """
         self.platformName = "Ethereum"
-        self.tags = ["development", "activism", "e-commerce"]
+        self.tags = ["cryptocurrencies"]
         
         ########################
         # Defining valid modes #

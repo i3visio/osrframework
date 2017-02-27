@@ -38,7 +38,7 @@ class Foros24h(Platform):
             Constructor... 
         """
         self.platformName = "Foros24h"
-        self.tags = ["opinion"]
+        self.tags = ["opinions"]
 
         ########################
         # Defining valid modes #

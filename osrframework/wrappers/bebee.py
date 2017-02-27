@@ -41,7 +41,7 @@ class Bebee(Platform):
             Constructor...
         """
         self.platformName = "Bebee"
-        self.tags = ["branding"]
+        self.tags = ["jobs"]
 
         ########################
         # Defining valid modes #

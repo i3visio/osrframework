@@ -41,7 +41,7 @@ class Wikia(Platform):
             Constructor... 
         """
         self.platformName = "Wikia"
-        self.tags = ["wiki"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

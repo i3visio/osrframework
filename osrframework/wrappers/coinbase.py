@@ -38,7 +38,7 @@ class Coinbase(Platform):
             Constructor... 
         """
         self.platformName = "Coinbase"
-        self.tags = ["bitcoin"]
+        self.tags = ["bitcoin", "payments"]
 
         ########################
         # Defining valid modes #

@@ -41,7 +41,7 @@ class Mozilla(Platform):
             Constructor...
         """
         self.platformName = "Mozilla"
-        self.tags = ["developer"]
+        self.tags = ["development"]
 
         ########################
         # Defining valid modes #

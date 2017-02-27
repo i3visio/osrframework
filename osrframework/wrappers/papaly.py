@@ -41,7 +41,7 @@ class Papaly(Platform):
             Constructor... 
         """
         self.platformName = "Papaly"
-        self.tags = ["wiki"]
+        self.tags = ["social"]
 
         ########################
         # Defining valid modes #

@@ -41,7 +41,7 @@ class Notabug(Platform):
             Constructor...
         """
         self.platformName = "Notabug"
-        self.tags = ["developer"]
+        self.tags = ["development"]
 
         ########################
         # Defining valid modes #

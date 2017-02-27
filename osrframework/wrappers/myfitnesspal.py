@@ -41,7 +41,7 @@ class MyFitnessPal(Platform):
             Constructor... 
         """
         self.platformName = "MyFitnessPal"
-        self.tags = ["fitness"]
+        self.tags = ["sports"]
 
         ########################
         # Defining valid modes #

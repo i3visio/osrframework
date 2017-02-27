@@ -38,7 +38,7 @@ class Kanogames(Platform):
             Constructor... 
         """
         self.platformName = "Kanogames"
-        self.tags = ["games"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

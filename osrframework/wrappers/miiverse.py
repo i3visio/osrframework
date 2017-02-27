@@ -41,7 +41,7 @@ class Miiverse(Platform):
             Constructor...
         """
         self.platformName = "Miiverse"
-        self.tags = ["games"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

@@ -41,7 +41,7 @@ class Newgrounds(Platform):
             Constructor...
         """
         self.platformName = "Newgrounds"
-        self.tags = ["games"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

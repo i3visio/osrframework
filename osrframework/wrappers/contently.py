@@ -41,7 +41,7 @@ class Contently(Platform):
             Constructor... 
         """
         self.platformName = "Contently"
-        self.tags = ["content", "blog"]
+        self.tags = ["marketing", "online"]
 
         ########################
         # Defining valid modes #

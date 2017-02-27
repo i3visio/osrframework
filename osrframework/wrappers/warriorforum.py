@@ -41,7 +41,7 @@ class Warriorforum(Platform):
             Constructor... 
         """
         self.platformName = "Warriorforum"
-        self.tags = ["warriorforum"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

@@ -38,7 +38,7 @@ class Onename(Platform):
             Constructor... 
         """
         self.platformName = "Onename"
-        self.tags = ["bitcoin"]
+        self.tags = ["cryptocurrencies", "identity"]
 
         ########################
         # Defining valid modes #

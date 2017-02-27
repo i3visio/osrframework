@@ -38,7 +38,7 @@ class Gamesheep(Platform):
             Constructor... 
         """
         self.platformName = "Gamesheep"
-        self.tags = ["games"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

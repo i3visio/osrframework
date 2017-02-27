@@ -41,7 +41,7 @@ class Canva(Platform):
             Constructor... 
         """
         self.platformName = "Canva"
-        self.tags = ["images"]
+        self.tags = ["image"]
 
         ########################
         # Defining valid modes #

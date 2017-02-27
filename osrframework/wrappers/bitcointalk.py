@@ -38,7 +38,7 @@ class Bitcointalk(Platform):
             Constructor... 
         """
         self.platformName = "Bitcointalk"
-        self.tags = ["hacking", "activism", "deep-web"]
+        self.tags = ["cryptocurrencies", "bitcoin"]
         
         ########################
         # Defining valid modes #

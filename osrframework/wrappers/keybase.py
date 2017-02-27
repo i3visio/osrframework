@@ -38,7 +38,7 @@ class Keybase(Platform):
             Constructor... 
         """
         self.platformName = "Keybase"
-        self.tags = ["bitcoin","pgp"]
+        self.tags = ["bitcoin","pgp", "identity"]
 
         ########################
         # Defining valid modes #

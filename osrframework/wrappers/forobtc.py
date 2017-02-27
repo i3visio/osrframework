@@ -38,7 +38,7 @@ class Forobtc(Platform):
             Constructor... 
         """
         self.platformName = "Forobtc"
-        self.tags = ["opinions", "cryptocurrencies"]
+        self.tags = ["cryptocurrencies", "bitcoin"]
 
         ########################
         # Defining valid modes #

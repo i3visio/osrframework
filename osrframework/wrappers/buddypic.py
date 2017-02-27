@@ -41,7 +41,7 @@ class Buddypic(Platform):
             Constructor... 
         """
         self.platformName = "Buddypic"
-        self.tags = ["citas"]
+        self.tags = ["dating"]
 
         ########################
         # Defining valid modes #

@@ -38,7 +38,7 @@ class Webtv(Platform):
             Constructor...
         """
         self.platformName = "Webtv"
-        self.tags = ["television"]
+        self.tags = ["video"]
 
         ########################
         # Defining valid modes #
