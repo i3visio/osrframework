@@ -32,16 +32,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Newgrounds(Platform):
+class Ello(Platform):
     """
-        A <Platform> object for Newgrounds.
+        A <Platform> object for Ello.
     """
     def __init__(self):
         """
             Constructor...
         """
-        self.platformName = "Newgrounds"
-        self.tags = ["games"]
+        self.platformName = "Ello"
+        self.tags = ["social"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +57,7 @@ class Newgrounds(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://" + "<usufy>" + ".newgrounds.com/"
+        self.url["usufy"] = "https://ello.co/" + "<usufy>" 
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Newgrounds(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h2 class=\"error\">Oops!</h2>"]
+        self.notFoundText["usufy"] = ["<h1>We couldn't find the page you're looking for.</h1>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

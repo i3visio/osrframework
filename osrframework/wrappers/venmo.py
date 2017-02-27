@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
 __version__ = "1.0"
 
 import argparse
@@ -32,16 +32,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Newgrounds(Platform):
+class Venmo(Platform):
     """
-        A <Platform> object for Newgrounds.
+        A <Platform> object for Venmo.
     """
     def __init__(self):
         """
             Constructor...
         """
-        self.platformName = "Newgrounds"
-        self.tags = ["games"]
+        self.platformName = "Venmo"
+        self.tags = ["payments", "e-commerce"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +57,7 @@ class Newgrounds(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://" + "<usufy>" + ".newgrounds.com/"
+        self.url["usufy"] = "https://venmo.com/" +  "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Newgrounds(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h2 class=\"error\">Oops!</h2>"]
+        self.notFoundText["usufy"] = [ "<title>Venmo | Page Not Found</title>" ]
         #self.notFoundText["searchfy"] = []
 
         #########################

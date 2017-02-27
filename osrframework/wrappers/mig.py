@@ -32,15 +32,15 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Newgrounds(Platform):
+class Mig(Platform):
     """
-        A <Platform> object for Newgrounds.
+        A <Platform> object for Mig.
     """
     def __init__(self):
         """
             Constructor...
         """
-        self.platformName = "Newgrounds"
+        self.platformName = "Mig"
         self.tags = ["games"]
 
         ########################
@@ -57,7 +57,7 @@ class Newgrounds(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://" + "<usufy>" + ".newgrounds.com/"
+        self.url["usufy"] = "https://new.mig.me/profile/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Newgrounds(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h2 class=\"error\">Oops!</h2>"]
+        self.notFoundText["usufy"] = ["Oops, how&#x27;d you get here?!"]
         #self.notFoundText["searchfy"] = []
 
         #########################

@@ -24,6 +24,37 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add V7n as a new usufy platform
 - Add feature: Add Viddler as a new usufy platform
 - Add feature: Add Wikia as a new usufy platform
+- Add feature: Add Bandcamp as a new usufy platform
+- Add feature: Add Codementor as a new usufy platform
+- Add feature: Add Colourlovers as a new usufy platform
+- Add feature: Add Contently as a new usufy platform
+- Add feature: Add Creativemarket as a new usufy platform
+- Add feature: Add Crokes as a new usufy platform
+- Add feature: Add Eightbitme as a new usufy platform
+- Add feature: Add Ello as a new usufy platform
+- Add feature: Add EyEem as a new usufy platform
+- Add feature: Add F6s as a new usufy platform
+- Add feature: Add Fiverr as a new usufy platform
+- Add feature: Add Fotolog as a new usufy platform
+- Add feature: Add Houzz as a new usufy platform
+- Add feature: Add Mig as a new usufy platform
+- Add feature: Add Miiverse as a new usufy platform
+- Add feature: Add Openbugbounty as a new usufy platform
+- Add feature: Add Papaly as a new usufy platform
+- Add feature: Add Patreon as a new usufy platform
+- Add feature: Add Paypal as a new usufy platform
+- Add feature: Add Phishtank as a new usufy platform
+- Add feature: Add Reverbnation as a new usufy platform
+- Add feature: Add Seatwish as a new usufy platform
+- Add feature: Add Soup as a new usufy platform
+- Add feature: Add Technorati as a new usufy platform
+- Add feature: Add Trakt as a new usufy platform
+- Add feature: Add Venmo as a new usufy platform
+- Add feature: Add Witty as a new usufy platform
+- Add feature: Add Younow as a new usufy platform
+- Add feature: Add Dzone as a new usufy platform
+- Add feature: Add Dreamstime as a new usufy platform
+- Add feature: Add Myfitnesspal as a new usufy platform
 - Add new subdomains to domainfy in the category other
 
 0.15.0, 2017/02/16 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
