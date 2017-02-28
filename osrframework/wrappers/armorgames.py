@@ -97,7 +97,9 @@ class Armorgames(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<title>', "end": 'Profile | Armor Games</title>'}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<li>Member since:', "end": '</li>'}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<link rel="image_src" href="', "end": '" />'}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

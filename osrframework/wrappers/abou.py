@@ -100,7 +100,15 @@ class Abou(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<div id="h11"><h1 id="profile_info">', "end": "</h1></div>"}
+        self.fieldsRegExp["usufy"]["i3visio.alias.youtube"] = {"start": '<a href="http://youtube.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.facebook"] = {"start": '<a href="http://facebook.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.linkedin"] = {"start": 'href="http://linkedin.com/in/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.googleplus"] = {"start": 'href="http://google.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.twitter"] = {"start": 'href="http://twitter.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.eksisozluk"] = {"start": 'href="http://eksisozluk.com/biri/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.academia"] = {"start": 'href="http://pima.academia.edu/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<img src="', "end": '" id="profileaimg">'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

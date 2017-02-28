@@ -97,7 +97,13 @@ class Audiob(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<title>', "end": '- Audiobus Forum</title>'}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<div class="Photo PhotoWrap PhotoWrapLarge ">\n<img src="', "end": '- Audiobus Forum</title>'}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<dd class="Joined"><time title="', "end": '"'}
+        self.fieldsRegExp["usufy"]["@visits"] = {"start": '<dd class="Visits">', "end": '</dd>'}
+        self.fieldsRegExp["usufy"]["@last_activity"] = {"start": '<dd class="LastActive"><time title="', "end": '"'}
+        self.fieldsRegExp["usufy"]["@roles"] = {"start": '<dd class="Roles">', "end": '</dd>'}
+        
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

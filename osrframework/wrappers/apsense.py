@@ -97,8 +97,10 @@ class Apsense(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-        
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": 'class="capicon"></a>', "end": "</h4>"}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": 'class="capicon"></a>', "end": '" class="capicon">'}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<span class="memo" style="display:block;margin-bottom:5px">', "end": '</span>'}
+               
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

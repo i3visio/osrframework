@@ -97,7 +97,8 @@ class Archive(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<img id="file-dropper-img" src="', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<h1>Posts by ', "end": '</h1>'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

@@ -101,10 +101,10 @@ class Angel(Platform):
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         self.fieldsRegExp["usufy"]["i3visio.fullname"] =  "<title>(.+) - AngelList</title>"
-        self.fieldsRegExp["usufy"]["i3visio.domain"] =  'data-field="online_bio_url" rel="me nofollow noopener noreferrer" target="_blank">([^<]+)</a></span></div>'
-        self.fieldsRegExp["usufy"]["i3visio.alias_twitter"] =  'href="http://twitter.com/([^\"]+)" class="icon link_el fontello-twitter"'
-        self.fieldsRegExp["usufy"]["i3visio.alias_facebook"] =  'href="http://www.facebook.com/([^\"]+)" class="icon link_el fontello-facebook"'
-        self.fieldsRegExp["usufy"]["i3visio.alias_linkedin"] =  'href="http://www.linkedin.com/in/([^\"]+)" class="icon link_el fontello-linkedin"'
+        self.fieldsRegExp["usufy"]["i3visio.domain"] =  {"start": 'rel="nofollow noopener noreferrer me" target="_blank"></a></span><span class=\'link\'><a href="', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias_twitter"] =  {"start": '<a href="http://twitter.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias_facebook"] =  {"start": '<a href="http://www.facebook.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias_linkedin"] =  {"start": '<a href="http://www.linkedin.com/in/', "end": '"'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

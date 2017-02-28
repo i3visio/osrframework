@@ -97,7 +97,12 @@ class About(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<title>", "end": " | about.me</title>"}
+        self.fieldsRegExp["usufy"]["i3visio.description"] = {"start": '<section class="bio" data-reactid="27"><div data-reactid="28"><p>', "end": "</p></div></section>"}
+        self.fieldsRegExp["usufy"]["i3visio.alias.twitter"] = {"start": 'title="Visit me on Twitter" href="https://www.twitter.com/', "end": '" target="_blank"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.linkedin"] = {"start": 'title="Visit me on LinkedIn" href="http://www.linkedin.com/in/', "end": '" target="_blank"'}
+        self.fieldsRegExp["usufy"]["i3visio.interests"] = {"start": '<meta name="keywords" content="', "end": '"/>'}
+        self.fieldsRegExp["usufy"]["i3visio.personal_website"] = {"start": '"text":"Visit my website","url":"', "end": '"'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

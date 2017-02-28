@@ -92,12 +92,18 @@ class Authorstream(Platform):
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
+        #self.fieldsRegExp["phonefy"]["i3visio.location"] = {"start": '<span id="LeftPanel1_lblname">', "end": '</span></h2>'}
         
         # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
+        self.fieldsRegExp["usufy"] = {}       
+        
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<span id="LeftPanel1_lblname">', "end": '</span></h2>'}
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<p class="light_text11" style="line-height: 12px">\n ', "end": ', '}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<img src="', "end": '" id="LeftPanel1_imgUserPic"'}
+        self.fieldsRegExp["usufy"]["i3visio.description"] = {"start": '<p class="light_text12 dv100per" style="line-height: 14px; word-wrap: break-word">\n', "end": '\n</p>\n'}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<span id="LeftPanel1_LabelJoinDate">', "end": '</span></span>'}
+        self.fieldsRegExp["usufy"]["i3visio.domain"] = {"start": '<span><strong>Website:</strong></span> <span><a rel="nofollow" target="_blank" href=\'', "end": '\'>'} 
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

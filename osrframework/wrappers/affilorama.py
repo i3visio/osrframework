@@ -100,7 +100,13 @@ class Affilorama(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<img src="', "end": '" width="125" height="125">'}        
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": 'content="', "end": 'on Affilorama.'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<span class="location">', "end": '</span>'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<span class="location">', "end": '</span>'}
+        self.fieldsRegExp["usufy"]["i3visio.twitter"] = {"start": 'data-name="data[Member][twitter]"><a href="http://twitter.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.facebook"] = {"start": 'data-name="data[Member][facebook]"><a href="http://facebook.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.googleplus"] = {"start": '<a href="http://plus.google.com/', "end": '"'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

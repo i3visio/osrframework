@@ -97,7 +97,9 @@ class Audioboo(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<a href="/', "end": '"><img alt="avatar"'}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": 'class="avatar-image avatar-image--with-image t-br-50pc di js-img-bg" style=";background-color:#db9c86"\nsrc="', "end": '" /></a>'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<p class='location'>", "end": '</p>'}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

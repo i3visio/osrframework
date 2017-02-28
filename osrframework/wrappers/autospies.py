@@ -31,7 +31,7 @@ from osrframework.utils.platforms import Platform
 
 class Autospies(Platform):
     """ 
-        A <Platform> object for Askfm.
+        A <Platform> object for Autospies.
     """
     def __init__(self):
         """ 
@@ -95,7 +95,7 @@ class Autospies(Platform):
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
         
         # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
+        #self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         
