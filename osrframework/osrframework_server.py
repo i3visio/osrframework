@@ -24,7 +24,7 @@ __author__ = "Felix Brezo y Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "AGPLv3+"
-__version__ = "v0.0.3"
+__version__ = "v1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -32,9 +32,9 @@ __email__ = "contacto@i3visio.com"
 import argparse
 import json
 import os
-import time
 import shlex
 import sys
+import time
 
 # Server code
 import flask
@@ -42,6 +42,9 @@ from flask import Flask
 from flask import abort, redirect, url_for
 from flask import request
 from flask import render_template
+from flask import send_file
+
+from werkzeug.utils import secure_filename
 
 # OSRFramework libraries
 import osrframework
@@ -53,26 +56,209 @@ import osrframework.searchfy as searchfy
 import osrframework.usufy as usufy
 
 import osrframework.utils.configuration as configuration
-from osrframework.utils.daemon import Daemon
+import osrframework.utils.platform_selection as platform_selection
+import osrframework.utils.updates as updates
+import osrframework.utils.general as general
 
 
-# Initiliazing the SECRET TOKEN
+# GLOBAL VARIABLES
+# -----------------
+# Important notice: this configuration makes STRONGLY UNADVISABLE to deploy this
+#   server in a different place to localhost for security reasons.
+# Creating the SECRET TOKEN
 SECRET_TOKEN = ""
+# Temporal data. A dictionary of extensions.
+loaded_data = {}
+# Data folder
+DATA_FOLDER = configuration.getConfigPath()["appPathData"]
+# Header filename
+HEADER = "profiles"
 
+# Starting the app
 app = Flask(__name__, static_url_path='')
 
 @app.route("/")
 def index():
-    return render_template('home.html', mt_home='class=current')
+    # Getting the status of the current OSRFramework installation
+    hasUpdates, version = updates.hasUpdatesOnPypi("osrframework")
+    if hasUpdates:
+        notice = {
+            "icon": "warning",
+            "message": "OSRFramework's version is " + version + ", but there is a new release on Pypi (" + version + "). We ecnourage you to <a href='https://github.com/i3visio/osrframework/blob/master/doc/INSTALL.md'>upgrade</a> soon!" ,
+            "type": "warning"
+        }
+    else:
+        notice = {
+            "icon": "thumbs-up",
+            "message": "OSRFramework is updated to the latest version (" + version + ").",
+            "type": "success"
+        }
+    return render_template('home.html', mt_home='class=current', notice=notice)
+
+
+@app.route("/info")
+def getInfo():
+    info = {
+        "__version__": "OSRFramework " + osrframework.__version__,
+        "license": "AGPLv3",
+        "server_time": _getServerTime()[1],
+        "source_code": "https://github.com/i3visio/osrframework",
+    }
+    return flask.Response(
+        json.dumps(
+            info,
+            indent=2,
+            sort_keys=True
+        ),
+        status=200,
+        mimetype="application/json"
+    )
+
 
 @app.route("/research")
 @app.route("/research/<program>")
 def research(program=None):
+    """Prepare research UI for the main tools in the framework.
+    """
+    platOptions = platform_selection.getAllPlatformNames(program)
+
     if not program:
         return render_template('research.html', mt_research='class=current', mr_main='class=current')
     else:
         params = request.args.get('query_text')
-        return render_template('research-' + program + '.html', mt_research='class=current', query_text=params)
+
+        if params != None:
+            # We perform an additional check to see if we are receiving an array
+            if params[0] == "[":
+                # TODO: make it more flexible. This is a workaround to process whois results
+                params = params.replace("u'", "")
+                params = params.replace("'", "")
+                params = params.replace(",", "")
+                params = params.replace("[", "")
+                params = params.replace("]", "")
+            return render_template('research-' + program + '.html', mt_research='class=current', query_text=params, plat_options=platOptions)
+        else:
+            return render_template('research-' + program + '.html', mt_research='class=current', plat_options=platOptions)
+
+
+def buildCommandFromParams(program, params):
+    strCommand = program + ".py "
+
+    for p in params:
+        strCommand += p + " "
+
+    return strCommand
+
+@app.route('/research/<program>', methods=['POST'])
+def run(program):
+    """Loading OSRFramework output...
+    """
+    platOptions = platform_selection.getAllPlatformNames(program)
+
+    # Loading the stored global data
+    global loaded_data
+    global DATA_FOLDER
+    output_folder = DATA_FOLDER
+
+    answer = []
+
+    form = request.form
+
+    if "terminal-form" in form.keys():
+        strParams = request.form['tex_command']
+
+        # Splitting the query
+        params = shlex.split(strParams)
+
+        # Manually adding the data folder if NOT provided
+        if "-o " not in strParams:
+            params += ["-o", output_folder]
+
+    elif "windowed-form" in form.keys():
+        # Manually building params
+        params = []
+
+        # Iterating through all the attributes. We will use its name to identify them
+        for key in form.keys():
+            if key == "tex_query":
+                # Adding the queries from the first text file
+                if program != "searchfy":
+                    params += ["-n"]
+                else:
+                    params += ["-q"]
+
+                # Splitting the query
+                splittedQuery = shlex.split(request.form[key])
+
+                # Adding the parameters
+                params += splittedQuery
+
+            elif key == "select_platforms":
+                # Adding the parameter depending on the platform
+                if program == "domainfy":
+                    params += ["-t"]
+                elif program == "mailfy":
+                    params += ["-d"]
+                else:
+                    params += ["-p"]
+
+                # This is a MultiDict. We have to ad an iteration
+                for pName in form.getlist(key):
+                    params += [pName]
+
+            elif "export_" in key:
+                params += ["-e"]
+                params += [key.split("_")[1]]
+
+            elif key == "open_url":
+                params += ["-w"]
+
+            elif key == "tex_filename":
+                params += ["-F"]
+                params += [request.form[key]]
+
+        params += ["-o", DATA_FOLDER]
+
+    # Selecting the appropriate program
+    if program == "domainfy":
+        args = domainfy.getParser().parse_args(params)
+    elif  program == "entify":
+        args = entify.getParser().parse_args(params)
+    elif program == "mailfy":
+        args = mailfy.getParser().parse_args(params)
+    elif program == "phonefy":
+        args = phonefy.getParser().parse_args(params)
+    elif program == "searchfy":
+        args = searchfy.getParser().parse_args(params)
+    elif program == "usufy":
+        args = usufy.getParser().parse_args(params)
+
+    # Return output. text/html is required for most browsers to show the text
+    try:
+        answer = runQuery(program=program, args=args)
+    except:
+        abort(400)
+
+    # Reading CSV
+    try:
+        with open(os.path.join(args.output_folder, args.file_header + ".csv")) as iF:
+            everything = iF.read().splitlines()
+            loaded_data["csv"] = ""
+            for i, line in enumerate(everything):
+                loaded_data["csv"] += line
+                # Checking if it is the last line. This is done to avoid extra lines.
+                if i+1 != len (everything):
+                    loaded_data["csv"] += "\n"
+    except:
+        pass
+
+    return render_template(
+        'research-' + program + '.html',
+        mt_research='class=current',
+        plat_options=platOptions,
+        text_results=general.usufyToTextExport(answer),
+        command=buildCommandFromParams(program, params)
+    )
 
 
 def allowed_file(filename):
@@ -84,6 +270,8 @@ def allowed_file(filename):
 @app.route("/explore", methods=['GET', 'POST'])
 def explore():
     # Based on http://flask.pocoo.org/docs/0.12/patterns/fileuploads/
+    global loaded_data
+
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -106,17 +294,15 @@ def explore():
             filename = secure_filename(file.filename)
 
             # TODO: pretty unsafe as it is now
-            # Recovering the loadedData: !
-            global loadedData
-            loadedData["csv"] = ""
+            # Recovering the loaded_data: !
+            loaded_data["csv"] = ""
             everything = file.stream.read().splitlines()
             for i, line in enumerate(everything):
-                loadedData["csv"] += line
+                loaded_data["csv"] += line
                 # Checking if it is the last line. This is done to avoid extra lines.
                 if i+1 != len (everything):
-                    loadedData["csv"] += "\n"
-
-            return render_template('explore.html', mt_explore='class=current', csvData=loadedData["csv"])
+                    loaded_data["csv"] += "\n"
+            return render_template('explore.html', mt_explore='class=current', csvData=loaded_data["csv"].decode('utf-8'))
         else:
             notice = {
                 "icon": "close",
@@ -125,65 +311,49 @@ def explore():
             }
             return render_template('explore.html', mt_explore='class=current', alert=notice)
     else:
-        return render_template('explore.html', mt_explore='class=current')
+        try:
+            csvData=loaded_data["csv"].decode('utf-8')
+            return render_template(
+                'explore.html',
+                mt_explore='class=current',
+                csvData=csvData
+            )
+        except:
+            return render_template(
+                'explore.html',
+                mt_explore='class=current'
+            )
 
 
-<<<<<<< HEAD
-@app.route("/info")
-def getInfo():
-    info = {
-        "__version__": "OSRFramework " + osrframework.__version__,
-        "license": "AGPLv3",
-        "server_time": _getServerTime()[1],
-        "source_code": "https://github.com/i3visio/osrframework",
-    }
-    return flask.Response(
-        json.dumps(
-            info,
-            indent=2,
-            sort_keys=True
-        ),
-        status=200,
-        mimetype="application/json"
-=======
-
-@app.route('/research/<program>', methods=['POST'])
-def run(program):
-    """Loading OSRFramework output...
-    """
-    # Grabbing the text search...
-    strParams = request.form['tex_command']
-
-    if strParams != None:
-        # Splitting the query
-        params = shlex.split(strParams)
-
-        # Selecting the appropriate program
-        if program == "domainfy":
-            args = domainfy.getParser().parse_args(params)
-        elif  program == "entify":
-            args = entify.getParser().parse_args(params)
-        elif program == "mailfy":
-            args = mailfy.getParser().parse_args(params)
-        elif program == "phonefy":
-            args = phonefy.getParser().parse_args(params)
-        elif program == "searchfy":
-            args = searchfy.getParser().parse_args(params)
-        elif program == "usufy":
-            args = usufy.getParser().parse_args(params)
-            print args
-        # Return output. text/html is required for most browsers to show the text
-        answer = runQuery(program=program, args=args)
+@app.route("/get_temporal_data/<fileName>")
+def get_temporal_data(fileName):
+    global loaded_data
+    extension = fileName.split('.')[-1]
+    if extension in loaded_data.keys():
+        return loaded_data[extension]
     else:
-        pass
-        answer = {}
+        return "No data found."
 
-    return render_template(
-        'research-' + program + '.html',
-        mt_research='class=current',
-        text_results=general.usufyToTextExport(answer)
->>>>>>> 162017d... Remove current mark after performing a search
-    )
+
+def runQuery(program, args=[]):
+    """Function that wraps the queries.
+    """
+    # Selecting the appropriate program
+    if program == "domainfy":
+        answer = domainfy.main(args)
+    elif program == "entify":
+        answer = entify.main(args)
+    elif program == "mailfy":
+        answer = mailfy.main(args)
+    elif program == "phonefy":
+        answer = phonefy.main(args)
+    elif program == "searchfy":
+        answer = searchfy.main(args)
+    elif program == "usufy":
+        answer = usufy.main(args)
+
+    # Returning the output
+    return answer
 
 
 # --------------
@@ -213,22 +383,18 @@ def api_v1(command, query):
     # Selecting the appropriate program
     if  command == "domainfy":
         args = domainfy.getParser().parse_args(['-n'] + params)
-        answer = domainfy.main(args)
     elif  command == "entify":
         args = entify.getParser().parse_args(['-w'] + params)
-        answer = entify.main(args)
     elif command == "mailfy":
         args = mailfy.getParser().parse_args(['-n'] + params)
-        answer = mailfy.main(args)
     elif command == "phonefy":
         args = phonefy.getParser().parse_args(['-n'] + params)
-        answer = phonefy.main(args)
     elif command == "searchfy":
         args = searchfy.getParser().parse_args(['-q'] + params)
-        answer = searchfy.main(args)
     elif command == "usufy":
         args = usufy.getParser().parse_args(['-n'] + params)
-        answer = usufy.main(args)
+
+    answer = runQuery(command, args)
     # Grabbing current Time
     osrfTimestamp, osrfDate = _getServerTime()
 
@@ -309,6 +475,12 @@ if __name__ == "__main__":
         SECRET_TOKEN = DEFAULT_VALUES["secret_token"]
     except:
         SECRET_TOKEN = None
+
+    try:
+        # TODO: get file path from
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    except:
+        app.config['UPLOAD_FOLDER'] = "/home/felix/"
 
     # Loading the server parser
     parser = argparse.ArgumentParser(

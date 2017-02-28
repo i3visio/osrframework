@@ -30,7 +30,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "AGPLv3+"
-__version__ = "v0.0.1"
+__version__ = "v1.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -49,7 +49,7 @@ import osrframework.osrframework_server as osrframework_server
 
 
 class ServerWrapper(threading.Thread):
-    def __init__(self, host="localhost", port=30030):
+    def __init__(self, host="localhost", port=30230):
         threading.Thread.__init__(self)
         self.daemon = True
 
@@ -57,7 +57,7 @@ class ServerWrapper(threading.Thread):
         osrframework_server.app.run(host=host, port=port, debug=False)
 
 # Starting GUI
-def launch_explorify(backend="http://localhost:30030/", maximized=False):
+def launch_explorify(backend="http://localhost:30230/", maximized=False):
     '''Method that launches a GUI to open the server.
     '''
     app = QApplication(sys.argv)
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     try:
         port = int(DEFAULT_VALUES["port"])
     except:
-        port = 30030
+        port = 30230
 
     parser = argparse.ArgumentParser(description='explorify.py - A tool to explore the data from OSRFramework.', prog='explorify.py', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False)
     parser._optionals.title = "Input options (one required)"

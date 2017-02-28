@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2016-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v5.0"
+__version__ = "v5.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -46,6 +46,7 @@ from multiprocessing import Process, Queue, Pool
 
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
+import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
 
 import osrframework.domains.gtld as gtld
@@ -90,6 +91,16 @@ def getWhoisInfo(domain):
         :result:
     '''
     new = []
+
+    # Grabbing the aliases
+    try:
+        emails = {}
+        emails["type"] = "i3visio.alias"
+        emails["value"] = str(domain.split(".")[0])
+        emails["attributes"] = []
+        new.append(emails)
+    except:
+        pass
 
     info = whois.whois(domain)
 
@@ -168,18 +179,42 @@ def createDomains(tlds, nicks=None, nicksFile=None):
     return domain_candidates
 
 
+def isBlackListed(ipv4):
+    """There are some providers that resolve always. We have identified these IP
+        so we have to perform an additional chdeck to confirm that the returned
+        IPv4 is not a false positive.
+    """
+    BLACKLISTED = [
+        "45.79.222.138",
+        "88.198.29.97",
+        "91.144.20.76",
+        "127.0.0.1",
+        "127.0.53.53",
+        "144.76.162.245"
+    ]
+
+    if ipv4 in BLACKLISTED:
+        return True
+    else:
+        return False
+
 def pool_function(domain):
-    '''
+    """
         Wrapper for being able to launch all the threads of getPageWrapper.
         :param domain: We receive the parameters as a dictionary.
         {
             "domain" : ".com",
             "type" : "global"
         }
-    '''
+    """
     is_valid = True
     try:
         ipv4 = socket.gethostbyname(domain["domain"])
+
+        # Check if this ipv4 normally throws false positives
+        if isBlackListed(ipv4):
+            return {"platform" : str(domain), "status": "ERROR", "data": {}}
+
         #If we arrive here... The domain exists!!
         aux = {}
         aux["type"] = "i3visio.result"
@@ -190,7 +225,7 @@ def pool_function(domain):
         except Exception as e:
             # If something happened... Well, we'll return an empty attributes array.
             aux["attributes"] = []
-            return {"platform" : str(domain), "status": "ERROR", "data": {}}
+
         tmp = {}
         tmp["type"] = "i3visio.domain"
         tmp["value"] =  domain["domain"]
@@ -240,9 +275,13 @@ def performSearch(domains=[], nThreads=16):
     # Launching the Pool
     # ------------------
     # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
-    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
-    pool = Pool(nThreads)
-    signal.signal(signal.SIGINT, original_sigint_handler)
+    try:
+        original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
+        pool = Pool(nThreads)
+        signal.signal(signal.SIGINT, original_sigint_handler)
+    except ValueError:
+        # To avoid: ValueError: signal only works in main thread
+        pool = Pool(nThreads)
 
     poolResults = []
     try:
@@ -389,7 +428,6 @@ This is free software, and you are welcome to redistribute it under certain cond
     return results
 
 def getParser():
-    import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("domainfy")
     # Capturing errors just in case the option is not found in the configuration
     try:
