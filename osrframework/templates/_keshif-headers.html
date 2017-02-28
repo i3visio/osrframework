@@ -370,7 +370,7 @@
                     var imgUrl = record.data.i3visio_uri_image_profile;
 
                     // Confirming the image url
-                    if (imgUrl == null) {
+                    if (imgUrl == null || imgUrl == "[N/A]") {
                         // If it does not exist, we will set it a default one
                         if (record.data.i3visio_platform != "[N/A]" && record.data.i3visio_alias != "[N/A]") {
                             // This is a user
