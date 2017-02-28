@@ -257,6 +257,10 @@ files_to_copy= {
     ],
     paths["appPathPatterns"] : [
         os.path.join("config", "plugins", "pattern.py.sample"),
+    ],
+    paths["appPathServer"] : [
+        os.path.join("osrframework", "templates"),
+        os.path.join("osrframework", "static"),
     ]
 }
 
@@ -271,9 +275,9 @@ for destiny in files_to_copy.keys():
             cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
         elif sys.platform == 'linux2' or sys.platform == 'darwin':
             if not os.geteuid() == 0:
-                cmd = "cp \"" + fileToMove + "\" \"" + destiny + "\""
+                cmd = "cp \"" + fileToMove + "\" \"" + destiny + "\" -r"
             else:
-                cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\""
+                cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\" -r"
         #print cmd
         output = os.popen(cmd).read()
 

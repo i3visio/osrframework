@@ -72,8 +72,8 @@ loaded_data = {}
 # Data folder
 configurationPaths = configuration.getConfigPath()
 DATA_FOLDER = configurationPaths["appPathData"]
-STATIC_FOLDER = configurationPaths["appPathServerStatic"]
-TEMPLATES_FOLDER = configurationPaths["appPathServerTemplates"]
+STATIC_FOLDER = os.path.join(configurationPaths["appPathServer"], "static")
+TEMPLATES_FOLDER = os.path.join(configurationPaths["appPathServer"], "templates")
 # Header filename
 HEADER = "profiles"
 

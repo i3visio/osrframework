@@ -29,6 +29,8 @@ import osrframework.wrappers
 
 import osrframework.utils.credentials as credentials
 import osrframework.utils.configuration as configuration
+import osrframework
+
 
 def getAllPlatformNames(mode):
     """Method that defines the whole list of available parameters.
@@ -39,18 +41,24 @@ def getAllPlatformNames(mode):
             Returns a list [] of strings for the platform objects.
     """
     # Recovering all the possible platforms installed
-    allPlatforms = getAllPlatformObjects(mode=mode)
-    # Defining the platOptions
     platOptions = []
-    for p in allPlatforms:
-        try:
-            # E. g.: to use wikipedia instead of wikipedia_ca and so on
-            parameter = p.parameterName
-        except:
-            parameter = p.platformName.lower()
+    if mode in ["phonefy", "usufy", "searchfy"]:
+        allPlatforms = getAllPlatformObjects(mode=mode)
+        # Defining the platOptions
+        for p in allPlatforms:
+            try:
+                # E. g.: to use wikipedia instead of wikipedia_ca and so on
+                parameter = p.parameterName
+            except:
+                parameter = p.platformName.lower()
 
-        if parameter not in platOptions:
-            platOptions.append(parameter)
+            if parameter not in platOptions:
+                platOptions.append(parameter)
+    elif mode == "domainfy":
+        platOptions = osrframework.domainfy.TLD.keys()
+    elif mode == "mailfy":
+        platOptions = osrframework.mailfy.EMAIL_DOMAINS
+
     platOptions =  sorted(set(platOptions))
     platOptions.insert(0, 'all')
     return platOptions
