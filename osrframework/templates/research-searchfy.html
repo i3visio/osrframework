@@ -25,7 +25,6 @@
 
                 <div class="col_9">
                     <h5><i class="fa fa-group icon-large"></i> <b>Searchfy</b>: Looking for text</h5>
-
                     <p>If you don't have an alias, you may want to search for them in several networks. In this case, <code>searchfy.py</code> is a tool that will help you to identify potentially interesting profiles.</p>
 
                     {% include '_menu-launcher.html' %}
@@ -38,7 +37,7 @@
                                 <input id="tex_command" name="tex_command" type="text" size="60" placeholder="e. g.: -q 'John Doe'" />
 
                                 <span class="tooltip-bottom" title="Launch the app as if you were in a terminal. The app name is not needed">
-                                    <button name="my-form" class="fa fa-cogs orange" onclick="loading();"> Launch</button>
+                                    <button name="terminal-form" class="fa fa-cogs orange" onclick="loading();"> Launch</button>
                                 </span>
                             </fieldset>
                         </form>
@@ -48,20 +47,28 @@
                         <form action="/research/searchfy" method="post">
                             <fieldset>
                                 <legend>Selecting targets</legend>
-                                    <label for="lab_command"><i class="fa fa-search"></i> Targets: </label>
-                                    <input id="tex_query" name="tex_query" type="text" size="60" placeholder='e. g.: "John Doe"'{% if query_text is defined %} value='{{ query_text }}'{% endif %}/>
-
-                                    <span class="tooltip-bottom" title="Launch the app as if you were in a terminal. The app name is not needed">
-                                        <button name="my-form" class="fa fa-cogs orange" onclick="loading();"> Launch</button>
-                                    </span>
+                                <label for="lab_command"><i class="fa fa-search"></i> Targets: </label>
+                                <input id="tex_query" name="tex_query" type="text" size="40" placeholder="e. g.: i3visio yrubiosec febrezo"{% if query_text is defined %} value='{{ query_text }}'{% endif %}/>
+                                <span class="tooltip-bottom" title="Launch the app">
+                                    <button name="windowed-form" class="fa fa-cogs orange" onclick="loading();"> Launch</button>
+                                </span>
                             </fieldset>
                             <fieldset>
                                 <legend>Other options</legend>
-                                <p>TODO.</p>
+                                <div class="col_6">
+                                    {% include '_options-platforms.html' %}
+                                </div>
+                                <div class="col_6">
+                                    {% include '_options-export.html' %}
+                                    {% include '_options-other.html' %}
+                                </div>
                             </fieldset>
                         </form>
                     </div>
                 </div>
+
+                {% include '_research-terminal.html' %}
+
             </div>
         </div>
 
