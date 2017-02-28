@@ -140,24 +140,3 @@ pip uninstall pydns
 pip install osrframework --upgrade
 ```
 Anyway, if you are facing any issues regarding the installation keep us posted at <https://github.com/i3visio/osrframework/issues/>.
-
-5 - Maltego Installation
-------------------------
-
-However, to use our Maltego Transforms, you will have to download Maltego from Paterva's site:
-```
-http://www.paterva.com/web6/products/download2.php
-```
-Follow the instructions there. Afterwards, you may launch the application and you you will have to import the recently created .mtz configuration file created by your Linux Installation.
-
-Select all the groups and click next. You may use the new i3visio entities now.
-
-The Maltego transforms and entities are generated automatically by the setup script.
-This will create a .mtz file in the User's home (check the installation terminal output to find it) and under the default folder inside the application folder (just in case a disaster happends ;)).
-```
-# Under Linux...
-~/.config/OSRFramework/osrframework-maltego-settings_<VERSION>.mtz
-~/.config/OSRFramework/default/osrframework-maltego-settings_<VERSION>.mtz
-```
-
-You will then have to import this file in Maltego by clicking the Menu --> Import --> Import configuration. You might have to manually check all the types in the installer assistant.
