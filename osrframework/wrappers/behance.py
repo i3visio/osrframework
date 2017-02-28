@@ -97,7 +97,16 @@ class Behance(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": 'href="/search?content=users&amp;sort=appreciations&amp;country=', "end": '&amp;'}
+        self.fieldsRegExp["usufy"]["i3visio.domain"] = {"start": 'href="" href="', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.twitter"] = {"start": 'href="http://twitter.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.facebook"] = {"start": 'href="http://facebook.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.pinterest"] = {"start": 'href="http://pinterest.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.vimeo"] = {"start": 'href="http://vimeo.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.instagram"] = {"start": 'href="http://instagram.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.wacom"] = {"start": 'href="http://gallery.wacom.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.pantone"] = {"start": 'href="http://canvas.pantone.com/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.i3visio.uri_image_profile"] = {"start": 'id="profile-image" src="', "end": '"'}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

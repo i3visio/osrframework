@@ -57,7 +57,7 @@ class Bandcamp(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://" + "<usufy>" + "bandcamp.com/"
+        self.url["usufy"] = "https://bandcamp.com/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -100,7 +100,8 @@ class Bandcamp(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<meta property="og:site_name" content="', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<div id="fan-bio-pic">\n    <a class="popupImage" href="', "end": '"'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

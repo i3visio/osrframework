@@ -100,7 +100,10 @@ class Bebee(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<title>', "end": '- beBee</title>'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<span itemprop="addressRegion">', "end": '</span>'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.googleplus"] = {"start": '<div><a rel="nofollow" class="color_corp_three" href="https://plus.google.com/u/0/', "end": '"'}
+        self.fieldsRegExp["usufy"]["i3visio.alias.linkedin"] = {"start": '<div><a rel="nofollow" class="color_corp_three" href="http://br.linkedin.com/in/', "end": '"'}
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

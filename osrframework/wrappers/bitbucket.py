@@ -97,7 +97,9 @@ class Bitbucket(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<h1>\n              \n                ', "end": '\n                \n                  <span class="username">'}
+        self.fieldsRegExp["usufy"]["i3visio.domain"] = {"start": 'rel="me nofollow">', "end": "</a>"}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": 'data-format="mmmm yyyy">', "end": "</time>"}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

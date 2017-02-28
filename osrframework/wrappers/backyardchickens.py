@@ -97,7 +97,12 @@ class Backyardchickens(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": 'class="indexable profile-header">', "end": '</h1>'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<td class="label indexable">Location:<br><br></td>\n\t\t\t<td class="data indexable">', "end": '<br><br></td>'}
+        self.fieldsRegExp["usufy"]["@real_name"] = {"start": '<td class="label indexable">Real Name:<br><br></td>\n\t\t\t<td class="data indexable">', "end": '<br><br></td>'}
+        self.fieldsRegExp["usufy"]["i3visio.i3visio.uri_image_profile"] = {"start": 'alt="Avatars" src="', "end": '"'}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<td class="label indexable">Join Date:<br><br></td>\n\t\t\t<td class="data indexable">', "end": '<br><br></td>'}
+        self.fieldsRegExp["usufy"]["@last_active"] = {"start": '<td class="label indexable">Last Online:<br><br></td>\n\t\t\t<td class="data indexable">', "end": '<br><br></td>'}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

@@ -97,7 +97,13 @@ class Bennugd(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<div class="username"><h4>', "end": '<span'}
+        self.fieldsRegExp["usufy"]["@sex"] = {"start": '<dt>Sexo: </dt>\n\t\t\t\t\t<dd>', "end": '</dd>'}
+        self.fieldsRegExp["usufy"]["@age"] = {"start": '<dt>Edad:</dt>\n\t\t\t\t\t<dd>', "end": '</dd>'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<dt>Ubicación:</dt>\n\t\t\t\t\t<dd>', "end": '</dd>'} 
+        self.fieldsRegExp["usufy"]["@last_active"] = {"start": '<dt>\xe9ltima vez activo: </dt>\n\t\t\t\t\t<dd>', "end": '</dd>'} 
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<dt>Fecha de registro: </dt>\n\t\t\t\t\t<dd>', "end": '</dd>'} 
+        self.fieldsRegExp["usufy"]["@language"] = {"start": '<dt>Idioma:</dt>\n\t\t\t\t\t<dd>', "end": '</dd>'}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}

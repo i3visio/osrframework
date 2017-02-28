@@ -13,6 +13,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Provide a GUI to make it easier to launch the commands for newcomers
 - Add feature: Change the path where Maltego settings file is created
 - Add feature: Add metadata extraction for all usufy wrappers starting with 'a'
+- Add feature: Add metadata extraction for all usufy wrappers starting with 'b'
 - Add feature: Add Affilorama as a new usufy platform
 - Add feature: Add Abou as a new usufy platform
 - Add feature: Add Canva as a new usufy platform

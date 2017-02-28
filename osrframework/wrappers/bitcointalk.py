@@ -97,7 +97,19 @@ class Bitcointalk(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<td><b>Name: </b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<td><b>Date Registered: </b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@last_activity"] = {"start": '<td><b>Last Active: </b></td>\n\t\t\t\t\t<td><b>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@ICQ"] = {"start": '<td><b>ICQ:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@AIM"] = {"start": '<td><b>AIM:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@MSN"] = {"start": '<td><b>AIM:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@YIM"] = {"start": '<td><b>AIM:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@Email"] = {"start": '<td><b>AIM:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["i3visio.domain"] = {"start": '<td><b>AIM:</b></td>\n\t\t\t\t\t<td><a href="', "end": '"'}
+        self.fieldsRegExp["usufy"]["@sex"] = {"start": '<td><b>Gender:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@age"] = {"start": '<td><b>Gender:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<td><b>Location:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
+        self.fieldsRegExp["usufy"]["@local_time"] = {"start": '<td><b>Local Time:</b></td>\n\t\t\t\t\t<td>', "end": "</td>"}
         
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
