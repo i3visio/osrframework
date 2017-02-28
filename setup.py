@@ -188,7 +188,8 @@ setup(
         #"pyopenssl",
         #"ndg-httpsclient",
         #"pyasn1"
-        "python-whois"
+        "python-whois",
+        "flask"
     ],
 )
 
