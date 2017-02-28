@@ -156,7 +156,7 @@ The Maltego transforms and entities are generated automatically by the setup scr
 This will create a .mtz file in the User's home (check the installation terminal output to find it) and under the default folder inside the application folder (just in case a disaster happends ;)).
 ```
 # Under Linux...
-~/osrframework-maltego-settings_<VERSION>.mtz
+~/.config/OSRFramework/osrframework-maltego-settings_<VERSION>.mtz
 ~/.config/OSRFramework/default/osrframework-maltego-settings_<VERSION>.mtz
 ```
 

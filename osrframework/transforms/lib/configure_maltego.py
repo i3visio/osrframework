@@ -28,7 +28,7 @@ import shutil, errno
 import osrframework
 import osrframework.utils.configuration as configuration
 
-VERSION = "v0.10"
+VERSION = "v0.11"
 
 def copyAnything(src="./osrframework-maltego-settings", dst=os.path.join("./", "tmp", "osrframework-maltego-settings") ):
     '''
@@ -37,10 +37,10 @@ def copyAnything(src="./osrframework-maltego-settings", dst=os.path.join("./", "
     '''
     # first of all trying to delete the folder
     try:
-        shutil.rmtree(dst)    
+        shutil.rmtree(dst)
     except:
         pass
-    
+
     try:
         shutil.copytree(src, dst)
     except OSError as exc: # python >2.5
@@ -87,11 +87,11 @@ def setDebugMode(dst=None, debug="false"):
 def zip(pathFolder=None):
     '''
         Zipping a file onto a mtz file.
-        
+
         :param pathFolder: Source folder or files.
     '''
     filePath =  "%s.mtz" % (pathFolder)
-    
+
     zf = zipfile.ZipFile(filePath, "w", zipfile.ZIP_DEFLATED)
 
     abs_src = os.path.abspath(pathFolder)
@@ -102,34 +102,34 @@ def zip(pathFolder=None):
             #print 'zipping %s as %s' % (os.path.join(dirname, filename), arcname)
             zf.write(absname, arcname)
     zf.close()
-    
+
     # After everything, deleting the previously created folder
     try:
-        shutil.rmtree(pathFolder)    
+        shutil.rmtree(pathFolder)
     except:
         pass
 
     return filePath
 
-def configureMaltego(transformsConfigFolder = None, base=None, wFolder=None, debug=False, mainPath = os.path.expanduser('~/'), backupPath = None):
+def configureMaltego(transformsConfigFolder=None, base=None, wFolder=None, debug=False, mainPath=os.path.expanduser('~/'), backupPath=None):
     '''
     '''
     # Defining the name of the output file
-    settingsFile = "osrframework-maltego-settings"  + "_" + VERSION 
+    settingsFile = "osrframework-maltego-settings"  + "_" + VERSION
 
     # Defining the full path to the folder in which the configuration files will be created
-    dst=os.path.join("./", "tmp", settingsFile)    
+    dst=os.path.join("./", "tmp", settingsFile)
 
     # copying anything in the config folder
     copyAnything(src=base, dst=dst)
 
     print "Configuring OSRFramework working directory for Maltego..."
-    # Setting the new path for 
+    # Setting the new path for
     setNewPath(iPath = transformsConfigFolder, dst=dst)
-    
-    # Setting the new path for 
-    setDebugMode(dst=dst, debug=str(debug).lower())    
-    
+
+    # Setting the new path for
+    setDebugMode(dst=dst, debug=str(debug).lower())
+
     print "Building the .mtz file."
     # Zipping the new configuration
     filePath = zip(pathFolder=dst)
@@ -140,11 +140,11 @@ def configureMaltego(transformsConfigFolder = None, base=None, wFolder=None, deb
     if mainPath != None:
         print "Moving the .mtz file to the following folder: " + os.path.join(mainPath, fileName)
         shutil.copy2(filePath, mainPath)
-       
+
     if backupPath != None:
         print "Moving the .mtz file to the backup folder:    " + os.path.join(backupPath, fileName)
-        shutil.copy2(filePath, backupPath)        
-       
+        shutil.copy2(filePath, backupPath)
+
     # Remove tmp files.
     shutil.rmtree(os.path.join("./", "tmp"))
 
@@ -152,17 +152,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='configure_maltego.py - A function to automatically generate Maltego configuration files.', prog='configure_maltego.py', epilog="", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
-    parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="./osrframework-maltego-settings[Base]")                        
+    parser.add_argument('-b', '--base', metavar='<path>', action='store', help="name of the base folder.", required=False, default="./osrframework-maltego-settings[Base]")
     parser.add_argument('-d', '--debug', action='store_true', help="storing the value of whether the transforms will be displaying a debug window when launched.", default=False, required=False)
-    parser.add_argument('-o', '--output', action='store_true', help="Path where the files will be copied.", default=False, required=False)    
+    parser.add_argument('-o', '--output', action='store_true', help="Path where the files will be copied.", default=False, required=False)
 
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version=VERSION, help='shows the version of the program and exists.')
-    
-    args = parser.parse_args()        
+
+    args = parser.parse_args()
 
     # Creating the application paths
     paths = configuration.getConfigPath()
-    
-    configureMaltego(transformsConfigFolder = paths["appPathTransforms"], base=args.base, debug = args.debug, backupPath = paths["applicationPathDefaults"])
+
+    configureMaltego(transformsConfigFolder=paths["appPathTransforms"], base=args.base, debug=args.debug, mainPath=paths["appPath"], backupPath=paths["appPathDefaults"])
