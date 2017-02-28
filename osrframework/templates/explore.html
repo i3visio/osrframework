@@ -44,6 +44,8 @@
                     <ul class="tabs">
                         <li><a href="#tab-keshif"> <i class="fa fa-pie-chart black"></i> Explore it</a></li>
                         <li><a href="#tab-csv"> <i class="fa fa-file-text"></i> CSV</a></li>
+                        <!--<li><a href="#tab-json"> <i class="fa fa-file-code-o"></i> Json</a></li>
+                        <li><a href="#tab-gml"> <i class="fa fa-dot-circle-o"></i> GML</a></li>-->
                     </ul>
 
                     <div id="tab-keshif" class="tab-content">
@@ -62,7 +64,12 @@
                     <div id="tab-csv" class="tab-content">
                         <pre>{% if csvData is defined %}{{ csvData }}{% else %}No data found.{% endif %}</pre>
                     </div>
-
+                    <!--<div id="tab-json" class="tab-content">
+                        <pre>{% if jsonData is defined %}{{ jsonData }}{% else %}No data found.{% endif %}</pre>
+                    </div>
+                    <div id="tab-gml" class="tab-content">
+                        <pre>{% if gmlData is defined %}{{ gmlData }}{% else %}No data found.{% endif %}</pre>
+                    </div>-->
             </div>
         </div>
 
