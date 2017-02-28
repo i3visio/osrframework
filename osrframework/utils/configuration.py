@@ -73,6 +73,9 @@ def getConfigPath(configFileName = None):
     paths = {
         "appPath": applicationPath,
         "appPathData": os.path.join(applicationPath, "data"),
+        "appPathServer": os.path.join(applicationPath, "server"),
+        "appPathServerStatic": os.path.join(applicationPath, "server", "static"),
+        "appPathServerTemplates": os.path.join(applicationPath, "server", "templates"),
         "appPathDefaults": os.path.join(applicationPath, "default"),
         "appPathTransforms": os.path.join(applicationPath, "transforms"),
         "appPathPlugins": os.path.join(applicationPath, "plugins"),

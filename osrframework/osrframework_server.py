@@ -70,12 +70,20 @@ SECRET_TOKEN = ""
 # Temporal data. A dictionary of extensions.
 loaded_data = {}
 # Data folder
-DATA_FOLDER = configuration.getConfigPath()["appPathData"]
+configurationPaths = configuration.getConfigPath()
+DATA_FOLDER = configurationPaths["appPathData"]
+STATIC_FOLDER = configurationPaths["appPathServerStatic"]
+TEMPLATES_FOLDER = configurationPaths["appPathServerTemplates"]
 # Header filename
 HEADER = "profiles"
 
 # Starting the app
-app = Flask(__name__, static_url_path='')
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder=STATIC_FOLDER,
+    template_folder=TEMPLATES_FOLDER
+ )
 
 @app.route("/")
 def index():
