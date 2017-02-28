@@ -26,14 +26,14 @@
                     <p>In OSRFramework you can use <code>usufy.py</code> to look for the existence of a given alias in different platforms, <code>domainfy.py</code> to check whether certain domains are registered or <code>mailfy.py</code> to check the existence of an email address. We know that privacy matters and you don't have to trust us: you can always check what the application does in the <a href="https://github.com/i3visio/osrframework">Github repo</a> because it is free software. Help is always welcome there but, in any case, you can always invite us for a beer <i class="fa fa-beer"></i>!</p>
 
                     <center>
-                        <a class="button blue" href="/collector"><i class="fa fa-search"></i> Start researching now!</a>
+                        <a class="button blue" href="/research"><i class="fa fa-search"></i> Start researching now!</a>
                     </center>
 
                     <h6>OSRFramework status</h6>
 
                     <!-- Success -->
-                    <div class="notice success">
-                        <i class="fa fa-thumbs-up "></i> OSRFramework is updated to the latest version.
+                    <div class="notice {{ notice['type'] }}">
+                        <i class="fa fa-{{ notice['icon'] }}"></i>  {{ notice['message'] }}
                     </div>
 
                 </div>
