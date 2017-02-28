@@ -19,8 +19,9 @@
 
 /* The main explorer */
 #chart_div {
-    height: 600px;
-    width: 800px;
+    height: 800px;
+    width: 100%;
+    min-width: 700px;
 }
 
 body {
@@ -35,11 +36,25 @@ h4 {
 h5 {
   text-align: center;
 }
+
+.tabConfiguration {
+    background-color: #def;
+}
+
+div#loading {
+    width: 35px;
+    height: 35px;
+    display: none;
+    background: url(/static/img/loading.gif) no-repeat;
+    cursor: wait;
+}
+
 /* The fonts for attributes */
 .attrib .fa{
     width: 15px;
     text-align: center;
 }
+
 .listItem{
     width: 130px;
 }
@@ -47,12 +62,16 @@ h5 {
     padding: 3px;
     text-align: center;
 }
-.nameText{
+
+.regTitle{
     font-weight: 700;
-}
-.aliasText{
     font-size: 0.8em;
 }
-.attributeText{
+
+.regSubtitle{
     font-size: 0.6em;
+}
+
+.attributeText{
+    font-size: 0.5em;
 }
