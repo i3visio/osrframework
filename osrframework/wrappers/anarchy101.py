@@ -82,7 +82,7 @@ class Anarchy101(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["User not found", "Could not establish database connection. Please check the username"]   
+        self.notFoundText["usufy"] = ["User not found", "Could not establish database connection. Please check the username", "Page not found"]   
         #self.notFoundText["searchfy"] = []        
         
         #########################
