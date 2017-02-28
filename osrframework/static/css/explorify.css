@@ -1,0 +1,77 @@
+/*##################################################################################
+#
+#    Copyright 2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##################################################################################*/
+
+/* The main explorer */
+#chart_div {
+    height: 800px;
+    width: 100%;
+    min-width: 700px;
+}
+
+body {
+  height: 100%;
+  background-color: #ddd;
+}
+
+h4 {
+  text-align: center;
+}
+
+h5 {
+  text-align: center;
+}
+
+.tabConfiguration {
+    background-color: #def;
+}
+
+div#loading {
+    width: 35px;
+    height: 35px;
+    display: none;
+    background: url(/static/img/loading.gif) no-repeat;
+    cursor: wait;
+}
+
+/* The fonts for attributes */
+.attrib .fa{
+    width: 15px;
+    text-align: center;
+}
+
+.listItem{
+    width: 130px;
+}
+.content{
+    padding: 3px;
+    text-align: center;
+}
+
+.regTitle{
+    font-weight: 700;
+    font-size: 0.8em;
+}
+
+.regSubtitle{
+    font-size: 0.6em;
+}
+
+.attributeText{
+    font-size: 0.5em;
+}

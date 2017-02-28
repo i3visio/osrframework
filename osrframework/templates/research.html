@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{% include '_banner.html' %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+	<head>
+
+        {% include '_shared-headers.html' %}
+
+    </head>
+
+    <body>
+
+        {% include '_menu-top.html' %}
+
+        <div id="body" class="grid clearfix">
+            <ul class="tabs">
+                <li><a href="#type-main"> Researching using OSRFramework tools</a></li>
+            </ul>
+            <div id="type-main" class="tab-content">
+                <!-- Menu Vertical Left -->
+                <div class="col_3">
+                    {% include '_menu-research.html' %}
+                </div>
+
+                <div class="col_9">
+                    <p>In this section you will be able to launch the different tools in the framework. Choose the one you need depending on the type of information you already have:</p>
+                    <ul class="icons">
+                        <li><i class="fa fa-check"></i> If you want to check if an <b>alias</b> is registered in several platforms, you can use <a href="/research/usufy"><code>usufy.py</code></a>.</li>
+                        <li><i class="fa fa-check"></i> When you need to find if there exist some <b>domains</b> registered using a given alias, you can use <a href="/research/domainfy"><code>domainfy.py</code></a>.</li>
+                        <li><i class="fa fa-check"></i> If you want to check if an <b>email address</b> exists, you can use <a href="/research/mailfy"><code>mailfy.py</code></a>.</li>
+                        <li><i class="fa fa-check"></i> If you are investigating a <b>mobile phone</b> that may be linked to spam, opt for <a href="/research/phonefy"><code>phonefy.py</code></a>.</li>
+                        <li><i class="fa fa-check"></i> If you want to find users searching by <b>any text</b> in several platforms, you might like <a href="/research/searchfy"><code>searchfy.py</code></a>.</li>
+                    </ul>
+                    <p>Remember that you can always use the command line applications to automate certain tasks as well as <code>osrfconsole.py</code> as an alternative UI.</p>
+                </div>
+            </div>
+        </div>
+
+        {% include '_footer.html' %}
+
+    </body>
+</html>

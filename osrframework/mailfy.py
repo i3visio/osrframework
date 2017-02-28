@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v5.0"
+__version__ = "v5.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -44,6 +44,7 @@ from multiprocessing import Process, Queue, Pool
 
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
+import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
 # From emailahoy code
 import emailahoy
@@ -249,9 +250,13 @@ def performSearch(emails=[], nThreads=16):
     # Launching the Pool
     # ------------------
     # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
-    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
-    pool = Pool(nThreads)
-    signal.signal(signal.SIGINT, original_sigint_handler)
+    try:
+        original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
+        pool = Pool(nThreads)
+        signal.signal(signal.SIGINT, original_sigint_handler)
+    except ValueError:
+        # To avoid: ValueError: signal only works in main thread
+        pool = Pool(nThreads)
 
     poolResults = []
     try:
@@ -397,7 +402,6 @@ This is free software, and you are welcome to redistribute it under certain cond
     return results
 
 def getParser():
-    import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("mailfy")
     # Capturing errors just in case the option is not found in the configuration
     try:

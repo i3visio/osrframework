@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{% include '_banner.html' %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+	<head>
+
+        {% include '_shared-headers.html' %}
+
+    </head>
+
+    <body>
+
+        {% include '_menu-top.html' %}
+
+        <div id="body" class="grid clearfix">
+            <ul class="tabs">
+                <li><a href="#type-main"> Ooops! Something happened! </a></li>
+            </ul>
+            <div id="type-main" class="tab-content">
+                <!-- Menu Vertical Left -->
+                <div class="col_6">
+                    <center>
+                        <img src="/img/thanks.gif" />
+                    </center>
+                </div>
+
+                <div class="col_6">
+                    <h5><i class="fa fa-close icon-large"></i> HTTP Status Code: {{ errorCode }} </h5>
+                    <p>{{ errorDescription }}</p>
+                    <p>Please, check the parameters provided.</p>
+                    <p>If the error persists, post an issue on the <a href="https://github.com/i3visio/osrframework/issues">Github's repository</a> to keep track of it.</p>
+                </div>
+            </div>
+        </div>
+
+        {% include '_footer.html' %}
+
+    </body>
+</html>

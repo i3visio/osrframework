@@ -40,6 +40,7 @@ import os
 
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
+import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
 
 def performSearch(platformNames=[], queries=[], process=False, excludePlatformNames=[]):
@@ -126,7 +127,6 @@ This is free software, and you are welcome to redistribute it under certain cond
     return results
 
 def getParser():
-    import osrframework.utils.configuration as configuration
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("searchfy")
     # Capturing errors just in case the option is not found in the configuration
     try:

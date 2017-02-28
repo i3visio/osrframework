@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{% include '_banner.html' %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+	<head>
+
+        {% include '_keshif-headers.html' %}
+        {% include '_shared-headers.html' %}
+
+    </head>
+
+    <body>
+
+        {% include '_menu-top.html' %}
+
+        <div id="body" class="grid clearfix">
+            <ul class="tabs">
+                <li><a href="#type-main"> Exploring data from your files</a></li>
+            </ul>
+
+            <div id="type-main" class="tab-content">
+                <h4>Explore the data </h4>
+
+                <div id="welcome">
+                    In the following tabs you can choose different ways of exploring the data collected. But first, you will have to load it from your hard drive.
+                </div>
+                <!-- Loading instructions -->
+                <div class="col_12">
+                    {% if alert is defined %}
+                        <div class="col_12">
+                            <!-- Success -->
+                            <div class="notice {{ alert['type'] }}">
+                                <i class="fa fa-{{ alert['icon'] }}"></i>  {{ alert['message'] }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <form method=post enctype=multipart/form-data>
+                        <input type=file name=file>
+                        <input class="orange" type=submit value=Upload>
+                    </form>
+
+                    <ul class="tabs">
+                        <li><a href="#tab-keshif"> <i class="fa fa-pie-chart black"></i> Explore it</a></li>
+                        <li><a href="#tab-csv"> <i class="fa fa-file-text"></i> CSV</a></li>
+                        <!--<li><a href="#tab-json"> <i class="fa fa-file-code-o"></i> Json</a></li>
+                        <li><a href="#tab-gml"> <i class="fa fa-dot-circle-o"></i> GML</a></li>-->
+                    </ul>
+
+                    <div id="tab-keshif" class="tab-content">
+                        <center>
+                            <div class="contents">
+
+                                {% if csvData is defined %}
+                                    <div id="chart_div" style="min-width: 100px; width: 100%;"</div>
+                                {% else %}
+                                    <!-- Warning -->
+                                    <div class="notice warning"><i class="fa fa-warning icon-large"></i> No data has been loaded yet.</div>
+                                {% endif %}
+                            </div>
+                        </center>
+                    </div>
+                    <div id="tab-csv" class="tab-content">
+                        <pre>{% if csvData is defined %}{{ csvData }}{% else %}No data found.{% endif %}</pre>
+                    </div>
+                    <!--<div id="tab-json" class="tab-content">
+                        <pre>{% if jsonData is defined %}{{ jsonData }}{% else %}No data found.{% endif %}</pre>
+                    </div>
+                    <div id="tab-gml" class="tab-content">
+                        <pre>{% if gmlData is defined %}{{ gmlData }}{% else %}No data found.{% endif %}</pre>
+                    </div>-->
+            </div>
+        </div>
+
+        {% include '_footer.html' %}
+
+    </body>
+</html>

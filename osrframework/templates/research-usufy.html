@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+{% include '_banner.html' %}
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+	<head>
+
+        {% include '_shared-headers.html' %}
+        <script type="text/javascript">// <![CDATA[
+                function loading(){
+                    $("#loading").show();
+                    $("#content").hide();
+                }
+        // ]]>
+        </script>
+    </head>
+
+    <body>
+
+        {% include '_menu-top.html' %}
+
+        <div id="body" class="grid clearfix">
+            <ul class="tabs">
+                <li><a href="#type-main"> Researching using OSRFramework tools</a></li>
+            </ul>
+            <div id="type-main" class="tab-content">
+                <!-- Menu Vertical Left -->
+                <div class="col_3">
+                    {% include '_menu-research.html' %}
+                </div>
+
+                <div class="col_9">
+                    <h5><i class="fa fa-user icon-large"></i> <b>Usufy</b>: Looking for usernames</h5>
+                    <p>Users tend to get registered in several platform using the same alias. If you come across one of them and you want to check if it exists in several platforms you can use <code>usufy.py</code>.<p>
+
+                    {% include '_menu-launcher.html' %}
+
+                    <div id="tab-terminal" class="tab-content tabConfiguration">
+                        <form action="/research/usufy" method="post">
+                            <fieldset>
+                                <legend>Manual configuration</legend>
+                                <label for="lab_command"><i class="fa fa-terminal black"></i> <code>usufy.py</code></label>
+                                <input id="tex_command" name="tex_command" type="text" size="40" placeholder="e. g.: -n i3visio -p all" />
+
+                                <span class="tooltip-bottom" title="Launch the app as if you were in a terminal. The app name is not needed.">
+                                    <button name="terminal-form" class="fa fa-cogs orange" onclick="loading();"> Launch</button>
+                                </span>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div id="tab-ui" class="tab-content tabConfiguration">
+                        <form action="/research/usufy" method="post">
+                            <fieldset>
+                                <legend>Selecting targets</legend>
+                                <label for="lab_command"><i class="fa fa-search"></i> Targets: </label>
+                                <input id="tex_query" name="tex_query" type="text" size="40" placeholder="e. g.: i3visio yrubiosec febrezo"{% if query_text is defined %} value='{{ query_text }}'{% endif %}/>
+                                <span class="tooltip-bottom" title="Launch the app.">
+                                    <button name="windowed-form" class="fa fa-cogs orange" onclick="loading();"> Launch</button>
+                                </span>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Other options</legend>
+                                <div class="col_6">
+                                    {% include '_options-platforms.html' %}
+                                </div>
+                                <div class="col_6">
+                                    {% include '_options-export.html' %}
+                                    {% include '_options-other.html' %}
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+
+                {% include '_research-terminal.html' %}
+
+            </div>
+        </div>
+
+        {% include '_footer.html' %}
+
+    </body>
+</html>

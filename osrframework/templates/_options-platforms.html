@@ -1,0 +1,10 @@
+<fieldset>
+    <legend>Platforms</legend>
+    <!-- Select -->
+    <label for="select_platforms">Select platforms. You can choose more than one using Ctrl key.</label><br>
+    <select id="select_platforms" name="select_platforms" multiple="multiple" class="fancy" style="height: 500px;">
+        {% for plat in plat_options %}
+          <option value="{{ plat }}"{% if plat=="all" %} selected="selected"{% endif %}>{{ plat }}</option>
+        {% endfor %}
+    </select>
+</fieldset>
