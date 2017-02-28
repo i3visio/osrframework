@@ -1,0 +1,7 @@
+<TransformSet name="i3visio - domainfy.py" description="Searching for domains using domainfy.py utility.">
+   <Transforms>
+      <Transform name="i3visio.aliasToAllKnownDomains"/>           
+      <Transform name="i3visio.aliasToGlobalKnownDomains"/>           
+   </Transforms>
+</TransformSet>
+

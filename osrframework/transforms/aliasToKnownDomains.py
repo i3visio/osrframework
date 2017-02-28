@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2015 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,24 +24,34 @@
 import sys
 import json
 from osrframework.transforms.lib.maltego import *
-from osrframework import mailfy
+from osrframework import domainfy
 
-def aliasToKnownEmails(query=None):
+def aliasToKnownEmails(query=None, parType="global"):
     '''
-        Method that checks if there exist emails for a given a alias.
+        Method that checks if there exist domains for a given a alias.
 
-        :param query:    email to verify.
+        :param query:    alias to verify.
 
     '''
     me = MaltegoTransform()
-    emails = mailfy.grabEmails(nicks = [query])
 
-    jsonData = mailfy.performSearch(emails)
 
+    # Processing the options returned to remove the "all" option
+    tlds = []
+    for typeTld in domainfy.TLD.keys():
+        if typeTld == parType:
+            for tld in domainfy.TLD[typeTld]:
+                tlds.append({ "tld" : tld, "type" : typeTld })
+
+    domains = domainfy.createDomains(tlds, nicks = [query])
+
+    jsonData = domainfy.performSearch(domains)
+    #print json.dumps(jsonData, indent=2)
     me.addListOfEntities(jsonData)
 
     # Returning the output text...
     me.returnOutput()
 
 if __name__ == "__main__":
-    aliasToKnownEmails(query=sys.argv[1])
+    # We avoi using additional parameters
+    aliasToKnownEmails(parType=sys.argv[1], query=sys.argv[2])

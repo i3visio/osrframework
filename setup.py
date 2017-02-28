@@ -220,6 +220,7 @@ files_to_copy= {
         os.path.join("osrframework", "mailfy.py"),
         os.path.join("osrframework", "usufy.py"),
         os.path.join("osrframework", "domainfy.py"),
+        os.path.join("osrframework", "transforms", "aliasToKnownDomains.py"),
         os.path.join("osrframework", "transforms", "aliasToKnownEmails.py"),
         os.path.join("osrframework", "transforms", "aliasToSkypeAccounts.py"),
         os.path.join("osrframework", "transforms", "aliasToSkypeIP.py"),
