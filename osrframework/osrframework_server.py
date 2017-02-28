@@ -66,34 +66,6 @@ def index():
     return render_template('home.html', mt_home='class=current')
 
 @app.route("/research")
-<<<<<<< HEAD
-def research():
-    return render_template('research.html', mt_research='class=current', mr_main='class=current')
-
-@app.route("/research/usufy")
-def research_usufy():
-    return render_template('research-usufy.html', mt_research='class=current', mr_usufy='class=current')
-
-
-@app.route("/research/domainfy")
-def research_domainfy():
-    return render_template('research-domainfy.html', mt_research='class=current', mr_domainfy='class=current')
-
-
-@app.route("/research/searchfy")
-def research_searchfy():
-    return render_template('research-searchfy.html', mt_research='class=current', mr_searchfy='class=current')
-
-
-@app.route("/research/phonefy")
-def research_phonefy():
-    return render_template('research-phonefy.html', mt_research='class=current', mr_phonefy='class=current')
-
-
-@app.route("/research/mailfy")
-def research_mailfy():
-    return render_template('research-mailfy.html', mt_research='class=current', mr_mailfy='class=current')
-=======
 @app.route("/research/<program>")
 def research(program=None):
     if not program:
@@ -154,7 +126,6 @@ def explore():
             return render_template('explore.html', mt_explore='class=current', alert=notice)
     else:
         return render_template('explore.html', mt_explore='class=current')
->>>>>>> dd8ddc3... Add research buttons to Keshif Browser
 
 
 <<<<<<< HEAD
