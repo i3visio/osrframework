@@ -1,0 +1,16 @@
+
+{% if text_results is defined %}
+    <div class="col_12">
+        <!-- Success -->
+        <div class="notice success"><i class="fa fa-check"></i> The command launched is: <code>{{ command }}</code></div>
+        <fieldset>
+            <div>
+                <center>
+                <a class="button blue" href="/explore"><i class="fa fa-bar-chart"></i> Explore these results now!</a>
+                </center>
+            </div>
+            <legend><i class="fa fa-table"></i> Results collected</legend>
+            <pre id="terminal-results">{{ text_results }}</pre>
+        </fieldset>
+    </div>
+{% endif %}
