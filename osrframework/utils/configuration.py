@@ -72,6 +72,7 @@ def getConfigPath(configFileName = None):
     # Defining additional folders
     paths = {
         "appPath": applicationPath,
+        "appPathData": os.path.join(applicationPath, "data"),
         "appPathDefaults": os.path.join(applicationPath, "default"),
         "appPathTransforms": os.path.join(applicationPath, "transforms"),
         "appPathPlugins": os.path.join(applicationPath, "plugins"),
