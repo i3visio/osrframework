@@ -88,18 +88,25 @@ app = Flask(
 @app.route("/")
 def index():
     # Getting the status of the current OSRFramework installation
-    hasUpdates, version = updates.hasUpdatesOnPypi("osrframework")
-    if hasUpdates:
+    try:
+        hasUpdates, version = updates.hasUpdatesOnPypi("osrframework")
+        if hasUpdates:
+            notice = {
+                "icon": "warning",
+                "message": "OSRFramework's version is " + version + ", but there is a new release on Pypi (" + version + "). We ecnourage you to <a href='https://github.com/i3visio/osrframework/blob/master/doc/INSTALL.md'>upgrade</a> soon!" ,
+                "type": "warning"
+            }
+        else:
+            notice = {
+                "icon": "thumbs-up",
+                "message": "OSRFramework is updated to the latest version (" + version + ").",
+                "type": "success"
+            }
+    except:
         notice = {
-            "icon": "warning",
-            "message": "OSRFramework's version is " + version + ", but there is a new release on Pypi (" + version + "). We ecnourage you to <a href='https://github.com/i3visio/osrframework/blob/master/doc/INSTALL.md'>upgrade</a> soon!" ,
-            "type": "warning"
-        }
-    else:
-        notice = {
-            "icon": "thumbs-up",
-            "message": "OSRFramework is updated to the latest version (" + version + ").",
-            "type": "success"
+            "icon": "close",
+            "message": "OSRFramework Server could not get connected to Pypi to find new versions. Current version is: " + str(osrframework.__version__) + ".",
+            "type": "error"
         }
     return render_template('home.html', mt_home='class=current', notice=notice)
 
