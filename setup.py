@@ -272,7 +272,7 @@ for destiny in files_to_copy.keys():
 
         # Choosing the command depending on the SO
         if sys.platform == 'win32':
-            cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
+            cmd = "xcopy \"" + fileToMove + "\" \"" + destiny + "\" /s /e"
         elif sys.platform == 'linux2' or sys.platform == 'darwin':
             if not os.geteuid() == 0:
                 cmd = "cp \"" + fileToMove + "\" \"" + destiny + "\" -r"
