@@ -4,11 +4,15 @@ OSRFramework Changelog
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
 0.16.0, 2017/03/01 -- New major release after participation in the Mobile World Congress Event.
+- Add feature #228: Add Mozilla as a new usufy platform
+- Add feature #226: Provide a docker file to let users install easily using Docker
+- Add feature #223: Providing an API to permit interaction by third party apps
 - Add feature #201: Add Mozilla as a new usufy platform
 - Add feature #196: Add Goblinrefuge as a new usufy platform
 - Add feature #195: Add NotABug as a new usufy platform
 - Add feature #193: Add Crowdin as a new usufy platform
 - Add feature #143: Consider adding beBee to supported platforms
+- Add feature: Provide a domainfy.py Maltego transform
 - Add feature: Provide an API to be used by other applications
 - Add feature: Provide a GUI to make it easier to launch the commands for newcomers
 - Add feature: Change the path where Maltego settings file is created
@@ -62,6 +66,8 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature: Add Myfitnesspal as a new usufy platform
 - Add feature: Add Datpiff as a new usufy platform
 - Add new subdomains to domainfy in the category other
+- Fix issue #224: Deal with arrays in an entity's value to create two entities of the same type
+
 
 0.15.0, 2017/02/16 -- New major release. Add new wrappers to usufy, mailfy and domainfy. Fix important bugs.
 - Add feature #206: Appropiately capturing Ctrl + C Exceptions to stop the execution feature
