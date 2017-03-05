@@ -111,7 +111,11 @@ def getWhoisInfo(domain):
     try:
         emails = {}
         emails["type"] = "i3visio.email"
-        emails["value"] = str(info.emails)
+        if type(info.emails) is not list:
+            aux = [info.emails]
+            emails["value"] = json.dumps(aux)
+        else:
+            emails["value"] = json.dumps(info.emails)
         emails["attributes"] = []
         new.append(emails)
     except:
