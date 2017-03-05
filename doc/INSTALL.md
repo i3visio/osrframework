@@ -1,7 +1,7 @@
 Installation Instructions
 =========================
 
-More detailed installation instructions can be found in this file. This will use the official package uploaded to pip.
+More detailed installation instructions can be found in this file. This will use the official package uploaded to pip, but if you prefer to use this with Docker check (this file)[USAGE_WITH_DOCKER.md].
 
 1.- Verifying the Python and Pip Installation
 ---------------------------------------------
