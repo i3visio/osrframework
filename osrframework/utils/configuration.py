@@ -74,8 +74,8 @@ def getConfigPath(configFileName = None):
         "appPath": applicationPath,
         "appPathData": os.path.join(applicationPath, "data"),
         "appPathServer": os.path.join(applicationPath, "server"),
-        #"appPathServerStatic": os.path.join(applicationPath, "server", "static"),
-        #"appPathServerTemplates": os.path.join(applicationPath, "server", "templates"),
+        "appPathServerStatic": os.path.join(applicationPath, "server", "static"),
+        "appPathServerTemplates": os.path.join(applicationPath, "server", "templates"),
         "appPathDefaults": os.path.join(applicationPath, "default"),
         "appPathTransforms": os.path.join(applicationPath, "transforms"),
         "appPathPlugins": os.path.join(applicationPath, "plugins"),
@@ -144,6 +144,14 @@ def returnListOfConfigurationValues(util):
                 elif param == "threads":
                     try:
                         value = int(value)
+                    except Exception as err:
+                        raise errors.ConfigurationParameterNotValidError(configPath, section, param, value)
+                elif param == "debug":
+                    try:
+                        if int(value) == 0:
+                            value = False
+                        else:
+                            value = True
                     except Exception as err:
                         raise errors.ConfigurationParameterNotValidError(configPath, section, param, value)
                 VALUES[param] = value
