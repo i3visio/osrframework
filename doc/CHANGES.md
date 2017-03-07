@@ -12,6 +12,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 - Add feature #195: Add NotABug as a new usufy platform
 - Add feature #193: Add Crowdin as a new usufy platform
 - Add feature #143: Consider adding beBee to supported platforms
+- Add feature: Add new wrappers as cardingbins.py and unioncarder.py
 - Add feature: Provide a domainfy.py Maltego transform
 - Add feature: Provide an API to be used by other applications
 - Add feature: Provide a GUI to make it easier to launch the commands for newcomers
