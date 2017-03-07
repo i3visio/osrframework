@@ -189,7 +189,8 @@ setup(
         #"ndg-httpsclient",
         #"pyasn1"
         "python-whois",
-        "flask"
+        "flask",
+        "pyyaml"
     ],
 )
 
