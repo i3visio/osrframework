@@ -93,7 +93,7 @@ def index():
         if hasUpdates:
             notice = {
                 "icon": "warning",
-                "message": "OSRFramework's version is " + version + ", but there is a new release on Pypi (" + version + "). We ecnourage you to <a href='https://github.com/i3visio/osrframework/blob/master/doc/INSTALL.md'>upgrade</a> soon!" ,
+                "message": "OSRFramework's version is " + version + ", but there is a new release on Pypi (" + version + "). We encourage you to upgrade soon!" ,
                 "type": "warning"
             }
         else:
