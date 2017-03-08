@@ -517,13 +517,13 @@ if __name__ == "__main__":
 
     # Parse args
     args = parser.parse_args()
- 
-    print osrframework.utils.banner.text 
+
+    print osrframework.utils.banner.text
     print
     # Starting the server
     print "[*] Server started at " + "http://" + args.host + ":" + str(args.port) + "... You can access it in your browser."
     print "[*] Press <Ctrl + C> at any time to stop the server."
-    
+
     app.run(
         debug=args.debug,
         host=args.host,
@@ -531,4 +531,3 @@ if __name__ == "__main__":
     )
 
     print "[*] OSRFramework server exited normally."
-    

@@ -1,4 +1,4 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 #
 ##################################################################################
 #
@@ -23,4 +23,4 @@ import osrframework.utils.logger
 
 # Calling the logger when being imported
 osrframework.utils.logger.setupLogger(loggerName="osrframework")
-__version__="0.16.0a4"
+__version__="0.16.0b"
