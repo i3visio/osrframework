@@ -153,7 +153,21 @@ def returnListOfConfigurationValues(util):
                         else:
                             value = True
                     except Exception as err:
-                        raise errors.ConfigurationParameterNotValidError(configPath, section, param, value)
+                        print "Something happened when processing this debug option. Resetting to default."
+                        # Copy the data from the default folder
+                        defaultConfigPath = os.path.join(getConfigPath()["appPathDefaults"], "general.cfg")
+
+                        try:
+                            # Recovering default file
+                            with open(defaultConfigPath) as iF:
+                                cont = iF.read()
+                                # Moving its contents as the default values
+                                with open(configPath, "w") as oF:
+                                    oF.write(cont)
+                        except Exception, e:
+                            raise errors.DefaultConfigurationFileNotFoundError(configPath, defaultConfigPath);
+
+                        #raise errors.ConfigurationParameterNotValidError(configPath, section, param, value)
                 VALUES[param] = value
             break
 
