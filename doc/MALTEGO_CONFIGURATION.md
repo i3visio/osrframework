@@ -31,7 +31,7 @@ It will create a .mtz file in the OSRFramework home and under the default folder
 inside the application folder (just in case a disaster happends ;)).
 ```
 # Under Linux...
-~/.config/OSRFramework/osrframework-maltego-settings_<VERSION>.mtz
+~/osrframework-maltego-settings_<VERSION>.mtz
 ~/.config/OSRFramework/default/osrframework-maltego-settings_<VERSION>.mtz
 ```
 
