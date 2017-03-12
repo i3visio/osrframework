@@ -258,10 +258,8 @@ files_to_copy= {
     paths["appPathPatterns"] : [
         os.path.join("config", "plugins", "pattern.py.sample"),
     ],
-    paths["appPathServerStatic"] : [
+    paths["appPathServer"] : [
         os.path.join("osrframework", "static"),
-    ],
-    paths["appPathServerTemplates"] : [
         os.path.join("osrframework", "templates"),
     ]
 }
@@ -276,7 +274,6 @@ for destiny in files_to_copy.keys():
         if sys.platform == 'win32':
             if os.path.isdir(fileToMove):
                 cmd = "echo d | xcopy \"" + fileToMove + "\" \"" + destiny + "\" /s /e"
-                print cmd
             else:
                 cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
         elif sys.platform == 'linux2' or sys.platform == 'darwin':

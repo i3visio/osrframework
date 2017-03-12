@@ -3,7 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.16.0, 2017/03/01 -- New major release after participation in the Mobile World Congress Event.
+0.16.1, 2017/03/12 -- Fix OSRFramework Server installation.
+- Fix issue: Templates and static files were not appropiately dealt by setup.py
+
+0.16.0, 2017/03/10 -- New major release after participation in the Mobile World Congress Event.
 - Add feature #228: Add Mozilla as a new usufy platform
 - Add feature #226: Provide a docker file to let users install easily using Docker
 - Add feature #223: Providing an API to permit interaction by third party apps
