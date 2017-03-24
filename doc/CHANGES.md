@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.16.2, 2017/03/25 -- Fix OSRFramework false positives.
+- Fix issue #239: Fix Paypal.me usufy wrapper that is throwing false positives
+
 0.16.1, 2017/03/12 -- Fix OSRFramework Server installation.
 - Fix issue: Templates and static files were not appropiately dealt by setup.py
 
