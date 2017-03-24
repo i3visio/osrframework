@@ -6,22 +6,22 @@
 #    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
-__version__ = "1.0"
+__author__ = "Félix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+__version__ = "1.1"
 
 import argparse
 import json
@@ -84,7 +84,7 @@ class Dreamstime(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<p>This account does not exist.</p>"]
+        self.notFoundText["usufy"] = ['<div class="noimgwrap">']
         #self.notFoundText["searchfy"] = []
 
         #########################
