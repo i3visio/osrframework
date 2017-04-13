@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.16.3, 2017/04/13 -- Fix OSRFramework false positives.
+- Fix issue #245: Fix BookOfMatches usufy wrapper
+
 0.16.2, 2017/03/25 -- Fix OSRFramework false positives.
 - Fix issue #239: Fix Paypal.me usufy wrapper that is throwing false positives
 - Fix issue #240: Fix Dreamstime.me usufy wrapper that is throwing false positives
