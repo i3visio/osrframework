@@ -82,7 +82,7 @@ class Pinterest(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['<div class="standaloneErrorPage">']
+        self.notFoundText["usufy"] = [ '<title>Pinterest •', '<div class="standaloneErrorPage">', '<div class="Module UserProfilePage error"']
         #self.notFoundText["searchfy"] = []
 
         #########################
