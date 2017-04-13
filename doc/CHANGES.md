@@ -6,6 +6,7 @@ For more information, check the README.md in <http://github.com/i3visio/osrframe
 0.16.3, 2017/04/13 -- Fix OSRFramework false positives.
 - Fix issue #245: Fix BookOfMatches usufy wrapper
 - Fix issue #244: Fix Pinterest usufy wrapper
+- Move Stuff platform to pending. It seems that it now permits comments using Facebook Connect.
 
 0.16.2, 2017/03/25 -- Fix OSRFramework false positives.
 - Fix issue #240: Fix Dreamstime.me usufy wrapper that is throwing false positives
