@@ -41,7 +41,7 @@ class Moneymaker(Platform):
             Constructor...
         """
         self.platformName = "Moneymaker"
-        self.tags = ["marketing"]
+        self.tags = ["e-commerce"]
 
         ########################
         # Defining valid modes #

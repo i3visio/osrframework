@@ -38,7 +38,7 @@ class Sourceforge(Platform):
             Constructor... 
         """
         self.platformName = "Sourceforge"
-        self.tags = ["code"]
+        self.tags = ["development"]
         
         ########################
         # Defining valid modes #

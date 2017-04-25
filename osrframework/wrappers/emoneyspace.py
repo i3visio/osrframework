@@ -41,7 +41,7 @@ class Emoneyspace(Platform):
             Constructor...
         """
         self.platformName = "Emoneyspace"
-        self.tags = ["forum", "economy"]
+        self.tags = ["online"]
 
         ########################
         # Defining valid modes #

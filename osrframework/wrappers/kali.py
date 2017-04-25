@@ -38,7 +38,7 @@ class Kali(Platform):
             Constructor... 
         """
         self.platformName = "Kali"
-        self.tags = ["hacking", "tools"]
+        self.tags = ["hacking"]
 
         ########################
         # Defining valid modes #

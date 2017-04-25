@@ -39,7 +39,7 @@ class Theverge(Platform):
             Constructor...
         """
         self.platformName = "Theverge"
-        self.tags = ["news"]
+        self.tags = ["news", "tech"]
 
         ########################
         # Defining valid modes #

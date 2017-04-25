@@ -39,7 +39,7 @@ class WikipediaEu(Platform):
         """
         self.platformName = "Wikipedia (eu)"
         self.parameterName = "wikipedia"
-        self.tags = ["social", "news"]
+        self.tags = ["education", "wiki"]
 
         ########################
         # Defining valid modes #

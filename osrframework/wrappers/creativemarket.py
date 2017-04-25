@@ -41,7 +41,7 @@ class Creativemarket(Platform):
             Constructor...
         """
         self.platformName = "Creativemarket"
-        self.tags = ["market"]
+        self.tags = ["e-commerce", "art"]
 
         ########################
         # Defining valid modes #

@@ -41,7 +41,7 @@ class Codecademy(Platform):
             Constructor... 
         """
         self.platformName = "Codecademy"
-        self.tags = ["learning", "development"]
+        self.tags = ["education", "development"]
 
         ########################
         # Defining valid modes #

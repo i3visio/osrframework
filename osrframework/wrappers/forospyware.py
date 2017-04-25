@@ -38,7 +38,7 @@ class Forospyware(Platform):
             Constructor... 
         """
         self.platformName = "Forospyware"
-        self.tags = ["security"]
+        self.tags = ["hacking"]
 
         ########################
         # Defining valid modes #

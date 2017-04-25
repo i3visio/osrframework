@@ -41,7 +41,7 @@ class Affilorama(Platform):
             Constructor... 
         """
         self.platformName = "Affilorama"
-        self.tags = ["e-commerce", "marketing"]
+        self.tags = ["e-commerce"]
 
         ########################
         # Defining valid modes #

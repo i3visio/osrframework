@@ -38,7 +38,7 @@ class Tipme(Platform):
             Constructor... 
         """
         self.platformName = "Tipme"
-        self.tags = ["bitcoin", "cryptocurrencies", "payments"]
+        self.tags = ["cryptocurrencies", "payments"]
 
         ########################
         # Defining valid modes #

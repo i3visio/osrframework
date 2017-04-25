@@ -42,7 +42,7 @@ class Skype(Platform):
             Constructor... 
         """
         self.platformName = "Skype"
-        self.tags = ["messaging"]
+        self.tags = ["conversation"]
 
         ########################
         # Defining valid modes #

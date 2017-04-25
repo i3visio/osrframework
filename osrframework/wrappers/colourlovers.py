@@ -41,7 +41,7 @@ class Colourlovers(Platform):
             Constructor...
         """
         self.platformName = "Colourlovers"
-        self.tags = ["design"]
+        self.tags = ["art"]
 
         ########################
         # Defining valid modes #

@@ -37,7 +37,7 @@ class Thesims(Platform):
             Constructor... 
         """
         self.platformName = "Thesims"
-        self.tags = ["social", "news", "gaming"]
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #

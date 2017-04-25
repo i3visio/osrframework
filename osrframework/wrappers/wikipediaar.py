@@ -39,7 +39,7 @@ class WikipediaAr(Platform):
         """
         self.platformName = "Wikipedia (ar)"
         self.parameterName = "wikipedia"
-        self.tags = ["social", "news"]
+        self.tags = ["education", "wiki"]
 
         ########################
         # Defining valid modes #

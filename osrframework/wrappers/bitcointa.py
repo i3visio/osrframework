@@ -38,7 +38,7 @@ class Bitcointa(Platform):
             Constructor... 
         """
         self.platformName = "Bitcointa"
-        self.tags = ["bitcoin"]
+        self.tags = ["cryptocurrencies"]
 
         ########################
         # Defining valid modes #

@@ -41,7 +41,7 @@ class TranslateHola(Platform):
             Constructor...
         """
         self.platformName = "Translate_Hola"
-        self.tags = ["internet", "development"]
+        self.tags = ["translation"]
 
         ########################
         # Defining valid modes #
