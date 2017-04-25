@@ -55,7 +55,7 @@ class Taringa(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.taringa.net" + "<usufy>"
+        self.url["usufy"] = "https://www.taringa.net/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
