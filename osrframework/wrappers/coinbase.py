@@ -30,15 +30,15 @@ import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 class Coinbase(Platform):
-    """ 
+    """
         A <Coinbase> object for Demo.
     """
     def __init__(self):
-        """ 
-            Constructor... 
+        """
+            Constructor...
         """
         self.platformName = "Coinbase"
-        self.tags = ["bitcoin", "payments"]
+        self.tags = ["cryptocurrencies", "payments"]
 
         ########################
         # Defining valid modes #
@@ -47,7 +47,7 @@ class Coinbase(Platform):
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
         self.isValidMode["searchfy"] = False
-        
+
         ######################################
         # Search URL for the different modes #
         ######################################
@@ -64,7 +64,7 @@ class Coinbase(Platform):
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
         #self.needsCredentials["searchfy"] = False
-        
+
         #################
         # Valid queries #
         #################
@@ -74,7 +74,7 @@ class Coinbase(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
-        
+
         ###################
         # Not_found clues #
         ###################
@@ -83,17 +83,17 @@ class Coinbase(Platform):
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = ["<title>Coinbase &mdash; 404 Not Found</title>"]
         #self.notFoundText["searchfy"] = []
-        
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -102,10 +102,9 @@ class Coinbase(Platform):
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-        
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-
