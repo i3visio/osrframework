@@ -10,6 +10,9 @@ For more information, check the README.Add some wrappers
 - Fix issue #250: Pinterest wrapper is throwing sometimes false positives
 - Fix issue #249: Ixgames usufy wrapper is throwing false positives
 - Fix issue #248: Echatta usufy wrapper is throwing false positives
+- Fix issue: Break.com was throwing false positives
+- Fix issue: Cartodb was throwing false positives
+- Fix issue: Creativemarket was throwing false positives
 - Rearrange some tags in certain platforms
 
 0.16.4, 2017/04/25 -- Fix OSRFramework false positives.
