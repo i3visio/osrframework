@@ -3,8 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
-0.16.5, 2017/04/25 -- Fix OSRFramework false positives.
-- Fix issue #249: Ixgames usufy wrapper is throwing false positives #249
+0.16.4, 2017/04/25 -- Fix OSRFramework false positives.
+- Fix issue #249: Ixgames usufy wrapper is throwing false positives
+- Fix issue #248: Echatta usufy wrapper is throwing false positives
 
 0.16.3, 2017/04/13 -- Fix OSRFramework false positives.
 - Fix issue #245: Fix BookOfMatches usufy wrapper
