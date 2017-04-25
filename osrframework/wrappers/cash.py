@@ -41,7 +41,7 @@ class Cash(Platform):
             Constructor...
         """
         self.platformName = "Cash"
-        self.tags = ["money"]
+        self.tags = ["payments"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +57,7 @@ class Cash(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://cash.me/" + "<usufy>" 
+        self.url["usufy"] = "https://cash.me/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
