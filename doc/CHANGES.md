@@ -3,11 +3,14 @@ OSRFramework Changelog
 
 For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
 
+0.16.5, 2017/04/25 -- Fix OSRFramework false positives.
+- Fix issue #249: Ixgames usufy wrapper is throwing false positives #249
+
 0.16.3, 2017/04/13 -- Fix OSRFramework false positives.
 - Fix issue #245: Fix BookOfMatches usufy wrapper
 - Fix issue #244: Fix Pinterest usufy wrapper
 - Fix issue #243: Domainfy.py is throwing some false positives
-- Move Stuff platform to pending. It seems that it now permits comments using Facebook Connect.
+- Move Stuff platform to pending. It seems that it now permits comments using Facebook Connect
 
 0.16.2, 2017/03/25 -- Fix OSRFramework false positives.
 - Fix issue #240: Fix Dreamstime.me usufy wrapper that is throwing false positives
