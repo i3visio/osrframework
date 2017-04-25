@@ -1,7 +1,12 @@
 OSRFramework Changelog
 ======================
 
-For more information, check the README.md in <http://github.com/i3visio/osrframework>. For the ToDo list and the known issues, scroll down till the end of this file.
+For more information, check the README.Add some wrappers
+
+0.16.3, 2017/04/13 -- Add Taringa and Theverge wrappers
+- Add feature #246: Add theverge.com as a new usufy platform
+- Add feature #238: Add Taringa as a new usufy wrapper
+- Add feature #236: Add Openstreetmap as a new usufy wrapper
 
 0.16.4, 2017/04/25 -- Fix some OSRFramework false positives and add Taringa, TheVerge and Openstreetmap.
 - Add feature #246: Add theverge.com as a new usufy platform
