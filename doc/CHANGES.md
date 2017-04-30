@@ -3,6 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.16.5, 2017/04/30 -- Fix mailfy.py by adding a timeout to the verifications.
+- Fix issue #251: Mailfy seems to be crashing persistently
+- Minor refactoring of the mailfy.py documentation and comments
+
 0.16.4, 2017/04/25 -- Fix some OSRFramework false positives and add Taringa, TheVerge and Openstreetmap.
 - Add feature #246: Add theverge.com as a new usufy platform
 - Add feature #238: Add Taringa as a new usufy wrapper

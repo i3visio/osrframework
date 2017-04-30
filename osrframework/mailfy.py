@@ -29,28 +29,28 @@ __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "AGPLv3+"
-__version__ = "v5.1"
+__version__ = "v5.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 import argparse
 import datetime as dt
+import time
 import json
-import os
-import sys
-
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
+import os
+import signal
+import sys
+
+# Email verification libraries
+import emailahoy
+import validate_email
 
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
-# From emailahoy code
-import emailahoy
-from validate_email import validate_email
-
-import signal
 
 # Pending
 #188.com", "21cn.cn", "popo.163.com", "vip.126.com", "vip.163.com", "vip.188.com"
@@ -93,8 +93,7 @@ EMAIL_DOMAINS = [
 
 
 def getMoreInfo(e):
-    '''
-        Method that calls different third party API.
+    '''Method that calls different third party API.
 
         :param e:   Email to verify.
 
@@ -121,7 +120,7 @@ def getMoreInfo(e):
     return email, alias, domain
 
 def weCanCheckTheseDomains(email):
-    '''
+    '''Method that verifies if a domain can be safely verified.
     '''
     # Known platform not to be working...
     notWorking = [
@@ -160,8 +159,7 @@ def weCanCheckTheseDomains(email):
     return True
 
 def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS, excludeDomains = []):
-    '''
-        Method that globally permits to grab the emails.
+    '''Method that globally permits to grab the emails.
 
         :param emails:  list of emails.
         :param emailsFile: filepath to the emails file.
@@ -173,34 +171,44 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
 
     '''
     email_candidates = []
+
     if emails != None:
         email_candidates = emails
     elif emailsFile != None:
+        # Reading the emails file
         with open(emailsFile, "r") as iF:
             email_candidates = iF.read().splitlines()
     elif nicks != None:
+        # Iterating the list of nicks
         for n in nicks:
+            # Iterating the list of possible domains to build the emails
             for d in domains:
                 if d not in excludeDomains:
                     email_candidates.append(n+"@"+d)
     elif nicksFile != None:
+        # Reading the list of nicks
         with open(nicksFile, "r") as iF:
             nicks = iF.read().splitlines()
+            # Iterating the list of nicks
             for n in nicks:
+                # Iterating the list of possible domains to build the emails
                 for d in domains:
                     if d not in excludeDomains:
                         email_candidates.append(n+"@"+d)
     return email_candidates
 
 def pool_function(args):
-    '''
-        Wrapper for being able to launch all the threads of getPageWrapper.
+    '''Wrapper for being able to launch all the threads. We will use python-emailahoy library for the verification in non-Windows systems as it is faster than validate_email. In Windows systems the latter would be used.
+
         :param args: We receive the parameters for getPageWrapper as a tuple.
     '''
     is_valid = True
 
     try:
-        is_valid = validate_email(args,verify=True)
+        if sys.platform == 'win32':
+            is_valid = validate_email.validate_email(args, verify=True)
+        else:
+            is_valid = emailahoy.verify_email_address(args)
     except Exception, e:
         print "WARNING. An error was found when performing the search. You can omit this message."
         print str(e)
@@ -211,27 +219,36 @@ def pool_function(args):
         email, alias, domain = getMoreInfo(args)
         aux = {}
         aux["type"] = "i3visio.profile"
-        aux["value"] =  domain["value"]+ " - " +alias["value"]
-        aux["attributes"]= []
+        aux["value"] = domain["value"] + " - " + alias["value"]
+        aux["attributes"] = []
         aux["attributes"].append(email)
         aux["attributes"].append(alias)
         aux["attributes"].append(domain)
 
-        return {"platform" : str(domain), "status": "DONE", "data": aux}
+        return {"platform": str(domain["value"]), "status": "DONE", "data": aux}
     else:
-        return {"platform" : str(domain), "status": "DONE", "data": {}}
+        return {"platform": str(domain["value"]), "status": "DONE", "data": {}}
 
-def performSearch(emails=[], nThreads=16):
-    '''
-        Method to perform the mail verification process.
+
+def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
+    '''Method to perform the mail verification process.
 
         :param emails: List of emails.
+        :param nThreads: List of threads.
+        :param secondsBeforeTimeout: Number of seconds to wait until timeouting.
 
         :return:
     '''
-    results = []
+    # Getting starting time
+    _startTime = time.time()
 
-    # Using threads in a pool if we are not running the program in main
+    def hasRunOutOfTime(oldEpoch):
+        '''Function that checks if a given time has passed
+        '''
+        now = time.time()
+        return now - oldEpoch >= secondsBeforeTimeout
+
+    results = []
     args = []
 
     # Grabbing all the emails that would be validated
@@ -270,20 +287,23 @@ def performSearch(emails=[], nThreads=16):
             parameters = ( m, )
             pool.apply_async (pool_function, args= parameters, callback = log_result )
 
-        # Waiting for results to be finished
-        while len(poolResults) < len(emails):
+        # Waiting for results to be finished or time to pass
+        while len(poolResults) < len(emails) and not hasRunOutOfTime(_startTime):
             pass
+
         # Closing normal termination
         pool.close()
     except KeyboardInterrupt:
         print "\nProcess manually stopped by the user. Terminating workers.\n"
         pool.terminate()
-        print "The following emails were not processed:"
+
         pending = ""
+
+        print "The following emails were not processed:"
         for m in emails:
             processed = False
-            for email in poolResults:
-                if str(m) == email["platform"]:
+            for result in poolResults:
+                if str(m) in json.dumps(result["data"]):
                     processed = True
                     break
             if not processed:
@@ -312,8 +332,7 @@ def performSearch(emails=[], nThreads=16):
     return results
 
 def main(args):
-    '''
-        Main program.
+    '''Main program.
 
         :param args: Arguments received in the command line.
     '''
@@ -326,14 +345,13 @@ This is free software, and you are welcome to redistribute it under certain cond
         print sayingHello
         print
 
-    # Commented out as not needed after 0.12.1
-    """
-    if sys.platform == 'win32':
-        print "WARNING:"
-        print "\tmailfy.py seems to be run in a Windows system."
-        print "\tThe emailahoy libraries may NOT work properly. We are trying to find a fix for this issue."
-        print
-    """
+        # Displaying a warning if this is being run in a windows system
+        if sys.platform == 'win32':
+            print "WARNING:"
+            print "\tOSRFramework has detected that you are running mailfy.py in a Windows system."
+            print "\tAs the emailahoy library is NOT working properly there, validate_email will be used."
+            print "\tVerification may be slower though."
+            print
 
     # Processing the options returned to remove the "all" option
     if "all" in args.domains:
