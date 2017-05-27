@@ -4,6 +4,7 @@ OSRFramework Changelog
 For more information, check the README.Add some wrappers
 
 0.16.6, 2017/05/27 -- Several fixes domainfy.py options.
+- Fix issue #258: Launching usufy.py -n whatever -t all crashes the app
 - Fix issue #255: Wrong command shown when stopping domainfy
 - Fix issue: -u option in domainfy.py was not working appropiately
 - Fix issue: Appropiately showing the list of pending domains in domainfy

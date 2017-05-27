@@ -1,20 +1,20 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2014-207 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##################################################################################
@@ -38,27 +38,27 @@ import osrframework.utils.config_api_keys as api_keys
 import logging
 
 class Platform():
-    ''' 
+    '''
         <Platform> class.
     '''
     def __init__(self):
-        ''' 
+        '''
             Constructor without parameters...
         '''
-        pass    
-        
+        pass
+
     def __init__(self, pName, tags):
-        ''' 
+        '''
             Constructor with parameters. This method permits the developer to instantiate dinamically Platform objects.
         '''
         self.platformName = pName
         # These tags will be the one used to label this platform
         self.tags = tags
-        
-        # Base URL
-        self.baseURL = "http://plataform.com"        
 
-        # Trying to find an API... This line should be added in every  platform for which we have defined an API. 
+        # Base URL
+        self.baseURL = "http://plataform.com"
+
+        # Trying to find an API... This line should be added in every  platform for which we have defined an API.
         # DO NOT FORGET TO IMPORT THE APIWRAPPER, i. e.:
         # from osrframework.api import TwitterAPIWrapper as TwitterAPIWrapper
         self.wrapperAPI = None
@@ -66,31 +66,31 @@ class Platform():
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = False
-        self.isValidMode["searchfy"] = False      
-        
+        self.isValidMode["searchfy"] = False
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         #self.url["usufy"] = "http://anyurl.com/user/" + "<usufy>"
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
-        ######################################        
-        self.needsCredentials = {}        
+        ######################################
+        self.needsCredentials = {}
         self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        self.needsCredentials["searchfy"] = False 
-        
+        self.needsCredentials["searchfy"] = False
+
         # Array of credentials to be used
         self.creds = []
-        
+
         ###################
         # Valid queries #
         ###################
@@ -100,43 +100,43 @@ class Platform():
         self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".*"
         self.validQuery["searchfy"] = ".*"
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        #self.notFoundText["usufy"] = []   
-        #self.notFoundText["searchfy"] = []        
-        
+        #self.notFoundText["usufy"] = []
+        #self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         #self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+
     def createURL(self, word, mode="phonefy"):
-        ''' 
+        '''
             Method to create the URL replacing the word in the appropriate URL.
-            
+
             :param word:   Word to be searched.
             :param mode:    Mode to be executed.
-            
+
             :return:    The URL to be queried.
         '''
         try:
@@ -149,19 +149,19 @@ class Platform():
                 try:
                     return self.url[mode].replace("<"+mode+">", urllib.pathname2url(word)), word
                 except:
-                    pass   
+                    pass
         except:
             pass
             # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.
 
     def getInfo(self, query=None, process = False, mode="phonefy", qURI=None):
-        ''' 
+        '''
             Method that checks the presence of a given query and recovers the first list of complains.
 
             :param query:   Query to verify.
             :param proces:  Calling the processing function.
-            :param mode:    Mode to be executed.   
-            :param qURI:    A query to be checked         
+            :param mode:    Mode to be executed.
+            :param qURI:    A query to be checked
 
             :return:    Python structure for the html processed.
         '''
@@ -171,7 +171,7 @@ class Platform():
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
             return json.dumps(results)
-        
+
         # Verrifying if the mode is valid
         if not self._isValidQuery(query, mode=mode):
             # TO-DO: InvalidQueryException
@@ -189,22 +189,22 @@ class Platform():
                         aux = {}
                         aux["type"]="i3visio.uri"
                         alias=r["value"].split(' - ')[1]
-                        qURL, query = self.createURL(word=alias, mode="usufy")                         
+                        qURL, query = self.createURL(word=alias, mode="usufy")
                         aux["value"]= qURL
-                        aux["attributes"]= []                        
+                        aux["attributes"]= []
                         r["attributes"].append(aux)
-                        
-                elif mode == "searchfy":                                
-                    results = self.wrapperAPI.search_users(query) 
+
+                elif mode == "searchfy":
+                    results = self.wrapperAPI.search_users(query)
                     # Manually appending the URL
                     for r in results:
                         aux = {}
                         aux["type"]="i3visio.uri"
                         alias=r["value"].split(' - ')[1]
-                        qURL, query = self.createURL(word=alias, mode="usufy")                         
+                        qURL, query = self.createURL(word=alias, mode="usufy")
                         aux["value"]= qURL
-                        aux["attributes"]= []                        
-                        r["attributes"].append(aux)                         
+                        aux["attributes"]= []
+                        r["attributes"].append(aux)
             else:
                 # NoneType returned
                 pass
@@ -214,8 +214,8 @@ class Platform():
             if qURI != None:
                 qURL = qURI
             else:
-                qURL, query = self.createURL(word=query, mode=mode)           
-            i3Browser = browser.Browser()            
+                qURL, query = self.createURL(word=query, mode=mode)
+            i3Browser = browser.Browser()
             try:
                 # check if it needs creds
                 if self.needsCredentials[mode]:
@@ -228,9 +228,9 @@ class Platform():
                     data = i3Browser.recoverURL(qURL)
             except:
                 # No information was found, then we return a null entity
-                # TO-DO: i3BrowserException         
-                return json.dumps(results)            
-                   
+                # TO-DO: i3BrowserException
+                return json.dumps(results)
+
             # Verifying if the platform exists
             if self.somethingFound(data, mode=mode):
 
@@ -238,72 +238,72 @@ class Platform():
                     r = {}
                     r["type"] = "i3visio.phone"
                     r["value"] = self.platformName + " - " + query
-                    r["attributes"] = []      
+                    r["attributes"] = []
 
                     # Appending platform URI
                     aux = {}
                     aux["type"] = "i3visio.uri"
                     aux["value"] = qURL
-                    aux["attributes"] = []           
-                    r["attributes"].append(aux)   
-                    
+                    aux["attributes"] = []
+                    r["attributes"].append(aux)
+
                     # Appending platform name
                     aux = {}
                     aux["type"] = "i3visio.platform"
                     aux["value"] = self.platformName
                     aux["attributes"] = []
                     r["attributes"].append(aux)
-                                  
+
                     # Iterating if requested to extract more entities from the URI
-                    if process:                               
+                    if process:
                         # This function returns a json text!
                         r["attributes"] += json.loads(self.processData(data=data, mode=mode))
                     # Appending the result to results: in this case only one profile will be grabbed
-                    results.append(r)    
-                                                              
+                    results.append(r)
+
                 elif mode == "usufy":
-                    r = {}            
+                    r = {}
                     r["type"] = "i3visio.profile"
-                    r["value"] = self.platformName + " - " + query                
-                    r["attributes"] = []   
-                    
+                    r["value"] = self.platformName + " - " + query
+                    r["attributes"] = []
+
                     # Appending platform URI
                     aux = {}
                     aux["type"] = "i3visio.uri"
                     aux["value"] = qURL
-                    aux["attributes"] = []           
-                    r["attributes"].append(aux)  
+                    aux["attributes"] = []
+                    r["attributes"].append(aux)
                     # Appending the alias
                     aux = {}
                     aux["type"] = "i3visio.alias"
                     aux["value"] = query
-                    aux["attributes"] = []           
-                    r["attributes"].append(aux)                    
+                    aux["attributes"] = []
+                    r["attributes"].append(aux)
                     # Appending platform name
                     aux = {}
                     aux["type"] = "i3visio.platform"
                     aux["value"] = self.platformName
                     aux["attributes"] = []
                     r["attributes"].append(aux)
-                    
-                  
+
+
                     # Iterating if requested to extract more entities from the URI
-                    if process:                               
+                    if process:
                         # This function returns a json text!
                         r["attributes"] += json.loads(self.processData(data=data, mode=mode))
-                
+
                     # Appending the result to results: in this case only one profile will be grabbed
-                    results.append(r)                
-                                                  
+                    results.append(r)
+
                 elif mode == "searchfy":
                     # Recovering all the found aliases...
                     ids = re.findall(self.searchfyAliasRegexp, data, re.DOTALL)
 
                     for j, i in enumerate(ids):
-                        r = {}            
+                        r = {}
                         r["type"] = "i3visio.profile"
-                        r["value"] = self.platformName + " - " + i            
-                        r["attributes"] = []   
+                        r["value"] = self.platformName + " - " + i
+                        r["attributes"] = []
 
                         # Appending platform URI
                         aux = {}
@@ -312,16 +312,16 @@ class Platform():
                         uri, alias = self.createURL(word=i, mode="base")
                         #uri=self.baseURL+i
 
-                        aux["value"] = uri                    
+                        aux["value"] = uri
 
-                        aux["attributes"] = []           
-                        r["attributes"].append(aux)  
+                        aux["attributes"] = []
+                        r["attributes"].append(aux)
                         # Appending the alias
                         aux = {}
                         aux["type"] = "i3visio.alias"
                         aux["value"] = alias
-                        aux["attributes"] = []           
-                        r["attributes"].append(aux)                      
+                        aux["attributes"] = []
+                        r["attributes"].append(aux)
                         # Appending platform name
                         aux = {}
                         aux["type"] = "i3visio.platform"
@@ -334,43 +334,43 @@ class Platform():
                         aux["value"] = query
                         aux["attributes"] = []
                         r["attributes"].append(aux)
-                        
+
                         # TO-DO:
                         # Perform additional procesing
                         # Iterating the requested profiles to extract more entities from the URI would be slow!
-                        """if process:                               
+                        """if process:
                             # This function returns a json text in usufy format for the returned objects.
-                            r["attributes"] += json.loads(self.getInfo(process = True, mode="usufy", qURI=uri, query=i))                    
+                            r["attributes"] += json.loads(self.getInfo(process = True, mode="usufy", qURI=uri, query=i))
                         # Appending the result to results: in this case only one profile will be grabbed"""
-                        results.append(r)  
+                        results.append(r)
         return json.dumps(results)
 
     def modeIsValid(self, mode):
-        ''' 
+        '''
             Verification of whether the mode is a correct option to be used.
-            
-            :param mode:    Mode to be executed.            
-            
+
+            :param mode:    Mode to be executed.
+
             :return:    True if the mode exists in the three main folders.
         '''
         if mode in self.isValidMode.keys():
             if mode in self.isValidMode.keys():
                 return True
         return False
-        
+
     def processData(self, uri=None, data = None, mode=None):
-        ''' 
+        '''
             Method to process and extract the entities of a URL of this type.
-           
+
             :param uri: The URI of this platform to be processed.
             :param data: The information from which the info will be extracted. This way, info will not be downloaded twice.
-            :param mode:    Mode to be executed.            
-                        
+            :param mode:    Mode to be executed.
+
             :return:    A list of the entities found.
         '''
         if data == None:
             # Accessing the resource
-            i3Browser = browser.Browser()            
+            i3Browser = browser.Browser()
             try:
                 # check if it needs creds
                 if self.needsCredentials[mode]:
@@ -380,11 +380,11 @@ class Platform():
                         data = i3Browser.recoverURL(uri)
                 else:
                     # Accessing the resources
-                    data = i3Browser.recoverURL(uri)   
+                    data = i3Browser.recoverURL(uri)
             except:
                 # No information was found, then we return a null entity
-                # TO-DO: i3BrowserException         
-                return json.dumps({})                        
+                # TO-DO: i3BrowserException
+                return json.dumps({})
         #else:
         #    return json.dumps({})
         info = []
@@ -397,9 +397,9 @@ class Platform():
                 try:
                     # Using the old approach of "Start" + "End"
                     regexp = self.fieldsRegExp[mode][field]["start"]+"([^\)]+)"+self.fieldsRegExp[mode][field]["end"]
-                    
+
                     tmp = re.findall(regexp, data)
-                    
+
                     # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
                     values = []
                     for t in tmp:
@@ -408,32 +408,32 @@ class Platform():
                             values.append(t.split(self.fieldsRegExp[mode][field]["end"])[0])
                         else:
                             values.append(t)
-                            
+
                 except:
                     # Using the compact approach if start and end tags do not exist.
                     regexp = self.fieldsRegExp[mode][field]
-                    
+
                     values = re.findall(regexp, data)
-                
+
                 for val in values:
                     aux = {}
                     aux["type"] = field
                     aux["value"] = val
-                    aux["attributes"] = []                
+                    aux["attributes"] = []
                     if aux not in info:
-                        info.append(aux)        
-        # Searchfy results        
+                        info.append(aux)
+        # Searchfy results
         else:
             # Grabbing the results for the search
             resultText = re.findall(searchfyAliasRegexp, data)
-            # Analysing each and every result to parse it...        
+            # Analysing each and every result to parse it...
             for resURI in resultText:
                 r = {}
                 r["type"] = "i3visio.uri"
                 r["value"] = resURI
                 r["attributes"] = []
                 """# Iterating through all the type of fields
-                i3Browser = browser.Browser()            
+                i3Browser = browser.Browser()
                 try:
                     # check if the profile needs credentials in usufy mode
                     if self.needsCredentials["usufy"]:
@@ -443,7 +443,7 @@ class Platform():
                             data = i3Browser.recoverURL(resURI)
                     else:
                         # Accessing the resources
-                        data = i3Browser.recoverURL(resURI)                
+                        data = i3Browser.recoverURL(resURI)
                 except:
                     data = ""
                 for field in self.fieldsRegExp["usufy"].keys():
@@ -451,10 +451,10 @@ class Platform():
                     try:
                         # Using the old approach of "Start" + "End"
                         regexp = self.fieldsRegExp["usufy"][field]["start"]+"([^\)]+)"+self.fieldsRegExp["usufy"][field]["end"]
-                        
+
                         # Parsing the result for the text
                         tmp = re.findall(regexp, data)
-                        
+
                         # Now we are performing an operation just in case the "end" tag is found  in the results, which would mean that the tag selected matches something longer in the data.
                         values = []
                         for t in tmp:
@@ -466,9 +466,9 @@ class Platform():
                     # In the case of a compact approach being used. This would happen if start and end tags do not exist, but the expected behaviour is the same.
                     except:
                         regexp = self.fieldsRegExp["usufy"][field]
-                        
+
                         values = re.findall(regexp, data)
-                    
+
                     if field == "i3visio.uri":
                         for val in values:
                             r["value"] =  val
@@ -477,20 +477,20 @@ class Platform():
                             aux = {}
                             aux["type"] = field
                             aux["value"] = val
-                            aux["attributes"] = []                
+                            aux["attributes"] = []
                             if aux not in r["attributes"]:
-                                r["attributes"].append(aux) """             
-                r["attributes"] = json.loads(self.getInfo(process = True, mode="usufy", qURI=resURI))   
+                                r["attributes"].append(aux) """
+                r["attributes"] = json.loads(self.getInfo(process = True, mode="usufy", qURI=resURI))
                 info.append(r)
         return json.dumps(info)
-    
+
     def somethingFound(self,data,mode="phonefy"):
-        ''' 
+        '''
             Verifying if something was found.
-            
+
             :param data:    Data where the self.notFoundText will be searched.
-            :param mode:    Mode to be executed.            
-            
+            :param mode:    Mode to be executed.
+
             :return: Returns True if exists.
         '''
         #try:
@@ -500,21 +500,21 @@ class Platform():
         return True
         #except:
         #    pass
-        #    # TO-DO: Throw notFoundText not found for this mode.        
-            
+        #    # TO-DO: Throw notFoundText not found for this mode.
+
     def __str__(self):
-        ''' 
+        '''
             Function to represent the text when printing the object
-            
+
             :return:    self.platformName
         '''
         try:
-            return self.parameterName        
+            return self.parameterName
         except:
-            return self.platformName    
+            return self.platformName
 
     def __eq__(self, obj):
-        ''' 
+        '''
             Function to check if two wrappers are the same based on the convention.
 
             :return:    True or False
@@ -522,9 +522,9 @@ class Platform():
         return self.platformName == obj.platformName
 
     def _getAuthenticated(self, browser):
-        ''' 
+        '''
             Getting authenticated. This method will be overwritten.
-            
+
             :param browser: The browser in which the user will be authenticated.
         '''
         # check if we have creds
@@ -537,11 +537,11 @@ class Platform():
         else:
             logger.debug("No credentials have been added and this platform needs them.")
             return False
-        
+
     def _isValidQuery(self, query, mode="phonefy"):
-        '''    
+        '''
             Method to verify if a given query is processable by the platform. The system looks for the forbidden characters in self.Forbidden list.
-            
+
             :param query:
             :param mode:    To be chosen amongst phonefy, usufy and searchfy.
             :return:    True | False
@@ -569,8 +569,8 @@ class Platform():
             print "\tQuery: ", query
             print "\tPlatform: ", self.platformName
             return True
-            
-           
+
+
     def setCredentials(self, cred):
         """
             Getting the credentials and appending it to self.creds.

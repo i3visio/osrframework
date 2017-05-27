@@ -31,7 +31,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v5.1"
+__version__ = "v5.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -59,6 +59,7 @@ import logging
 
 # Preparing to capture interruptions smoothly
 import signal
+
 
 def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     '''
@@ -157,6 +158,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     print json.dumps(res, indent = 2)
     return res
 
+
 def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
     '''
         Method that wraps the call to the getInfo. Before it was getUserPage.
@@ -207,6 +209,7 @@ def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload =
     except Exception as e:
         print "\tERROR: " + str(p)
         return {"platform" : str(p), "status": "ERROR", "data": []}
+
 
 def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, maltego=False, verbosity=1, logFolder="./logs"):
     '''
@@ -307,6 +310,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                         profiles.append(r)
         res+=profiles
     return res
+
 
 def main(args):
     '''
@@ -563,6 +567,7 @@ This is free software, and you are welcome to redistribute it under certain cond
 
             return res
 
+
 def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("usufy")
     # Capturing errors just in case the option is not found in the configuration
@@ -616,6 +621,7 @@ def getParser():
     groupAbout.add_argument('--version', action='version', version='%(prog)s ' +__version__, help='shows the version of the program and exists.')
 
     return parser
+
 
 if __name__ == "__main__":
     # Grabbing the parser
