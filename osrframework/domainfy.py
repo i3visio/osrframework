@@ -29,7 +29,7 @@ __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2016-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v5.1"
+__version__ = "v5.2"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -171,15 +171,23 @@ def createDomains(tlds, nicks=None, nicksFile=None):
     if nicks != None:
         for n in nicks:
             for t in tlds:
-                tmp = { "domain" : n + t["tld"], "type" : t["type"] }
-                domain_candidates.append( tmp )
+                tmp = {
+                    "domain" : n + t["tld"],
+                    "type" : t["type"],
+                    "tld": t["tld"]
+                }
+                domain_candidates.append(tmp)
     elif nicksFile != None:
         with open(nicksFile, "r") as iF:
             nicks = iF.read().splitlines()
             for n in nicks:
                 for t in tlds:
-                    tmp = { "domain" : n + t["tld"], "type" :["type"] }
-                    domain_candidates.append( tmp )
+                    tmp = {
+                        "domain" : n + t["tld"],
+                        "type" : t["type"],
+                        "tld": t["tld"]
+                    }
+                    domain_candidates.append(tmp)
     return domain_candidates
 
 
@@ -310,7 +318,7 @@ def performSearch(domains=[], nThreads=16):
         print "\nProcess manually stopped by the user. Terminating workers.\n"
         pool.terminate()
         print "The following domains were not processed:"
-        pending = ""
+        pending_tld = ""
         for d in domains:
             processed = False
             for processedDomain in poolResults:
@@ -318,14 +326,14 @@ def performSearch(domains=[], nThreads=16):
                     processed = True
                     break
             if not processed:
-                print "\t- " + str(d)
-                pending += " " + str(d)
+                print "\t- " + str(d["domain"])
+                pending_tld += " " + str(d["tld"])
         print
         print "[!] If you want to relaunch the app with these domains you can always run the command with: "
-        print "\t domainfy.py ... -t none -u " + pending
+        print "\t domainfy.py ... -t none -u " + pending_tld
         print
         print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-        print "\t domainfy.py ... -x " + pending
+        print "\t domainfy.py ... -x " + pending_tld
         print
     pool.join()
 
@@ -371,7 +379,7 @@ This is free software, and you are welcome to redistribute it under certain cond
                         tlds.append({ "tld" : tld, "type" : typeTld })
 
     for new in args.user_defined:
-        if tld not in args.exclude:
+        if new not in args.exclude:
             tlds.append( {"tld": new, "type": "user_defined"})
 
     if args.nicks:

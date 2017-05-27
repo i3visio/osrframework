@@ -3,6 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.16.6, 2017/05/27 -- Several fixes domainfy.py options.
+- Fix issue #255: Wrong command shown when stopping domainfy
+- Fix issue: -u option in domainfy.py was not working appropiately
+- Fix issue: Appropiately showing the list of pending domains in domainfy
+
 0.16.5, 2017/04/30 -- Fix mailfy.py by adding a timeout to the verifications.
 - Fix issue #251: Mailfy seems to be crashing persistently
 - Minor refactoring of the mailfy.py documentation and comments
