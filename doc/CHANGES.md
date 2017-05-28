@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.16.7a, 2017/XX/XX -- Several fixes domainfy.py options.
+- Fix Dockerfile by removing an unnecessary `sudo`.
+
 0.16.6, 2017/05/28 -- Several fixes domainfy.py options.
 - Add feature #255: Add Metasploit forums as a new usufy wrapper
 - Add feature #254: Add Steemit.com as a new usufy platform

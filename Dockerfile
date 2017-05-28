@@ -12,10 +12,10 @@ RUN apt-get install -y python-pip
 RUN pip install pip --upgrade
 
 # Installing latest version of pip
-RUN pip install osrframework --pre
+RUN pip install osrframework --upgrade --pre
 
 # TODO: For some reason, the Docker installation seems not to correctly set the default .cfg files.
-RUN sudo apt-get install -y wget
+RUN apt-get install -y wget
 
 # We will download them manually for now.
 RUN wget https://raw.githubusercontent.com/i3visio/osrframework/master/config/accounts.cfg -O /root/.config/OSRFramework/default/accounts.cfg
