@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.16.6, 2017/05/27 -- Several fixes domainfy.py options.
+0.16.6, 2017/05/28 -- Several fixes domainfy.py options.
 - Add feature #255: Add Metasploit forums as a new usufy wrapper
 - Add feature #254: Add Steemit.com as a new usufy platform
 - Add feature #253: Add cryptofresh as a new usufy platform
