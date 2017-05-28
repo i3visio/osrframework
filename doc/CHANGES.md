@@ -5,6 +5,7 @@ For more information, check the README.Add some wrappers
 
 0.16.6, 2017/05/27 -- Several fixes domainfy.py options.
 - Fix issue #262: Twitpic now only redirects to Twitter! Thanks for these years, guys!
+- Fix issue #261: Paypal.me usufy wrapper is throwing false positives
 - Fix issue #260: Ello.co has changed its error message
 - Fix issue #258: Launching usufy.py -n whatever -t all crashes the app
 - Fix issue #255: Wrong command shown when stopping domainfy
