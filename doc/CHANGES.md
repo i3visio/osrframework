@@ -9,7 +9,9 @@ For more information, check the README.Add some wrappers
 - Fix issue #260: Ello.co has changed its error message
 - Fix issue #259: Gogobot has been moved to trip.com
 - Fix issue #258: Launching usufy.py -n whatever -t all crashes the app
+- Fix issue #256: Add Metasploit forums as a new usufy wrapper
 - Fix issue #255: Wrong command shown when stopping domainfy
+- Fix issue: Rename rapid forum to rapid_i as the platform is rapid-i.com
 - Fix issue: -u option in domainfy.py was not working appropiately
 - Fix issue: Appropiately showing the list of pending domains in domainfy
 
