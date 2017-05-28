@@ -20,7 +20,7 @@
 ##################################################################################
 
 __author__ = "i3visio <contacto@i3visio.com>"
-__version__ = "1.1"
+__version__ = "1.0"
 
 import argparse
 import json
@@ -31,16 +31,16 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Ello(Platform):
+class Rapid7(Platform):
     """
-        A <Platform> object for Ello.
+        A <Platform> object for Rapid7.
     """
     def __init__(self):
         """
             Constructor...
         """
-        self.platformName = "Ello"
-        self.tags = ["social"]
+        self.platformName = "Rapid7"
+        self.tags = ["hacking", "development"]
 
         ########################
         # Defining valid modes #
@@ -56,7 +56,7 @@ class Ello(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://ello.co/" + "<usufy>"
+        self.url["usufy"] = "https://community.rapid7.com/people/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -83,7 +83,7 @@ class Ello(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["| [404] Not Found</title>"]
+        self.notFoundText["usufy"] = ['<title>Error | Rapid7 Community and Blog</title>']
         #self.notFoundText["searchfy"] = []
 
         #########################

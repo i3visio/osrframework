@@ -3,6 +3,20 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.16.6, 2017/05/28 -- Several fixes domainfy.py options.
+- Add feature #255: Add Metasploit forums as a new usufy wrapper
+- Add feature #254: Add Steemit.com as a new usufy platform
+- Add feature #253: Add cryptofresh as a new usufy platform
+- Fix issue #262: Twitpic now only redirects to Twitter! Thanks for these years, guys!
+- Fix issue #261: Paypal.me usufy wrapper is throwing false positives
+- Fix issue #260: Ello.co has changed its error message
+- Fix issue #259: Gogobot has been moved to trip.com
+- Fix issue #258: Launching usufy.py -n whatever -t all crashes the app
+- Fix issue #256: Wrong command shown when stopping domainfy
+- Fix issue: Rename rapid forum to rapid_i as the platform is rapid-i.com
+- Fix issue: -u option in domainfy.py was not working appropiately
+- Fix issue: Appropiately showing the list of pending domains in domainfy
+
 0.16.5, 2017/04/30 -- Fix mailfy.py by adding a timeout to the verifications.
 - Fix issue #251: Mailfy seems to be crashing persistently
 - Minor refactoring of the mailfy.py documentation and comments

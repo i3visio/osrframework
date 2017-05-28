@@ -1,4 +1,3 @@
-# !/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 ##################################################################################
@@ -20,8 +19,8 @@
 #
 ##################################################################################
 
-__author__ = "Félix Brezo, Yaiza Rubio <contacto@i3visio.com>"
-__version__ = "1.0"
+__author__ = "i3visio <contacto@i3visio.com>"
+__version__ = "1.1"
 
 import argparse
 import json
@@ -84,7 +83,7 @@ class Paypal(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['user-scalable=no" /><title>PayPal.Me</title>']
+        self.notFoundText["usufy"] = ['<meta name="twitter:title" content="Maak uw eigen PayPal.Me-link" />']
         #self.notFoundText["searchfy"] = []
 
         #########################

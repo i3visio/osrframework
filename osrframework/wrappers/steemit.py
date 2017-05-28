@@ -2,7 +2,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -20,7 +20,7 @@
 ##################################################################################
 
 __author__ = "i3visio <contacto@i3visio.com>"
-__version__ = "1.1"
+__version__ = "1.0"
 
 import argparse
 import json
@@ -31,16 +31,15 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Ello(Platform):
-    """
-        A <Platform> object for Ello.
+class Steemit(Platform):
+    """A <Platform> object for Steemit.
     """
     def __init__(self):
         """
             Constructor...
         """
-        self.platformName = "Ello"
-        self.tags = ["social"]
+        self.platformName = "Steemit"
+        self.tags = ["cryptocurrencies", "blog"]
 
         ########################
         # Defining valid modes #
@@ -56,7 +55,7 @@ class Ello(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://ello.co/" + "<usufy>"
+        self.url["usufy"] = "https://steemit.com/@" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -83,7 +82,7 @@ class Ello(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["| [404] Not Found</title>"]
+        self.notFoundText["usufy"] = ['User Not Found - Steemit</title>']
         #self.notFoundText["searchfy"] = []
 
         #########################
