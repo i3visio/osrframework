@@ -7,6 +7,7 @@ For more information, check the README.Add some wrappers
 - Fix issue #262: Twitpic now only redirects to Twitter! Thanks for these years, guys!
 - Fix issue #261: Paypal.me usufy wrapper is throwing false positives
 - Fix issue #260: Ello.co has changed its error message
+- Fix issue #259: Gogobot has been moved to trip.com
 - Fix issue #258: Launching usufy.py -n whatever -t all crashes the app
 - Fix issue #255: Wrong command shown when stopping domainfy
 - Fix issue: -u option in domainfy.py was not working appropiately
