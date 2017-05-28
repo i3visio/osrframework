@@ -11,7 +11,6 @@ RUN apt-get update -y
 # Installing Pip from repositories
 RUN apt-get install -y python-pip
 
-
 # Install prelease version or stable version if requested
 RUN pip install osrframework --upgrade $VERSION
 
