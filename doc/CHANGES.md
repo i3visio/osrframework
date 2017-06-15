@@ -4,6 +4,7 @@ OSRFramework Changelog
 For more information, check the README.Add some wrappers
 
 0.16.7, 2017/06/15 -- SAeveral fixes on certain platforms.
+- Temporally removed some wrappers: apsense, flavors, paypal, pinterest, sokule and wordpress
 - Fix issue #265: False positives in domainfy
 - Fix Dockerfile by removing an unnecessary `sudo`.
 
