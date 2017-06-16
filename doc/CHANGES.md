@@ -3,7 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.16.7, 2017/06/15 -- SAeveral fixes on certain platforms.
+0.16.8, 2017/06/16 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
+- Fix issue #187: Review installation with --user in Linux systems where ~/.local/bin is NOT in the PATH
+
+0.16.7, 2017/06/15 -- Several fixes on certain platforms.
 - Temporally removed some wrappers: apsense, flavors, paypal, pinterest, sokule and wordpress
 - Fix issue #265: False positives in domainfy
 - Fix Dockerfile by removing an unnecessary `sudo`.
