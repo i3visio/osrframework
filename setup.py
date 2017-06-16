@@ -41,7 +41,28 @@ else:
     if not os.geteuid() == 0:
         try:
             packagesPaths = site.getusersitepackages()
+            # TODO: Check whether the packagesPaths is in the PATH, if not, add it
             print "[*] The installation has not been launched as superuser."
+            user_bin_path = site.USER_BASE + "/bin"
+            print "[*] We will verify is the '" + user_bin_path + "' folder is in the path so as to make the utils available anywhere in the system."
+            bin_path = os.popen("echo $PATH").read()
+            if user_bin_path in bin_path:
+                print "[*] Great. '" + user_bin_path + "' is in the path. No further actions needed."
+            else:
+                print "[*] We are manually adding the '" + user_bin_path + "' folder to the ~/.bashrc file."
+                # Building the commands to be added to .bashrc
+                new_lines = """
+                # Added by OSRFramework
+                # ---------------------
+                # Check this issue in Github for additional information about why these lines where added: <https://github.com/i3visio/osrframework/issues/187>
+
+                export PY_USER_BIN= """ + user_bin_path + """
+                export PATH=$PATH:$PY_USER_BIN
+                """
+
+                command = "echo '''" + new_lines + "''' >> ~/.bashrc"
+                print "[*] As we want to be transparent, the command that is being run is the following:\n" + command
+                a = os.popen(command).read()        
         except:
             IS_VIRTUAL_ENV = True
     else:
