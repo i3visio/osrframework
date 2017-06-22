@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.16.8, 2017/06/16 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
+0.16.8, 2017/06/22 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
 - Fix issue #187: Review installation with --user in Linux systems where ~/.local/bin is NOT in the PATH
 - Fix issue: Several wrappers have been moved to pending: cardingbins, retailmenot, seatfish and xtube.
 
