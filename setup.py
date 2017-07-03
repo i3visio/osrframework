@@ -299,9 +299,9 @@ for destiny in files_to_copy.keys():
                 cmd = "copy \"" + fileToMove + "\" \"" + destiny + "\""
         elif sys.platform == 'linux2' or sys.platform == 'darwin':
             if not os.geteuid() == 0:
-                cmd = "cp \"" + fileToMove + "\" \"" + destiny + "\" -r"
+                cmd = "cp -r -- \"" + fileToMove + "\" \"" + destiny + "\""
             else:
-                cmd = "sudo cp \"" + fileToMove + "\" \"" + destiny + "\" -r"
+                cmd = "sudo cp -r -- \"" + fileToMove + "\" \"" + destiny + "\""
         #print cmd
         output = os.popen(cmd).read()
 
