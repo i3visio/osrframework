@@ -47,7 +47,7 @@ import osrframework.utils.general as general
 def getPlatformInfo(platform, query, process, mode, pipeConnection):
     '''
         Method to to get the info from the platform in a separete thread.
-        This is a fix to 'catch' sementation faults from external platform libraries.
+        This is a fix to 'catch' segmentation faults from external platform libraries.
 
         :param platform: <Platform> objects
         :param queries: a query to be performed.
