@@ -37,11 +37,30 @@ __email__ = "contacto@i3visio.com"
 import argparse
 import json
 import os
+from multiprocessing import Process, Pipe
 
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
+
+def getPlatformInfo(platform, query, process, mode, pipeConnection):
+    '''
+        Method to to get the info from the platform in a separete thread.
+        This is a fix to 'catch' segmentation faults from external platform libraries.
+
+        :param platform: <Platform> objects
+        :param queries: a query to be performed.
+        :param process: Whether to process all the profiles... SLOW!
+        :param mode: a string that represents a operation mode
+        :param pipeConnection: a pipe connection to send messages back to parent process
+
+        :return:
+    '''
+    # This returns a json.txt!
+    entities = platform.getInfo(query, process, mode)
+    pipeConnection.send(entities)
+    pipeConnection.close()
 
 def performSearch(platformNames=[], queries=[], process=False, excludePlatformNames=[]):
     '''
@@ -58,10 +77,21 @@ def performSearch(platformNames=[], queries=[], process=False, excludePlatformNa
     results = []
     for q in queries:
         for pla in platforms:
-            # This returns a json.txt!
-            entities = pla.getInfo(query=q, process = process, mode="searchfy")
-            if entities != "[]":
-                results += json.loads(entities)
+            # Getting the pipe connection
+            parent_conn, child_conn = Pipe()
+            # Starting a new process
+            p = Process(target=getPlatformInfo, args=(pla, q, process, "searchfy", child_conn))
+            p.start()
+            p.join()
+            # Look at the exit code to check if the process ended unexpectedly
+            if p.exitcode == -11:
+                print "WARNING. Something happened when trying to get info from: " + str(pla)
+                print "\n\n"
+                continue
+            # Getting the entities from the message sent by child process
+            entitites = parent_conn.recv()
+            results += json.loads(entitites)
+            
     return results
 
 def main(args):
