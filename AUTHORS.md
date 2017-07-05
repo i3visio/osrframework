@@ -12,3 +12,4 @@ Contributors
 * Eva Suárez ([@EvaSuarez22](https://twitter.com/EvaSuarez22))
 * Lucas Sánchez
 * Fran J. Gómez ([@ffranz](https://twitter.com/ffranz))
+* Abilio Almeida  ([@aabilio](https://github.com/aabilio))
