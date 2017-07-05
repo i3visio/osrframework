@@ -3,6 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.16.9, 2017/06/22 -- Add support for a more colourful interface
+- Add feature: Add coloured output in usufy.
+- Add feature: Add suport for a colourful interfaces using colorama.
+
 0.16.8, 2017/06/22 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
 - Fix issue #187: Review installation with --user in Linux systems where ~/.local/bin is NOT in the PATH
 - Fix issue: Several wrappers have been moved to pending: cardingbins, retailmenot, seatfish and xtube.

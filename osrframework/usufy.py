@@ -31,16 +31,22 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v5.2"
+__version__ = "v5.3"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 
 import argparse
+import colorama
+import datetime as dt
 import json
 import os
-import datetime as dt
 import traceback
+import logging
+# Preparing to capture interruptions smoothly
+import signal
+
+colorama.init(autoreset=True)
 
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
@@ -53,12 +59,10 @@ import osrframework.utils.benchmark as benchmark
 import osrframework.utils.browser as browser
 import osrframework.utils.general as general
 
+from osrframework.utils.general import error, warning, success, info, title, emphasis
+
 # logging imports
 import osrframework.utils.logger
-import logging
-
-# Preparing to capture interruptions smoothly
-import signal
 
 
 def fuzzUsufy(fDomains = None, fFuzzStruct = None):
@@ -142,13 +146,13 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
             # initiating list
             urlToTry = struct.replace("<DOMAIN>", domain)
             test = urlToTry.replace("<USERNAME>", nick.lower())
-            print "Processing "+ test + "..."
+            print("Processing "+ test + "...")
             i3Browser = browser.Browser()
             try:
                 html = i3Browser.recoverURL(test)
                 if nick in html:
                     possibleURL.append(test)
-                    print "\tPossible usufy found!!!\n"
+                    print(general.success("\tPossible usufy found!!!\n"))
             except:
                 logger.error("The resource could not be downloaded.")
 
@@ -194,7 +198,7 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
             logger.debug("\t" + str(p) +" - User profile not found...")
         return []
     except:
-        print "ERROR: something happened when processing " + str(p) +". You may like to deactivate this wrapper if the error persist."
+        print(general.error("ERROR: something happened when processing " + str(p) +". You may like to deactivate this wrapper if the error persist."))
         return []
 
 
@@ -207,13 +211,12 @@ def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload =
         res = getPageWrapper(p, nick, rutaDescarga, avoidProcessing, avoidDownload, outQueue)
         return {"platform" : str(p), "status": "DONE", "data": res}
     except Exception as e:
-        print "\tERROR: " + str(p)
+        print(general.error("\tERROR: " + str(p)))
         return {"platform" : str(p), "status": "ERROR", "data": []}
 
 
 def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, maltego=False, verbosity=1, logFolder="./logs"):
-    '''
-        Method that receives as a parameter a series of nicks and verifies whether those nicks have a profile associated in different social networks.
+    '''Method that receives as a parameter a series of nicks and verifies whether those nicks have a profile associated in different social networks.
 
         List of parameters that the method receives:
         :param nicks:        list of nicks to process.
@@ -274,9 +277,9 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
             # Closing normal termination
             pool.close()
         except KeyboardInterrupt:
-            print "\n[!] Process manually stopped by the user. Terminating workers.\n"
+            print(general.warning("\n[!] Process manually stopped by the user. Terminating workers.\n"))
             pool.terminate()
-            print "[!] The following platforms were not processed:"
+            print(general.warning("[!] The following platforms were not processed:"))
             pending = ""
             for p in platforms:
                 processed = False
@@ -287,13 +290,13 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                 if not processed:
                     print "\t- " + str(p)
                     pending += " " + str(p).lower()
-            print
-            print "[!] If you want to relaunch the app with these platforms you can always run the command with: "
-            print "\t usufy.py ... -p " + pending
-            print
-            print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-            print "\t usufy.py ... -x " + pending
-            print
+            print("\n")
+            print("[!] If you want to relaunch the app with these platforms you can always run the command with: ")
+            print("\t usufy.py ... -p " + pending)
+            print("\n")
+            print("[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: ")
+            print("\t usufy.py ... -x " + pending)
+            print("\n")
         pool.join()
 
         profiles = []
@@ -323,14 +326,16 @@ def main(args):
     logger = logging.getLogger("osrframework.usufy")
     # Printing the results if requested
     if not args.maltego:
-        print banner.text
+        print(general.title(banner.text))
 
-        sayingHello = """usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+        sayingHello = """
+usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
+
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
         logger.info(sayingHello)
-        print sayingHello
-        print
+        print(general.title(sayingHello))
         logger.info("Starting usufy.py...")
 
     if args.license:
@@ -404,12 +409,9 @@ This is free software, and you are welcome to redistribute it under certain cond
             logger.info("Collecting the list of tags...")
             tags = platform_selection.getAllPlatformNamesByTag("usufy")
             logger.info(json.dumps(tags, indent=2))
-            print "This is the list of platforms grouped by tag."
-            print
-            print json.dumps(tags, indent=2, sort_keys=True)
-            print
-            print "[Tip] Remember that you can always launch the platform using the -t option followed by any of the aforementioned."
-            print
+            print(general.info("This is the list of platforms grouped by tag.\n"))
+            print(json.dumps(tags, indent=2, sort_keys=True))
+            print(general.info("[Tip] Remember that you can always launch the platform using the -t option followed by any of the aforementioned.\n"))
             return tags
 
         # Executing the corresponding process...
@@ -417,10 +419,9 @@ This is free software, and you are welcome to redistribute it under certain cond
             # Showing the execution time...
             if not args.maltego:
                 startTime= dt.datetime.now()
-                print str(startTime) +"\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!"
-                print
-                print "\tPress <Ctrl + C> to stop..."
-                print
+                print("\n")
+                print(str(startTime) + "\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!\n")
+                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
             # Defining the list of users to monitor
             nicks = []
@@ -458,8 +459,8 @@ This is free software, and you are welcome to redistribute it under certain cond
                 try:
                     res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
                 except Exception as e:
-                    print "Exception grabbed when processing the nicks: " + str(e)
-                    print traceback.print_stack()
+                    print(general.error("Exception grabbed when processing the nicks: " + str(e)))
+                    print(general.error(traceback.print_stack()))
 
             logger.info("Listing the results obtained...")
             # We are going to iterate over the results...
@@ -535,35 +536,30 @@ This is free software, and you are welcome to redistribute it under certain cond
                 general.listToMaltego(res)
             # Printing the results if requested
             else:
-                print "A summary of the results obtained are shown in the following table:"
-                #print res
-                print unicode(general.usufyToTextExport(res))
-
-                print
+                now = dt.datetime.now()
+                print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+                print(general.success(unicode(general.usufyToTextExport(res))))
 
                 if args.web_browser:
                     general.openResultsInBrowser(res)
-
-                print "You can find all the information collected in the following files:"
+                    
+                print("\n")
+                now = dt.datetime.now()
+                print(str(now) + "\tYou can find all the information collected in the following files:")
                 for ext in args.extension:
                     # Showing the output files
-                    print "\t-" + fileHeader + "." + ext
+                    print("\t-" + general.emphasis(fileHeader + "." + ext))
 
                 # Showing the execution time...
-                print
                 endTime= dt.datetime.now()
-                print str(endTime) +"\tFinishing execution..."
-                print
-                print "Total time used:\t" + str(endTime-startTime)
-                print "Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(listPlatforms)) +" seconds"
-                print
+                print("\n" + str(endTime) +"\tFinishing execution...\n")
+                print("Total time used:\t" + str(endTime-startTime))
+                print("Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(listPlatforms)) +" seconds\n")
 
                 # Urging users to place an issue on Github...
-                print
-                print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-                print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-                print "Note that otherwise, we won't know about it!"
-                print
+                print("Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?")
+                print("Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>.")
+                print("Note that otherwise, we won't know about it!\n")
 
             return res
 
@@ -579,7 +575,7 @@ def getParser():
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
 
-    parser = argparse.ArgumentParser(description='usufy.py - Piece of software that checks the existence of a profile for a given user in up to ' + str(len(platOptions)-1)+ ' different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description= colorama.Style.BRIGHT + 'usufy.py - Piece of software that checks the existence of a profile for a given user in up to ' + str(len(platOptions)-1)+ ' different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options

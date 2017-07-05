@@ -1,24 +1,24 @@
 # !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
-##################################################################################
+################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2014-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
 import hashlib
 import json
@@ -745,3 +745,52 @@ def openResultsInBrowser(res):
         for att in r["attributes"]:
             if att["type"] == "i3visio.uri":
                 uriToBrowser(att["value"])
+
+
+
+import colorama
+colorama.init(autoreset=True)
+
+def colorize(text, messageType=None):
+    """Function that colorizes a message. Possible options for type: ["ERROR", "WARNING", "SUCCESS", "INFO"]
+    """
+    formattedText = text
+    # Set colors
+    if "ERROR" in messageType:
+        formattedText = colorama.Fore.RED + formattedText
+    elif "WARNING" in messageType:
+        formattedText = colorama.Fore.YELLOW + formattedText
+    elif "SUCCESS" in messageType:
+        formattedText = colorama.Fore.GREEN + formattedText
+    elif "INFO" in messageType:
+        formattedText = colorama.Fore.BLUE + formattedText
+
+    # Set emphashis mode
+    if "BOLD" in messageType:
+        formattedText = colorama.Style.BRIGHT + formattedText
+
+    return formattedText + colorama.Style.RESET_ALL
+
+
+def error(text):
+    return colorize(text, ["ERROR", "BOLD"])
+
+
+def warning(text):
+    return colorize(text, ["WARNING"])
+
+
+def success(text):
+    return colorize(text, ["SUCCESS", "BOLD"])
+
+
+def info(text):
+    return colorize(text, ["INFO"])
+
+
+def title(text):
+    return colorize(text, ["INFO", "BOLD"])
+
+
+def emphasis(text):
+    return colorize(text, ["BOLD"])

@@ -210,7 +210,8 @@ setup(
         #"pyasn1"
         "python-whois",
         "flask",
-        "pyyaml"
+        "pyyaml",
+        "colorama"
     ],
 )
 
