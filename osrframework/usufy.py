@@ -131,7 +131,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     # Going through all the lines
     for l in lines:
         domain = l.split()[0]
-        print "Performing tests for" + domain + "..."
+        print()"Performing tests for" + domain + "...")
 
         # selecting the number of nicks to be tested in this domain
         nick = l.split()[1]
@@ -156,10 +156,9 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
             except:
                 logger.error("The resource could not be downloaded.")
 
-        #print possibleURL
         res[domain] = possibleURL
 
-    print json.dumps(res, indent = 2)
+    print(json.dumps(res, indent = 2))
     return res
 
 
@@ -272,8 +271,8 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
 
             # Waiting for results to be finished
             while len(poolResults) < len(platforms):
-                #print "Waiiting to finish all!"
                 pass
+
             # Closing normal termination
             pool.close()
         except KeyboardInterrupt:
@@ -288,7 +287,7 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                         processed = True
                         break
                 if not processed:
-                    print "\t- " + str(p)
+                    print()"\t- " + str(p))
                     pending += " " + str(p).lower()
             print("\n")
             print("[!] If you want to relaunch the app with these platforms you can always run the command with: ")
@@ -345,14 +344,14 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
             with open ("COPYING", "r") as iF:
                 contenido = iF.read().splitlines()
                 for linea in contenido:
-                    print linea
+                    print(linea)
         except Exception:
             try:
                 # Trying to recover the COPYING file...
                 with open ("/usr/share/osrframework/COPYING", "r") as iF:
                     contenido = iF.read().splitlines()
                     for linea in contenido:
-                        print linea
+                        print(linea)
             except:
                 logger.error("ERROR: there has been an error when opening the COPYING file.\n\tThe file contains the terms of the GPLv3 under which this software is distributed.\n\tIn case of doubts, verify the integrity of the files or contact contacto@i3visio.com.")
     elif args.fuzz:
@@ -450,11 +449,8 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
                         logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
                         os.makedirs(args.output_folder)
                 # Launching the process...
-                ###try:
                 res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
-                ###except Exception as e:
-                    ###print "Exception grabbed when processing the nicks: " + str(e)
-                    ###print traceback.print_stack()
+
             else:
                 try:
                     res = processNickList(nicks, listPlatforms, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
@@ -542,7 +538,7 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
 
                 if args.web_browser:
                     general.openResultsInBrowser(res)
-                    
+
                 print("\n")
                 now = dt.datetime.now()
                 print(str(now) + "\tYou can find all the information collected in the following files:")
