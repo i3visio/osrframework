@@ -20,18 +20,19 @@
 #
 ##################################################################################
 
-'''
+"""
 usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.
 For details, run:
     python usufy.py --license
-'''
+"""
+
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "GPLv3+"
-__version__ = "v5.3"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -66,14 +67,13 @@ import osrframework.utils.logger
 
 
 def fuzzUsufy(fDomains = None, fFuzzStruct = None):
-    '''
-        Method to guess the usufy path against a list of domains or subdomains.
+    """Method to guess the usufy path against a list of domains or subdomains.
 
         :param fDomains:    a list to strings containing the domains and (optionally) a nick.
         :param fFuzzStruct:    a list to strings containing the transforms to be performed.
 
         :return:    Dictionary of {domain: url}.
-    '''
+    """
     logger = logging.getLogger("osrframework.usufy")
 
     if fFuzzStruct == None:
@@ -131,7 +131,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     # Going through all the lines
     for l in lines:
         domain = l.split()[0]
-        print()"Performing tests for" + domain + "...")
+        print("Performing tests for" + domain + "...")
 
         # selecting the number of nicks to be tested in this domain
         nick = l.split()[1]
@@ -163,8 +163,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
 
 
 def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
-    '''
-        Method that wraps the call to the getInfo. Before it was getUserPage.
+    """Method that wraps the call to the getInfo. Before it was getUserPage.
 
         List of parameters that the method receives:
         :param pName:        platform where the information is stored. It is a string.
@@ -177,7 +176,7 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
 
            :return:
             None if a queue is provided. Note that the values will be stored in the outQueue or a dictionary is returned.
-    '''
+    """
     logger = logging.getLogger("osrframework.usufy")
 
     logger.debug("\tLooking for profiles in " + str(p) + "...")
@@ -187,7 +186,6 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
 
         if res != []:
             if outQueue != None:
-                #logger.info("\t" + (str(p) +" - User profile found: ").ljust(40, ' ') + url)
                 # Storing in the output queue the values
                 outQueue.put((res))
             else:
@@ -202,10 +200,9 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
 
 
 def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
-    '''
-        Wrapper for being able to launch all the threads of getPageWrapper.
+    """Wrapper for being able to launch all the threads of getPageWrapper.
         :param args: We receive the parameters for getPageWrapper as a tuple.
-    '''
+    """
     try:
         res = getPageWrapper(p, nick, rutaDescarga, avoidProcessing, avoidDownload, outQueue)
         return {"platform" : str(p), "status": "DONE", "data": res}
@@ -215,21 +212,37 @@ def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload =
 
 
 def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, maltego=False, verbosity=1, logFolder="./logs"):
-    '''Method that receives as a parameter a series of nicks and verifies whether those nicks have a profile associated in different social networks.
+    """
+    Process a list of nicks to check whether they exist.
 
-        List of parameters that the method receives:
-        :param nicks:        list of nicks to process.
-        :param platforms:    list of <Platform> objects to be processed.
-        :param rutaDescarga:    local file where saving the obtained information.
-        :param avoidProcessing:    boolean var that defines whether the profiles will NOT be processed.
-        :param avoidDownload: boolean var that defines whether the profiles will NOT be downloaded (stored in this version).
-        :param maltego:        parameter to tell usufy.py that he has been invoked by Malego.
-        :param verbosity:    the level of verbosity to be used.
-        :param logFolder:    the path to the log folder.
+    This method receives as a parameter a series of nicks and verifies whether
+    those nicks have a profile associated in different social networks.
 
-        :return:
-            Returns a dictionary where the key is the nick and the value another dictionary where the keys are the social networks and te value is the corresponding URL.
-    '''
+    Parameters
+    ----------
+    nicks:
+        List of nicks to process.
+    platforms:
+        List of <Platform> objects to be processed.
+    rutaDescarga:
+        Local file where saving the obtained information.
+    avoidProcessing:
+        Lboolean var that defines whether the profiles will NOT be processed.
+    avoidDownload:
+        A boolean var that defines whether the profiles will NOT be downloaded.
+    maltego:
+        A parameter to tell usufy.py that he has been invoked by Malego.
+    verbosity:
+        The level of verbosity to be used.
+    logFolder:
+        The path to the log folder.
+
+    Returns
+    -------
+        Returns a dictionary where the key is the nick and the value another
+        dictionary where the keys are the social networks and te value is the
+        corresponding URL.
+    """
     osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=verbosity, logFolder=logFolder)
     logger = logging.getLogger("osrframework.usufy")
 
@@ -287,14 +300,14 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
                         processed = True
                         break
                 if not processed:
-                    print()"\t- " + str(p))
+                    print("\t- " + str(p))
                     pending += " " + str(p).lower()
             print("\n")
-            print("[!] If you want to relaunch the app with these platforms you can always run the command with: ")
-            print("\t usufy.py ... -p " + pending)
+            print(general.warning("If you want to relaunch the app with these platforms you can always run the command with: "))
+            print("\t usufy.py ... -p " + general.emphasis(pending))
             print("\n")
-            print("[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: ")
-            print("\t usufy.py ... -x " + pending)
+            print(general.warning("If you prefer to avoid these platforms you can manually evade them for whatever reason with: "))
+            print("\t usufy.py ... -x " + general.emphasis(pending))
             print("\n")
         pool.join()
 
@@ -315,15 +328,28 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
 
 
 def main(args):
-    '''
-        Main function. This function is created in this way so as to let other applications make use of the full configuration capabilities of the application.
-    '''
+    """
+    Main function to launch usufy.
+
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules getParser().
+
+    Parameters
+    ----------
+    args:
+        The parameters as processed by this modules getParser().
+
+    Returns
+    -------
+        A Json representing the matching results.
+    """
     # Recovering the logger
     # Calling the logger when being imported
     osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=args.verbose, logFolder=args.logfolder)
     # From now on, the logger can be recovered like this:
     logger = logging.getLogger("osrframework.usufy")
-    # Printing the results if requested
+
     if not args.maltego:
         print(general.title(banner.text))
 
@@ -332,7 +358,8 @@ usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+visit <http://www.gnu.org/licenses/gpl-3.0.txt>.
+"""
         logger.info(sayingHello)
         print(general.title(sayingHello))
         logger.info("Starting usufy.py...")
@@ -418,7 +445,6 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
             # Showing the execution time...
             if not args.maltego:
                 startTime= dt.datetime.now()
-                print("\n")
                 print(str(startTime) + "\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!\n")
                 print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
@@ -465,7 +491,8 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
             # Structure returned
             """
             [
-                {
+                {        print
+
                   "attributes": [
                     {
                       "attributes": [],
@@ -544,7 +571,7 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
                 print(str(now) + "\tYou can find all the information collected in the following files:")
                 for ext in args.extension:
                     # Showing the output files
-                    print("\t-" + general.emphasis(fileHeader + "." + ext))
+                    print("\t" + general.emphasis(fileHeader + "." + ext))
 
                 # Showing the execution time...
                 endTime= dt.datetime.now()
@@ -553,9 +580,7 @@ visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
                 print("Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(listPlatforms)) +" seconds\n")
 
                 # Urging users to place an issue on Github...
-                print("Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?")
-                print("Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>.")
-                print("Note that otherwise, we won't know about it!\n")
+                print(banner.footer)
 
             return res
 
