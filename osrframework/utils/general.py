@@ -20,15 +20,19 @@
 #
 ################################################################################
 
+import datetime
 import hashlib
 import json
-import datetime
-import sys
 import os
-from osrframework.transforms.lib.maltego import MaltegoEntity, MaltegoTransform
+import urllib
+import sys
 
 import networkx as nx
 import logging
+
+from osrframework.transforms.lib.maltego import MaltegoEntity, MaltegoTransform
+
+LICENSE_URL = "https://www.gnu.org/licenses/agpl-3.0.txt"
 
 def exportUsufy(data, ext, fileH):
     '''
@@ -794,3 +798,20 @@ def title(text):
 
 def emphasis(text):
     return colorize(text, ["BOLD"])
+
+
+def showLicense():
+    """
+    Method that prints the license if requested.
+
+    It tries to find the license online and manually download it. This method
+    only prints its contents in plain text.
+    """
+    print(info("Trying to recover the contents of the license...\n"))
+    try:
+        # Grab the license online and print it.
+        text = urllib.urlopen(LICENSE_URL).read()
+        print(text)
+    except:
+        print(warning("The license could not be downloaded and printed."))
+        print(info("You can always try to download it using this link:\n\t" + LICENSE_URL))
