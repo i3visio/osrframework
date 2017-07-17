@@ -80,6 +80,8 @@ def main(args):
     --------
         Returns a list with i3visio entities.
     """
+    results = []
+    
     if not args.quiet:
         print(general.title(banner.text))
 
@@ -91,53 +93,54 @@ are welcome to redistribute it under certain conditions. For additional info,
 visit """ + general.LICENSE_URL + "\n"
         print(general.title(sayingHello))
 
+    if args.license:
+        general.showLicense()
+    else:
         # Showing the execution time...
         startTime= dt.datetime.now()
         #TODO: Get the number searchable platforms in this context
         print(str(startTime) + "\tStarting search in different platform(s)... Relax!\n")
         print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        try:
+            results = processPhoneList(platformNames=args.platforms, numbers=args.numbers, excludePlatformNames=args.exclude)
+        except KeyboardInterrupt:
+            print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
 
-    try:
-        results = processPhoneList(platformNames=args.platforms, numbers=args.numbers, excludePlatformNames=args.exclude)
-    except KeyboardInterrupt:
-        print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
-        results = []
+        # Trying to store the information recovered
+        if args.output_folder != None:
+            # Verifying an output folder was selected
+            if not os.path.exists(args.output_folder):
+                os.makedirs(args.output_folder)
+            # Grabbing the results
+            fileHeader = os.path.join(args.output_folder, args.file_header)
+            for ext in args.extension:
+                # Generating output files
+                general.exportUsufy(results, ext, fileHeader)
 
-    # Trying to store the information recovered
-    if args.output_folder != None:
-        # Verifying an output folder was selected
-        if not os.path.exists(args.output_folder):
-            os.makedirs(args.output_folder)
-        # Grabbing the results
-        fileHeader = os.path.join(args.output_folder, args.file_header)
-        for ext in args.extension:
-            # Generating output files
-            general.exportUsufy(results, ext, fileHeader)
+        # Showing the information gathered if requested
+        if not args.quiet:
+            now = dt.datetime.now()
+            print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+            print(general.success(unicode(general.usufyToTextExport(results))))
 
-    # Showing the information gathered if requested
-    if not args.quiet:
-        now = dt.datetime.now()
-        print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
-        print(general.success(unicode(general.usufyToTextExport(results))))
+            if args.web_browser:
+                general.openResultsInBrowser(results)
 
-        if args.web_browser:
-            general.openResultsInBrowser(results)
+            now = dt.datetime.now()
+            print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
+            for ext in args.extension:
+                # Showing the output files
+                print("\t" + general.emphasis(fileHeader + "." + ext))
 
-        now = dt.datetime.now()
-        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
-        for ext in args.extension:
-            # Showing the output files
-            print("\t" + general.emphasis(fileHeader + "." + ext))
+            # Showing the execution time...
+            endTime= dt.datetime.now()
+            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("Total time consumed:\t" + general.emphasis(str(endTime-startTime)) + "\n")
+            #TODO: Get the number searchable platforms in this context
+            #print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(listPlatforms))) +" seconds\n")
 
-        # Showing the execution time...
-        endTime= dt.datetime.now()
-        print("\n" + str(endTime) +"\tFinishing execution...\n")
-        print("Total time consumed:\t" + general.emphasis(str(endTime-startTime)) + "\n")
-        #TODO: Get the number searchable platforms in this context
-        #print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(listPlatforms))) +" seconds\n")
-
-        # Urging users to place an issue on Github...
-        print(banner.footer)
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
     return results
 
