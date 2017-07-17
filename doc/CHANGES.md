@@ -3,13 +3,15 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.16.9, 2017/06/22 -- Add support for a more colourful interface
-- Add feature: Add coloured output in usufy.
-- Add feature: Add suport for a colourful interfaces using colorama.
+0.17.0, 2017/07/22 -- Prepare the Blackhat Arsenal release
+- Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
+- Add feature: Add colorama utils to general
+- Update the print functions
+- Fix some issues regarding to the display of the license
 
 0.16.8, 2017/06/22 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
 - Fix issue #187: Review installation with --user in Linux systems where ~/.local/bin is NOT in the PATH
-- Fix issue: Several wrappers have been moved to pending: cardingbins, retailmenot, seatfish and xtube.
+- Fix issue: Several wrappers have been moved to pending: cardingbins, retailmenot, seatfish and xtube
 
 0.16.7, 2017/06/15 -- Several fixes on certain platforms.
 - Temporally removed some wrappers: apsense, flavors, paypal, pinterest, sokule and wordpress
