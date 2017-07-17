@@ -65,8 +65,8 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
 
     Args:
     -----
-        fDomains: A list to strings containing the domains and (optionally)
-            a nick.
+        fDomains: A list to strings containing the domains and (optionally) a
+            nick.
         fFuzzStruct: A list to strings containing the transforms to be
             performed.
 
@@ -163,19 +163,25 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
 
 
 def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
-    """Method that wraps the call to the getInfo. Before it was getUserPage.
+    """
+    Method that wraps the call to the getInfo. Before it was getUserPage.
 
-        List of parameters that the method receives:
-        :param pName:        platform where the information is stored. It is a string.
-        :param nick:        nick to be searched.
-        :param rutaDescarga:    local file where saving the obtained information.
-        :param avoidProcessing:boolean var that defines whether the profiles will NOT be processed (stored in this version).
-        :param avoidDownload: boolean var that defines whether the profiles will NOT be downloaded (stored in this version).
-        :param outQueue:    Queue where the information will be stored.
-        :param maltego:        parameter to tell usufy.py that he has been invoked by Malego.
+    Args:
+    -----
+        pName: Platform where the information is stored. It is a string.
+        nick: Nick to be searched.
+        rutaDescarga: Local file where saving the obtained information.
+        avoidProcessing: Boolean var that defines whether the profiles will NOT
+            be processed (stored in this version).
+        avoidDownload: Boolean var that defines whether the profiles will NOT be
+            downloaded (stored in this version).
+        outQueue: Queue where the information will be stored.
+        maltego: Parameter to tell usufy.py that he has been invoked by Malego.
 
-           :return:
-            None if a queue is provided. Note that the values will be stored in the outQueue or a dictionary is returned.
+    Returns:
+    --------
+        None if a queue is provided. Note that the values will be stored in the
+        outQueue or a dictionary is returned.
     """
     logger = logging.getLogger("osrframework.usufy")
 
@@ -200,8 +206,12 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
 
 
 def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
-    """Wrapper for being able to launch all the threads of getPageWrapper.
-        :param args: We receive the parameters for getPageWrapper as a tuple.
+    """
+    Wrapper for being able to launch all the threads of getPageWrapper.
+
+    Args:
+    -----
+        args: We receive the parameters for getPageWrapper as a tuple.
     """
     try:
         res = getPageWrapper(p, nick, rutaDescarga, avoidProcessing, avoidDownload, outQueue)
@@ -233,9 +243,9 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
 
     Returns:
     --------
-        dict: Returns a dictionary where the key is the nick and the value
-            another dictionary where the keys are the social networks and te
-            value is the corresponding URL.
+        A dictionary where the key is the nick and the value another dictionary
+        where the keys are the social networks and the value is the
+        corresponding URL.
     """
     osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=verbosity, logFolder=logFolder)
     logger = logging.getLogger("osrframework.usufy")
