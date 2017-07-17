@@ -22,7 +22,6 @@
 import osrframework
 import colorama
 
-
 colorama.init(autoreset=True)
 
 text = colorama.Fore.BLUE + colorama.Style.BRIGHT + """
@@ -30,10 +29,18 @@ text = colorama.Fore.BLUE + colorama.Style.BRIGHT + """
  / _ \/ ___||  _ \|  ___| __ __ _ _ __ ___   _____      _____  _ __| | __
 | | | \___ \| |_) | |_ | '__/ _` | '_ ` _ \ / _ \ \ /\ / / _ \| '__| |/ /
 | |_| |___) |  _ <|  _|| | | (_| | | | | | |  __/\ V  V / (_) | |  |   <
- \___/|____/|_| \_\_|  |_|  \__,_|_| |_| |_|\___| \_/\_/ \___/|_|  |_|\_\ 
+ \___/|____/|_| \_\_|  |_|  \__,_|_| |_| |_|\___| \_/\_/ \___/|_|  |_|\_\
 
 
                 Version:      OSRFramework """ + osrframework.__version__ + """
                 Created by:   Felix Brezo and Yaiza Rubio, (i3visio)
 
+"""
+
+footer = """
+Did something go wrong? Is a platform reporting false positives? Do you need to
+integrate a new one and you don't know how to start? Then, you can always place
+an issue in the Github project:
+    <https://github.com/i3visio/osrframework/issues>.
+Note that otherwise, we won't know about it!
 """
