@@ -21,14 +21,6 @@
 ################################################################################
 
 
-'''
-alias_generator.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-
-This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
-are welcome to redistribute it under certain conditions.  For additional info,
-visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
-
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
