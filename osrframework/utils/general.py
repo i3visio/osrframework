@@ -807,11 +807,12 @@ def showLicense():
     It tries to find the license online and manually download it. This method
     only prints its contents in plain text.
     """
-    print("\nTrying to recover the contents of the license...\n")
+    print("Trying to recover the contents of the license...\n")
     try:
         # Grab the license online and print it.
         text = urllib.urlopen(LICENSE_URL).read()
+        print("License retrieved from " + emphasis(LICENSE_URL) + ".")
+        raw_input("\n\tPress " + emphasis("<ENTER>") + " to print it.\n")
         print(text)
     except:
         print(warning("The license could not be downloaded and printed."))
-        print(info("You can always try to download it using this link:\n\t" + LICENSE_URL))
