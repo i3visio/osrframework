@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -13,18 +14,18 @@
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
 __author__ = "Felix Brezo y Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "AGPLv3+"
-__version__ = "v1.0"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -59,6 +60,7 @@ import osrframework.utils.configuration as configuration
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.updates as updates
 import osrframework.utils.general as general
+from osrframework.utils.general import error, warning, success, info, title, emphasis
 
 
 # GLOBAL VARIABLES
@@ -518,11 +520,10 @@ if __name__ == "__main__":
     # Parse args
     args = parser.parse_args()
 
-    print osrframework.utils.banner.text
-    print
+    print(general.title(osrframework.utils.banner.text))
     # Starting the server
-    print "[*] Server started at " + "http://" + args.host + ":" + str(args.port) + "... You can access it in your browser."
-    print "[*] Press <Ctrl + C> at any time to stop the server."
+    print(general.info("[*] Server started at " + "http://" + args.host + ":" + str(args.port) + "... You can access it in your browser."))
+    print(general.info("[*] Press <Ctrl + C> at any time to stop the server."))
 
     app.run(
         debug=args.debug,
@@ -530,4 +531,4 @@ if __name__ == "__main__":
         port=args.port
     )
 
-    print "[*] OSRFramework server exited normally."
+    print(general.info("\n[*] OSRFramework server exited normally."))
