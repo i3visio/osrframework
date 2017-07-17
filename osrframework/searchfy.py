@@ -45,7 +45,7 @@ from osrframework.utils.general import error, warning, success, info, title, emp
 
 def performSearch(platformNames=[], queries=[], process=False, excludePlatformNames=[]):
     """
-    Method to perform the search itself.
+    Method to perform the search itself on the different platforms.
 
     Args:
     -----
@@ -71,8 +71,12 @@ def performSearch(platformNames=[], queries=[], process=False, excludePlatformNa
 
 def main(args):
     """
-    Main program.
+    Main function to launch usufy.
 
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules `getParser()`.
+    
     Args:
     -----
         args: Arguments received in the command line.
@@ -93,10 +97,9 @@ visit """ + general.LICENSE_URL + "\n"
         print(general.title(sayingHello))
 
         # Showing the execution time...
-        if not args.maltego:
-            startTime= dt.datetime.now()
-            print(str(startTime) + "\tStarting search in " + general.emphasis(str(len(args.platforms))) + " platform(s)... Relax!\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        startTime= dt.datetime.now()
+        print(str(startTime) + "\tStarting search in different platform(s)... Relax!\n")
+        print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
     # Performing the search
     try:
