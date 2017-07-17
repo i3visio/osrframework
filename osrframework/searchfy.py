@@ -76,7 +76,7 @@ def main(args):
     The function is created in this way so as to let other applications make
     use of the full configuration capabilities of the application. The
     parameters received are used as parsed by this modules `getParser()`.
-    
+
     Args:
     -----
         args: Arguments received in the command line.
@@ -85,6 +85,8 @@ def main(args):
     --------
         A list of i3visio entities.
     """
+    results = []
+
     if not args.maltego:
         print(general.title(banner.text))
 
@@ -96,64 +98,67 @@ are welcome to redistribute it under certain conditions. For additional info,
 visit """ + general.LICENSE_URL + "\n"
         print(general.title(sayingHello))
 
+    if args.license:
+        general.showLicense()
+    else:
         # Showing the execution time...
         startTime= dt.datetime.now()
         print(str(startTime) + "\tStarting search in different platform(s)... Relax!\n")
         print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        # Performing the search
+        try:
+            results = performSearch(platformNames=args.platforms, queries=args.queries, process=args.process, excludePlatformNames=args.exclude)
+        except KeyboardInterrupt:
+            print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
+            results = []
 
-    # Performing the search
-    try:
-        results = performSearch(platformNames=args.platforms, queries=args.queries, process=args.process, excludePlatformNames=args.exclude)
-    except KeyboardInterrupt:
-        print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
-        results = []
+        # Generating summary files for each ...
+        if args.extension:
+            # Storing the file...
+            if not args.maltego:
+                # Verifying if the outputPath exists
+                if not os.path.exists (args.output_folder):
+                    os.makedirs(args.output_folder)
 
-    # Generating summary files for each ...
-    if args.extension:
-        # Storing the file...
+            # Grabbing the results
+            fileHeader = os.path.join(args.output_folder, args.file_header)
+
+            if not args.maltego:
+                # Iterating through the given extensions to print its values
+                for ext in args.extension:
+                    # Generating output files
+                    general.exportUsufy(results, ext, fileHeader)
+
+        # Generating the Maltego output
+        if args.maltego:
+            general.listToMaltego(results)
+
+        # Printing the results if requested
         if not args.maltego:
-            # Verifying if the outputPath exists
-            if not os.path.exists (args.output_folder):
-                os.makedirs(args.output_folder)
+            now = dt.datetime.now()
+            print(str(now) + "\tA summary of the results obtained are listed in the following table:\n")
+            print(general.success(unicode(general.usufyToTextExport(results))))
 
-        # Grabbing the results
-        fileHeader = os.path.join(args.output_folder, args.file_header)
+            if args.web_browser:
+                general.openResultsInBrowser(results)
 
-        if not args.maltego:
-            # Iterating through the given extensions to print its values
+            now = dt.datetime.now()
+            print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
             for ext in args.extension:
-                # Generating output files
-                general.exportUsufy(results, ext, fileHeader)
+                # Showing the output files
+                print("\t" + general.emphasis(fileHeader + "." + ext))
 
-    # Generating the Maltego output
-    if args.maltego:
-        general.listToMaltego(results)
+            # Showing the execution time...
+            endTime= dt.datetime.now()
+            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
+            print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(args.platforms))) +" seconds\n")
 
-    # Printing the results if requested
-    if not args.maltego:
-        now = dt.datetime.now()
-        print(str(now) + "\tA summary of the results obtained are listed in the following table:\n")
-        print(general.success(unicode(general.usufyToTextExport(results))))
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
-        if args.web_browser:
-            general.openResultsInBrowser(results)
+        return results
 
-        now = dt.datetime.now()
-        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
-        for ext in args.extension:
-            # Showing the output files
-            print("\t" + general.emphasis(fileHeader + "." + ext))
-
-        # Showing the execution time...
-        endTime= dt.datetime.now()
-        print("\n" + str(endTime) +"\tFinishing execution...\n")
-        print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
-        print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(args.platforms))) +" seconds\n")
-
-        # Urging users to place an issue on Github...
-        print(banner.footer)
-
-    return results
 
 def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("searchfy")
