@@ -37,15 +37,13 @@ def checkInSkype(query=None):
     try:
         # Instantianting Skype object, all further actions are done
         # using this object.
-        #print "[*] Instantiating the Skype object..."
         skype = Skype4Py.Skype()
 
         # Start Skype if it's not already running.
         try:
             # Checking if Skype is running...
             if not skype.Client.IsRunning:
-                print "[!] Skype is NOT running... Open it and try again."
-                print
+                print(general.warning("[!] Skype is NOT running... Open it and try again.\n"))
                 # Commented to avoid messages. Users should manually open the app
                 #skype.Client.Start()
                 return jsonData
@@ -56,14 +54,14 @@ def checkInSkype(query=None):
             # Attach to Skype. This may cause Skype to open a confirmation
             # dialog.
             try:
-                #print "[*] Attaching the session"
+                # Attaching the session
                 skype.Attach()
 
                 # Set up an event handler.
                 def new_skype_status(status):
                     # If Skype is closed and reopened, it informs us about it
                     # so we can reattach.
-                    print "[!] Trying to reattach the handler..."
+                    print(general.warning("[!] Trying to reattach the handler..."))
                     if status == Skype4Py.apiAttachAvailable:
                         skype.Attach()
                 skype.OnAttachmentStatus = new_skype_status
@@ -129,32 +127,28 @@ def checkInSkype(query=None):
                     #print "[* ] We are in checkInSkype.py: " + str(jsonData)
 
                 except Exception as e:
-                    print "[!] WARNING. Something happened when performing the search in Skype."
-                    print "[!] Exception grabbed: " + str(e)
+                    print(general.warning("[!] WARNING. Something happened when performing the search in Skype."))
+                    print(general.warning( "[!] Exception grabbed: " + str(e)))
                     print
 
             except Exception as e:
-                print "[!] WARNING. Something happened when trying to attach OSRFramework to a valid Skype session."
-                print "[!] Exception grabbed: " + str(e)
-                print "[!] Are you logged in?"
-                print
+                print(general.warning( "[!] WARNING. Something happened when trying to attach OSRFramework to a valid Skype session."))
+                print(general.warning( "[!] Exception grabbed: " + str(e)))
+                print(general.warning( "[!] Are you logged in?\n"))
 
         except Exception as e:
-            print "[!] WARNING. Something happened when trying to create a valid Skype session."
-            print "[!] Exception grabbed: " + str(e)
-            print "[!] This usually happens when you do NOT have any version of Skype installed in this machine."
-            print
+            print(general.warning("[!] WARNING. Something happened when trying to create a valid Skype session."))
+            print(general.warning("[!] Exception grabbed: " + str(e)))
+            print(general.warning("[!] This usually happens when you do NOT have any version of Skype installed in this machine.\n"))
 
     except Exception as e:
-        print "WARNING. Something happened when trying to link to a valid Skype session."
-        print "Exception grabbed: " + str(e)
-        print "This usually happens when you do NOT have any version of Skype logged in in this machine. Although you may omit this message, you can also fix it by: "
-        print "\ta) Install any version of Skype and log in"
-        print "\tb) If Skype is installed, the log in window will be appearing. You will need to log in and perform the search again (or run it with '-p skype' only) to get results from Skype."
-        print "In spite of this message, execution is going on."
-        print
+        print(general.warning("WARNING. Something happened when trying to link to a valid Skype session."))
+        print(general.warning("Exception grabbed: " + str(e)))
+        print(general.warning("This usually happens when you do NOT have any version of Skype logged in in this machine. Although you may omit this message, you can also fix it by: "))
+        print(general.warning("\ta) Install any version of Skype and log in"))
+        print(general.warning("\tb) If Skype is installed, the log in window will be appearing. You will need to log in and perform the search again (or run it with '-p skype' only) to get results from Skype."))
+        print(general.warning("In spite of this message, execution is going on.\n"))
 
-    #print "Returning the following info from checkInSkype: " + str(jsonData)
     return jsonData
 
 if __name__ == "__main__":
@@ -171,4 +165,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print json.dumps(checkInSkype(args.query), indent = 2)
+    print(general.success(json.dumps(checkInSkype(args.query), indent = 2)))
