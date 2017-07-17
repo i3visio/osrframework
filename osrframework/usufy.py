@@ -31,7 +31,7 @@ For details, run:
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
+__license__ = "AGPLv3+"
 __version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"

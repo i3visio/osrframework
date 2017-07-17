@@ -32,7 +32,7 @@ visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
+__license__ = "AGPLv3+"
 __version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
