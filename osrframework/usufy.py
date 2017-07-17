@@ -351,7 +351,7 @@ usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL
+visit """ + general.LICENSE_URL + "\n"
         logger.info(sayingHello)
         print(general.title(sayingHello))
         logger.info("Starting usufy.py...")
@@ -422,7 +422,7 @@ visit """ + general.LICENSE_URL
             # Showing the execution time...
             if not args.maltego:
                 startTime= dt.datetime.now()
-                print(str(startTime) + "\tStarting search in " + str(len(listPlatforms)) + " platform(s)... Relax!\n")
+                print(str(startTime) + "\tStarting search in " + general.emphasis(str(len(listPlatforms))) + " platform(s)... Relax!\n")
                 print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
             # Defining the list of users to monitor
@@ -543,9 +543,8 @@ visit """ + general.LICENSE_URL
                 if args.web_browser:
                     general.openResultsInBrowser(res)
 
-                print("\n")
                 now = dt.datetime.now()
-                print(str(now) + "\tYou can find all the information collected in the following files:")
+                print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
                 for ext in args.extension:
                     # Showing the output files
                     print("\t" + general.emphasis(fileHeader + "." + ext))
@@ -553,8 +552,8 @@ visit """ + general.LICENSE_URL
                 # Showing the execution time...
                 endTime= dt.datetime.now()
                 print("\n" + str(endTime) +"\tFinishing execution...\n")
-                print("Total time used:\t" + str(endTime-startTime))
-                print("Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(listPlatforms)) +" seconds\n")
+                print("Total time consumed:\t" + general.emphasis(str(endTime-startTime)))
+                print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(listPlatforms))) +" seconds\n")
 
                 # Urging users to place an issue on Github...
                 print(banner.footer)
