@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
@@ -18,20 +18,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
 __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "AGPLv3+"
-__version__ = "v5.2"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
+
 
 import argparse
 import datetime as dt
@@ -93,12 +90,12 @@ EMAIL_DOMAINS = [
 
 
 def getMoreInfo(e):
-    '''Method that calls different third party API.
+    """Method that calls different third party API.
 
         :param e:   Email to verify.
 
         :result:
-    '''
+    """
     # Grabbing the email
     email = {}
     email["type"] = "i3visio.email"
@@ -119,9 +116,19 @@ def getMoreInfo(e):
 
     return email, alias, domain
 
+
 def weCanCheckTheseDomains(email):
-    '''Method that verifies if a domain can be safely verified.
-    '''
+    """
+    Method that verifies if a domain can be safely verified.
+
+    Args:
+    -----
+        email: the email whose domain will be verified.
+
+    Returns:
+    --------
+        bool: it represents whether the domain can be verified.
+    """
     # Known platform not to be working...
     notWorking = [
         "@aol.com",
@@ -146,30 +153,38 @@ def weCanCheckTheseDomains(email):
     #notWorking = []
     for n in notWorking:
         if n in email:
-            print "WARNING: the domain of '" + email + "' has been blacklisted by mailfy.py as it CANNOT BE VERIFIED."
+            print(general.warning("WARNING: the domain of '" + email + "' has been blacklisted by mailfy.py as it CANNOT BE VERIFIED."))
             return False
+
     emailDomains = EMAIL_DOMAINS
     safe = False
+
     for e in emailDomains:
         if e in email:
             safe =  True
             break
+
     if not safe:
-        print "WARNING: the domain of '" + email + "' will not be safely verified."
+        print(general.warning("WARNING: the domain of '" + email + "' will not be safely verified."))
     return True
 
+
 def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS, excludeDomains = []):
-    '''Method that globally permits to grab the emails.
+    """
+    Method that generates a list of emails.
 
-        :param emails:  list of emails.
-        :param emailsFile: filepath to the emails file.
-        :param nicks:   list of aliases.
-        :param nicksFile:  filepath to the aliases file.
-        :param domains: domains where the aliases will be tested.
+    Args:
+    -----
+        emails: any premade list of emails.
+        emailsFile: the filepath to the emails file (one per line).
+        nicks: a list of aliases.
+        nicksFile: the filepath to the aliases file (one per line).
+        domains: the domains where the aliases will be tested.
 
-        :result:    list of emails to check,
-
-    '''
+    Returns:
+    --------
+        list: the list of emails that will be verified.
+    """
     email_candidates = []
 
     if emails != None:
@@ -197,11 +212,27 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
                         email_candidates.append(n+"@"+d)
     return email_candidates
 
-def pool_function(args):
-    '''Wrapper for being able to launch all the threads. We will use python-emailahoy library for the verification in non-Windows systems as it is faster than validate_email. In Windows systems the latter would be used.
 
-        :param args: We receive the parameters for getPageWrapper as a tuple.
-    '''
+def pool_function(args):
+    """
+    A wrapper for being able to launch all the threads.
+
+    We will use python-emailahoy library for the verification in non-Windows
+    systems as it is faster than validate_email. In Windows systems the latter
+    is preferred.
+
+    Args:
+    -----
+        args: reception of the parameters for getPageWrapper as a tuple.
+
+    Returns:
+    --------
+        dict: representing whether the verification was ended successfully. The
+            format is as follows:
+            ```
+            {"platform": "str(domain["value"])", "status": "DONE", "data": aux}
+            ```
+    """
     is_valid = True
 
     try:
@@ -210,9 +241,7 @@ def pool_function(args):
         else:
             is_valid = emailahoy.verify_email_address(args)
     except Exception, e:
-        print "WARNING. An error was found when performing the search. You can omit this message."
-        print str(e)
-        print
+        print(general.warning("WARNING. An error was found when performing the search. You can omit this message.\n" + str(e)))
         is_valid = False
 
     if is_valid:
@@ -231,20 +260,38 @@ def pool_function(args):
 
 
 def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
-    '''Method to perform the mail verification process.
+    """
+    Method to perform the mail verification process.
 
-        :param emails: List of emails.
-        :param nThreads: List of threads.
-        :param secondsBeforeTimeout: Number of seconds to wait until timeouting.
+    Args:
+    -----
+        emails: list of emails to be verified.
+        nThreads: the number of threads to be used. Default: 16 threads.
+        secondsBeforeTimeout: number of seconds to wait before raising a
+            timeout. Default: 5 seconds.
 
-        :return:
-    '''
+    Returns:
+    --------
+        TODO.
+    """
     # Getting starting time
     _startTime = time.time()
 
     def hasRunOutOfTime(oldEpoch):
-        '''Function that checks if a given time has passed
-        '''
+        """
+        Function that checks if a given time has passed.
+
+        It verifies whether the oldEpoch has passed or not by checking if the
+        seconds passed are greater.
+
+        Arguments
+        ---------
+        oldepoch: Seconds passed since 1970 as returned by `time.time()`.
+
+        Returns
+        -------
+            A boolean representing whether it has run out of time.
+        """
         now = time.time()
         return now - oldEpoch >= secondsBeforeTimeout
 
@@ -294,12 +341,12 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
         # Closing normal termination
         pool.close()
     except KeyboardInterrupt:
-        print "\nProcess manually stopped by the user. Terminating workers.\n"
+        print(general.warning("\n[!] Process manually stopped by the user. Terminating workers.\n"))
         pool.terminate()
 
         pending = ""
 
-        print "The following emails were not processed:"
+        print(general.warning("[!] The following platforms were not processed:"))
         for m in emails:
             processed = False
             for result in poolResults:
@@ -307,16 +354,16 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
                     processed = True
                     break
             if not processed:
-                print "\t- " + str(m)
+                print("\t- " + str(p))
                 pending += " " + str(m)
 
-        print
-        print "[!] If you want to relaunch the app with these domains you can always run the command with: "
-        print "\t mailfy.py ... -d " + pending
-        print
-        print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-        print "\t mailfy.py ... -x " + pending
-        print
+        print("\n")
+        print(general.warning("If you want to relaunch the app with these platforms you can always run the command with: "))
+        print("\t mailfy.py ... -p " + general.emphasis(pending))
+        print("\n")
+        print(general.warning("If you prefer to avoid these platforms you can manually evade them for whatever reason with: "))
+        print("\t mailfy.py ... -x " + general.emphasis(pending))
+        print("\n")
     pool.join()
 
     # Processing the results
@@ -332,26 +379,37 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
     return results
 
 def main(args):
-    '''Main program.
+    """
+    Main function to launch phonefy.
 
-        :param args: Arguments received in the command line.
-    '''
-    sayingHello = """mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules `getParser()`.
+
+    Args:
+    -----
+        args: The parameters as processed by this modules `getParser()`.
+
+    Results:
+    --------
+        Returns a list with i3visio entities.
+    """
     if not args.quiet:
-        print banner.text
+        print(general.title(banner.text))
 
-        print sayingHello
-        print
+        sayingHello = """
+mailfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
+
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit """ + general.LICENSE_URL + "\n"
+        print(general.title(sayingHello))
 
         # Displaying a warning if this is being run in a windows system
         if sys.platform == 'win32':
-            print "WARNING:"
-            print "\tOSRFramework has detected that you are running mailfy.py in a Windows system."
-            print "\tAs the emailahoy library is NOT working properly there, validate_email will be used."
-            print "\tVerification may be slower though."
-            print
+            print(general.warning("""OSRFramework has detected that you are running mailfy.py in a Windows system.
+As the "emailahoy" library is NOT working properly there, "validate_email" will
+be used instead. Verification may be slower though."""))
 
     # Processing the options returned to remove the "all" option
     if "all" in args.domains:
@@ -372,10 +430,8 @@ This is free software, and you are welcome to redistribute it under certain cond
     # Showing the execution time...
     if not args.quiet:
         startTime= dt.datetime.now()
-        print str(startTime) +"\tStarting search of the following " + str(len(emails))+ " different emails: "+ str(emails) + ". Be patient!"
-        print
-        print "\tPress <Ctrl + C> to stop..."
-        print
+        print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails: "+ str(emails) + ". Be patient!\n")
+        print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
     # Perform searches, using different Threads
     results = performSearch(emails, args.threads)
 
@@ -391,33 +447,29 @@ This is free software, and you are welcome to redistribute it under certain cond
 
     # Showing the information gathered if requested
     if not args.quiet:
-        print "A summary of the results obtained are shown in the following table:"
-        print unicode(general.usufyToTextExport(results))
-        print
+        now = dt.datetime.now()
+        print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+        print(general.success(unicode(general.usufyToTextExport(results))))
 
-        print "You can find all the information collected in the following files:"
+        now = dt.datetime.now()
+        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
         for ext in args.extension:
             # Showing the output files
-            print "\t-" + fileHeader + "." + ext
+            print(general.emphasis("\t" + fileHeader + "." + ext))
+
     # Showing the execution time...
     if not args.quiet:
-        print
         endTime= dt.datetime.now()
-        print str(endTime) +"\tFinishing execution..."
-        print
-        print "Total time used:\t" + str(endTime-startTime)
-        print "Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(emails)) +" seconds"
-        print
+        print("\n" + str(endTime) +"\tFinishing execution...\n")
+        print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
+        print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(emails))) +" seconds\n")
 
-    # Urging users to place an issue on Github...
     if not args.quiet:
-        print
-        print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-        print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-        print "Note that otherwise, we won't know about it!"
-        print
+        # Urging users to place an issue on Github...
+        print(banner.footer)
 
     return results
+
 
 def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("mailfy")
