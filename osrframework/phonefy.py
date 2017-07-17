@@ -1,40 +1,37 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-phonefy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v5.0"
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 
 import argparse
+import datetime as dt
 import json
 import os
 
@@ -43,15 +40,18 @@ import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
 
+from osrframework.utils.general import error, warning, success, info, title, emphasis
+
+
 def processPhoneList(platformNames=[], numbers=[], excludePlatformNames=[]):
-    '''
+    """
         Method to perform the phone list.
 
         :param platformNames: List of names fr the platforms.
         :param numbers: List of numbers to be queried.
 
         :return:
-    '''
+    """
     # Grabbing the <Platform> objects
     platforms = platform_selection.getPlatformsByName(platformNames, mode="phonefy", excludePlatformNames=excludePlatformNames)
 
@@ -65,23 +65,43 @@ def processPhoneList(platformNames=[], numbers=[], excludePlatformNames=[]):
     return results
 
 def main(args):
-    '''
-        Main program.
+    """
+    Main function to launch phonefy.
 
-        :param args: Arguments received by parameter
-    '''
-    sayingHello = """phonefy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules `getParser()`.
+
+    Args:
+    -----
+        args: The parameters as processed by this modules `getParser()`.
+
+    Results:
+    --------
+        Returns a list with i3visio entities.
+    """
     if not args.quiet:
-        print banner.text
+        print(general.title(banner.text))
 
-        print sayingHello
-        print
+        sayingHello = """
+phonefy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
-    results = processPhoneList(platformNames=args.platforms, numbers=args.numbers, excludePlatformNames=args.exclude)
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit """ + general.LICENSE_URL + "\n"
+        print(general.title(sayingHello))
 
-    #print json.dumps(results, indent=2)
+        # Showing the execution time...
+        startTime= dt.datetime.now()
+        #TODO: Get the number searchable platforms in this context
+        print(str(startTime) + "\tStarting search in different platform(s)... Relax!\n")
+        print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+
+    try:
+        results = processPhoneList(platformNames=args.platforms, numbers=args.numbers, excludePlatformNames=args.exclude)
+    except KeyboardInterrupt:
+        print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
+        results = []
 
     # Trying to store the information recovered
     if args.output_folder != None:
@@ -96,28 +116,31 @@ This is free software, and you are welcome to redistribute it under certain cond
 
     # Showing the information gathered if requested
     if not args.quiet:
-        print "A summary of the results obtained are shown in the following table:"
-        print unicode(general.usufyToTextExport(results))
-        print
+        now = dt.datetime.now()
+        print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+        print(general.success(unicode(general.usufyToTextExport(results))))
 
         if args.web_browser:
             general.openResultsInBrowser(results)
 
-        print "You can find all the information collected in the following files:"
+        now = dt.datetime.now()
+        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
         for ext in args.extension:
             # Showing the output files
-            print "\t-" + fileHeader + "." + ext
+            print("\t" + general.emphasis(fileHeader + "." + ext))
 
-    # Urging users to place an issue on Github...
-    if not args.quiet:
-        print
-        print
-        print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-        print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-        print "Note that otherwise, we won't know about it!"
-        print
+        # Showing the execution time...
+        endTime= dt.datetime.now()
+        print("\n" + str(endTime) +"\tFinishing execution...\n")
+        print("Total time consumed:\t" + general.emphasis(str(endTime-startTime)) + "\n")
+        #TODO: Get the number searchable platforms in this context
+        #print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(listPlatforms))) +" seconds\n")
+
+        # Urging users to place an issue on Github...
+        print(banner.footer)
 
     return results
+
 
 def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("phonefy")
