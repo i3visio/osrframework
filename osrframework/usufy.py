@@ -20,13 +20,6 @@
 #
 ##################################################################################
 
-"""
-usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.
-For details, run:
-    python usufy.py --license
-"""
 
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
@@ -67,57 +60,64 @@ import osrframework.utils.logger
 
 
 def fuzzUsufy(fDomains = None, fFuzzStruct = None):
-    """Method to guess the usufy path against a list of domains or subdomains.
+    """
+    Method to guess the usufy path against a list of domains or subdomains.
 
-        :param fDomains:    a list to strings containing the domains and (optionally) a nick.
-        :param fFuzzStruct:    a list to strings containing the transforms to be performed.
+    Args:
+    -----
+        fDomains: A list to strings containing the domains and (optionally)
+            a nick.
+        fFuzzStruct: A list to strings containing the transforms to be
+            performed.
 
-        :return:    Dictionary of {domain: url}.
+    Returns:
+    --------
+        dict: A dictionary of the form of `{"domain": "url"}`.
     """
     logger = logging.getLogger("osrframework.usufy")
 
     if fFuzzStruct == None:
         # Loading these structures by default
         fuzzingStructures = [
-                    "http://<DOMAIN>/<USERNAME>",
-                    "http://<DOMAIN>/~<USERNAME>",
-                    "http://<DOMAIN>/?action=profile;user=<USERNAME>",
-                    "http://<DOMAIN>/causes/author/<USERNAME>",
-                    "http://<DOMAIN>/channel/<USERNAME>",
-                    "http://<DOMAIN>/community/profile/<USERNAME>",
-                    "http://<DOMAIN>/component/comprofiler/userprofiler/<USERNAME>",
-                    "http://<DOMAIN>/details/@<USERNAME>",
-                    "http://<DOMAIN>/foros/member.php?username=<USERNAME>",
-                    "http://<DOMAIN>/forum/member/<USERNAME>",
-                    "http://<DOMAIN>/forum/member.php?username=<USERNAME>",
-                    "http://<DOMAIN>/forum/profile.php?mode=viewprofile&u=<USERNAME>",
-                    "http://<DOMAIN>/home/<USERNAME>",
-                    "http://<DOMAIN>/index.php?action=profile;user=<USERNAME>",
-                    "http://<DOMAIN>/member_profile.php?u=<USERNAME>",
-                    "http://<DOMAIN>/member.php?username=<USERNAME>",
-                    "http://<DOMAIN>/members/?username=<USERNAME>",
-                    "http://<DOMAIN>/members/<USERNAME>",
-                    "http://<DOMAIN>/members/view/<USERNAME>",
-                    "http://<DOMAIN>/mi-espacio/<USERNAME>",
-                    "http://<DOMAIN>/u<USERNAME>",
-                    "http://<DOMAIN>/u/<USERNAME>",
-                    "http://<DOMAIN>/user-<USERNAME>",
-                    "http://<DOMAIN>/user/<USERNAME>",
-                    "http://<DOMAIN>/user/<USERNAME>.html",
-                    "http://<DOMAIN>/users/<USERNAME>",
-                    "http://<DOMAIN>/usr/<USERNAME>",
-                    "http://<DOMAIN>/usuario/<USERNAME>",
-                    "http://<DOMAIN>/usuarios/<USERNAME>",
-                    "http://<DOMAIN>/en/users/<USERNAME>",
-                    "http://<DOMAIN>/people/<USERNAME>",
-                    "http://<DOMAIN>/profil/<USERNAME>",
-                    "http://<DOMAIN>/profile/<USERNAME>",
-                    "http://<DOMAIN>/profile/page/<USERNAME>",
-                    "http://<DOMAIN>/rapidforum/index.php?action=profile;user=<USERNAME>",
-                    "http://<DOMAIN>/social/usuarios/<USERNAME>",
-                    "http://<USERNAME>.<DOMAIN>",
-                    "http://<USERNAME>.<DOMAIN>/user/"
-                ]
+            "http://<DOMAIN>/<USERNAME>",
+            "http://<DOMAIN>/~<USERNAME>",
+            "http://<DOMAIN>/?action=profile;user=<USERNAME>",
+            "http://<DOMAIN>/causes/author/<USERNAME>",
+            "http://<DOMAIN>/channel/<USERNAME>",
+            "http://<DOMAIN>/community/profile/<USERNAME>",
+            "http://<DOMAIN>/component/comprofiler/userprofiler/<USERNAME>",
+            "http://<DOMAIN>/details/@<USERNAME>",
+            "http://<DOMAIN>/foros/member.php?username=<USERNAME>",
+            "http://<DOMAIN>/forum/member/<USERNAME>",
+            "http://<DOMAIN>/forum/member.php?username=<USERNAME>",
+            "http://<DOMAIN>/forum/profile.php?mode=viewprofile&u=<USERNAME>",
+            "http://<DOMAIN>/home/<USERNAME>",
+            "http://<DOMAIN>/index.php?action=profile;user=<USERNAME>",
+            "http://<DOMAIN>/member_profile.php?u=<USERNAME>",
+            "http://<DOMAIN>/member.php?username=<USERNAME>",
+            "http://<DOMAIN>/members/?username=<USERNAME>",
+            "http://<DOMAIN>/members/<USERNAME>",
+            "http://<DOMAIN>/members/view/<USERNAME>",
+            "http://<DOMAIN>/mi-espacio/<USERNAME>",
+            "http://<DOMAIN>/u<USERNAME>",
+            "http://<DOMAIN>/u/<USERNAME>",
+            "http://<DOMAIN>/user-<USERNAME>",
+            "http://<DOMAIN>/user/<USERNAME>",
+            "http://<DOMAIN>/user/<USERNAME>.html",
+            "http://<DOMAIN>/users/<USERNAME>",
+            "http://<DOMAIN>/usr/<USERNAME>",
+            "http://<DOMAIN>/usuario/<USERNAME>",
+            "http://<DOMAIN>/usuarios/<USERNAME>",
+            "http://<DOMAIN>/en/users/<USERNAME>",
+            "http://<DOMAIN>/people/<USERNAME>",
+            "http://<DOMAIN>/profil/<USERNAME>",
+            "http://<DOMAIN>/profile/<USERNAME>",
+            "http://<DOMAIN>/profile/page/<USERNAME>",
+            "http://<DOMAIN>/rapidforum/index.php?action=profile;user=<USERNAME>",
+            "http://<DOMAIN>/social/usuarios/<USERNAME>",
+            "http://<USERNAME>.<DOMAIN>",
+            "http://<USERNAME>.<DOMAIN>/user/"
+        ]
     else:
         try:
             fuzzingStructures = fFuzzStruct.read().splitlines()
@@ -218,30 +218,24 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
     This method receives as a parameter a series of nicks and verifies whether
     those nicks have a profile associated in different social networks.
 
-    Parameters
-    ----------
-    nicks:
-        List of nicks to process.
-    platforms:
-        List of <Platform> objects to be processed.
-    rutaDescarga:
-        Local file where saving the obtained information.
-    avoidProcessing:
-        Lboolean var that defines whether the profiles will NOT be processed.
-    avoidDownload:
-        A boolean var that defines whether the profiles will NOT be downloaded.
-    maltego:
-        A parameter to tell usufy.py that he has been invoked by Malego.
-    verbosity:
-        The level of verbosity to be used.
-    logFolder:
-        The path to the log folder.
+    Args:
+    -----
+        nicks: List of nicks to process.
+        platforms: List of <Platform> objects to be processed.
+        rutaDescarga: Local file where saving the obtained information.
+        avoidProcessing: A boolean var that defines whether the profiles will
+            NOT be processed.
+        avoidDownload: A boolean var that defines whether the profiles will NOT
+            be downloaded.
+        maltego: A parameter to tell usufy.py that he has been invoked by Malego.
+        verbosity: The level of verbosity to be used.
+        logFolder: The path to the log folder.
 
-    Returns
-    -------
-        Returns a dictionary where the key is the nick and the value another
-        dictionary where the keys are the social networks and te value is the
-        corresponding URL.
+    Returns:
+    --------
+        dict: Returns a dictionary where the key is the nick and the value
+            another dictionary where the keys are the social networks and te
+            value is the corresponding URL.
     """
     osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=verbosity, logFolder=logFolder)
     logger = logging.getLogger("osrframework.usufy")
@@ -333,16 +327,15 @@ def main(args):
 
     The function is created in this way so as to let other applications make
     use of the full configuration capabilities of the application. The
-    parameters received are used as parsed by this modules getParser().
+    parameters received are used as parsed by this modules `getParser()`.
 
-    Parameters
-    ----------
-    args:
-        The parameters as processed by this modules getParser().
+    Args:
+    -----
+        args: The parameters as processed by this modules `getParser()`.
 
-    Returns
-    -------
-        A Json representing the matching results.
+    Returns:
+    --------
+        dict: A Json representing the matching results.
     """
     # Recovering the logger
     # Calling the logger when being imported
@@ -358,29 +351,14 @@ usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit <http://www.gnu.org/licenses/gpl-3.0.txt>.
+visit <http://www.gnu.org/licenses/agpl-3.0.txt>.
 """
         logger.info(sayingHello)
         print(general.title(sayingHello))
         logger.info("Starting usufy.py...")
 
     if args.license:
-        logger.info("Looking for the license...")
-        # showing the license
-        try:
-            with open ("COPYING", "r") as iF:
-                contenido = iF.read().splitlines()
-                for linea in contenido:
-                    print(linea)
-        except Exception:
-            try:
-                # Trying to recover the COPYING file...
-                with open ("/usr/share/osrframework/COPYING", "r") as iF:
-                    contenido = iF.read().splitlines()
-                    for linea in contenido:
-                        print(linea)
-            except:
-                logger.error("ERROR: there has been an error when opening the COPYING file.\n\tThe file contains the terms of the GPLv3 under which this software is distributed.\n\tIn case of doubts, verify the integrity of the files or contact contacto@i3visio.com.")
+        general.showLicense()
     elif args.fuzz:
         logger.info("Performing the fuzzing tasks...")
         res = fuzzUsufy(args.fuzz, args.fuzz_config)
@@ -603,7 +581,7 @@ def getParser():
     groupMainOptions = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
     groupMainOptions.add_argument('--info', metavar='<action>', choices=['list_platforms', 'list_tags'], action='store', help='select the action to be performed amongst the following: list_platforms (list the details of the selected platforms), list_tags (list the tags of the selected platforms). Afterwards, it exists.')
-    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')
+    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
     groupMainOptions.add_argument('-b', '--benchmark',  action='store_true', default=False, help='perform the benchmarking tasks.')
     groupMainOptions.add_argument('-f', '--fuzz', metavar='<path_to_fuzzing_list>', action='store', type=argparse.FileType('r'), help='this option will try to find usufy-like URLs. The list of fuzzing platforms in the file should be (one per line): <BASE_DOMAIN>\t<VALID_NICK>')
     groupMainOptions.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
