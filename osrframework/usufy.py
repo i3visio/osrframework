@@ -351,8 +351,7 @@ usufy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit <http://www.gnu.org/licenses/agpl-3.0.txt>.
-"""
+visit """ + general.LICENSE_URL
         logger.info(sayingHello)
         print(general.title(sayingHello))
         logger.info("Starting usufy.py...")
