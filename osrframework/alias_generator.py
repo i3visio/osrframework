@@ -59,47 +59,27 @@ def main(name=None, surname1=None, surname2=None, city=None, country=None, year=
 
     It receives several parameters as parsed by this module's `getParser()`.
 
-    Parameters
-    ----------
-    name:
-        String representing the known name of the investigated profile.
-
-    surname1:
-        String representing the first surname of the investigated profile.
-
-    surname2:
-        String representing the second surname of the investigated profile.
-
-    city:
-        String representing the city where the profile was born or works.
-
-    country:
-        String representing the country.
-
-    year:
-        String representing a year linked to the profile.
-
-    useNumbers:
-        Boolean representing whether to use random numbers at the end.
-
-    useCommonWords:
-        Boolean representing whether to use known commond words to generate new
-        nicknames.
-
-    useNumbers:
-        Boolean representing whether to use random numbers at the end.
-
-    useLeet:
-        Boolean representing whether to modify certain letters by numbers using
-        the leet (*133t*) codification.
-
-    extraWords:
-        A list of strings with extra words to be appended to the generated
-        nicknames.
+    Args:
+    -----
+    name: String representing the known name of the investigated profile.
+    surname1: String representing the first surname of the investigated profile.
+    surname2: String representing the second surname of the investigated
+        profile.
+    city: String representing the city where the profile was born or works.
+    country: String representing the country.
+    year: String representing a year linked to the profile.
+    useNumbers: Boolean representing whether to use random numbers at the end.
+    useCommonWords: Boolean representing whether to use known commond words to
+        generate new nicknames.
+    useNumbers: Boolean representing whether to use random numbers at the end.
+    useLeet: Boolean representing whether to modify certain letters by numbers
+        using the leet (*133t*) codification.
+    extraWords: A list of strings with extra words to be appended to the
+        generatednicknames.
 
     Returns
     -------
-    An ordered list of the nicknames generated.
+        list: An ordered list of the nicknames generated.
     """
     # Lowering all the info received
     name = name.lower()
