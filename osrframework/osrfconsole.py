@@ -1,32 +1,34 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
+
 
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2016-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v5.0"
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
+
 
 import argparse
 import cmd as cmd
@@ -36,6 +38,7 @@ import sys
 
 import osrframework.utils.configuration as configuration
 import osrframework.utils.banner as banner
+import osrframework.utils.general as general
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.regexp_selection as regexp_selection
 
@@ -60,9 +63,7 @@ UTILS = [
 ################################################################################
 
 class OSRFConsoleUtil(cmd.Cmd):
-    """
-        Simple class from which of a Metasploit-like interactive interface.
-    """
+    """Simple class from which of a Metasploit-like interactive interface."""
     # Setting up the name of the module
     UNAME = "Abstract Util"
 
@@ -97,7 +98,7 @@ class OSRFConsoleUtil(cmd.Cmd):
     }
 
     def _checkIfRequiredAreSet(self):
-        """Internal function to check if the required parameters have been set"""
+        """Internal function to check if the required parameters have been set."""
         details = ""
         for key in self.CONFIG.keys():
             if self.CONFIG[key]["REQUIRED"] and self.CONFIG[key]["CURRENT_VALUE"] == None:
@@ -112,15 +113,13 @@ class OSRFConsoleUtil(cmd.Cmd):
         return details
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function."""
+        """Function that creates the array with the params that will work with this function."""
         # Creating the parameters as if they were created using the command line
         params = ["-h"]
         return params
 
     def do_set(self, line):
-        """
-Setting the variables defined in CONFIG. You can check their values at any time by typing 'show options'.
-        """
+        """Setting the variables defined in CONFIG. You can check their values at any time by typing 'show options'."""
         try:
             parameter, value = line.split(" ", 1)
             # Setting the parameter
@@ -134,12 +133,12 @@ Setting the variables defined in CONFIG. You can check their values at any time 
                             raise Exception("ERROR: the value provided is not valid.")
                 # Setting the value
                 self.CONFIG[parameter]["CURRENT_VALUE"] = value
-                print parameter + "=" + str(value)
+                print(general.info(parameter + "=" + str(value)))
             else:
                 raise Exception("ERROR: parameter not valid.")
         except Exception as e:
-            print "[!] ERROR: Not enough parameters provided. Usage: set OPTION VALUE."
-            print str(e)
+            print(general.error("[!] ERROR: Not enough parameters provided. Usage: set OPTION VALUE."))
+            print(general.error(str(e)))
 
     def complete_set(self, text, line, begidx, endidx):
         # First, we will try to get the available parameters
@@ -165,26 +164,24 @@ Setting the variables defined in CONFIG. You can check their values at any time 
         return completions
 
     def do_unset(self, line):
-        """
-Unsetting the variables defined in CONFIG. You can check their values at any time by typing 'show options' and unsetting all the options at once by typing 'unset all'".
-        """
+        """Unsetting the variables defined in CONFIG. You can check their values at any time by typing 'show options' and unsetting all the options at once by typing 'unset all'"."""
         try:
             parameter = line.split(" ")[0]
             # Getting the parameter
             if parameter in self.CONFIG.keys():
                 # Unsetting the value
                 self.CONFIG[parameter]["CURRENT_VALUE"] = self.CONFIG[parameter]["DEFAULT_VALUE"]
-                print parameter + " reseted to '" + str(self.CONFIG[parameter]["DEFAULT_VALUE"]) + "'."
+                print(general.info(parameter + " reseted to '" + str(self.CONFIG[parameter]["DEFAULT_VALUE"]) + "'."))
             elif parameter == "all":
                 for p in self.CONFIG.keys():
                     # Unsetting all the values
                     self.CONFIG[p]["CURRENT_VALUE"] = self.CONFIG[p]["DEFAULT_VALUE"]
-                print "All parameters reseted to their default values."
+                print(general.info("All parameters reseted to their default values."))
             else:
                 raise Exception("ERROR: parameter not valid.")
         except Exception as e:
-            print "[!] ERROR: Not enough parameters provided. Usage: unset OPTION"
-            print str(e)
+            print(gemeral.error("[!] ERROR: Not enough parameters provided. Usage: unset OPTION"))
+            print(general.error("Traceback: " + str(e)))
 
     def complete_unset(self, text, line, begidx, endidx):
         # First, we will try to get the available parameters
@@ -201,38 +198,27 @@ Unsetting the variables defined in CONFIG. You can check their values at any tim
         return completions
 
     def do_run(self, line):
-        """
-Command that send the order to the framework to launch the current utility.
-        """
-        print
+        """Command that send the order to the framework to launch the current utility."""
         if self._checkIfRequiredAreSet():
-            print "Launching the util..."
+            print(general.info("Launching the util..."))
         else:
-            print "There are required parameters which have not been set."
+            print(general.error("There are required parameters which have not been set."))
             self.do_show("options")
-        print
 
     def do_show(self, line):
-        """
-Showing the information about the module. The things to show are: 'options' and 'command'.
+        """Showing the information about the module. The things to show are: 'options' and 'command'.
     - ' options' will show the current values of each and every parameter.
-    - 'command' will show the command needed to launch the module as is using the cli applications.
-        """
-        print
+    - 'command' will show the command needed to launch the module as is using the cli applications."""
         if line.lower() == "options":
-            print "Defining the different options for util " + self.UNAME + "..."
+            print(general.info("Defining the different options for util " + self.UNAME + "..."))
             for key in self.CONFIG.keys():
-                # print "" + (key +  " (*) " if CONFIG[key]["REQUIRED"] + ": ").ljust(14) + CONFIG[key]["CURRENT_VALUE"]
-                print "\t- " + (key + (" (*)." if self.CONFIG[key]["REQUIRED"] else ".") ).ljust(14) + "" + self.CONFIG[key]["DESCRIPTION"]
-            print
+                print(general.info("\t- " + (key + (" (*)." if self.CONFIG[key]["REQUIRED"] else ".") ).ljust(14) + "" + self.CONFIG[key]["DESCRIPTION"]))
 
-            print "Showing the current state of the options for util " + self.UNAME + "..."
+            print(general.info("Showing the current state of the options for util " + self.UNAME + "..."))
             for key in self.CONFIG.keys():
-                # print "" + (key +  " (*) " if CONFIG[key]["REQUIRED"] + ": ").ljust(14) + CONFIG[key]["CURRENT_VALUE"]
-                print "\t- " + (key + (" (*)" if self.CONFIG[key]["REQUIRED"] else "") + ": ").ljust(14) + ("" if self.CONFIG[key]["CURRENT_VALUE"] == None else str(self.CONFIG[key]["CURRENT_VALUE"]))
+                print(general.info("\t- " + (key + (" (*)" if self.CONFIG[key]["REQUIRED"] else "") + ": ").ljust(14) + ("" if self.CONFIG[key]["CURRENT_VALUE"] == None else str(self.CONFIG[key]["CURRENT_VALUE"]))))
         elif line.lower() == "command":
-            print "Equivalent command to be launched to imitate the current configuration:\n\t$ " + self.createCommandLine()
-        print
+            print(general.info("Equivalent command to be launched to imitate the current configuration:\n\t$ ") + general.title(self.createCommandLine()) + "\n")
 
     def complete_show(self, text, line, begidx, endidx):
         # First, we will try to get the available parameters
@@ -249,9 +235,7 @@ Showing the information about the module. The things to show are: 'options' and 
         return completions
 
     def createCommandLine(self):
-        """
-Method to build the commandline that should execute the same actions as defined in the console.
-        """
+        """Method to build the commandline that should execute the same actions as defined in the console."""
         if self._checkIfRequiredAreSet():
             command = self.UNAME
             # Getting the params
@@ -264,11 +248,8 @@ Method to build the commandline that should execute the same actions as defined 
             return self.UNAME + " -h  # NOTE: all the required parameters are not set. Option '-h' is being shown."
 
     def do_info(self, line):
-        """
-This command shows all the information available about the module.
-        """
-        print
-        print "Displaying module information."
+        """This command shows all the information available about the module."""
+        print(general.info("Displaying module information."))
         self.do_show("options")
         self.do_show("command")
 
@@ -279,10 +260,8 @@ This command unloads the current util and returns back to the main console.
         return True
 
     def do_exit(self, line):
-        """
-This command will exit the osrfconsole normally.
-        """
-        print "Exiting the program..."
+        """This command will exit the osrfconsole normally."""
+        print(general.info("Exiting the program..."))
         sys.exit()
 
 """
@@ -300,13 +279,13 @@ This command will exit the osrfconsole normally.
 ################################################################################
 
 class OSRFConsoleDomainfy(OSRFConsoleUtil):
-    """Class that controls an interactive domainfy program"""
+    """Class that controls an interactive domainfy program."""
     # Setting up the name of the module
     UNAME = "domainfy.py"
 
     intro = ""
     # Defining the prompt
-    prompt = 'osrf (' + UNAME.split('.')[0] + ') > '
+    prompt = general.emphasis('osrf (' + UNAME.split('.')[0] + ') > ')
     # Defining the character to create hyphens
     ruler = '-'
 
@@ -373,15 +352,12 @@ class OSRFConsoleDomainfy(OSRFConsoleUtil):
         return params
 
     def do_run(self, line):
-        """
-Running the current application. This method should be redefined for each util.
-        """
+        """Running the current application. This method should be redefined for each util."""
         print
         # Checking if all the required parameters have been set
         if self._checkIfRequiredAreSet():
-            print "Collecting the options set by the user..."
+            print(general.info("Collecting the options set by the user..."))
             # Getting the parser...
-            pass
             parser = domainfy.getParser()
 
             # Generating the parameters
@@ -389,17 +365,17 @@ Running the current application. This method should be redefined for each util.
 
             args = parser.parse_args(params)
 
-            print "Launching the util with the following parameters: " + str(params)
-            print
+            print(general.info("Launching " + self.UNAME + " with the following parameters: ") + general.emphashis(str(params)))
+
             try:
-                domainfy.main(args)
+                usufy.main(args)
             except Exception as e:
-                print "[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "
-                print "Traceback: " + str(e)
+                print(gemeral.error("[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "))
+                print(general.error("Traceback: " + str(e)))
         else:
-            print "[!] ERROR. There are required parameters which have not been set."
+            print(general.error("[!] ERROR. There are required parameters which have not been set."))
             self.do_show("options")
-        print
+        print(general.success("Execution ended successfully."))
 
 """
 ================================================================================
@@ -417,7 +393,7 @@ Running the current application. This method should be redefined for each util.
 ################################################################################
 
 class OSRFConsoleEntify(OSRFConsoleUtil):
-    """Class that controls an interactive entify program"""
+    """Class that controls an interactive entify program."""
     # Setting up the name of the module
     UNAME = "entify.py"
 
@@ -472,13 +448,11 @@ class OSRFConsoleEntify(OSRFConsoleUtil):
         return params
 
     def do_run(self, line):
-        """
-Running the current application. This method should be redefined for each util.
-        """
+        """Running the current application. This method should be redefined for each util."""
         print
         # Checking if all the required parameters have been set
         if self._checkIfRequiredAreSet():
-            print "Collecting the options set by the user..."
+            print(general.info("Collecting the options set by the user..."))
             # Getting the parser...
             parser = entify.getParser()
 
@@ -487,17 +461,17 @@ Running the current application. This method should be redefined for each util.
 
             args = parser.parse_args(params)
 
-            print "Launching the util with the following parameters:\n\t" + str(params)
-            print
+            print(general.info("Launching " + self.UNAME + " with the following parameters: ") + general.emphashis(str(params)))
+
             try:
-                entify.main(args)
+                usufy.main(args)
             except Exception as e:
-                print "[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "
-                print "Traceback: " + str(e)
+                print(gemeral.error("[!] ERROR. Something happened when launching the utility. Type 'show options' to check the parameters. "))
+                print(general.error("Traceback: " + str(e)))
         else:
-            print "[!] ERROR. There are required parameters which have not been set."
+            print(general.error("[!] ERROR. There are required parameters which have not been set."))
             self.do_show("options")
-        print
+        print(general.success("Execution ended successfully."))
 
 """
 ================================================================================
@@ -515,7 +489,7 @@ Running the current application. This method should be redefined for each util.
 ################################################################################
 
 class OSRFConsoleMailfy(OSRFConsoleUtil):
-    """Class that controls an interactive mailfy program"""
+    """Class that controls an interactive mailfy program."""
     # Setting up the name of the module
     UNAME = "mailfy.py"
 
@@ -578,13 +552,11 @@ class OSRFConsoleMailfy(OSRFConsoleUtil):
         return params
 
     def do_run(self, line):
-        """
-Running the current application. This method should be redefined for each util.
-        """
+        """Running the current application. This method should be redefined for each util."""
         print
         # Checking if all the required parameters have been set
         if self._checkIfRequiredAreSet():
-            print "Collecting the options set by the user..."
+            print(general.info("Collecting the options set by the user..."))
             # Getting the parser...
             parser = mailfy.getParser()
 
@@ -593,17 +565,17 @@ Running the current application. This method should be redefined for each util.
 
             args = parser.parse_args(params)
 
-            print "Launching the util with the following parameters: " + str(params)
-            print
+            print(general.info("Launching " + self.UNAME + " with the following parameters: ") + general.emphashis(str(params)))
+
             try:
-                mailfy.main(args)
+                usufy.main(args)
             except Exception as e:
-                print "[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "
-                print "Traceback: " + str(e)
+                print(gemeral.error("[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "))
+                print(general.error("Traceback: " + str(e)))
         else:
-            print "[!] ERROR. There are required parameters which have not been set."
+            print(general.error("[!] ERROR. There are required parameters which have not been set."))
             self.do_show("options")
-        print
+        print(general.success("Execution ended successfully."))
 
 """
 ================================================================================
@@ -621,7 +593,7 @@ Running the current application. This method should be redefined for each util.
 ################################################################################
 
 class OSRFConsolePhonefy(OSRFConsoleUtil):
-    """Class that controls an interactive phonefy program"""
+    """Class that controls an interactive phonefy program."""
     # Setting up the name of the module
     UNAME = "phonefy.py"
 
@@ -682,7 +654,7 @@ Running the current application. This method should be redefined for each util.
         print
         # Checking if all the required parameters have been set
         if self._checkIfRequiredAreSet():
-            print "Collecting the options set by the user..."
+            print(general.info("Collecting the options set by the user..."))
             # Getting the parser...
             parser = phonefy.getParser()
 
@@ -691,17 +663,17 @@ Running the current application. This method should be redefined for each util.
 
             args = parser.parse_args(params)
 
-            print "Launching the util with the following parameters:\n\t" + str(params)
-            print
+            print(general.info("Launching " + self.UNAME + " with the following parameters: ") + general.emphashis(str(params)))
+
             try:
-                phonefy.main(args)
+                usufy.main(args)
             except Exception as e:
-                print "[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "
-                print "Traceback: " + str(e)
+                print(gemeral.error("[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "))
+                print(general.error("Traceback: " + str(e)))
         else:
-            print "[!] ERROR. There are required parameters which have not been set."
+            print(general.error("[!] ERROR. There are required parameters which have not been set."))
             self.do_show("options")
-        print
+        print(general.success("Execution ended successfully."))
 
 """
 ================================================================================
@@ -774,13 +746,12 @@ class OSRFConsoleSearchfy(OSRFConsoleUtil):
         return params
 
     def do_run(self, line):
-        """
-Running the current application. This method should be redefined for each util.
+        """Running the current application. This method should be redefined for each util.
         """
         print
         # Checking if all the required parameters have been set
         if self._checkIfRequiredAreSet():
-            print "Collecting the options set by the user..."
+            print(general.info("Collecting the options set by the user..."))
             # Getting the parser...
             parser = searchfy.getParser()
 
@@ -789,17 +760,17 @@ Running the current application. This method should be redefined for each util.
 
             args = parser.parse_args(params)
 
-            print "Launching the util with the following parameters: " + str(params)
-            print
+            print(general.info("Launching " + self.UNAME + " with the following parameters: ") + general.emphashis(str(params)))
+
             try:
-                searchfy.main(args)
+                usufy.main(args)
             except Exception as e:
-                print "[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "
-                print "Traceback: " + str(e)
+                print(gemeral.error("[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "))
+                print(general.error("Traceback: " + str(e)))
         else:
-            print "[!] ERROR. There are required parameters which have not been set."
+            print(general.error("[!] ERROR. There are required parameters which have not been set."))
             self.do_show("options")
-        print
+        print(general.success("Execution ended successfully."))
 
 """
 ================================================================================
@@ -823,7 +794,7 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
 
     intro = ""
     # Defining the prompt
-    prompt = 'osrf (' + UNAME.split('.')[0] + ') > '
+    prompt = general.emphasis('osrf (' + UNAME.split('.')[0] + ') > ')
     # Defining the character to create hyphens
     ruler = '-'
 
@@ -868,7 +839,7 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """Function that creates the array with the params that will work with this function."""
         # Creating the parameters as if they were created using the command line
         params = [
             "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
@@ -880,13 +851,11 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
         return params
 
     def do_run(self, line):
-        """
-Running the current application. This method should be redefined for each util.
-        """
+        """Running the current application. This method should be redefined for each util."""
         print
         # Checking if all the required parameters have been set
         if self._checkIfRequiredAreSet():
-            print "Collecting the options set by the user..."
+            print(general.info("Collecting the options set by the user..."))
             # Getting the parser...
             parser = usufy.getParser()
 
@@ -895,17 +864,17 @@ Running the current application. This method should be redefined for each util.
 
             args = parser.parse_args(params)
 
-            print "Launching the util with the following parameters: " + str(params)
-            print
+            print(general.info("Launching " + self.UNAME + " with the following parameters: ") + general.emphashis(str(params)))
+
             try:
                 usufy.main(args)
             except Exception as e:
-                print "[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "
-                print "Traceback: " + str(e)
+                print(gemeral.error("[!] ERROR. Something happenned when launching the utility. Type 'show options' to check the parameters. "))
+                print(general.error("Traceback: " + str(e)))
         else:
-            print "[!] ERROR. There are required parameters which have not been set."
+            print(general.error("[!] ERROR. There are required parameters which have not been set."))
             self.do_show("options")
-        print
+        print(general.success("Execution ended successfully."))
 
 
 """
@@ -923,13 +892,16 @@ Running the current application. This method should be redefined for each util.
 ################################################################################
 
 class OSRFConsoleMain(cmd.Cmd):
-    """OSRFramework console application to control the different framework utils. Type 'help' to find the commands. """
+    """
+    OSRFramework console application to control the different framework utils.
+
+    Type 'help' to find the commands.
+    """
 
     DISCLAIMER = '''\tOSRFConsole ''' + __version__ + ''' - Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 
 This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.'''
 
     intro = banner.text + "\n" + DISCLAIMER
 
@@ -951,14 +923,14 @@ This is free software, and you are welcome to redistribute it under certain cond
     intro += info
 
     # Defining the prompt
-    prompt = 'osrf > '
+    prompt = general.emphasis('osrf > ')
 
     ruler = '='
 
     def do_info(self, line):
         """
-Command that shows again the general information about the application.
-"""
+        Command that shows again the general information about the application.
+        """
         configInfo =  "\n    Additional configuration files:"
         configInfo += "\n    -------------------------------"
         configInfo += "\n    You will be able to find more configuration options in the following files in your system. The relevant paths are the ones that follows:"
@@ -975,21 +947,24 @@ Command that shows again the general information about the application.
         configInfo += "\n\t- '" + paths["appPathPatterns"] + "/' -> Directory containing the user-defined patterns for entify.py."
         configInfo += "\n\t- '" + paths["appPathWrappers"] + "/' -> Directory containing the user-defined wrappers for usufy, searchfy and phonefy platforms."
         configInfo += "\n"
-        print self.info + configInfo
+        print(general.title(self.info) + general.info(configInfo))
 
     def do_use(self, line):
         """
-This command will define which of the framework's utilities will be loaded. The available options are the following:
-    - domainfy
-    - entify
-    - mailfy
-    - phonefy
-    - searchfy
-    - usufy
-For example, type 'use usufy' to load the usufy util. You can always use the <TAB> to be helped using the autocomplete options.
-"""
+        This command will define which of the framework's utilities will be loaded.
+
+        The available options are the following:
+            - domainfy
+            - entify
+            - mailfy
+            - phonefy
+            - searchfy
+            - usufy
+        For example, type 'use usufy' to load the usufy util. You can always use
+        the <TAB> to be helped using the autocomplete options.
+        """
         if line not in UTILS:
-            print "[!] Util is not correct. Try 'help use' to check the available options."
+            print(general.warning("[!] Util is not correct. Try 'help use' to check the available options."))
             return False
         elif line == "domainfy":
             OSRFConsoleDomainfy().cmdloop()
@@ -1004,7 +979,7 @@ For example, type 'use usufy' to load the usufy util. You can always use the <TA
         elif line == "usufy":
             OSRFConsoleUsufy().cmdloop()
         else:
-            print "[!] Not implemented yet. Try 'help use' to check the available options."
+            print(general.warning("[!] Not implemented yet. Try 'help use' to check the available options."))
 
     def complete_use(self, text, line, begidx, endidx):
         if not text:
@@ -1018,10 +993,11 @@ For example, type 'use usufy' to load the usufy util. You can always use the <TA
 
     def do_exit(self, line):
         """
-This command will exit the osrfconsole normally.
+        This command will exit osrfconsole normally.
         """
-        print "Exiting..."
+        print(info("Exiting..."))
         sys.exit()
+
 
 if __name__ == '__main__':
     OSRFConsoleMain().cmdloop()
