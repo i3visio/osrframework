@@ -227,11 +227,11 @@ def pool_function(args):
 
     Returns:
     --------
-        dict: representing whether the verification was ended successfully. The
-            format is as follows:
-            ```
-            {"platform": "str(domain["value"])", "status": "DONE", "data": aux}
-            ```
+        A dictionary representing whether the verification was ended
+        successfully. The format is as follows:
+        ```
+        {"platform": "str(domain["value"])", "status": "DONE", "data": aux}
+        ```
     """
     is_valid = True
 
@@ -286,7 +286,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
 
         Arguments
         ---------
-        oldepoch: Seconds passed since 1970 as returned by `time.time()`.
+            oldepoch: Seconds passed since 1970 as returned by `time.time()`.
 
         Returns
         -------
@@ -394,6 +394,8 @@ def main(args):
     --------
         Returns a list with i3visio entities.
     """
+    results = []
+
     if not args.quiet:
         print(general.title(banner.text))
 
@@ -411,62 +413,65 @@ visit """ + general.LICENSE_URL + "\n"
 As the "emailahoy" library is NOT working properly there, "validate_email" will
 be used instead. Verification may be slower though."""))
 
-    # Processing the options returned to remove the "all" option
-    if "all" in args.domains:
-        domains = EMAIL_DOMAINS
+    if args.license:
+        general.showLicense()
     else:
-        # processing only the given domains and excluding the ones provided
-        domains = []
-        for d in args.domains:
-            if d not in args.exclude:
-                domains.append(d)
+        # Processing the options returned to remove the "all" option
+        if "all" in args.domains:
+            domains = EMAIL_DOMAINS
+        else:
+            # processing only the given domains and excluding the ones provided
+            domains = []
+            for d in args.domains:
+                if d not in args.exclude:
+                    domains.append(d)
 
-    if args.create_emails:
-        emails = grabEmails(nicksFile=args.create_emails, domains=domains, excludeDomains=args.exclude)
-    else:
-        emails = grabEmails(emails=args.emails, emailsFile=args.emails_file, nicks=args.nicks, nicksFile=args.nicks_file, domains=domains, excludeDomains=args.exclude)
+        if args.create_emails:
+            emails = grabEmails(nicksFile=args.create_emails, domains=domains, excludeDomains=args.exclude)
+        else:
+            emails = grabEmails(emails=args.emails, emailsFile=args.emails_file, nicks=args.nicks, nicksFile=args.nicks_file, domains=domains, excludeDomains=args.exclude)
 
 
-    # Showing the execution time...
-    if not args.quiet:
-        startTime= dt.datetime.now()
-        print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails: "+ str(emails) + ". Be patient!\n")
-        print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
-    # Perform searches, using different Threads
-    results = performSearch(emails, args.threads)
+        # Showing the execution time...
+        if not args.quiet:
+            startTime= dt.datetime.now()
+            print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
+            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        # Perform searches, using different Threads
+        results = performSearch(emails, args.threads)
 
-    # Trying to store the information recovered
-    if args.output_folder != None:
-        if not os.path.exists(args.output_folder):
-            os.makedirs(args.output_folder)
-        # Grabbing the results
-        fileHeader = os.path.join(args.output_folder, args.file_header)
-        for ext in args.extension:
-            # Generating output files
-            general.exportUsufy(results, ext, fileHeader)
+        # Trying to store the information recovered
+        if args.output_folder != None:
+            if not os.path.exists(args.output_folder):
+                os.makedirs(args.output_folder)
+            # Grabbing the results
+            fileHeader = os.path.join(args.output_folder, args.file_header)
+            for ext in args.extension:
+                # Generating output files
+                general.exportUsufy(results, ext, fileHeader)
 
-    # Showing the information gathered if requested
-    if not args.quiet:
-        now = dt.datetime.now()
-        print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
-        print(general.success(unicode(general.usufyToTextExport(results))))
+        # Showing the information gathered if requested
+        if not args.quiet:
+            now = dt.datetime.now()
+            print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+            print(general.success(unicode(general.usufyToTextExport(results))))
 
-        now = dt.datetime.now()
-        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
-        for ext in args.extension:
-            # Showing the output files
-            print(general.emphasis("\t" + fileHeader + "." + ext))
+            now = dt.datetime.now()
+            print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
+            for ext in args.extension:
+                # Showing the output files
+                print(general.emphasis("\t" + fileHeader + "." + ext))
 
-    # Showing the execution time...
-    if not args.quiet:
-        endTime= dt.datetime.now()
-        print("\n" + str(endTime) +"\tFinishing execution...\n")
-        print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
-        print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(emails))) +" seconds\n")
+        # Showing the execution time...
+        if not args.quiet:
+            endTime= dt.datetime.now()
+            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
+            print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(emails))) +" seconds\n")
 
-    if not args.quiet:
-        # Urging users to place an issue on Github...
-        print(banner.footer)
+        if not args.quiet:
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
     return results
 
