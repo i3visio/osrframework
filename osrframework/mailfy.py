@@ -454,7 +454,7 @@ be used instead. Verification may be slower though."""))
         if not args.quiet:
             now = dt.datetime.now()
             print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
-            print(general.success(unicode(general.usufyToTextExport(results))))
+            print(general.success(general.usufyToTextExport(results)))
 
             now = dt.datetime.now()
             print("\n" + str(now) + "\tYou can find all the information collected in the following files:")

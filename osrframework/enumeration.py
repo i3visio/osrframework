@@ -40,7 +40,9 @@ import re
 
 
 def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
-    """Function that performs the enumeration itself."""
+    """
+    Function that performs the enumeration itself.
+    """
 
     for i, url in enumerate(urlDict.keys()):
         # Grabbing domain name:
@@ -84,7 +86,9 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
 
 
 def enumeration_main(args):
-    """Main loop for the enumeration"""
+    """
+    Main loop for the enumeration
+    """
     print(general.title(banner.text))
 
     sayingHello = """

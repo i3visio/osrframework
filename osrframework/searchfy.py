@@ -137,7 +137,7 @@ visit """ + general.LICENSE_URL + "\n"
         if not args.maltego:
             now = dt.datetime.now()
             print(str(now) + "\tA summary of the results obtained are listed in the following table:\n")
-            print(general.success(unicode(general.usufyToTextExport(results))))
+            print(general.success(general.usufyToTextExport(results)))
 
             if args.web_browser:
                 general.openResultsInBrowser(results)

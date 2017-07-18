@@ -548,7 +548,7 @@ visit """ + general.LICENSE_URL + "\n"
             else:
                 now = dt.datetime.now()
                 print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
-                print(general.success(unicode(general.usufyToTextExport(res))))
+                print(general.success(general.usufyToTextExport(res)))
 
                 if args.web_browser:
                     general.openResultsInBrowser(res)

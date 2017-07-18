@@ -285,13 +285,18 @@ def usufyToJsonExport(d, fPath):
 
 def usufyToTextExport(d, fPath=None):
     """
-    Workaround to export to a .txt file.
+    Workaround to export to a .txt file or to show the information.
 
     Args:
     -----
         d: Data to export.
-        fPath: File path for the output file. If None was provided, it will assume that it has to
-            print it.
+        fPath: File path for the output file. If None was provided, it will
+            assume that it has to print it.
+
+    Returns:
+    --------
+        unicode: It sometimes returns a unicode representation of the Sheet
+            received.
     """
     # Manual check...
     if d == []:
@@ -325,7 +330,7 @@ def usufyToTextExport(d, fPath=None):
             oF.write(str(sheet))
     except Exception as e:
         # If a fPath was not provided... We will only print the info:
-        return sheet
+        return unicode(sheet)
 
 
 def usufyToCsvExport(d, fPath):

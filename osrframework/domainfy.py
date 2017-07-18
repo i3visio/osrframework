@@ -454,7 +454,7 @@ visit """ + general.LICENSE_URL + "\n"
         if not args.quiet:
             print("A summary of the results obtained are shown in the following table:\n")
             try:
-                print(general.success(unicode(general.usufyToTextExport(results))))
+                print(general.success(general.usufyToTextExport(results)))
             except:
                 print(general.warning("\nSomething happened when exporting the results. The Json will be shown instead:\n"))
                 print(general.warning(json.dumps(results, indent=2)))

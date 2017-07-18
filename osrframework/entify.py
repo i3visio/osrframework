@@ -282,7 +282,7 @@ visit """ + general.LICENSE_URL + "\n"
         # Showing the information gathered if requested
         if not args.quiet:
             print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
-            print(general.success(unicode(general.usufyToTextExport(results))))
+            print(general.success(general.usufyToTextExport(results)))
 
             now = dt.datetime.now()
             print(str(now) + "\tYou can find all the information collected in the following files:")

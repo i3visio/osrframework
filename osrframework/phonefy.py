@@ -81,7 +81,7 @@ def main(args):
         Returns a list with i3visio entities.
     """
     results = []
-    
+
     if not args.quiet:
         print(general.title(banner.text))
 
@@ -121,7 +121,7 @@ visit """ + general.LICENSE_URL + "\n"
         if not args.quiet:
             now = dt.datetime.now()
             print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
-            print(general.success(unicode(general.usufyToTextExport(results))))
+            print(general.success(general.usufyToTextExport(results)))
 
             if args.web_browser:
                 general.openResultsInBrowser(results)
