@@ -8,6 +8,8 @@ For more information, check the README.Add some wrappers
 - Add feature: Add colorama utils to general
 - Update the print functions
 - Fix some issues regarding to the display of the license
+- General update of the way in which functions in `osrframework.utils.general` are documented as well as removal of unneeded functions.
+- Remove a hack in the export function to set the encoding that implied setting the default encoding using `sys.setdefaultencoding()` and resetting it back after the export.
 
 0.16.8, 2017/06/22 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
 - Fix issue #187: Review installation with --user in Linux systems where ~/.local/bin is NOT in the PATH
