@@ -29,13 +29,13 @@ __version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
+
 import argparse
 import datetime as dt
 import json
 import os
 import signal
 import socket
-import sys
 import whois
 
 # global issues for multiprocessing
@@ -77,13 +77,19 @@ def getNumberTLD():
         total+= len(TLD[typeTld])
     return total
 
+
 def getWhoisInfo(domain):
     """
     Method that trie to recover the whois info from a domain.
 
-        :param domain:   domain to verify.
+    Args:
+    -----
+        domain: The domain to verify.
 
-        :result:
+    Returns:
+    --------
+        dict: A dictionary containing the result as an i3visio entity with its
+            `value`, `type` and `attributes`.
     """
     new = []
 
@@ -151,14 +157,21 @@ def getWhoisInfo(domain):
 
     return new
 
+
 def createDomains(tlds, nicks=None, nicksFile=None):
-    """Method that globally permits to generate the domains to be checked.
+    """
+    Method that globally permits to generate the domains to be checked.
 
-        :param tlds:  list of tlds.
-        :param nicks:   list of aliases.
-        :param nicksFile:  filepath to the aliases file.
+    Args:
+    -----
+        tlds: List of tlds.
+        nicks: List of aliases.
+        nicksFile: The filepath to the aliases file.
 
-        :result:    list of domains to be checked."""
+    Returns:
+    --------
+        list: list of domains to be checked.
+    """
     domain_candidates = []
     if nicks != None:
         for n in nicks:
@@ -184,9 +197,20 @@ def createDomains(tlds, nicks=None, nicksFile=None):
 
 
 def isBlackListed(ipv4):
-    """There are some providers that resolve always. We have identified these IP
-        so we have to perform an additional chdeck to confirm that the returned
-        IPv4 is not a false positive.
+    """
+    Method that checks if an IPv4 is blackslited
+
+    There are some providers that resolve always. We have identified these IP
+    so we have to perform an additional chdeck to confirm that the returned
+    IPv4 is not a false positive.
+
+    Args:
+    -----
+        ipv4: The IP to be verified.
+
+    Returns:
+    --------
+        bool: It returns whether the IP is blacklisted.
     """
     BLACKLISTED = [
         "45.79.222.138",
@@ -205,12 +229,23 @@ def isBlackListed(ipv4):
         return False
 
 def pool_function(domain):
-    """Wrapper for being able to launch all the threads of getPageWrapper.
-        :param domain: We receive the parameters as a dictionary.
+    """
+    Wrapper for being able to launch all the threads of getPageWrapper.
+
+    Args:
+    -----
+        domain: We receive the parameters as a dictionary.
+        ```
         {
             "domain" : ".com",
             "type" : "global"
-        }"""
+        }
+        ```
+    Returns:
+    --------
+        dict: A dictionary containing the following values:
+        `{"platform" : str(domain), "status": "DONE", "data": aux}`
+    """
     is_valid = True
     try:
         ipv4 = socket.gethostbyname(domain["domain"])
@@ -255,16 +290,19 @@ def pool_function(domain):
     except Exception as e:
         return {"platform" : str(domain), "status": "ERROR", "data": {}}
 
+
 def performSearch(domains=[], nThreads=16):
     """
     Method to perform the mail verification process.
 
     Arguments
     ---------
-    domains: List of domains to check.
+        domains: List of domains to check.
+        nThreads: Number of threads to use.
 
     Returns
     -------
+        list: A list containing the results as i3visio entities.
     """
     results = []
 
@@ -362,7 +400,7 @@ domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
 visit """ + general.LICENSE_URL + "\n"
-        print(general.info(sayingHello))
+        print(general.title(sayingHello))
 
     if args.license:
         general.showLicense()
@@ -414,9 +452,9 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Showing the information gathered if requested
         if not args.quiet:
-            print("A summary of the results obtained are shown in the following table:")
+            print("A summary of the results obtained are shown in the following table:\n")
             try:
-                print(general.success(general.usufyToTextExport(results)))
+                print(general.success(unicode(general.usufyToTextExport(results))))
             except:
                 print(general.warning("\nSomething happened when exporting the results. The Json will be shown instead:\n"))
                 print(general.warning(json.dumps(results, indent=2)))
