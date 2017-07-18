@@ -29,6 +29,7 @@ __version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
+
 import argparse
 import json
 import logging

@@ -34,11 +34,11 @@ import argparse
 import colorama
 import datetime as dt
 import json
-import os
-import traceback
 import logging
+import os
 # Preparing to capture interruptions smoothly
 import signal
+import traceback
 
 colorama.init(autoreset=True)
 
