@@ -4,6 +4,7 @@ OSRFramework Changelog
 For more information, check the README.Add some wrappers
 
 0.17.0, 2017/07/22 -- Prepare the Blackhat Arsenal release
+- Add feature #267: Add a leaked email search using HaveIBeenPwned.
 - Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
 - Add feature: Add colorama utils to general
 - Update the print functions

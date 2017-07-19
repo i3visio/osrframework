@@ -44,6 +44,7 @@ import sys
 import emailahoy
 import validate_email
 
+import osrframework.thirdparties.haveibeenpwned_com.hibp as hibp
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
@@ -88,13 +89,72 @@ EMAIL_DOMAINS = [
     "zoho.com"
 ]
 
+LEAKED_DOMAINS = [
+    "126.com",
+    "163.com",
+    "189.cn",
+    "aol.com",
+    "bk.ru",
+    "breakthru.com",
+    #"aaathats3as.com",
+    "btinternet.com",
+    #"cocaine.ninja",
+    #"cock.lu",
+    #"cock.email",
+    #"firemail.cc",
+    #"getbackinthe.kitchen",
+    "gmail.com",
+    "gmx.com",
+    "gmx.de",
+    #"hitler.rocks",
+    "hotmail.com",
+    "hushmail.com",
+    "icloud.com",
+    "inbox.com",
+    "keemail.me",
+    "latinmail.com",
+    "libero.it",
+    "lycos.com",
+    "me.com",
+    "mail.ru",
+    "mail2tor.com",
+    #"memeware.net",
+    #"noob.com",
+    "outlook.com",
+    "protonmail.ch",
+    "protonmail.com",
+    "rambler.ru",
+    "rocketmail.com",
+    "rediffmail.com",
+    "seznam.cz",
+    "starmedia.com",
+    "tuta.io",
+    "tutamail.com",
+    "tutanota.com",
+    "tutanota.de",
+    "ukr.net",
+    #"waifu.club",
+    #"wp.pl",
+    "ya.ru",
+    "yahoo.com",
+    "yandex.com",
+    "yandex.ru",
+    "yeah.net",
+    "zoho.com"
+]
+
 
 def getMoreInfo(e):
-    """Method that calls different third party API.
+    """
+    Method that calls different third party API.
 
-        :param e:   Email to verify.
+    Args:
+    -----
+        e:   Email to verify.
 
-        :result:
+    Returns:
+    --------
+        Three different values: email, alias and domain.
     """
     # Grabbing the email
     email = {}
@@ -175,11 +235,12 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
 
     Args:
     -----
-        emails: any premade list of emails.
-        emailsFile: the filepath to the emails file (one per line).
-        nicks: a list of aliases.
-        nicksFile: the filepath to the aliases file (one per line).
-        domains: the domains where the aliases will be tested.
+        emails: Any premade list of emails.
+        emailsFile: Filepath to the emails file (one per line).
+        nicks: A list of aliases.
+        nicksFile: Filepath to the aliases file (one per line).
+        domains: Domains where the aliases will be tested.
+        excludeDomains: Domains to be excluded from the created list.
 
     Returns:
     --------
@@ -378,6 +439,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
 
     return results
 
+
 def main(args):
     """
     Main function to launch phonefy.
@@ -416,8 +478,11 @@ be used instead. Verification may be slower though."""))
     if args.license:
         general.showLicense()
     else:
-        # Processing the options returned to remove the "all" option
-        if "all" in args.domains:
+        # Grabbing the list of global domains
+        if args.is_leaked:
+            domains = LEAKED_DOMAINS
+            # Processing the options returned to remove the "all" option
+        elif "all" in args.domains:
             domains = EMAIL_DOMAINS
         else:
             # processing only the given domains and excluding the ones provided
@@ -431,14 +496,79 @@ be used instead. Verification may be slower though."""))
         else:
             emails = grabEmails(emails=args.emails, emailsFile=args.emails_file, nicks=args.nicks, nicksFile=args.nicks_file, domains=domains, excludeDomains=args.exclude)
 
+        startTime= dt.datetime.now()
 
-        # Showing the execution time...
-        if not args.quiet:
-            startTime= dt.datetime.now()
-            print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
-        # Perform searches, using different Threads
-        results = performSearch(emails, args.threads)
+        if not args.is_leaked:
+            # Showing the execution time...
+            if not args.quiet:
+                print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
+                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            # Perform searches, using different Threads
+            tmp = performSearch(emails, args.threads)
+
+            # We make a strict copy of the object
+            results = list(tmp)
+
+            if not args.quiet:
+                now = dt.datetime.now()
+                print(str(now) +"\tMailfy has found " + general.emphasis(str(len(results))) + " existing email(s). Has it been leaked somewhere?")
+
+            # Verify the existence of the mails found as leaked emails.
+            for r in tmp:
+                # We assume that the first attribute is always the email
+                query = r["attributes"][0]["value"]
+                leaks = hibp.checkIfEmailWasHacked(query)
+                if len(leaks) > 0:
+                    if not args.quiet:
+                        print(general.success("\t" + query + " has been found in at least " + str(len(leaks)) + " different leaks."))
+                    email, alias, domain = getMoreInfo(query)
+
+                    for leak in leaks:
+                        # Creating a new full entity from scratch
+                        new = {}
+                        new["type"] = "i3visio.profile"
+                        new["value"] = leak["value"] + " - " + alias["value"]
+                        new["attributes"] = []
+                        new["attributes"].append(email)
+                        new["attributes"].append(alias)
+                        new["attributes"].append(domain)
+
+                        # leak contains a i3visio.platform built by HIBP
+                        new["attributes"].append(leak)
+                        results.append(new)
+                else:
+                    if not args.quiet:
+                        print(general.warning("\t" + query + " has NOT been found on any leak yet."))
+        else:
+            if not args.quiet:
+                print("\n" + str(startTime) +"\tStarting search of " + general.emphasis(str(len(emails))) + " different emails in leaked databases.\nNote that this will take between 1 and 2 seconds per query due to HIBP API restrictions:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
+                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+
+            # Perform is_leaked function
+            results = []
+            for i, e in enumerate(emails):
+                if not args.quiet:
+                    print(general.info("\t" + str(i+1) + "/" + str(len(emails)) + " - Searching if " + e + " has been leaked somewhere..."))
+                leaks = hibp.checkIfEmailWasHacked(e)
+
+                if len(leaks) > 0:
+                    if not args.quiet:
+                        print(general.success("\t" + e + " has been found in at least " + str(len(leaks)) + " different leaks."))
+
+                    email, alias, domain = getMoreInfo(e)
+                    for leak in leaks:
+                        # Creating a new full entity from scratch
+                        new = {}
+                        new["type"] = "i3visio.profile"
+                        new["value"] = leak["value"] + " - " + alias["value"]
+                        new["attributes"] = []
+                        new["attributes"].append(email)
+                        new["attributes"].append(alias)
+                        new["attributes"].append(domain)
+
+                        # leak contains a i3visio.platform built by HIBP
+                        new["attributes"].append(leak)
+                        results.append(new)
 
         # Trying to store the information recovered
         if args.output_folder != None:
@@ -453,7 +583,7 @@ be used instead. Verification may be slower though."""))
         # Showing the information gathered if requested
         if not args.quiet:
             now = dt.datetime.now()
-            print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+            print("\n" + str(now) + "\tA summary of the results obtained are shown in the following table:\n")
             print(general.success(general.usufyToTextExport(results)))
 
             now = dt.datetime.now()
@@ -496,16 +626,18 @@ def getParser():
     groupMainOptions.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the domains selected.')
     groupMainOptions.add_argument('-N', '--nicks_file', metavar='<nicks_file>', action='store', help = 'the file with the list of nicks to be checked in the domains selected.')
     groupMainOptions.add_argument('--create_emails', metavar='<nicks_file>',  action='store', help = 'the file with the list of nicks to be created in the domains selected.')
+
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
     groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default=DEFAULT_VALUES["domains"])
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=excludeList, action='store', help="select the domains to be excluded from the search.")
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    groupProcessing.add_argument('--is_leaked', required=False, default=False, action='store_true', help='Defines whether mailfy.py should search for leaked emails instead of verifying them.')
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options
