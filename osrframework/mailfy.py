@@ -548,7 +548,7 @@ be used instead. Verification may be slower though."""))
             results = []
             for i, e in enumerate(emails):
                 if not args.quiet:
-                    print(general.info("\t" + str(i+1) + "/" + str(len(emails)) + " - Searching if " + e + " has been leaked somewhere..."))
+                    print("\t" + str(i+1) + "/" + str(len(emails)) + " - Searching if " + e + " has been leaked somewhere...")
                 leaks = hibp.checkIfEmailWasHacked(e)
 
                 if len(leaks) > 0:
