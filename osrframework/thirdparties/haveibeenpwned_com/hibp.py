@@ -24,7 +24,7 @@ import requests
 import sys
 import time
 
-def checkIfEmailWasHacked(email=None, sleepSeconds=1):
+def checkIfEmailWasHacked(email=None, sleepSeconds=1.5):
     """
     Method that checks if the given email is stored in the HIBP website.
 
