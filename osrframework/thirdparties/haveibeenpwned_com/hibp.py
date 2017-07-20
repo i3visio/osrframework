@@ -61,7 +61,7 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1.5):
         for e in jsonData:
             new = {}
             new["value"] = e["Name"]
-            new["type"] = "i3visio.platform"
+            new["type"] = "i3visio.platform_leaked"
             new["attributes"] = [
                 {
                     "value": "i3visio_uri",

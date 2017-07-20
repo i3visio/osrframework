@@ -153,7 +153,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
         return h
 
     # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio_alias", "i3visio_uri", "i3visio_platform", "i3visio_email", "i3visio_ipv4", "i3visio_phone", "i3visio_dni", "i3visio_domain"]
+    allowedInTerminal = ["i3visio_alias", "i3visio_uri", "i3visio_platform", "i3visio_email", "i3visio_ipv4", "i3visio_phone", "i3visio_dni", "i3visio_domain", "i3visio_platform_leaked"]
     # List of profiles found
     values = {}
     headers = ["_id"]
