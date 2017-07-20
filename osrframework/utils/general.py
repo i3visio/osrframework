@@ -859,7 +859,7 @@ def openResultsInBrowser(res):
     -----
         res: A list containing several i3visio entities.
     """
-    print(info("Opening URIs in the default web browser..."))
+    print(emphasis("\n\tOpening URIs in the default web browser..."))
 
     for r in res:
         for att in r["attributes"]:
