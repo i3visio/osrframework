@@ -7,6 +7,7 @@ For more information, check the README.Add some wrappers
 - Add feature #267: Add a leaked email search using HaveIBeenPwned.
 - Add feature #168: Add Get as a new platform
 - Add feature: Add Seatwish usufy wrapper
+- Add feature: Add Xtube usufy wrapper
 - Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
 - Add feature: Add colorama utils to general
 - Fix issue #278: Remove bladna.nl usufy wrapper
