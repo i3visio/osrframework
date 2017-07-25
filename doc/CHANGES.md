@@ -9,6 +9,7 @@ For more information, check the README.Add some wrappers
 - Add feature: Add colorama utils to general
 - Fix issue #278: Remove bladna.nl usufy wrapper
 - Fix issue #277: Fix creativemarket usufy wrapper
+- Fix issue #276: Fix trip.com usufy wrapper
 - Fix issue #275: Remove Travian forum usufy wrapper
 - Fix issue #274: Remove Carder usufy wrapper
 - Update the print functions
