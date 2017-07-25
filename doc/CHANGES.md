@@ -7,7 +7,8 @@ For more information, check the README.Add some wrappers
 - Add feature #267: Add a leaked email search using HaveIBeenPwned.
 - Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
 - Add feature: Add colorama utils to general
-- Fix issue #275: Remove Travian forum ususfy wrapper
+- Fix issue #278: Remove bladna.nl usufy wrapper
+- Fix issue #275: Remove Travian forum usufy wrapper
 - Update the print functions
 - Fix some issues regarding to the display of the license
 - General update of the way in which functions in `osrframework.utils.general` are documented as well as removal of unneeded functions.
