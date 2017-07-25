@@ -8,12 +8,12 @@ For more information, check the README.Add some wrappers
 - Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
 - Add feature: Add colorama utils to general
 - Fix issue #278: Remove bladna.nl usufy wrapper
-- Fix issue #277: Fix creativemarket usufy wrapper
 - Fix issue #276: Fix trip.com usufy wrapper
 - Fix issue #275: Remove Travian forum usufy wrapper
 - Fix issue #274: Remove Carder usufy wrapper
 - Update the print functions
 - Fix some issues regarding to the display of the license
+- Patch issue #277: Fix creativemarket usufy wrapper
 - General update of the way in which functions in `osrframework.utils.general` are documented as well as removal of unneeded functions.
 - Remove a hack in the export function to set the encoding that implied setting the default encoding using `sys.setdefaultencoding()` and resetting it back after the export.
 
