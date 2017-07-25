@@ -21,7 +21,7 @@
 ##################################################################################
 
 __author__ = "i3visio"
-__version__ = "1.1"
+__version__ = "1.2"
 
 import argparse
 import json
@@ -84,7 +84,7 @@ class Creativemarket(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Not Found ~ Creative Market</title>"]
+        self.notFoundText["usufy"] = ["<title>Fonts, Graphics, Themes and More ~ Creative Market</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################
