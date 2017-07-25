@@ -3,12 +3,13 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.17.0, 2017/07/22 -- Prepare the Blackhat Arsenal release
+0.17.0, 2017/07/25 -- Prepare the Blackhat Arsenal release
 - Add feature #267: Add a leaked email search using HaveIBeenPwned.
 - Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
 - Add feature: Add colorama utils to general
 - Fix issue #278: Remove bladna.nl usufy wrapper
 - Fix issue #275: Remove Travian forum usufy wrapper
+- Fix issue #274: Remove Carder usufy wrapper
 - Update the print functions
 - Fix some issues regarding to the display of the license
 - General update of the way in which functions in `osrframework.utils.general` are documented as well as removal of unneeded functions.
