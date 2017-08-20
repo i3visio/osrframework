@@ -3,6 +3,14 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.17.1, 2017/08/20 -- Some fixes and new wrappers.
+- Add feature #283: Add Kiwi usufy wrapper
+- Add feature #284: Add Sarahah usufy wrapper
+- Fix issue #286: Remove intersect.es wrapper as the platform has been changed
+- Fix issue #282: Fix openstreetmap usufy wrapper when using usernames containing a dot
+- Fix issue #280: Fix serieadictos usufy wrapper
+- Fix issue #279: Fix bebee usufy wrapper
+
 0.17.0, 2017/07/25 -- Prepare the Blackhat Arsenal release
 - Add feature #267: Add a leaked email search using HaveIBeenPwned.
 - Add feature #168: Add Get as a new platform
