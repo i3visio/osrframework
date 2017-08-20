@@ -10,6 +10,7 @@ For more information, check the README.Add some wrappers
 - Fix issue #282: Fix openstreetmap usufy wrapper when using usernames containing a dot
 - Fix issue #280: Fix serieadictos usufy wrapper
 - Fix issue #279: Fix bebee usufy wrapper
+- Fix some issues in osrframework_server and the configuration file
 
 0.17.0, 2017/07/25 -- Prepare the Blackhat Arsenal release
 - Add feature #267: Add a leaked email search using HaveIBeenPwned.

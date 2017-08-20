@@ -494,10 +494,10 @@ if __name__ == "__main__":
         SECRET_TOKEN = None
 
     try:
-        # TODO: get file path from
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+        # Get file path from
+        app.config['UPLOAD_FOLDER'] = DEFAULT_VALUES["upload_folder"]
     except:
-        app.config['UPLOAD_FOLDER'] = "/home/felix/"
+        app.config['UPLOAD_FOLDER'] = "/tmp/"
 
     # Loading the server parser
     parser = argparse.ArgumentParser(
