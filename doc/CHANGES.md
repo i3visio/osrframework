@@ -3,6 +3,10 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.17.3, 2017/09/16 -- Some new additions and fixes
+- Fix issue #291: Fix bebee usufy platform
+- Fix issue with false positives in Kiwi for usernames longer than 16
+
 0.17.2, 2017/08/21 -- Fixes with some usernames in Kiwi and Smugmug.
 - Fix issue #288: Remove the `.` as a valid character for usernames in Smugmug
 - Fix issue #287: Remove the `.` as a valid character for usernames in Kiwi
