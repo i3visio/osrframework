@@ -3,6 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.17.2, 2017/08/21 -- Fixes with some usernames in Kiwi and Smugmug.
+- Fix issue #288: Remove the `.` as a valid character for usernames in Smugmug
+- Fix issue #287: Remove the `.` as a valid character for usernames in Kiwi
+- Move to pending Oroom and Backyardchickens
+
 0.17.1, 2017/08/20 -- Some fixes and new wrappers.
 - Add feature #283: Add Kiwi usufy wrapper
 - Add feature #284: Add Sarahah usufy wrapper
