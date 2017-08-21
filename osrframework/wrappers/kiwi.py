@@ -75,7 +75,7 @@ class Kiwi(Platform):
         self.validQuery = {}
         # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
+        self.validQuery["usufy"] = "[^\.]+"
         #self.validQuery["searchfy"] = ".*"
 
         ###################
