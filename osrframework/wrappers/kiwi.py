@@ -21,7 +21,7 @@
 ##################################################################################
 
 __author__ = "Yaiza Rubio and Félix Brezo <contacto@i3visio.com>"
-__version__ = "1.0"
+__version__ = "1.2"
 
 import argparse
 import json
@@ -75,7 +75,7 @@ class Kiwi(Platform):
         self.validQuery = {}
         # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = "[^\.]+"
+        self.validQuery["usufy"] = "[^\.]{1,16}"
         #self.validQuery["searchfy"] = ".*"
 
         ###################
