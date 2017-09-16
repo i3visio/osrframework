@@ -25,7 +25,7 @@ __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2014-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
 __license__ = "AGPLv3+"
-__version__ = "v6.0"
+__version__ = "v6.1"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -582,7 +582,7 @@ def getParser():
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
 
-    parser = argparse.ArgumentParser(description= colorama.Style.BRIGHT + 'usufy.py - Piece of software that checks the existence of a profile for a given user in up to ' + str(len(platOptions)-1)+ ' different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description= 'usufy.py - Piece of software that checks the existence of a profile for a given user in dozens of different platforms.', prog='usufy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
     # Defining the mutually exclusive group for the main options
