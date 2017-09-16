@@ -258,12 +258,15 @@ def pool_function(domain):
         aux = {}
         aux["type"] = "i3visio.result"
         aux["value"] = "Domain Info - " + domain["domain"]
-        # Performing whois info
+        aux["attributes"] = []
+
+        # Performing whois info and adding if necessary
         try:
-            aux["attributes"] = getWhoisInfo(domain["domain"])
+            if domain["type"] != "global":
+                aux["attributes"] = getWhoisInfo(domain["domain"])
         except Exception as e:
             # If something happened... Well, we'll return an empty attributes array.
-            aux["attributes"] = []
+            pass
 
         tmp = {}
         tmp["type"] = "i3visio.domain"
