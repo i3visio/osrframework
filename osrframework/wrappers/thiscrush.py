@@ -41,7 +41,7 @@ class ThisCrush(Platform):
             Constructor...
         """
         self.platformName = "Thiscrush"
-        self.tags = ["jobs"]
+        self.tags = ["social", "teenagers"]
 
         ########################
         # Defining valid modes #

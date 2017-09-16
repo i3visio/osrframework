@@ -38,7 +38,7 @@ class Slideshare(Platform):
             Constructor... 
         """
         self.platformName = "Slideshare"
-        self.tags = ["social", "microblogging"]
+        self.tags = ["file-sharing"]
 
         ########################
         # Defining valid modes #

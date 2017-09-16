@@ -40,7 +40,7 @@ class Kiwi(Platform):
         """ 
         Constructor...
         """
-        self.platformName = "kiwi"
+        self.platformName = "Kiwi"
         self.tags = ["social", "teenagers"]
 
         ########################

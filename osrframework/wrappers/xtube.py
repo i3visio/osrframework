@@ -39,7 +39,7 @@ class Xtube(Platform):
         '''
         self.platformName = "Xtube"
         # Add the tags for the platform
-        self.tags = ["video", "adult", "contact"]
+        self.tags = ["sex"]
 
         ########################
         # Defining valid modes #

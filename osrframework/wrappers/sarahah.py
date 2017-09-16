@@ -40,7 +40,7 @@ class Sarahah(Platform):
         """
         Constructor...
         """
-        self.platformName = "sarahah"
+        self.platformName = "Sarahah"
         self.tags = ["social", "teenagers"]
 
         ########################
