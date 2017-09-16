@@ -4,6 +4,7 @@ OSRFramework Changelog
 For more information, check the README.Add some wrappers
 
 0.17.3, 2017/09/16 -- Some new additions and fixes
+- Add feature #290: Add thiscrush.com as a new usufy platform
 - Fix issue #291: Fix bebee usufy platform
 - Fix issue with false positives in Kiwi for usernames longer than 16
 
