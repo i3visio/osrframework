@@ -12,6 +12,7 @@ For more information, check the README.Add some wrappers
 - Fix issue in domainfy of several false positives
 - Fix issue with false positives in Kiwi for usernames longer than 16
 - Fix several tags for some platforms
+- Fix issue with Rapid7 forums by removing it
 
 0.17.2, 2017/08/21 -- Fixes with some usernames in Kiwi and Smugmug.
 - Fix issue #288: Remove the `.` as a valid character for usernames in Smugmug
