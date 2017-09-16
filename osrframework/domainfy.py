@@ -220,7 +220,9 @@ def isBlackListed(ipv4):
         "127.0.0.2",
         "127.0.53.53",
         "141.8.226.58",
-        "144.76.162.245"
+        "144.76.162.245",
+        "173.230.131.38",
+        "109.95.242.11"
     ]
 
     if ipv4 in BLACKLISTED:
@@ -228,7 +230,7 @@ def isBlackListed(ipv4):
     else:
         return False
 
-def pool_function(domain):
+def pool_function(domain, launchWhois = False):
     """
     Wrapper for being able to launch all the threads of getPageWrapper.
 
@@ -241,6 +243,7 @@ def pool_function(domain):
             "type" : "global"
         }
         ```
+        launchWhois: Whether the whois info will be launched.
     Returns:
     --------
         dict: A dictionary containing the following values:
@@ -262,7 +265,7 @@ def pool_function(domain):
 
         # Performing whois info and adding if necessary
         try:
-            if domain["type"] != "global":
+            if domain["type"] != "global" and launchWhois:
                 aux["attributes"] = getWhoisInfo(domain["domain"])
         except Exception as e:
             # If something happened... Well, we'll return an empty attributes array.
@@ -294,7 +297,7 @@ def pool_function(domain):
         return {"platform" : str(domain), "status": "ERROR", "data": {}}
 
 
-def performSearch(domains=[], nThreads=16):
+def performSearch(domains=[], nThreads=16, launchWhois=False):
     """
     Method to perform the mail verification process.
 
@@ -302,6 +305,7 @@ def performSearch(domains=[], nThreads=16):
     ---------
         domains: List of domains to check.
         nThreads: Number of threads to use.
+        launchWhois: Sets if whois queries will be launched.
 
     Returns
     -------
@@ -340,7 +344,7 @@ def performSearch(domains=[], nThreads=16):
 
         for d in domains:
             # We need to create all the arguments that will be needed
-            parameters = ( d, )
+            parameters = ( d, launchWhois, )
             pool.apply_async (pool_function, args= parameters, callback = log_result )
 
         # Waiting for results to be finished
@@ -441,7 +445,7 @@ visit """ + general.LICENSE_URL + "\n"
             print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
         # Perform searches, using different Threads
-        results = performSearch(domains, args.threads)
+        results = performSearch(domains, args.threads, args.whois)
 
         # Trying to store the information recovered
         if args.output_folder != None:
@@ -507,6 +511,7 @@ def getParser():
     groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=["all", "none"] + TLD.keys(), action='store', help='List of tld types where the nick will be looked for.', required=False, default=DEFAULT_VALUES["tlds"])
     groupProcessing.add_argument('-u', '--user_defined',  metavar='<new_tld>',  nargs='+', action='store', help='Additional TLD that will be searched.', required=False, default = DEFAULT_VALUES["user_defined"])
     groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=excludeList, action='store', help="select the domains to be avoided. The format should include the initial '.'.")
+    groupProcessing.add_argument('--whois', required=False, action='store_true', default=False, help='tells the program to launch whois queries.')
 
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )

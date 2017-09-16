@@ -6,8 +6,10 @@ For more information, check the README.Add some wrappers
 0.17.3, 2017/09/16 -- Some new additions and fixes
 - Add feature #290: Add thiscrush.com as a new usufy platform
 - Add feature: Add Mastodon.social and Mastodon.xyz platforms
+- Add feature: Add noip.com subdomains
 - Fix issue #291: Fix bebee usufy platform
 - Fix issue in domainfy that tried a Whois info request if a TLD classified as other was found
+- Fix issue in domainfy of several false positives
 - Fix issue with false positives in Kiwi for usernames longer than 16
 - Fix several tags for some platforms
 
