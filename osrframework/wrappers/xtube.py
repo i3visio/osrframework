@@ -39,14 +39,7 @@ class Xtube(Platform):
         '''
         self.platformName = "Xtube"
         # Add the tags for the platform
-        self.tags = ["video", "adult", "contact"]
-        self.NICK_WILDCARD = "<HERE_GOES_THE_NICK>"
-        # Add the URL below
-        self.url = "http://www.xtube.com/community/profile.php?user=" + self.NICK_WILDCARD
-        # Add the strings to look for when an error appears
-        #self.notFoundText = ["<title>about.me | your personal homepage</title><style>"]
-        self.notFoundText = ["<div class=\"profile-not-found-pic\"></div>"]
-        self.forbiddenList = ['.']
+        self.tags = ["sex"]
 
         ########################
         # Defining valid modes #
@@ -62,7 +55,7 @@ class Xtube(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.apsense.com/user/" + "<usufy>"       
+        self.url["usufy"] = "http://www.xtube.com/community/profile.php?user=" + "<usufy>"       
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
@@ -89,7 +82,7 @@ class Xtube(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h2>404 Page</h2>"]   
+        self.notFoundText["usufy"] = ["<strong>Error page not found</strong>"]   
         #self.notFoundText["searchfy"] = []        
         
         #########################

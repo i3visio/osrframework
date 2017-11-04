@@ -1,46 +1,48 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-enumeration.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
+__author__ = "Felix Brezo, Yaiza Rubio "
+__copyright__ = "Copyright 2015-2017, i3visio"
+__credits__ = ["Felix Brezo", "Yaiza Rubio"]
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
+__maintainer__ = "Felix Brezo, Yaiza Rubio"
+__email__ = "contacto@i3visio.com"
+
+
 import argparse
 import os
 import os.path
 import osrframework.utils.banner as banner
 import osrframework.utils.browser as browser
+import osrframework.utils.general as general
 import re
 
-__author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v1.0.2"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
 
 def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
+    """
+    Function that performs the enumeration itself.
+    """
 
     for i, url in enumerate(urlDict.keys()):
         # Grabbing domain name:
@@ -54,26 +56,26 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
 
         i3Browser = browser.Browser()
 
-        # Main loop
+        # Main loop that checks if the maximum number of errors has been reached
         while consecutiveErrors <= maxErrors:
             # creating the new URL to download
             newQuery = url.replace("<INDEX>", str(index))
-            print newQuery
+            print(newQuery)
             # Downloading the file
             try:
-
                 data = i3Browser.recoverURL(newQuery)
-                print "Data recovered..."
+
                 filename = domain.replace("/", "|") + "_" + "-profile_" + str(index).rjust(10, "0") +".html"
+
                 if urlDict[url] != None:
                     if urlDict[url] in data:
-                        print "Storing resource as:\t" + filename + "..."
+                        print(general.info("Storing resource as:\t" + filename + "..."))
                         # The profile was found  so we will store it:
                         with open( outputFolder + "/" + filename, "w") as oF:
                             oF.write(data)
                 else:
                     # The profile was found  so we will store it:
-                    print "Storing resource as:\t" + filename + "..."
+                    print(general.info("Storing resource as:\t" + filename + "...")
                     with open( outputFolder + "/" + filename, "w") as oF:
                         oF.write(data)
             except:
@@ -81,19 +83,22 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
                 #logger.error("The resource could not be downloaded.")
 
             index+=1
+
+
 def enumeration_main(args):
-    '''
-        Main loop.
-    '''
-    sayingHello = """enumeration.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
-    #logger.info(sayingHello)
-    print banner.text
+    """
+    Main loop for the enumeration
+    """
+    print(general.title(banner.text))
 
+    sayingHello = """
+enumeration.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 
-    print sayingHello
-    print
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit """ + general.LICENSE_URL + "\n"
+    print(general.info(sayingHello))
+
     # Loading URL
     urlDict = {}
     if args.url !=None:

@@ -41,7 +41,7 @@ class Coderwall(Platform):
             Constructor...
         """
         self.platformName = "Coderwall"
-        self.tags = ["developement", "education"]
+        self.tags = ["development", "education"]
 
         ########################
         # Defining valid modes #

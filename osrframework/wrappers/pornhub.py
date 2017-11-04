@@ -39,7 +39,7 @@ class Pornhub(Platform):
             Constructor... 
         """
         self.platformName = "Pornhub"
-        self.tags = ["adult", "video", "contact"]
+        self.tags = ["sex"]
 
         ########################
         # Defining valid modes #

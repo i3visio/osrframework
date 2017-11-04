@@ -1,40 +1,37 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-searchfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v5.0"
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
 
 import argparse
+import datetime as dt
 import json
 import os
 
@@ -43,16 +40,23 @@ import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
 
+from osrframework.utils.general import error, warning, success, info, title, emphasis
+
+
 def performSearch(platformNames=[], queries=[], process=False, excludePlatformNames=[]):
-    '''
-        Method to perform the phone list.
+    """
+    Method to perform the search itself on the different platforms.
 
-        :param platforms: List of <Platform> objects.
-        :param queries: List of queries to be performed.
-        :param process: Whether to process all the profiles... SLOW!
+    Args:
+    -----
+        platforms: List of <Platform> objects.
+        queries: List of queries to be performed.
+        process: Whether to process all the profiles... SLOW!
 
-        :return:
-    '''
+    Returns:
+    --------
+        A list with the entities collected.
+    """
     # Grabbing the <Platform> objects
     platforms = platform_selection.getPlatformsByName(platformNames, mode="searchfy", excludePlatformNames=excludePlatformNames)
     results = []
@@ -64,67 +68,97 @@ def performSearch(platformNames=[], queries=[], process=False, excludePlatformNa
                 results += json.loads(entities)
     return results
 
+
 def main(args):
-    '''
-        Main program.
+    """
+    Main function to launch usufy.
 
-        :param args: Arguments received in the command line.
-    '''
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules `getParser()`.
+
+    Args:
+    -----
+        args: Arguments received in the command line.
+
+    Returns:
+    --------
+        A list of i3visio entities.
+    """
+    results = []
+
     if not args.maltego:
-        print banner.text
-        sayingHello = """searchfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
-        print sayingHello
-        print
+        print(general.title(banner.text))
 
-    results = performSearch(platformNames=args.platforms, queries=args.queries, process=args.process, excludePlatformNames=args.exclude)
+        sayingHello = """
+searchfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
-    # Generating summary files for each ...
-    if args.extension:
-        # Storing the file...
-        #logger.info("Creating output files as requested.")
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit """ + general.LICENSE_URL + "\n"
+        print(general.title(sayingHello))
+
+    if args.license:
+        general.showLicense()
+    else:
+        # Showing the execution time...
+        startTime= dt.datetime.now()
+        print(str(startTime) + "\tStarting search in different platform(s)... Relax!\n")
+        print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        # Performing the search
+        try:
+            results = performSearch(platformNames=args.platforms, queries=args.queries, process=args.process, excludePlatformNames=args.exclude)
+        except KeyboardInterrupt:
+            print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
+            results = []
+
+        # Generating summary files for each ...
+        if args.extension:
+            # Storing the file...
+            if not args.maltego:
+                # Verifying if the outputPath exists
+                if not os.path.exists (args.output_folder):
+                    os.makedirs(args.output_folder)
+
+            # Grabbing the results
+            fileHeader = os.path.join(args.output_folder, args.file_header)
+
+            if not args.maltego:
+                # Iterating through the given extensions to print its values
+                for ext in args.extension:
+                    # Generating output files
+                    general.exportUsufy(results, ext, fileHeader)
+
+        # Generating the Maltego output
+        if args.maltego:
+            general.listToMaltego(results)
+
+        # Printing the results if requested
         if not args.maltego:
-            # Verifying if the outputPath exists
-            if not os.path.exists (args.output_folder):
-                #logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
-                os.makedirs(args.output_folder)
+            now = dt.datetime.now()
+            print(str(now) + "\tA summary of the results obtained are listed in the following table:\n")
+            print(general.success(general.usufyToTextExport(results)))
 
-        # Grabbing the results
-        fileHeader = os.path.join(args.output_folder, args.file_header)
+            if args.web_browser:
+                general.openResultsInBrowser(results)
 
-        if not args.maltego:
-            # Iterating through the given extensions to print its values
+            now = dt.datetime.now()
+            print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
             for ext in args.extension:
-                # Generating output files
-                general.exportUsufy(results, ext, fileHeader)
+                # Showing the output files
+                print("\t" + general.emphasis(fileHeader + "." + ext))
 
-    # Generating the Maltego output
-    if args.maltego:
-        general.listToMaltego(results)
+            # Showing the execution time...
+            endTime= dt.datetime.now()
+            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
+            print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(args.platforms))) +" seconds\n")
 
-    # Printing the results if requested
-    if not args.maltego:
-        print "A summary of the results obtained are listed in the following table:"
-        print unicode(general.usufyToTextExport(results))
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
-        if args.web_browser:
-            general.openResultsInBrowser(results)
+        return results
 
-        print "You will find all the information collected in the following files:"
-        for ext in args.extension:
-            # Generating output files
-            print "\t-" + fileHeader + "." + ext
-
-    # Urging users to place an issue on Github...
-    if not args.maltego:
-        print
-        print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-        print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-        print "Note that otherwise, we won't know about it!"
-        print
-
-    return results
 
 def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("searchfy")

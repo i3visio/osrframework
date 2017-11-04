@@ -28,3 +28,4 @@ fuzz.txt
 *.mtz
 *.zip
 *.back
+osrframework-virtualenv

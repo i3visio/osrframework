@@ -37,7 +37,7 @@ class Tradimo(Platform):
             Constructor... 
         """
         self.platformName = "Tradimo"
-        self.tags = ["e-commerce", "adult"]
+        self.tags = ["e-commerce"]
 
         ########################
         # Defining valid modes #

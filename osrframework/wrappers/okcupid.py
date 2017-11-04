@@ -41,7 +41,7 @@ class Okcupid(Platform):
             Constructor... 
         """
         self.platformName = "Okcupid"
-        self.tags = ["dating"]
+        self.tags = ["contact"]
 
         ########################
         # Defining valid modes #

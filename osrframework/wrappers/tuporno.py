@@ -38,7 +38,7 @@ class Tuporno(Platform):
             Constructor... 
         """
         self.platformName = "Tuporno"
-        self.tags = ["adult"]
+        self.tags = ["sex"]
 
         ########################
         # Defining valid modes #

@@ -39,7 +39,7 @@ class Pokerred(Platform):
             Constructor... 
         '''
         self.platformName = "Pokerred"
-        self.tags = ["gaming", "adult"]
+        self.tags = ["gambling"]
         
         ########################
         # Defining valid modes #

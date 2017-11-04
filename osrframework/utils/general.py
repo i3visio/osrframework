@@ -1,47 +1,58 @@
 # !/usr/bin/python
 # -*- coding: cp1252 -*-
 #
-##################################################################################
+################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2014-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
+
+import colorama
+colorama.init(autoreset=True)
+
+import datetime
 import hashlib
 import json
-import datetime
-import sys
+import logging
+import networkx as nx
 import os
+import urllib
+import webbrowser as wb
+
 from osrframework.transforms.lib.maltego import MaltegoEntity, MaltegoTransform
 
-import networkx as nx
-import logging
+
+LICENSE_URL = "https://www.gnu.org/licenses/agpl-3.0.txt"
+
 
 def exportUsufy(data, ext, fileH):
-    '''
-        Method that exports a Usufy structure onto different formats.
-        :param data: Data to export.
-        :param ext: One of the following: csv, excel, json, ods.
-        :param fileH: Fileheader for the output files.
-    '''
-    # HACK!
-    import sys
-    reload(sys)
-    sys.setdefaultencoding("ISO-8859-1")
-    # Selecting the appropriate export function
+    """
+    Method that exports the different structures onto different formats.
+
+    Args:
+    -----
+        data: Data to export.
+        ext: One of the following: csv, excel, json, ods.
+        fileH: Fileheader for the output files.
+
+    Returns:
+    --------
+        Performs the export as requested by parameter.
+    """
     if ext == "csv":
         usufyToCsvExport(data, fileH+"."+ext)
     elif ext == "gml":
@@ -60,66 +71,81 @@ def exportUsufy(data, ext, fileH):
         usufyToXlsExport(data, fileH+"."+ext)
     elif ext == "xlsx":
         usufyToXlsxExport(data, fileH+"."+ext)
-    # HACK!
-    import sys
-    reload(sys)
-    sys.setdefaultencoding("ascii")
+
 
 def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=True):
-    '''
-        Method that recovers the values and columns from the current structure
-        This method is used by:
-            - usufyToCsvExport
-            - usufyToOdsExport
-            - usufyToXlsExport
-            - usufyToXlsxExport
-        :param res:    new data to export.
-        :param oldTabularData:    the previous data stored.
-            {
-              "OSRFramework": [
-                [
-                  "i3visio.alias",
-                  "i3visio.platform",
-                  "i3visio.uri"
-                ],
-                [
-                  "i3visio",
-                  "Twitter",
-                  "https://twitter.com/i3visio",
-                ]
-              ]
-            }
-        :param isTerminal:    if isTerminal is activated, only information related to i3visio.alias, i3visio.platform and i3visio.uri will be displayed in the terminal.
-        :param canUnicode:      Variable that stores if the printed output can deal with Unicode characters.
-        :return:
-            values, a dictionary containing all the information stored.
-            headers, a list containing the headers used for the rows.
-            Values is like:
-            {
-              "OSRFramework": [
-                [
-                  "i3visio.alias",
-                  "i3visio.platform",
-                  "i3visio.uri"
-                ],
-                [
-                  "i3visio",
-                  "Twitter",
-                  "https://twitter.com/i3visio",
-                ],
-                [
-                  "i3visio",
-                  "Github",
-                  "https://github.com/i3visio",
-                ]
-              ]
-            }
+    """
+    Method that recovers the values and columns from the current structure
 
-    '''
+    This method is used by:
+        - usufyToCsvExport
+        - usufyToOdsExport
+        - usufyToXlsExport
+        - usufyToXlsxExport
+
+    Args:
+    -----
+        res: New data to export.
+        oldTabularData: The previous data stored.
+        {
+          "OSRFramework": [
+            [
+              "i3visio.alias",
+              "i3visio.platform",
+              "i3visio.uri"
+            ],
+            [
+              "i3visio",
+              "Twitter",
+              "https://twitter.com/i3visio",
+            ]
+          ]
+        }
+        isTerminal: If isTerminal is activated, only information related to
+            i3visio.alias, i3visio.platform and i3visio.uri will be displayed
+            in the terminal.
+        canUnicode: Variable that stores if the printed output can deal with
+            Unicode characters.
+
+    Returns:
+    --------
+        The values, as a dictionary containing all the information stored.
+        Values is like:
+        {
+          "OSRFramework": [
+            [
+              "i3visio.alias",
+              "i3visio.platform",
+              "i3visio.uri"
+            ],
+            [
+              "i3visio",
+              "Twitter",
+              "https://twitter.com/i3visio",
+            ],
+            [
+              "i3visio",
+              "Github",
+              "https://github.com/i3visio",
+            ]
+          ]
+        }
+    """
     def _grabbingNewHeader(h):
-        '''
-            Changing the starting @ for a '_' and changing the "i3visio." for "i3visio_". Changed in 0.9.4+.
-        '''
+        """
+        Updates the headers to be general.
+
+        Changing the starting @ for a '_' and changing the "i3visio." for
+        "i3visio_". Changed in 0.9.4+.
+
+        Args:
+        -----
+            h: A header to be sanitised.
+
+        Returns:
+        --------
+            string: The modified header.
+        """
         if h[0] == "@":
             h = h.replace("@","_")
         elif "i3visio." in h:
@@ -127,7 +153,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
         return h
 
     # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio_alias", "i3visio_uri", "i3visio_platform", "i3visio_email", "i3visio_ipv4", "i3visio_phone", "i3visio_dni", "i3visio_domain"]
+    allowedInTerminal = ["i3visio_alias", "i3visio_uri", "i3visio_platform", "i3visio_email", "i3visio_ipv4", "i3visio_phone", "i3visio_dni", "i3visio_domain", "i3visio_platform_leaked"]
     # List of profiles found
     values = {}
     headers = ["_id"]
@@ -202,7 +228,6 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
             workingSheet.append(newRow)
     except Exception, e:
         # No previous value found!
-        #print str(e)
         pass
 
     # After having all the previous data stored an updated... We will go through the rest:
@@ -232,12 +257,16 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
 
     return data
 
+
 def usufyToJsonExport(d, fPath):
-    '''
-        Workaround to export to a json file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a json file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     oldData = []
     try:
         with open (fPath) as iF:
@@ -253,12 +282,22 @@ def usufyToJsonExport(d, fPath):
     with open (fPath, "w") as oF:
         oF.write(jsonText)
 
+
 def usufyToTextExport(d, fPath=None):
-    '''
-        Workaround to export to a .txt file.
-        :param d: Data to export.
-        :param fPath: File path. If None was provided, it will assume that it has to print it.
-    '''
+    """
+    Workaround to export to a .txt file or to show the information.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file. If None was provided, it will
+            assume that it has to print it.
+
+    Returns:
+    --------
+        unicode: It sometimes returns a unicode representation of the Sheet
+            received.
+    """
     # Manual check...
     if d == []:
         return "+------------------+\n| No data found... |\n+------------------+"
@@ -291,15 +330,18 @@ def usufyToTextExport(d, fPath=None):
             oF.write(str(sheet))
     except Exception as e:
         # If a fPath was not provided... We will only print the info:
-        return sheet
+        return unicode(sheet)
 
 
 def usufyToCsvExport(d, fPath):
-    '''
-        Workaround to export to a CSV file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a CSV file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
 
     from pyexcel_io import get_data
     try:
@@ -316,12 +358,16 @@ def usufyToCsvExport(d, fPath):
     # NOTE: when working with CSV files it is no longer a dict because it is a one-sheet-format
     save_data(fPath, tabularData["OSRFramework"])
 
+
 def usufyToOdsExport(d, fPath):
-    '''
-        Workaround to export to a .ods file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a .ods file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     from pyexcel_ods import get_data
     try:
         #oldData = get_data(fPath)
@@ -338,12 +384,16 @@ def usufyToOdsExport(d, fPath):
     # Storing the file
     save_data(fPath, tabularData)
 
+
 def usufyToXlsExport(d, fPath):
-    '''
-        Workaround to export to a .xls file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a .xls file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     from pyexcel_xls import get_data
     try:
         #oldData = get_data(fPath)
@@ -359,12 +409,16 @@ def usufyToXlsExport(d, fPath):
     # Storing the file
     save_data(fPath, tabularData)
 
+
 def usufyToXlsxExport(d, fPath):
-    '''
-        Workaround to export to a .xlsx file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a .xlsx file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     from pyexcel_xlsx import get_data
     try:
         #oldData = get_data(fPath)
@@ -381,23 +435,32 @@ def usufyToXlsxExport(d, fPath):
     # Storing the file
     save_data(fPath, tabularData)
 
+
 def _generateGraphData(data, oldData=nx.Graph()):
-    '''
-        Processing the data from i3visio structures to generate the nodes and edges of networkx graph library. It will create a new node for each and i3visio.<something> entities while it will add properties for all the attribute starting with "@".
+    """
+    Processing the data from i3visio structures to generate nodes and edges
 
-        :param d: The i3visio structures containing a list of
-        :param oldData: A graph structure representing the previous information.
+    This function uses the networkx graph library. It will create a new node
+    for each and i3visio.<something> entities while it will add properties for
+    all the attribute starting with "@".
 
-        :return: A graph structure representing the updated information.
-    '''
+    Args:
+    -----
+        d: The i3visio structures containing a list of
+        oldData: A graph structure representing the previous information.
+
+    Returns:
+    --------
+        A graph structure representing the updated information.
+    """
     def _addNewNode(ent, g):
         """
-            :param ent:   The hi3visio-like entities to be used as the identifier.
+            ent:   The hi3visio-like entities to be used as the identifier.
                 ent = {
                     "value":"i3visio",
                     "type":"i3visio.alias,
                 }
-            :param g:   The graph in which the entity will be stored.
+            g:   The graph in which the entity will be stored.
             :return:    newAtts, newEntties
         """
         # Serialized entity
@@ -426,14 +489,21 @@ def _generateGraphData(data, oldData=nx.Graph()):
 
     def _processAttributes(elems, g):
         """
-            :param elems:   List of i3visio-like entities.
-            :param g:   The graph in which the entity will be stored.
+        Function that processes a list of elements to obtain new attributes.
 
-            :return:    newAtts, newEntities
+        Args:
+        -----
+            elems: List of i3visio-like entities.
+            g: The graph in which the entity will be stored.
+
+        Returns:
+        --------
+            newAtts: Dict of attributes (to be stored as attributes for the
+                given entity).
+            newEntities: List of new Entities (to be stored as attributes for
+                the given entity).
         """
-        # Dict of attributes (to be stored as attributes for the given entity)
         newAtts = {}
-        # List of new Entities (to be stored as attributes for the given entity)
         newEntities= []
 
         for att in elems:
@@ -521,12 +591,16 @@ def _generateGraphData(data, oldData=nx.Graph()):
 
     return graphData
 
+
 def usufyToGmlExport(d, fPath):
-    '''
-        Workaround to export to a gml file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export data to a .gml file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     # Reading the previous gml file
     try:
         oldData=nx.read_gml(fPath)
@@ -542,17 +616,22 @@ def usufyToGmlExport(d, fPath):
     except Exception as e:
         # No information has been recovered
         oldData = nx.Graph()
+
     newGraph = _generateGraphData(d, oldData)
 
     # Writing the gml file
     nx.write_gml(newGraph,fPath)
 
+
 def usufyToPngExport(d, fPath):
-    '''
-        Workaround to export to a png file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a png file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     newGraph = _generateGraphData(d)
 
     import matplotlib.pyplot as plt
@@ -560,12 +639,16 @@ def usufyToPngExport(d, fPath):
     nx.draw(newGraph)
     plt.savefig(fPath)
 
+
 def usufyToMaltegoExport(profiles, fPath):
-    '''
-        Workaround to export to a Maltego file.
-        :param d: Data to export.
-        :param fPath: File path.
-    '''
+    """
+    Workaround to export to a Maltego file.
+
+    Args:
+    -----
+        d: Data to export.
+        fPath: File path for the output file.
+    """
     me = MaltegoTransform()
     # A dictionary with the structure:
 
@@ -593,36 +676,46 @@ def usufyToMaltegoExport(profiles, fPath):
 
 def listToMaltego(profiles):
     """
-        Method to generate the text to be appended to a Maltego file. May need to be revisited.
+    Method to generate the text to be appended to a Maltego file.
 
-        :param profiles:    a list of dictionaries with the information of the profiles: {"a_nick": [<list_of_results>]}
-                    [
-                        {
-                          "attributes": [
-                            {
-                              "attributes": [],
-                              "type": "i3visio.uri",
-                              "value": "http://twitter.com/i3visio"
-                            },
-                            {
-                              "attributes": [],
-                              "type": "i3visio.alias",
-                              "value": "i3visio"
-                            },
-                            {
-                              "attributes": [],
-                              "type": "i3visio.platform",
-                              "value": "Twitter"
-                            }
-                          ],
-                          "type": "i3visio.profile",
-                          "value": "Twitter - i3visio"
-                        }
-                        ,
-                        ...
-                    ]
+    May need to be revisited.
 
-        :return:    maltegoText as the string to be written for a Maltego file.
+    Args:
+    -----
+        profiles: A list of dictionaries with the information of the profiles
+            in the following format: `{"a_nick": [<list_of_results>]}`. An
+            example is shown below:
+            ```
+            [
+                {
+                  "attributes": [
+                    {
+                      "attributes": [],
+                      "type": "i3visio.uri",
+                      "value": "http://twitter.com/i3visio"
+                    },
+                    {
+                      "attributes": [],
+                      "type": "i3visio.alias",
+                      "value": "i3visio"
+                    },
+                    {
+                      "attributes": [],
+                      "type": "i3visio.platform",
+                      "value": "Twitter"
+                    }
+                  ],
+                  "type": "i3visio.profile",
+                  "value": "Twitter - i3visio"
+                }
+                ,
+                ...
+            ]
+            ```
+
+    Returns:
+    --------
+        string: The .xml text to be written for a Maltego file.
     """
     logger = logging.getLogger("osrframework.utils")
     logger.info( "Generating Maltego File...")
@@ -661,12 +754,23 @@ def listToMaltego(profiles):
     me.returnOutput()
     return me.getOutput()
 
+
 def fileToMD5(filename, block_size=256*128, binary=False):
-    '''
-        :param filename:    Path to the file.
-        :param block_size:    Chunks of suitable size. Block size directly depends on the block size of your filesystem to avoid performances issues. Blocks of 4096 octets (Default NTFS).
-        :return:    md5 hash.
-    '''
+    """
+    A function that calculates the MD5 hash of a file.
+
+    Args:
+    -----
+        filename: Path to the file.
+        block_size: Chunks of suitable size. Block size directly depends on
+            the block size of your filesystem to avoid performances issues.
+            Blocks of 4096 octets (Default NTFS).
+        binary: A boolean representing whether the returned info is in binary
+            format or not.
+    Returns:
+    --------
+        string: The  MD5 hash of the file.
+    """
     md5 = hashlib.md5()
     with open(filename,'rb') as f:
         for chunk in iter(lambda: f.read(block_size), b''):
@@ -675,25 +779,33 @@ def fileToMD5(filename, block_size=256*128, binary=False):
         return md5.hexdigest()
     return md5.digest()
 
-def getCurrentStrDatetime():
-    '''
-        Generating the current Datetime with a given format.
 
-        :return:    strTime
-    '''
+def getCurrentStrDatetime():
+    """
+    Generating the current Datetime with a given format.
+
+    Returns:
+    --------
+        string: The string of a date.
+    """
     # Generating current time
     i = datetime.datetime.now()
     strTime = "%s-%s-%s_%sh%sm" % (i.year, i.month, i.day, i.hour, i.minute)
     return strTime
 
+
 def getFilesFromAFolder(path):
-    '''
-        Getting all the files in a folder.
+    """
+    Getting all the files in a folder.
 
-        :param path:    path in which looking for files.
+    Args:
+    -----
+        path: The path in which looking for the files.
 
-        :return:    list of filenames.
-    '''
+    Returns:
+    --------
+        list: The list of filenames found.
+    """
     from os import listdir
     from os.path import isfile, join
     #onlyfiles = [ f for f in listdir(path) if isfile(join(path,f)) ]
@@ -704,18 +816,19 @@ def getFilesFromAFolder(path):
     return onlyFiles
 
 
-
-import webbrowser as wb
-import subprocess
-
 def uriToBrowser(uri=None):
-    '''
-        Method that launches the URI in the default browser of the system. This returns no new entity.
+    """
+    Method that launches the URI in the default browser of the system.
 
-        :param uri:    uri to open.
-    '''
-    # Temporally deactivating standard ouptut and error:
-    #   Source: <https://stackoverflow.com/questions/2323080/how-can-i-disable-the-webbrowser-message-in-python>
+    This function temporally deactivates the standard ouptut and errors to
+    prevent the system to show unwanted messages. This method is based on this
+    question from Stackoverflow.
+    https://stackoverflow.com/questions/2323080/how-can-i-disable-the-webbrowser-message-in-python
+
+    Args:
+    -----
+        uri: The string representing the URI to be opened in the browser.
+    """
 
     # Cloning stdout (1) and stderr (2)
     savout1 = os.dup(1)
@@ -739,9 +852,91 @@ def uriToBrowser(uri=None):
 
 
 def openResultsInBrowser(res):
-    print "Opening URIs in the default web browser..."
+    """
+    Method that collects the URI from a list of entities and opens them.
+
+    Args:
+    -----
+        res: A list containing several i3visio entities.
+    """
+    print(emphasis("\n\tOpening URIs in the default web browser..."))
 
     for r in res:
         for att in r["attributes"]:
             if att["type"] == "i3visio.uri":
                 uriToBrowser(att["value"])
+
+
+def colorize(text, messageType=None):
+    """
+    Function that colorizes a message.
+
+    Args:
+    -----
+        text: The string to be colorized.
+        messageType: Possible options include "ERROR", "WARNING", "SUCCESS",
+            "INFO" or "BOLD".
+
+    Returns:
+    --------
+        string: Colorized if the option is correct, including a tag at the end
+            to reset the formatting.
+    """
+    formattedText = text
+    # Set colors
+    if "ERROR" in messageType:
+        formattedText = colorama.Fore.RED + formattedText
+    elif "WARNING" in messageType:
+        formattedText = colorama.Fore.YELLOW + formattedText
+    elif "SUCCESS" in messageType:
+        formattedText = colorama.Fore.GREEN + formattedText
+    elif "INFO" in messageType:
+        formattedText = colorama.Fore.BLUE + formattedText
+
+    # Set emphashis mode
+    if "BOLD" in messageType:
+        formattedText = colorama.Style.BRIGHT + formattedText
+
+    return formattedText + colorama.Style.RESET_ALL
+
+
+def error(text):
+    return colorize(text, ["ERROR", "BOLD"])
+
+
+def warning(text):
+    return colorize(text, ["WARNING"])
+
+
+def success(text):
+    return colorize(text, ["SUCCESS", "BOLD"])
+
+
+def info(text):
+    return colorize(text, ["INFO"])
+
+
+def title(text):
+    return colorize(text, ["INFO", "BOLD"])
+
+
+def emphasis(text):
+    return colorize(text, ["BOLD"])
+
+
+def showLicense():
+    """
+    Method that prints the license if requested.
+
+    It tries to find the license online and manually download it. This method
+    only prints its contents in plain text.
+    """
+    print("Trying to recover the contents of the license...\n")
+    try:
+        # Grab the license online and print it.
+        text = urllib.urlopen(LICENSE_URL).read()
+        print("License retrieved from " + emphasis(LICENSE_URL) + ".")
+        raw_input("\n\tPress " + emphasis("<ENTER>") + " to print it.\n")
+        print(text)
+    except:
+        print(warning("The license could not be downloaded and printed."))

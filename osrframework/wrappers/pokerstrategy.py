@@ -39,7 +39,7 @@ class Pokerstrategy(Platform):
             Constructor... 
         """
         self.platformName = "Pokerstrategy"
-        self.tags = ["gaming", "adult"]
+        self.tags = ["gambling"]
         
         ########################
         # Defining valid modes #

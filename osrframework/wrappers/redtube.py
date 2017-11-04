@@ -38,7 +38,7 @@ class Redtube(Platform):
             Constructor... 
         """
         self.platformName = "Redtube"
-        self.tags = ["video", "adult"]
+        self.tags = ["sex"]
 
         ########################
         # Defining valid modes #

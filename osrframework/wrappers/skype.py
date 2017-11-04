@@ -28,18 +28,19 @@ import sys
 import urllib2
 
 import osrframework.utils.browser as browser
+import osrframework.utils.general as general
 import osrframework.thirdparties.skype.checkInSkype as skype
 from osrframework.utils.platforms import Platform
 
 import Skype4Py
 
 class Skype(Platform):
-    """ 
+    """
         A <Platform> object for Skype.
     """
     def __init__(self):
-        """ 
-            Constructor... 
+        """
+            Constructor...
         """
         self.platformName = "Skype"
         self.tags = ["conversation"]
@@ -47,16 +48,16 @@ class Skype(Platform):
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = True      
-        
+        self.isValidMode["searchfy"] = True
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = ""
         self.url["searchfy"] = ""
@@ -64,11 +65,11 @@ class Skype(Platform):
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        self.needsCredentials["searchfy"] = False 
-        
+        self.needsCredentials["searchfy"] = False
+
         #################
         # Valid queries #
         #################
@@ -78,7 +79,7 @@ class Skype(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         self.validQuery["searchfy"] = ".+"
-        
+
         ###################
         # Not_found clues #
         ###################
@@ -87,17 +88,17 @@ class Skype(Platform):
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = [] # N/A in Skype
         self.notFoundText["searchfy"] = [] # N/A in Skype
-        
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -105,44 +106,44 @@ class Skype(Platform):
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-    
+
 
     def processData(self, uri=None, data=None, mode=None):
         '''
             Method that process the data in a Skype User.
-            
+
             :return:    A i3visio-like object.
         '''
         info = []
-        
+
         # splitting info
         pairs = data.split('; ')
-        
+
         for p in pairs:
             parts = p.split(':')
-            
+
             aux = {}
             aux["type"] = parts[0]
-            aux["value"] = parts[1]        
+            aux["value"] = parts[1]
             aux["attributes"] = {}
-            
+
             info.append(aux)
         return json.dumps(info)
 
     def getInfo(self, query=None, process = False, mode="usufy"):
-        ''' 
+        '''
             Method that checks the presence of a given query and recovers the first list of complains.
 
             :param query: Phone number to verify.
             :param proces:  Calling the processing function.
-            :param mode:    Mode to be executed.            
+            :param mode:    Mode to be executed.
 
             :return:    Python structure for the html processed.
         '''
@@ -151,9 +152,8 @@ class Skype(Platform):
         data = ""
         if not self.modeIsValid(mode=mode):
             # TO-DO: InvalidModeException
-            #print "InvalidModeException"
             return json.dumps(results)
-               
+
         try:
             logger = logging.getLogger("osrframework.wrappers")
             # Verifying if the nick is a correct nick
@@ -170,25 +170,24 @@ class Skype(Platform):
 
                 UTF8Writer = codecs.getwriter('utf8')
                 sys.stdout = UTF8Writer(sys.stdout)
-   
+
                 # Search for users and display their Skype name, full name
                 # and country.
                 #print "In skype.py, before sending the query: '" + query + "'"
                 data = skype.checkInSkype(query)
                 #print "In skype.py, printing the 'data' variable:\n" + json.dumps(data, indent=2)
         except Exception as e:
-            print "[!] In skype.py, exception caught when checking information in Skype!"
+            print(general.warning("[!] In skype.py, exception caught when checking information in Skype!\n"))
             # No information was found, then we return a null entity
-            return json.dumps(results)            
-                
+            return json.dumps(results)
+
         # Verifying if the platform exists
         if mode == "usufy":
             for user in data:
-                if user["value"] == "Skype - " + query.lower():            
+                if user["value"] == "Skype - " + query.lower():
                     results.append(user)
         elif mode == "searchfy":
             results = data
 
-    	#print "In skype.py, printing the 'results' variable:\n" + json.dumps(results, indent=2)              
+    	#print "In skype.py, printing the 'results' variable:\n" + json.dumps(results, indent=2)
         return json.dumps(results)
-

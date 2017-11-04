@@ -57,7 +57,7 @@ class Bebee(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://es.bebee.com/bee/" + "<usufy>"
+        self.url["usufy"] = "https://bebee.com/bee/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Bebee(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["No hay resultados para"]
+        self.notFoundText["usufy"] = ['<link rel="canonical" href="https://.bebee.com/bees/search">']
         #self.notFoundText["searchfy"] = []
 
         #########################

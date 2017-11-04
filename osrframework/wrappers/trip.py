@@ -84,7 +84,7 @@ class Trip(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Trip.com</title>"]
+        self.notFoundText["usufy"] = ["<title>Brittney Mauck Travel Tips &amp; Activities - Trip.com</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

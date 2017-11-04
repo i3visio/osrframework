@@ -1,53 +1,45 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
 __author__ = "Felix Brezo, Yaiza Rubio"
 __copyright__ = "Copyright 2016-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v5.2"
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
+
 import argparse
 import datetime as dt
-import socket
 import json
 import os
+import signal
+import socket
 import whois
-import sys
 
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
-
-import osrframework.utils.banner as banner
-import osrframework.utils.platform_selection as platform_selection
-import osrframework.utils.configuration as configuration
-import osrframework.utils.general as general
 
 import osrframework.domains.gtld as gtld
 import osrframework.domains.cctld as cctld
@@ -56,7 +48,10 @@ import osrframework.domains.geographic_tld as geographic_tld
 import osrframework.domains.brand_tld as brand_tld
 import osrframework.domains.other_subdomains as other_subdomains
 
-import signal
+import osrframework.utils.banner as banner
+import osrframework.utils.platform_selection as platform_selection
+import osrframework.utils.configuration as configuration
+import osrframework.utils.general as general
 
 # Defining the TLD dictionary based on <https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains>
 TLD = {}
@@ -74,22 +69,28 @@ TLD["brand"] = brand_tld.tld
 TLD["other"] = other_subdomains.tld
 
 def getNumberTLD():
-    '''
-        Counting the total number of TLD being processed.
-    '''
+    """
+    Counting the total number of TLD being processed.
+    """
     total = 0
     for typeTld in TLD.keys():
         total+= len(TLD[typeTld])
     return total
 
+
 def getWhoisInfo(domain):
-    '''
-        Method that trie to recover the whois info from a domain.
+    """
+    Method that trie to recover the whois info from a domain.
 
-        :param domain:   domain to verify.
+    Args:
+    -----
+        domain: The domain to verify.
 
-        :result:
-    '''
+    Returns:
+    --------
+        dict: A dictionary containing the result as an i3visio entity with its
+            `value`, `type` and `attributes`.
+    """
     new = []
 
     # Grabbing the aliases
@@ -156,17 +157,21 @@ def getWhoisInfo(domain):
 
     return new
 
+
 def createDomains(tlds, nicks=None, nicksFile=None):
-    '''
-        Method that globally permits to generate the domains to be checked.
+    """
+    Method that globally permits to generate the domains to be checked.
 
-        :param tlds:  list of tlds.
-        :param nicks:   list of aliases.
-        :param nicksFile:  filepath to the aliases file.
+    Args:
+    -----
+        tlds: List of tlds.
+        nicks: List of aliases.
+        nicksFile: The filepath to the aliases file.
 
-        :result:    list of domains to be checked
-
-    '''
+    Returns:
+    --------
+        list: list of domains to be checked.
+    """
     domain_candidates = []
     if nicks != None:
         for n in nicks:
@@ -192,9 +197,20 @@ def createDomains(tlds, nicks=None, nicksFile=None):
 
 
 def isBlackListed(ipv4):
-    """There are some providers that resolve always. We have identified these IP
-        so we have to perform an additional chdeck to confirm that the returned
-        IPv4 is not a false positive.
+    """
+    Method that checks if an IPv4 is blackslited
+
+    There are some providers that resolve always. We have identified these IP
+    so we have to perform an additional chdeck to confirm that the returned
+    IPv4 is not a false positive.
+
+    Args:
+    -----
+        ipv4: The IP to be verified.
+
+    Returns:
+    --------
+        bool: It returns whether the IP is blacklisted.
     """
     BLACKLISTED = [
         "45.79.222.138",
@@ -204,7 +220,9 @@ def isBlackListed(ipv4):
         "127.0.0.2",
         "127.0.53.53",
         "141.8.226.58",
-        "144.76.162.245"
+        "144.76.162.245",
+        "173.230.131.38",
+        "109.95.242.11"
     ]
 
     if ipv4 in BLACKLISTED:
@@ -212,14 +230,24 @@ def isBlackListed(ipv4):
     else:
         return False
 
-def pool_function(domain):
+def pool_function(domain, launchWhois = False):
     """
-        Wrapper for being able to launch all the threads of getPageWrapper.
-        :param domain: We receive the parameters as a dictionary.
+    Wrapper for being able to launch all the threads of getPageWrapper.
+
+    Args:
+    -----
+        domain: We receive the parameters as a dictionary.
+        ```
         {
             "domain" : ".com",
             "type" : "global"
         }
+        ```
+        launchWhois: Whether the whois info will be launched.
+    Returns:
+    --------
+        dict: A dictionary containing the following values:
+        `{"platform" : str(domain), "status": "DONE", "data": aux}`
     """
     is_valid = True
     try:
@@ -233,12 +261,15 @@ def pool_function(domain):
         aux = {}
         aux["type"] = "i3visio.result"
         aux["value"] = "Domain Info - " + domain["domain"]
-        # Performing whois info
+        aux["attributes"] = []
+
+        # Performing whois info and adding if necessary
         try:
-            aux["attributes"] = getWhoisInfo(domain["domain"])
+            if domain["type"] != "global" and launchWhois:
+                aux["attributes"] = getWhoisInfo(domain["domain"])
         except Exception as e:
             # If something happened... Well, we'll return an empty attributes array.
-            aux["attributes"] = []
+            pass
 
         tmp = {}
         tmp["type"] = "i3visio.domain"
@@ -265,14 +296,21 @@ def pool_function(domain):
     except Exception as e:
         return {"platform" : str(domain), "status": "ERROR", "data": {}}
 
-def performSearch(domains=[], nThreads=16):
-    '''
-        Method to perform the mail verification process.
 
-        :param domains: List of domains to check.
+def performSearch(domains=[], nThreads=16, launchWhois=False):
+    """
+    Method to perform the mail verification process.
 
-        :return:
-    '''
+    Arguments
+    ---------
+        domains: List of domains to check.
+        nThreads: Number of threads to use.
+        launchWhois: Sets if whois queries will be launched.
+
+    Returns
+    -------
+        list: A list containing the results as i3visio entities.
+    """
     results = []
 
     # Using threads in a pool if we are not running the program in main
@@ -306,7 +344,7 @@ def performSearch(domains=[], nThreads=16):
 
         for d in domains:
             # We need to create all the arguments that will be needed
-            parameters = ( d, )
+            parameters = ( d, launchWhois, )
             pool.apply_async (pool_function, args= parameters, callback = log_result )
 
         # Waiting for results to be finished
@@ -315,9 +353,9 @@ def performSearch(domains=[], nThreads=16):
         # Closing normal termination
         pool.close()
     except KeyboardInterrupt:
-        print "\nProcess manually stopped by the user. Terminating workers.\n"
+        print(general.warning("\nProcess manually stopped by the user. Terminating workers.\n"))
         pool.terminate()
-        print "The following domains were not processed:"
+        print(general.warning("The following domains were not processed:"))
         pending_tld = ""
         for d in domains:
             processed = False
@@ -326,17 +364,13 @@ def performSearch(domains=[], nThreads=16):
                     processed = True
                     break
             if not processed:
-                print "\t- " + str(d["domain"])
+                print(general.warning("\t- " + str(d["domain"])))
                 pending_tld += " " + str(d["tld"])
-        print
-        print "[!] If you want to relaunch the app with these domains you can always run the command with: "
-        print "\t domainfy.py ... -t none -u " + pending_tld
-        print
-        print "[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "
-        print "\t domainfy.py ... -x " + pending_tld
-        print
+        print(general.warning("[!] If you want to relaunch the app with these domains you can always run the command with: "))
+        print(general.warning("\t domainfy.py ... -t none -u " + pending_tld))
+        print(general.warning("[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "))
+        print(general.warning("\t domainfy.py ... -x " + pending_tld))
     pool.join()
-
 
     # Processing the results
     # ----------------------
@@ -348,96 +382,106 @@ def performSearch(domains=[], nThreads=16):
     return results
 
 def main(args):
-    '''
-        Main program of domainfy.
+    """
+    Main function to launch phonefy.
 
-        :param args: Arguments received in the command line.
-    '''
-    sayingHello = """domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules `getParser()`.
+
+    Args:
+    -----
+        args: The parameters as processed by this modules `getParser()`.
+
+    Results:
+    --------
+        list: Returns a list with i3visio entities.
+    """
+    results = []
     if not args.quiet:
-        print banner.text
+        print(general.title(banner.text))
 
-        print sayingHello
-        print
+        sayingHello = """
+domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 
-    # Processing the options returned to remove the "all" option
-    tlds = []
-    if "all" in args.tlds:
-        for typeTld in TLD.keys():
-            for tld in TLD[typeTld]:
-                if tld not in args.exclude:
-                    tlds.append({ "tld" : tld, "type" : typeTld })
-    elif "none" in args.tlds:
-        pass
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit """ + general.LICENSE_URL + "\n"
+        print(general.title(sayingHello))
+
+    if args.license:
+        general.showLicense()
     else:
-        for typeTld in TLD.keys():
-            if typeTld in args.tlds:
+        # Processing the options returned to remove the "all" option
+        tlds = []
+        if "all" in args.tlds:
+            for typeTld in TLD.keys():
                 for tld in TLD[typeTld]:
                     if tld not in args.exclude:
                         tlds.append({ "tld" : tld, "type" : typeTld })
+        elif "none" in args.tlds:
+            pass
+        else:
+            for typeTld in TLD.keys():
+                if typeTld in args.tlds:
+                    for tld in TLD[typeTld]:
+                        if tld not in args.exclude:
+                            tlds.append({ "tld" : tld, "type" : typeTld })
 
-    for new in args.user_defined:
-        if new not in args.exclude:
-            tlds.append( {"tld": new, "type": "user_defined"})
+        for new in args.user_defined:
+            if new not in args.exclude:
+                tlds.append( {"tld": new, "type": "user_defined"})
 
-    if args.nicks:
-        domains = createDomains(tlds, nicks = args.nicks)
-    else:
-        # nicks_file
-        domains = createDomains(tlds, nicksFile = args.nicks_file)
+        if args.nicks:
+            domains = createDomains(tlds, nicks = args.nicks)
+        else:
+            # nicks_file
+            domains = createDomains(tlds, nicksFile = args.nicks_file)
 
-    # Showing the execution time...
-    if not args.quiet:
-        startTime= dt.datetime.now()
-        print str(startTime) +"\tStarting the lookup in up to " + str(len(tlds))+ " different domains. Be patient!"
-        print
-        print "\tPress <Ctrl + C> to stop..."
-        print
-    # Perform searches, using different Threads
-    results = performSearch(domains, args.threads)
+        # Showing the execution time...
+        if not args.quiet:
+            startTime= dt.datetime.now()
+            print(str(startTime) + "\tTrying to identify the existence of " + general.emphasis(str(len(domains))) + " domain(s)... Relax!\n")
+            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
-    # Trying to store the information recovered
-    if args.output_folder != None:
-        if not os.path.exists(args.output_folder):
-            os.makedirs(args.output_folder)
-        # Grabbing the results
-        fileHeader = os.path.join(args.output_folder, args.file_header)
-        for ext in args.extension:
-            # Generating output files
-            general.exportUsufy(results, ext, fileHeader)
+        # Perform searches, using different Threads
+        results = performSearch(domains, args.threads, args.whois)
 
-    # Showing the information gathered if requested
-    if not args.quiet:
-        print "A summary of the results obtained are shown in the following table:"
-        try:
-            print str(general.usufyToTextExport(results))
-        except:
-            print results
-        print
+        # Trying to store the information recovered
+        if args.output_folder != None:
+            if not os.path.exists(args.output_folder):
+                os.makedirs(args.output_folder)
+            # Grabbing the results
+            fileHeader = os.path.join(args.output_folder, args.file_header)
+            for ext in args.extension:
+                # Generating output files
+                general.exportUsufy(results, ext, fileHeader)
 
-        print "You can find all the information collected in the following files:"
-        for ext in args.extension:
-            # Showing the output files
-            print "\t-" + fileHeader + "." + ext
-    # Showing the execution time...
-    if not args.quiet:
-        print
-        endTime= dt.datetime.now()
-        print str(endTime) +"\tFinishing execution..."
-        print
-        print "Total time used:\t" + str(endTime-startTime)
-        print "Average seconds/query:\t" + str((endTime-startTime).total_seconds()/len(domains)) +" seconds"
-        print
+        # Showing the information gathered if requested
+        if not args.quiet:
+            print("A summary of the results obtained are shown in the following table:\n")
+            try:
+                print(general.success(general.usufyToTextExport(results)))
+            except:
+                print(general.warning("\nSomething happened when exporting the results. The Json will be shown instead:\n"))
+                print(general.warning(json.dumps(results, indent=2)))
 
-    # Urging users to place an issue on Github...
-    if not args.quiet:
-        print
-        print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-        print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-        print "Note that otherwise, we won't know about it!"
-        print
+            now = dt.datetime.now()
+            print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
+            for ext in args.extension:
+                # Showing the output files
+                print("\t" + general.emphasis(fileHeader + "." + ext))
+
+        # Showing the execution time...
+        if not args.quiet:
+            # Showing the execution time...
+            endTime= dt.datetime.now()
+            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
+            print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(domains))) +" seconds\n")
+
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
     return results
 
@@ -467,6 +511,7 @@ def getParser():
     groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=["all", "none"] + TLD.keys(), action='store', help='List of tld types where the nick will be looked for.', required=False, default=DEFAULT_VALUES["tlds"])
     groupProcessing.add_argument('-u', '--user_defined',  metavar='<new_tld>',  nargs='+', action='store', help='Additional TLD that will be searched.', required=False, default = DEFAULT_VALUES["user_defined"])
     groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=excludeList, action='store', help="select the domains to be avoided. The format should include the initial '.'.")
+    groupProcessing.add_argument('--whois', required=False, action='store_true', default=False, help='tells the program to launch whois queries.')
 
     # Getting a sample header for the output files
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )

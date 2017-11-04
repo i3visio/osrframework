@@ -38,7 +38,7 @@ class Betblog(Platform):
             Constructor...
         """
         self.platformName = "Betblog"
-        self.tags = ["betting"]
+        self.tags = ["gambling"]
 
         ########################
         # Defining valid modes #

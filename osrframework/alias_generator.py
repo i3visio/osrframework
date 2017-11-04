@@ -1,35 +1,31 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
 #
-#    This program is free software. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-alias_generator.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v1.0"
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
@@ -38,11 +34,12 @@ import argparse
 import json
 
 import osrframework.utils.banner as banner
+import osrframework.utils.general as general
 
 # GLOBAL OPTIONS
 SEPARATORS = ["_", ".", '']
 COMMON_WORDS = ["666", "home", "mr", "news",  "official", "real", "xxx"]
-LOCALES = ["ar", "en", "es", "fr", "ru"]
+LOCALES = ["ar", "de", "en", "es", "fr", "ru"]
 LEET_TRANSFORMS = {
     "a" : ["4"],
     "b" : ["8"],
@@ -56,14 +53,34 @@ LEET_TRANSFORMS = {
 }
 
 
-def main(name = None, surname1 = None, surname2 = None, city = None, country = None, year = None, useNumbers = False, useCommonWords = False, useLeet = False, useLocales = False, extraWords = [] ):
-    '''
-        Method that generates de given aliases.
+def main(name=None, surname1=None, surname2=None, city=None, country=None, year=None, useNumbers=False, useCommonWords=False, useLeet=False, useLocales=False, extraWords=[]):
+    """
+    The main method that generates the given aliases.
 
-        :param args: Options given by parameter
+    It receives several parameters as parsed by this module's `getParser()`.
 
-        :return:    Text matching the regular expression provided.
-    '''
+    Args:
+    -----
+    name: String representing the known name of the investigated profile.
+    surname1: String representing the first surname of the investigated profile.
+    surname2: String representing the second surname of the investigated
+        profile.
+    city: String representing the city where the profile was born or works.
+    country: String representing the country.
+    year: String representing a year linked to the profile.
+    useNumbers: Boolean representing whether to use random numbers at the end.
+    useCommonWords: Boolean representing whether to use known commond words to
+        generate new nicknames.
+    useNumbers: Boolean representing whether to use random numbers at the end.
+    useLeet: Boolean representing whether to modify certain letters by numbers
+        using the leet (*133t*) codification.
+    extraWords: A list of strings with extra words to be appended to the
+        generatednicknames.
+
+    Returns
+    -------
+        list: An ordered list of the nicknames generated.
+    """
     # Lowering all the info received
     name = name.lower()
     surname1 = surname1.lower()
@@ -86,7 +103,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     if country == '':
         country = None
 
-    print "Generation of new aliases..."
+    print("\nGenerating new aliases...")
 
     lista = []
 
@@ -2710,7 +2727,6 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
 
     # Adding common words
     if useCommonWords:
-        print "We are in useCommonWords:" + str (useCommonWords)
         for n in lista:
             for w in COMMON_WORDS:
                 try:
@@ -2795,14 +2811,12 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
 
     # Sorting list
     listaFinal.sort()
-    print
-    print "Generated nicks:"
-    print
-    print json.dumps(listaFinal, indent=2, sort_keys=True)
-    print
-    print "Up to " + str(len(listaFinal)) + " nicks generated:"
-    print
-    print "Writing the results onto the file: " + args.outputFile
+    print("\nProcess finished.")
+    print("\nGenerated nicks:\n")
+    print(general.success(json.dumps(listaFinal, indent=2, sort_keys=True)))
+    print("\nUp to " + general.emphasis(str(len(listaFinal))) + " nicks generated.\n")
+    print("Writing the results onto the file:\n\t" + general.emphasis(args.outputFile))
+
     oF=open(args.outputFile, "w")
     for l in listaFinal:
         oF.write(l+"\n")
@@ -2811,7 +2825,7 @@ def main(name = None, surname1 = None, surname2 = None, city = None, country = N
     return listaFinal
 
 if __name__ == "__main__":
-    print banner.text
+    print(general.title(banner.text))
 
     parser = argparse.ArgumentParser(description='alias_generator.py is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator.py', epilog="", add_help=False)
 
@@ -2843,41 +2857,53 @@ if __name__ == "__main__":
     extraWords = args.extra_words
 
     if args.name == None and args.surname1 == None and args.surname2 == None and args.city == None and args.country == None and args.year == None:
-        print "Collecting information about the profile"
-        print "----------------------------------------"
-        print
-        args.name=raw_input("Insert a name: ".ljust(35, " ")).replace(' ','')
-        args.surname1=raw_input("Insert the first surname: ".ljust(35, " ")).replace(' ','')
-        args.surname2=raw_input("Insert the second surname: ".ljust(35, " ")).replace(' ','')
-        args.year=raw_input("Insert a year (e. g.: birthyear): ".ljust(35, " ")).replace(' ','')
-        args.city=raw_input("Insert a city: ".ljust(35, " ")).replace(' ','')
-        args.country=raw_input("Insert a country: ".ljust(35, " ")).replace(' ','')
+        print("\nCollecting information about the profile")
+        print("----------------------------------------\n")
+
+        args.name = raw_input(general.emphasis("Insert a name: ".ljust(35, " "))).replace(' ','')
+        args.surname1 = raw_input(general.emphasis("Insert the first surname: ".ljust(35, " "))).replace(' ','')
+        args.surname2 = raw_input(general.emphasis("Insert the second surname: ".ljust(35, " "))).replace(' ','')
+        args.year = raw_input(general.emphasis("Insert a year (e. g.: birthyear): ".ljust(35, " "))).replace(' ','')
+        args.city = raw_input(general.emphasis("Insert a city: ".ljust(35, " "))).replace(' ','')
+        args.country = raw_input(general.emphasis("Insert a country: ".ljust(35, " "))).replace(' ','')
 
         if args.extra_words == []:
-            print "Additional transformations to be done"
-            print "-------------------------------------"
-            print
-            inputText=raw_input("Extra words to add (',' separated): ".ljust(35, " ")).replace(' ','')
+            print("\nAdditional transformations to be added")
+            print("--------------------------------------\n")
+            inputText = raw_input(general.emphasis("Extra words to add (',' separated): ".ljust(35, " "))).replace(' ','')
             extraWords += inputText.lower().split(',')
 
     lista=[]
 
-    print
-    print "-----------"
-    print "Input data:"
-    print "-----------"
-    if args.name != "": print args.name
-    if args.surname1 != "": print args.surname1
-    if args.surname2 != "": print args.surname2
-    if args.year != "": print args.year
-    if args.city != "": print args.city
-    if args.country != "": print args.country
-    print
 
-    main(name = args.name, surname1 = args.surname1, surname2 = args.surname2, city = args.city, country = args.country, year = args.year, useNumbers = args.numbers, useCommonWords = args.common_words, useLeet = args.leet, useLocales = args.locales, extraWords = extraWords )
+    print("\nInput data:")
+    print("-----------\n")
+    if args.name != "":
+        print("Name: ".ljust(20, " ") + args.name)
+    if args.surname1 != "":
+        print("First Surname: ".ljust(20, " ") + args.surname1)
+    if args.surname2 != "":
+        print("Second Surname: ".ljust(20, " ") + args.surname2)
+    if args.year != "":
+        print("Year: ".ljust(20, " ") + args.year)
+    if args.city != "":
+        print("City: ".ljust(20, " ") + args.city)
+    if args.country != "":
+        print("Country: ".ljust(20, " ") + args.country)
 
-    print
-    print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-    print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-    print "Note that otherwise, we won't know about it!"
-    print
+    main(
+        name=args.name,
+        surname1=args.surname1,
+        surname2=args.surname2,
+        city=args.city,
+        country=args.country,
+        year=args.year,
+        useNumbers=args.numbers,
+        useCommonWords=args.common_words,
+        useLeet=args.leet,
+        useLocales=args.locales,
+        extraWords=extraWords
+    )
+
+    # Urging users to place an issue on Github...
+    print(banner.footer)

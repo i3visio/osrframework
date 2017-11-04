@@ -3,9 +3,51 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.17.3, 2017/09/16 -- Some new additions and fixes
+- Add feature #290: Add thiscrush.com as a new usufy platform
+- Add feature: Add Mastodon.social and Mastodon.xyz platforms
+- Add feature: Add noip.com subdomains
+- Fix issue #291: Fix bebee usufy platform
+- Fix issue in domainfy that tried a Whois info request if a TLD classified as other was found
+- Fix issue in domainfy of several false positives
+- Fix issue with false positives in Kiwi for usernames longer than 16
+- Fix several tags for some platforms
+- Fix issue with Rapid7 forums by removing it
+
+0.17.2, 2017/08/21 -- Fixes with some usernames in Kiwi and Smugmug.
+- Fix issue #288: Remove the `.` as a valid character for usernames in Smugmug
+- Fix issue #287: Remove the `.` as a valid character for usernames in Kiwi
+- Move to pending Oroom and Backyardchickens
+
+0.17.1, 2017/08/20 -- Some fixes and new wrappers.
+- Add feature #283: Add Kiwi usufy wrapper
+- Add feature #284: Add Sarahah usufy wrapper
+- Fix issue #286: Remove intersect.es wrapper as the platform has been changed
+- Fix issue #282: Fix openstreetmap usufy wrapper when using usernames containing a dot
+- Fix issue #280: Fix serieadictos usufy wrapper
+- Fix issue #279: Fix bebee usufy wrapper
+- Fix some issues in osrframework_server and the configuration file
+
+0.17.0, 2017/07/25 -- Prepare the Blackhat Arsenal release
+- Add feature #267: Add a leaked email search using HaveIBeenPwned.
+- Add feature #168: Add Get as a new platform
+- Add feature: Add Seatwish usufy wrapper
+- Add feature: Add Xtube usufy wrapper
+- Add feature: Add coloured output in usufy, mailfy, searchfy, phonefy, entify, osrfconsole and domainfy
+- Add feature: Add colorama utils to general
+- Fix issue #278: Remove bladna.nl usufy wrapper
+- Fix issue #276: Fix trip.com usufy wrapper
+- Fix issue #275: Remove Travian forum usufy wrapper
+- Fix issue #274: Remove Carder usufy wrapper
+- Update the print functions
+- Fix some issues regarding to the display of the license
+- Patch issue #277: Fix creativemarket usufy wrapper
+- General update of the way in which functions in `osrframework.utils.general` are documented as well as removal of unneeded functions.
+- Remove a hack in the export function to set the encoding that implied setting the default encoding using `sys.setdefaultencoding()` and resetting it back after the export.
+
 0.16.8, 2017/06/22 -- Important update on the setup.py to verify whether the .local/bin folder is in the path.
 - Fix issue #187: Review installation with --user in Linux systems where ~/.local/bin is NOT in the PATH
-- Fix issue: Several wrappers have been moved to pending: cardingbins, retailmenot, seatfish and xtube.
+- Fix issue: Several wrappers have been moved to pending: cardingbins, retailmenot, seatfish and xtube
 
 0.16.7, 2017/06/15 -- Several fixes on certain platforms.
 - Temporally removed some wrappers: apsense, flavors, paypal, pinterest, sokule and wordpress

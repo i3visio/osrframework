@@ -1,48 +1,44 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
 #    Copyright 2015-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-'''
-entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions.  For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.
-'''
+
 __author__ = "Felix Brezo, Yaiza Rubio "
 __copyright__ = "Copyright 2015-2017, i3visio"
 __credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "GPLv3+"
-__version__ = "v5.0"
+__license__ = "AGPLv3+"
+__version__ = "v6.0"
 __maintainer__ = "Felix Brezo, Yaiza Rubio"
 __email__ = "contacto@i3visio.com"
 
+
 import argparse
-# logging imports
-import logging
 import json
-import requests
+import logging
 import os
 from os import listdir
 from os.path import isfile, join, isdir
+import requests
+import urllib2
 
-# Imports
 import osrframework.utils.banner as banner
 from osrframework.utils.regexp import RegexpObject
 import osrframework.utils.general as general
@@ -51,15 +47,21 @@ import osrframework.utils.regexp_selection as regexp_selection
 
 
 def getEntitiesByRegexp(data = None, listRegexp = None, verbosity=1, logFolder="./logs"):
-    '''
-        Method to obtain entities by Regexp.
+    """
+    Method to obtain entities by Regexp.
 
-        :param data:    text where the entities will be looked for.
-        :param listRegexp:    list of selected regular expressions to be looked for. If None was provided, all the available will be chosen instead.
-        :param verbosity:    Verbosity level.
-        :param logFolder:    Folder to store the logs.
+    Args:
+    -----
+        data: text where the entities will be looked for.
+        listRegexp: list of selected regular expressions to be looked for. If
+            None was provided, all the available will be chosen instead.
+        verbosity: the verbosity level.
+        logFolder: the folder to store the logs.
 
-        :return:    a list of the available objects containing the expressions found in the provided data.
+    Returns:
+    --------
+        list: available objects containing the expressions found in the provided
+        data.
         [
           {
             "attributes": [],
@@ -71,7 +73,7 @@ def getEntitiesByRegexp(data = None, listRegexp = None, verbosity=1, logFolder="
             "type": "i3visio.email",
             "value": "bar@foo.com"
         ]
-    '''
+    """
     logSet.setupLogger(loggerName="osrframework.entify", verbosity=verbosity, logFolder=logFolder)
     logInstance = logging.getLogger("osrframework.entify")
     if listRegexp == None:
@@ -86,14 +88,21 @@ def getEntitiesByRegexp(data = None, listRegexp = None, verbosity=1, logFolder="
 
 
 def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, verbosity=1, logFolder= "./logs", quiet=False):
-    '''
-        [Optionally] recursive method to scan the files in a given folder.
+    """
+    [Optionally] recursive method to scan the files in a given folder.
 
-        :param folder:    the folder to be scanned.
-        :param listRegexp:    listRegexp is an array of <RegexpObject>.
-        :param recursive:    when True, it performs a recursive search on the subfolders.
+    Args:
+    -----
+        folder: the folder to be scanned.
+        listRegexp: listRegexp is an array of <RegexpObject>.
+        recursive: when True, it performs a recursive search on the subfolders.
 
-        :return:    a list of the available objects containing the expressions found in the provided data.
+    Returns:
+    --------
+        list: Available objects containing the expressions found in the
+        provided data. An example of the returned data is as follows:
+
+        ```
         [
           {
             "attributes": [],
@@ -106,7 +115,8 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
             "value": "bar@foo.com"
           }
         ]
-    '''
+        ```
+    """
     logSet.setupLogger(loggerName="osrframework.entify", verbosity=verbosity, logFolder=logFolder)
     logger = logging.getLogger("osrframework.entify")
 
@@ -123,7 +133,7 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
         filePath = join(folder,f)
         logger.debug("Looking for regular expressions in: " + filePath)
         if not quiet:
-            print str(i) + "/" + str(len(onlyfiles)) + "\tLooking for regular expressions in: " + filePath
+            print(str(i) + "/" + str(len(onlyfiles)) + "\tLooking for regular expressions in: " + filePath)
         with open(filePath, "r") as tempF:
             # reading data
             foundExpr = getEntitiesByRegexp(data = tempF.read(), listRegexp = listRegexp)
@@ -143,28 +153,30 @@ def scanFolderForRegexp(folder = None, listRegexp = None, recursive = False, ver
 
     # Printing the information if not in quiet mode
     if not quiet:
-        print json.dumps(results, indent=2)
-    #with open("./entify_out.txt", "w") as oF:
-    #    oF.write(json.dumps(results, indent=2))
+        print(general.success(json.dumps(results, indent=2)))
+
     return results
 
 
 def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"):
-    '''
-        [Optionally] recursive method to scan the files in a given folder.
+    """
+    [Optionally] recursive method to scan the files in a given folder.
 
-        :param uri:    the URI to be scanned.
-        :param listRegexp:    listRegexp is an array of <RegexpObject>.
+    Args:
+    -----
+        uri: the URI to be scanned.
+        listRegexp: listRegexp is an array of <RegexpObject>.
 
-        :return:    a dictionary where the key is the name of the file.
-    '''
+    Returns:
+    -------
+        dict: the key is the name of the file.
+    """
     logSet.setupLogger(loggerName="osrframework.entify", verbosity=verbosity, logFolder=logFolder)
     logger = logging.getLogger("osrframework.entify")
 
     results = []
     logger.debug("Looking for regular expressions in: " + uri)
 
-    import urllib2
     data = urllib2.urlopen(uri).read()
     foundExpr = getEntitiesByRegexp(data = data, listRegexp = listRegexp)
 
@@ -199,79 +211,90 @@ def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"
 
     return results
 
+
 def main(args):
-    '''
-        Main function. This function is created in this way so as to let other applications make use of the full configuration capabilities of the application.
-    '''
+    """
+    Main function to launch phonefy.
+
+    The function is created in this way so as to let other applications make
+    use of the full configuration capabilities of the application. The
+    parameters received are used as parsed by this modules `getParser()`.
+
+    Args:
+    -----
+        args: The parameters as processed by this modules `getParser()`.
+
+    Results:
+    --------
+        Returns a list with i3visio entities.
+    """
+    results = []
+
     # Recovering the logger
     # Calling the logger when being imported
     logSet.setupLogger(loggerName="osrframework.entify", verbosity=args.verbose, logFolder=args.logfolder)
     # From now on, the logger can be recovered like this:
     logger = logging.getLogger("osrframework.entify")
 
-    logger.info("""entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit to <http://www.gnu.org/licenses/gpl-3.0.txt>.""")
-
     logger.info("Selecting the regular expressions to be analysed...")
 
-    sayingHello = """entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
-This program comes with ABSOLUTELY NO WARRANTY.
-This is free software, and you are welcome to redistribute it under certain conditions. For additional info, visit <http://www.gnu.org/licenses/gpl-3.0.txt>."""
     if not args.quiet:
-        print banner.text
+        print(general.title(banner.text))
 
-        print sayingHello
-        print
-        logger.info("Starting entify.py")
+        sayingHello = """
+entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
 
-    listRegexp = []
-    if args.regexp:
-        listRegexp = regexp_selection.getRegexpsByName(args.regexp)
-    elif args.new_regexp:
-        for i, r in enumerate(args.new_regexp):
-            listRegexp.append(RegexpObject(name = "NewRegexp"+str(i), reg_exp = args.new_regexp))
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+are welcome to redistribute it under certain conditions. For additional info,
+visit """ + general.LICENSE_URL + "\n"
+        print(general.info(sayingHello))
 
-    if not args.web:
-        results = scanFolderForRegexp(folder = args.input_folder, listRegexp= listRegexp, recursive = args.recursive, verbosity=args.verbose, logFolder= args.logfolder, quiet=args.quiet)
+    if args.license:
+        general.showLicense()
     else:
-        results = scanResource(uri = args.web, listRegexp= listRegexp, verbosity=args.verbose, logFolder= args.logfolder)
-    logger.info("Logging the results:\n" + json.dumps(results, indent=2, sort_keys=True))
+        listRegexp = []
+        if args.regexp:
+            listRegexp = regexp_selection.getRegexpsByName(args.regexp)
+        elif args.new_regexp:
+            for i, r in enumerate(args.new_regexp):
+                listRegexp.append(RegexpObject(name = "NewRegexp"+str(i), reg_exp = args.new_regexp))
 
-    # Trying to store the information recovered
-    if args.output_folder != None:
-        # Verifying an output folder was selected
-        logger.debug("Preparing the output folder...")
-        if not os.path.exists(args.output_folder):
-            logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
-            os.makedirs(args.output_folder)
+        if not args.web:
+            results = scanFolderForRegexp(folder = args.input_folder, listRegexp= listRegexp, recursive = args.recursive, verbosity=args.verbose, logFolder= args.logfolder, quiet=args.quiet)
+        else:
+            results = scanResource(uri = args.web, listRegexp= listRegexp, verbosity=args.verbose, logFolder= args.logfolder)
+        logger.info("Logging the results:\n" + json.dumps(results, indent=2, sort_keys=True))
 
-        # Grabbing the results
-        fileHeader = os.path.join(args.output_folder, args.file_header)
-        for ext in args.extension:
-            # Generating output files
-            general.exportUsufy(results, ext, fileHeader)
+        # Trying to store the information recovered
+        if args.output_folder != None:
+            # Verifying an output folder was selected
+            logger.debug("Preparing the output folder...")
+            if not os.path.exists(args.output_folder):
+                logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
+                os.makedirs(args.output_folder)
 
-    # Showing the information gathered if requested
-    if not args.quiet:
-        print "A summary of the results obtained are shown in the following table:"
-        print unicode(general.usufyToTextExport(results))
-        print
+            # Grabbing the results
+            fileHeader = os.path.join(args.output_folder, args.file_header)
+            for ext in args.extension:
+                # Generating output files
+                general.exportUsufy(results, ext, fileHeader)
 
-        print "You can find all the information collected in the following files:"
-        for ext in args.extension:
-            # Showing the output files
-            print "\t-" + fileHeader + "." + ext
+        # Showing the information gathered if requested
+        if not args.quiet:
+            print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+            print(general.success(general.usufyToTextExport(results)))
 
-    # Urging users to place an issue on Github...
-    if not args.quiet:
-        print
-        print "Did something go wrong? Is a platform reporting false positives? Do you need to integrate a new one?"
-        print "Then, place an issue in the Github project: <https://github.com/i3visio/osrframework/issues>."
-        print "Note that otherwise, we won't know about it!"
-        print
+            now = dt.datetime.now()
+            print(str(now) + "\tYou can find all the information collected in the following files:")
+            for ext in args.extension:
+                # Showing the output files
+                print("\t-" + general.emphasis(fileHeader + "." + ext))
+
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
     return results
+
 
 def getParser():
     import osrframework.utils.configuration as configuration
@@ -309,6 +332,7 @@ def getParser():
     groupAbout.add_argument('--version', action='version', version='%(prog)s '+" " +__version__, help='shows the version of the program and exists.')
 
     return parser
+
 
 if __name__ == "__main__":
     # Grabbing the parser
