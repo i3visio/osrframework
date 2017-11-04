@@ -3,6 +3,14 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.17.4, 2017/11/04 -- Some new additions and fixes
+- Fix issue #295: addressed the error found when exiting osrfconsole.py
+- Fix issue in gsmspain usufy wrapper
+- Fix issue in Bubok wrapper
+- Patch issue that was opening too many browser windows if no browser was opened
+- Remove castroller.com wrapper
+- Remove Karmacracy wrapper. Thank you for these years, KCY!
+
 0.17.3, 2017/09/16 -- Some new additions and fixes
 - Add feature #290: Add thiscrush.com as a new usufy platform
 - Add feature: Add Mastodon.social and Mastodon.xyz platforms

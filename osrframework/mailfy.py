@@ -333,7 +333,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
 
     Returns:
     --------
-        TODO.
+        The results collected.
     """
     # Getting starting time
     _startTime = time.time()
