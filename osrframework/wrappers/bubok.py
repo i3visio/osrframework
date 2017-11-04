@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,22 +20,16 @@
 #
 ##################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
-
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 class Bubok(Platform):
-    """ 
-        A <Platform> object for Bubok.
+    """
+    A <Platform> object for Bubok.
     """
     def __init__(self):
-        """ 
-            Constructor... 
+        """
+        Constructor...
         """
         self.platformName = "Bubok"
         self.tags = ["books"]
@@ -47,7 +41,7 @@ class Bubok(Platform):
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
         self.isValidMode["searchfy"] = False
-        
+
         ######################################
         # Search URL for the different modes #
         ######################################
@@ -64,7 +58,7 @@ class Bubok(Platform):
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
         #self.needsCredentials["searchfy"] = False
-        
+
         #################
         # Valid queries #
         #################
@@ -74,26 +68,26 @@ class Bubok(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
-        
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["PRESENTACIONES Y EVENTOS"]
+        self.notFoundText["usufy"] = ["<title>Bubok - Distribución nacional e internacional de libros de autores noveles</title>"]
         #self.notFoundText["searchfy"] = []
-        
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
@@ -102,10 +96,9 @@ class Bubok(Platform):
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-        
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-
