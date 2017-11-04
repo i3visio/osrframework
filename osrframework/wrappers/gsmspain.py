@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,23 +20,17 @@
 #
 ##################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
-
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 
 class Gsmspain(Platform):
     """
-        A <Platform> object for Gsmspain.
+    A <Platform> object for Gsmspain.
     """
     def __init__(self):
         """
-            Constructor...
+        Constructor...
         """
         self.platformName = "Gsmspain"
         self.tags = ["opinions"]
@@ -82,7 +76,10 @@ class Gsmspain(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Perfil del usuario en los foros de gsmspain.com</title>"]
+        self.notFoundText["usufy"] = [
+            "<title>Perfil del usuario  en los foros de gsmspain.com</title>",
+            "<title>Perfil del usuario en los foros de gsmspain.com</title>"
+        ]
         #self.notFoundText["searchfy"] = []
 
         #########################
