@@ -23,13 +23,13 @@
 
 import colorama
 colorama.init(autoreset=True)
-
 import datetime
 import hashlib
 import json
 import logging
 import networkx as nx
 import os
+import time
 import urllib
 import webbrowser as wb
 
@@ -767,6 +767,7 @@ def fileToMD5(filename, block_size=256*128, binary=False):
             Blocks of 4096 octets (Default NTFS).
         binary: A boolean representing whether the returned info is in binary
             format or not.
+
     Returns:
     --------
         string: The  MD5 hash of the file.
@@ -782,7 +783,7 @@ def fileToMD5(filename, block_size=256*128, binary=False):
 
 def getCurrentStrDatetime():
     """
-    Generating the current Datetime with a given format.
+    Generating the current Datetime with a given format
 
     Returns:
     --------
@@ -800,7 +801,7 @@ def getFilesFromAFolder(path):
 
     Args:
     -----
-        path: The path in which looking for the files.
+        path: The path in which looking for the files
 
     Returns:
     --------
@@ -816,9 +817,9 @@ def getFilesFromAFolder(path):
     return onlyFiles
 
 
-def uriToBrowser(uri=None):
+def urisToBrowser(uris=[], autoraise=True):
     """
-    Method that launches the URI in the default browser of the system.
+    Method that launches the URI in the default browser of the system
 
     This function temporally deactivates the standard ouptut and errors to
     prevent the system to show unwanted messages. This method is based on this
@@ -827,7 +828,7 @@ def uriToBrowser(uri=None):
 
     Args:
     -----
-        uri: The string representing the URI to be opened in the browser.
+        uri: a list of strings representing the URI to be opened in the browser.
     """
 
     # Cloning stdout (1) and stderr (2)
@@ -840,11 +841,12 @@ def uriToBrowser(uri=None):
     os.open(os.devnull, os.O_RDWR)
 
     try:
-        # Opening the Tor URI using onion.cab proxy
-        if ".onion" in uri:
-            wb.get().open(uri.replace(".onion", ".onion.cab"), new=2)
-        else:
-            wb.get().open(uri, new=2)
+        for uri in uris:
+            # Opening the Tor URI using onion.cab proxy
+            if ".onion" in uri:
+                wb.open(uri.replace(".onion", ".onion.city"), new=2, autoraise=autoraise)
+            else:
+                wb.open(uri, new=2, autoraise=autoraise)
     finally:
         # Reopening them...
         os.dup2(savout1, 1)
@@ -853,7 +855,7 @@ def uriToBrowser(uri=None):
 
 def openResultsInBrowser(res):
     """
-    Method that collects the URI from a list of entities and opens them.
+    Method that collects the URI from a list of entities and opens them
 
     Args:
     -----
@@ -861,10 +863,17 @@ def openResultsInBrowser(res):
     """
     print(emphasis("\n\tOpening URIs in the default web browser..."))
 
+    urisToBrowser(["https://github.com/i3visio/osrframework"], autoraise=False)
+    # Waiting 2 seconds to confirm that the browser is opened and prevent the OS from opening several windows
+    time.sleep(2)
+
+    uris = []
     for r in res:
         for att in r["attributes"]:
             if att["type"] == "i3visio.uri":
-                uriToBrowser(att["value"])
+                uris.append(att["value"])
+
+    urisToBrowser(uris)
 
 
 def colorize(text, messageType=None):

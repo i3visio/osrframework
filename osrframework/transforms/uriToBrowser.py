@@ -25,16 +25,20 @@ import webbrowser as wb
 from osrframework.transforms.lib.maltego import *
 
 def uriToBrowser(uri=None):
-    ''' 
-        Method that launches the URI in the default browser of the system. This returns no new entity.
+    """
+    Method that launches the URI in the default browser of the system
 
-        :param uri:    uri to open.
-    '''
+    This returns no new entity.
+
+    Args:
+    ----
+        uri: the URI to open
+    """
     me = MaltegoTransform()
 
     # Opening the Tor URI using onion.cab proxy
     if ".onion" in uri:
-        wb.open(uri.replace(".onion", ".onion.cab"), new=2)    
+        wb.open(uri.replace(".onion", ".onion.city"), new=2)    
     else:
         wb.open(uri, new=2)
             
