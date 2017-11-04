@@ -61,7 +61,7 @@ UTILS = [
 
 class OSRFConsoleUtil(cmd.Cmd):
     """
-        Simple class from which of a Metasploit-like interactive interface.
+    Simple class from which of a msfconsole-like interactive interface
     """
     # Setting up the name of the module
     UNAME = "Abstract Util"
@@ -97,7 +97,9 @@ class OSRFConsoleUtil(cmd.Cmd):
     }
 
     def _checkIfRequiredAreSet(self):
-        """Internal function to check if the required parameters have been set"""
+        """
+        Internal function to check if the required parameters have been set
+        """
         details = ""
         for key in self.CONFIG.keys():
             if self.CONFIG[key]["REQUIRED"] and self.CONFIG[key]["CURRENT_VALUE"] == None:
@@ -105,21 +107,39 @@ class OSRFConsoleUtil(cmd.Cmd):
         return True
 
     def _getOptionsDescription(self):
-        """Internal function to collect the description of each and every parameter"""
+        """
+        Internal function to collect the description of each and every parameter
+
+        Returns:
+        --------
+            string: a string containing the description of each option.
+        """
         details = ""
         for key in self.CONFIG.keys():
             details += "\t- " + key + ". " + self.CONFIG[key]["DESCRIPTION"] + "\n"
         return details
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function."""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = ["-h"]
         return params
 
     def do_set(self, line):
         """
-Setting the variables defined in CONFIG. You can check their values at any time by typing 'show options'.
+        Setting the variables defined in CONFIG
+
+        You can check their values at any time by typing 'show options'.
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         try:
             parameter, value = line.split(" ", 1)
@@ -166,7 +186,18 @@ Setting the variables defined in CONFIG. You can check their values at any time 
 
     def do_unset(self, line):
         """
-Unsetting the variables defined in CONFIG. You can check their values at any time by typing 'show options' and unsetting all the options at once by typing 'unset all'".
+        Unsetting the variables defined in CONFIG
+
+        You can check their values at any time by typing 'show options' and
+        unsetting all the options at once by typing 'unset all'.
+
+        Args:
+        -----
+            line: the string of the line typed.
+
+        Raises:
+        -------
+            ValueError: if the parameter is not valid.
         """
         try:
             parameter = line.split(" ")[0]
@@ -181,7 +212,7 @@ Unsetting the variables defined in CONFIG. You can check their values at any tim
                     self.CONFIG[p]["CURRENT_VALUE"] = self.CONFIG[p]["DEFAULT_VALUE"]
                 print "All parameters reseted to their default values."
             else:
-                raise Exception("ERROR: parameter not valid.")
+                raise ValueError("ERROR: parameter not valid.")
         except Exception as e:
             print "[!] ERROR: Not enough parameters provided. Usage: unset OPTION"
             print str(e)
@@ -202,7 +233,11 @@ Unsetting the variables defined in CONFIG. You can check their values at any tim
 
     def do_run(self, line):
         """
-Command that send the order to the framework to launch the current utility.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         if self._checkIfRequiredAreSet():
@@ -214,9 +249,17 @@ Command that send the order to the framework to launch the current utility.
 
     def do_show(self, line):
         """
-Showing the information about the module. The things to show are: 'options' and 'command'.
-    - ' options' will show the current values of each and every parameter.
-    - 'command' will show the command needed to launch the module as is using the cli applications.
+        Showing the information about the module
+
+        The things to show are: 'options' and 'command'.
+            - 'options' will show the current values of each and every
+                parameter.
+            - 'command' will show the command needed to launch the module as is
+                using the cli applications.
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         if line.lower() == "options":
@@ -250,7 +293,14 @@ Showing the information about the module. The things to show are: 'options' and 
 
     def createCommandLine(self):
         """
-Method to build the commandline that should execute the same actions as defined in the console.
+        Method to build the command line command
+
+        This method will build the command to run the same actions defined in
+        using this tool.
+
+        Returns:
+        --------
+            String: the string to type in the terminal
         """
         if self._checkIfRequiredAreSet():
             command = self.UNAME
@@ -265,7 +315,11 @@ Method to build the commandline that should execute the same actions as defined 
 
     def do_info(self, line):
         """
-This command shows all the information available about the module.
+        Shows all the information available about the module.
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         print "Displaying module information."
@@ -274,13 +328,21 @@ This command shows all the information available about the module.
 
     def do_back(self, line):
         """
-This command unloads the current util and returns back to the main console.
+        Command to unload the current util and goes back to the main console
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         return True
 
     def do_exit(self, line):
         """
-This command will exit the osrfconsole normally.
+        This command will exit the osrfconsole normally
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print "Exiting the program..."
         sys.exit()
@@ -300,7 +362,9 @@ This command will exit the osrfconsole normally.
 ################################################################################
 
 class OSRFConsoleDomainfy(OSRFConsoleUtil):
-    """Class that controls an interactive domainfy program"""
+    """
+    Class that controls an interactive domainfy program
+    """
     # Setting up the name of the module
     UNAME = "domainfy.py"
 
@@ -358,7 +422,13 @@ class OSRFConsoleDomainfy(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = [
             "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
@@ -374,7 +444,11 @@ class OSRFConsoleDomainfy(OSRFConsoleUtil):
 
     def do_run(self, line):
         """
-Running the current application. This method should be redefined for each util.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         # Checking if all the required parameters have been set
@@ -461,7 +535,13 @@ class OSRFConsoleEntify(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = [
             "-u", self.CONFIG["URL"]["CURRENT_VALUE"],
@@ -473,7 +553,11 @@ class OSRFConsoleEntify(OSRFConsoleUtil):
 
     def do_run(self, line):
         """
-Running the current application. This method should be redefined for each util.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         # Checking if all the required parameters have been set
@@ -566,7 +650,13 @@ class OSRFConsoleMailfy(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = [
             "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
@@ -579,7 +669,11 @@ class OSRFConsoleMailfy(OSRFConsoleUtil):
 
     def do_run(self, line):
         """
-Running the current application. This method should be redefined for each util.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         # Checking if all the required parameters have been set
@@ -665,7 +759,13 @@ class OSRFConsolePhonefy(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = [
             "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
@@ -677,7 +777,11 @@ class OSRFConsolePhonefy(OSRFConsoleUtil):
 
     def do_run(self, line):
         """
-Running the current application. This method should be redefined for each util.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         # Checking if all the required parameters have been set
@@ -763,7 +867,13 @@ class OSRFConsoleSearchfy(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = [
             "-q" ] + self.CONFIG["QUERY"]["CURRENT_VALUE"].split() + [
@@ -775,7 +885,11 @@ class OSRFConsoleSearchfy(OSRFConsoleUtil):
 
     def do_run(self, line):
         """
-Running the current application. This method should be redefined for each util.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         # Checking if all the required parameters have been set
@@ -868,7 +982,13 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
     }
 
     def _getParams(self):
-        """ Function that creates the array with the params that will work with this function"""
+        """
+        Function that creates the array with the params of this function
+
+        Returns:
+        --------
+            list: a list of the params that can be used
+        """
         # Creating the parameters as if they were created using the command line
         params = [
             "-n" ] + self.CONFIG["NICK"]["CURRENT_VALUE"].split() + [
@@ -881,7 +1001,11 @@ class OSRFConsoleUsufy(OSRFConsoleUtil):
 
     def do_run(self, line):
         """
-Running the current application. This method should be redefined for each util.
+        Command that send the order to the framework to launch this util
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print
         # Checking if all the required parameters have been set
@@ -923,7 +1047,12 @@ Running the current application. This method should be redefined for each util.
 ################################################################################
 
 class OSRFConsoleMain(cmd.Cmd):
-    """OSRFramework console application to control the different framework utils. Type 'help' to find the commands. """
+    """
+    OSRFramework console application to control the different framework utils
+
+    The user can type 'help' at any time to find the available commands included
+    in the framework.
+    """
 
     DISCLAIMER = '''\tOSRFConsole ''' + __version__ + ''' - Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 
@@ -957,12 +1086,16 @@ This is free software, and you are welcome to redistribute it under certain cond
 
     def do_info(self, line):
         """
-Command that shows again the general information about the application.
-"""
-        configInfo =  "\n    Additional configuration files:"
-        configInfo += "\n    -------------------------------"
-        configInfo += "\n    You will be able to find more configuration options in the following files in your system. The relevant paths are the ones that follows:"
+        Command that shows again the general information about the application.
 
+        Args:
+        -----
+            line: the string of the line typed.
+        """
+        configInfo =  """    Additional configuration files:
+    -------------------------------
+    You will be able to find more configuration options in the following files
+    in your system. The relevant paths are the ones that follow:"""
         # Get the configuration folders in each system
         paths = configuration.getConfigPath()
 
@@ -979,14 +1112,16 @@ Command that shows again the general information about the application.
 
     def do_use(self, line):
         """
-This command will define which of the framework's utilities will be loaded. The available options are the following:
+This command will define which of the framework's utilities will be loaded.
+The available options are the following:
     - domainfy
     - entify
     - mailfy
     - phonefy
     - searchfy
     - usufy
-For example, type 'use usufy' to load the usufy util. You can always use the <TAB> to be helped using the autocomplete options.
+For example, type 'use usufy' to load the usufy util. You can always use the
+<TAB> to be helped using the autocomplete options.
 """
         if line not in UTILS:
             print "[!] Util is not correct. Try 'help use' to check the available options."
@@ -1018,7 +1153,11 @@ For example, type 'use usufy' to load the usufy util. You can always use the <TA
 
     def do_exit(self, line):
         """
-This command will exit the osrfconsole normally.
+        This command will exit the osrfconsole normally
+
+        Args:
+        -----
+            line: the string of the line typed.
         """
         print "Exiting..."
         sys.exit()
