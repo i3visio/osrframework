@@ -160,7 +160,8 @@ def buildCommandFromParams(program, params):
 
 @app.route('/research/<program>', methods=['POST'])
 def run(program):
-    """Loading OSRFramework output...
+    """
+    Loading OSRFramework output...
     """
     platOptions = platform_selection.getAllPlatformNames(program)
 
@@ -228,23 +229,9 @@ def run(program):
 
         params += ["-o", DATA_FOLDER]
 
-    # Selecting the appropriate program
-    if program == "domainfy":
-        args = domainfy.getParser().parse_args(params)
-    elif  program == "entify":
-        args = entify.getParser().parse_args(params)
-    elif program == "mailfy":
-        args = mailfy.getParser().parse_args(params)
-    elif program == "phonefy":
-        args = phonefy.getParser().parse_args(params)
-    elif program == "searchfy":
-        args = searchfy.getParser().parse_args(params)
-    elif program == "usufy":
-        args = usufy.getParser().parse_args(params)
-
     # Return output. text/html is required for most browsers to show the text
     try:
-        answer = runQuery(program=program, args=args)
+        answer = runQuery(program=program, args=params)
     except:
         abort(400)
 
@@ -345,21 +332,35 @@ def get_temporal_data(fileName):
 
 
 def runQuery(program, args=[]):
-    """Function that wraps the queries.
     """
+    Function that wraps the queries
+
+    It automatically launches the corresponding application function. The
+    is_entry_point flag is set as False to receive something as parameter.
+
+    Args:
+    -----
+        program: A String represnting the application to be launched.
+        args: A list of the parameters to be launched.
+
+    Returns:
+    --------
+        A JSON object representing the results.
+    """
+    print args
     # Selecting the appropriate program
     if program == "domainfy":
-        answer = domainfy.main(args)
+        answer = domainfy.main(args, is_entry_point=False)
     elif program == "entify":
-        answer = entify.main(args)
+        answer = entify.main(args, is_entry_point=False)
     elif program == "mailfy":
-        answer = mailfy.main(args)
+        answer = mailfy.main(args, is_entry_point=False)
     elif program == "phonefy":
-        answer = phonefy.main(args)
+        answer = phonefy.main(args, is_entry_point=False)
     elif program == "searchfy":
-        answer = searchfy.main(args)
+        answer = searchfy.main(args, is_entry_point=False)
     elif program == "usufy":
-        answer = usufy.main(args)
+        answer = usufy.main(args, is_entry_point=False)
 
     # Returning the output
     return answer
@@ -380,6 +381,7 @@ def api_v1(command, query):
         that may allow the one who performs the query to run code. Use it with
         caution.
     """
+    print "ASAASASAA"
     # Splitting the query
     splittedQuery = shlex.split(query)
 
@@ -389,21 +391,10 @@ def api_v1(command, query):
     else:
         params = [splittedQuery[0]]
 
-    # Selecting the appropriate program
-    if  command == "domainfy":
-        args = domainfy.getParser().parse_args(['-n'] + params)
-    elif  command == "entify":
-        args = entify.getParser().parse_args(['-w'] + params)
-    elif command == "mailfy":
-        args = mailfy.getParser().parse_args(['-n'] + params)
-    elif command == "phonefy":
-        args = phonefy.getParser().parse_args(['-n'] + params)
-    elif command == "searchfy":
-        args = searchfy.getParser().parse_args(['-q'] + params)
-    elif command == "usufy":
-        args = usufy.getParser().parse_args(['-n'] + params)
+    print params
 
-    answer = runQuery(command, args)
+    answer = runQuery(command, params)
+
     # Grabbing current Time
     osrfTimestamp, osrfDate = _getServerTime()
 
