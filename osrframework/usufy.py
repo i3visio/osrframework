@@ -370,7 +370,7 @@ def getParser():
     return parser
 
 
-def main(params=None):
+def main(params=None, is_entry_point=True):
     """
     Main function to launch usufy.
 
@@ -381,6 +381,7 @@ def main(params=None):
     Args:
     -----
         params: The parameters as processed by this modules `getParser()`.
+        is_entry_point: Defines whether it is an entry_point.
 
     Returns:
     --------
@@ -612,6 +613,7 @@ visit """ + general.LICENSE_URL + "\n"
                 # Urging users to place an issue on Github...
                 print(banner.footer)
 
+        if not is_entry_point:
             return res
 
 

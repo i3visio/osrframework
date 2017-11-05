@@ -471,7 +471,7 @@ def getParser():
     return parser
 
 
-def main(params=None):
+def main(params=None, is_entry_point=False):
     """
     Main function to launch phonefy.
 
@@ -482,6 +482,7 @@ def main(params=None):
     Args:
     -----
         params: Arguments received in the command line.
+        is_entry_point: Defines whether it is an entry_point.    
 
     Returns:
     --------
@@ -639,7 +640,8 @@ be used instead. Verification may be slower though."""))
             # Urging users to place an issue on Github...
             print(banner.footer)
 
-    return results
+    if not is_entry_point:
+        return results
 
 
 if __name__ == "__main__":

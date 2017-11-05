@@ -413,7 +413,7 @@ def getParser():
     return parser
 
 
-def main(params=None):
+def main(params=None, is_entry_point=True):
     """
     Main function to launch phonefy.
 
@@ -424,6 +424,7 @@ def main(params=None):
     Args:
     -----
         params: The parameters as processed by this modules `getParser()`.
+        is_entry_point: Defines whether it is an entry_point.
 
     Results:
     --------
@@ -520,7 +521,8 @@ visit """ + general.LICENSE_URL + "\n"
             # Urging users to place an issue on Github...
             print(banner.footer)
 
-    return results
+    if not is_entry_point:
+        return results
 
 
 if __name__ == "__main__":
