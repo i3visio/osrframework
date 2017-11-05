@@ -471,7 +471,7 @@ def getParser():
     return parser
 
 
-def main(params=None, is_entry_point=False):
+def main(params=None, is_entry_point=True):
     """
     Main function to launch phonefy.
 
@@ -482,7 +482,7 @@ def main(params=None, is_entry_point=False):
     Args:
     -----
         params: Arguments received in the command line.
-        is_entry_point: Defines whether it is an entry_point.    
+        is_entry_point: Defines whether it is an entry_point.
 
     Returns:
     --------

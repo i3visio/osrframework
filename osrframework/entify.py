@@ -240,7 +240,7 @@ def getParser():
     return parser
 
 
-def main(params=None, is_entry_point=False):
+def main(params=None, is_entry_point=True):
     """
     Main function to launch phonefy.
 
