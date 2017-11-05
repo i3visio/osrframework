@@ -34,7 +34,7 @@ def hasUpdatesOnPypi(packageName="osrframework"):
     # This is an array
     version_available = pypi.package_releases(packageName)
     try:
-        if version_available[0] == installedPackage.version:
+        if version_available[0] <= installedPackage.version:
             # No updates available
             return False, installedPackage.version
         else:
