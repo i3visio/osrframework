@@ -21,15 +21,6 @@
 ################################################################################
 
 
-__author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "AGPLv3+"
-__version__ = "v6.0"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
-
-
 import argparse
 import json
 import logging
@@ -39,11 +30,13 @@ from os.path import isfile, join, isdir
 import requests
 import urllib2
 
+import osrframework
 import osrframework.utils.banner as banner
 from osrframework.utils.regexp import RegexpObject
 import osrframework.utils.general as general
 import osrframework.utils.logger as logSet
 import osrframework.utils.regexp_selection as regexp_selection
+import osrframework.utils.configuration as configuration
 
 
 def getEntitiesByRegexp(data = None, listRegexp = None, verbosity=1, logFolder="./logs"):
@@ -212,7 +205,42 @@ def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"
     return results
 
 
-def main(args):
+def getParser():
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("entify")
+
+    parser = argparse.ArgumentParser(description='entify - entify is a program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False)
+    parser._optionals.title = "Input options (one required)"
+
+    # Adding the main options
+    groupMainOptions = parser.add_mutually_exclusive_group(required=True)
+    listAll = regexp_selection.getAllRegexpNames()
+    groupMainOptions.add_argument('-r', '--regexp', metavar='<name>', choices=listAll, action='store', nargs='+', help='select the regular expressions to be looked for amongst the following: ' + str(listAll))
+    groupMainOptions.add_argument('-R', '--new_regexp', metavar='<regular_expression>', action='store', help='add a new regular expression, for example, for testing purposes.')
+
+    # Adding the main options
+    groupInput = parser.add_mutually_exclusive_group(required=True)
+    groupInput.add_argument('-i', '--input_folder',  metavar='<path_to_input_folder>', default=None, action='store',  help='path to the folder to analyse.')
+    groupInput.add_argument('-w', '--web',  metavar='<url>',  action='store', default=None, help='URI to be recovered and analysed.')
+
+    # adding the option
+    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the processing parameters.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
+    # Getting a sample header for the output files
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-q', '--quiet', required=False, action='store_true', default=False, help='Asking the program not to show any output.')
+    groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
+    groupProcessing.add_argument('--recursive', action='store_true', default=False, required=False, help='Variable to tell the system to perform a recursive search on the folder tree.')
+
+    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
+
+    return parser
+
+
+def main(params=None):
     """
     Main function to launch phonefy.
 
@@ -222,12 +250,17 @@ def main(args):
 
     Args:
     -----
-        args: The parameters as processed by this modules `getParser()`.
+        params: The parameters as processed by this modules `getParser()`.
 
     Results:
     --------
         Returns a list with i3visio entities.
     """
+    # Grabbing the parser
+    parser = getParser()
+
+    args = parser.parse_args(params)
+
     results = []
 
     # Recovering the logger
@@ -242,7 +275,7 @@ def main(args):
         print(general.title(banner.text))
 
         sayingHello = """
-entify.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
+entify Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
@@ -296,54 +329,5 @@ visit """ + general.LICENSE_URL + "\n"
     return results
 
 
-def getParser():
-    import osrframework.utils.configuration as configuration
-    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("entify")
-
-    parser = argparse.ArgumentParser(description='entify.py - entify.py is a program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify.py', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False)
-    parser._optionals.title = "Input options (one required)"
-
-    # Adding the main options
-    # Defining the mutually exclusive group for the main options
-    groupMainOptions = parser.add_mutually_exclusive_group(required=True)
-    listAll = regexp_selection.getAllRegexpNames()
-    groupMainOptions.add_argument('-r', '--regexp', metavar='<name>', choices=listAll, action='store', nargs='+', help='select the regular expressions to be looked for amongst the following: ' + str(listAll))
-    groupMainOptions.add_argument('-R', '--new_regexp', metavar='<regular_expression>', action='store', help='add a new regular expression, for example, for testing purposes.')
-
-    # Adding the main options
-    # Defining the mutually exclusive group for the main options
-    groupInput = parser.add_mutually_exclusive_group(required=True)
-    groupInput.add_argument('-i', '--input_folder',  metavar='<path_to_input_folder>', default=None, action='store',  help='path to the folder to analyse.')
-    groupInput.add_argument('-w', '--web',  metavar='<url>',  action='store', default=None, help='URI to be recovered and analysed.')
-
-    # adding the option
-    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the processing parameters.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    groupProcessing.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
-    # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default = DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    groupProcessing.add_argument('-q', '--quiet', required=False, action='store_true', default=False, help='Asking the program not to show any output.')
-    groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('--recursive', action='store_true', default=False, required=False, help='Variable to tell the system to perform a recursive search on the folder tree.')
-
-    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
-    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s '+" " +__version__, help='shows the version of the program and exists.')
-
-    return parser
-
-
 if __name__ == "__main__":
-    # Grabbing the parser
-    parser = getParser()
-
-    args = parser.parse_args()
-
-    # Recovering the logger
-    # Calling the logger when being imported
-    logSet.setupLogger(loggerName="osrframework", verbosity=args.verbose, logFolder=args.logfolder)
-    # From now on, the logger can be recovered like this:
-    logger = logging.getLogger("osrframework")
-
-    main(args)
+    main(sys.argv)

@@ -20,14 +20,14 @@
 #
 ##################################################################################
 
+
 import os
 import sys
-from setuptools import setup
-
-# Checking if obsolete versions are installed in the machine
+from setuptools import setup, find_packages
 import shutil
 import site
 
+# Checking if obsolete versions are installed in the machine
 IS_VIRTUAL_ENV = False
 
 # Get packagesPaths depending on whether the user launched it with sudo or not
@@ -62,7 +62,7 @@ else:
 
                 command = "echo '''" + new_lines + "''' >> ~/.bashrc"
                 print "[*] As we want to be transparent, the command that is being run is the following:\n" + command
-                a = os.popen(command).read()        
+                a = os.popen(command).read()
         except:
             IS_VIRTUAL_ENV = True
     else:
@@ -130,17 +130,31 @@ setup(
     url="http://github.com/i3visio/osrframework",
     license="COPYING",
     keywords = "python osint harvesting profiling maltego username socialmedia forums",
-    scripts= [
-        "osrframework/alias_generator.py",
-        "osrframework/domainfy.py",
-        "osrframework/entify.py",
-        "osrframework/mailfy.py",
-        "osrframework/phonefy.py",
-        "osrframework/searchfy.py",
-        "osrframework/usufy.py",
-        "osrframework/osrfconsole.py",
-        "osrframework/osrframework_server.py",
-    ],
+    entry_points={
+        'console_scripts': [
+            'alias_generator = osrframework.alias_generator:main',
+            'alias_generator.py = osrframework.alias_generator:main',
+            'domainfy = osrframework.domainfy:main',
+            'domainfy.py = osrframework.domainfy:main',
+            'entify = osrframework.entify:main',
+            'entify.py = osrframework.entify:main',
+            'enumerate-profiles = osrframework.enumeration:main',
+            'enumerate-profiles.py = osrframework.enumeration:main',
+            'mailfy = osrframework.mailfy:main',
+            'mailfy.py = osrframework.mailfy:main',
+            'osrfconsole = osrframework.osrfconsole:main',
+            'osrfconsole.py = osrframework.osrfconsole:main',
+            'osrf = osrframework.osrfconsole:main',
+            'osrframework-server = osrframework.osrframework_server:main',
+            'osrframework-server.py = osrframework.osrframework_server.py:main',
+            'phonefy = osrframework.phonefy:main',
+            'phonefy.py = osrframework.phonefy:main',
+            'searchfy = osrframework.searchfy:main',
+            'searchfy.py = osrframework.searchfy:main',
+            'usufy = osrframework.usufy:main',
+            'usufy.py = osrframework.usufy:main',
+        ],
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Topic :: Software Development :: Libraries',
@@ -158,27 +172,7 @@ setup(
         'Topic :: Scientific/Engineering :: Visualization',
         'Topic :: Text Processing :: Markup :: HTML'
     ],
-    packages=[
-        "osrframework",
-        "osrframework.api",
-        "osrframework.thirdparties",
-        "osrframework.thirdparties.blockchain_info",
-        "osrframework.thirdparties.haveibeenpwned_com",
-        "osrframework.thirdparties.infobel_com",
-        "osrframework.thirdparties.ip_api_com",
-        "osrframework.thirdparties.md5crack_com",
-        "osrframework.thirdparties.pipl_com",
-        "osrframework.thirdparties.pipl_com.lib",
-        "osrframework.thirdparties.resolvethem_com",
-        "osrframework.thirdparties.skype",
-        "osrframework.utils",
-        "osrframework.transforms",
-        "osrframework.transforms.lib",
-        "osrframework.patterns",
-        "osrframework.wrappers",
-        "osrframework.searchengines",
-        "osrframework.domains",
-    ],
+    packages=find_packages(),
     long_description=long_description,
     install_requires=[
         "setuptools",

@@ -21,26 +21,17 @@
 ################################################################################
 
 
-__author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "AGPLv3+"
-__version__ = "v6.0"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
-
-
 import argparse
 import datetime as dt
 import json
 import os
+import sys
 
+import osrframework
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
 import osrframework.utils.general as general
-
-from osrframework.utils.general import error, warning, success, info, title, emphasis
 
 
 def performSearch(platformNames=[], queries=[], process=False, excludePlatformNames=[]):
@@ -69,7 +60,7 @@ def performSearch(platformNames=[], queries=[], process=False, excludePlatformNa
     return results
 
 
-def main(args):
+def main(params=None):
     """
     Main function to launch usufy.
 
@@ -79,12 +70,17 @@ def main(args):
 
     Args:
     -----
-        args: Arguments received in the command line.
+        params: Arguments received in the command line.
 
     Returns:
     --------
         A list of i3visio entities.
     """
+    # Grabbing the parser
+    parser = getParser()
+
+    args = parser.parse_args(params)
+
     results = []
 
     if not args.maltego:
@@ -171,9 +167,8 @@ def getParser():
     parser = argparse.ArgumentParser(description='searchfy.py - Piece of software that performs a query on the platforms in OSRFramework.', prog='searchfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
     parser._optionals.title = "Input options (one required)"
 
-    # Defining the mutually exclusive group for the main options
-    groupMain = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
+    groupMain = parser.add_mutually_exclusive_group(required=True)
     groupMain.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')
     groupMain.add_argument('-q', '--queries', metavar='<searches>', nargs='+', action='store', help = 'the list of queries to be performed).')
 
@@ -181,9 +176,6 @@ def getParser():
 
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which searchfy will process the identified profiles.')
-    #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    # Getting a sample header for the output files
-
     groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>' )
     groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
@@ -196,16 +188,10 @@ def getParser():
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    #groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
-    groupAbout.add_argument('--version', action='version', version='%(prog)s ' +" " +__version__, help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
 
     return parser
 
+
 if __name__ == "__main__":
-    # Grabbing the parser
-    parser = getParser()
-
-    args = parser.parse_args()
-
-    # Calling the main function
-    main(args)
+    main(sys.argv)

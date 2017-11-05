@@ -21,27 +21,18 @@
 ################################################################################
 
 
-__author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2016-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "AGPLv3+"
-__version__ = "v6.0"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
-
-
 import argparse
 import cmd as cmd
 import json
 import os
 import sys
 
+import osrframework
 import osrframework.utils.configuration as configuration
 import osrframework.utils.banner as banner
 import osrframework.utils.general as general
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.regexp_selection as regexp_selection
-
 import osrframework.domainfy as domainfy
 import osrframework.entify as entify
 import osrframework.mailfy as mailfy
@@ -1043,7 +1034,7 @@ class OSRFConsoleMain(cmd.Cmd):
     in the framework.
     """
 
-    DISCLAIMER = """\tOSRFConsole """ + __version__ + """ - Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
+    DISCLAIMER = """\tOSRFramework """ + osrframework.__version__ + """ - Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 
     This program comes with ABSOLUTELY NO WARRANTY. This software is free software,
     and you are really welcome to redistribute it under certain conditions. For
@@ -1055,6 +1046,7 @@ class OSRFConsoleMain(cmd.Cmd):
     info  = """    General information
     ===================
 
+    OSRFConsole is a terminal GUI to interact with OSRFramework utilities.
     OSRFramework stands for Open Sources Research Framework. It includes a set
     of tools that help the analyst in the task of user profiling making use of
     different OSINT tools.
@@ -1177,5 +1169,20 @@ class OSRFConsoleMain(cmd.Cmd):
         sys.exit()
 
 
-if __name__ == '__main__':
+def main(params=None):
+    """
+    Main function that starts the loop
+
+    Args:
+    -----
+        params: Arguments received in the command line. Not used now.
+
+    Returns:
+    --------
+        A list of i3visio entities.
+    """
     OSRFConsoleMain().cmdloop()
+
+
+if __name__ == '__main__':
+    main(sys.argv)

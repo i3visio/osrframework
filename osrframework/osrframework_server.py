@@ -21,14 +21,6 @@
 #
 ################################################################################
 
-__author__ = "Felix Brezo y Yaiza Rubio "
-__copyright__ = "Copyright 2015-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "AGPLv3+"
-__version__ = "v6.0"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
-
 
 import argparse
 import json
@@ -484,8 +476,7 @@ def not_found_error(error):
 # Launching code
 # --------------
 
-
-if __name__ == "__main__":
+def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("osrframework-server")
 
     try:
@@ -502,7 +493,7 @@ if __name__ == "__main__":
     # Loading the server parser
     parser = argparse.ArgumentParser(
         description='OSRFramework Server - The tool that will start a local server.',
-        prog='./osrframework-server.py',
+        prog='./osrframework-server',
         epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.",
         add_help=False
     )
@@ -515,10 +506,27 @@ if __name__ == "__main__":
 
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s ' + " " + osrframework.__version__, help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
 
-    # Parse args
-    args = parser.parse_args()
+    return parser
+
+
+def main(params=None):
+    """
+    Main function that starts the server
+
+    Args:
+    -----
+        params: Arguments received in the command line.
+
+    Returns:
+    --------
+        A list of i3visio entities.
+    """
+    # Grabbing the parser
+    parser = getParser()
+
+    args = parser.parse_args(params)
 
     print(general.title(osrframework.utils.banner.text))
     # Starting the server
@@ -532,3 +540,7 @@ if __name__ == "__main__":
     )
 
     print(general.info("\n[*] OSRFramework server exited normally."))
+
+
+if __name__ == "__main__":
+    main(sys.argv)

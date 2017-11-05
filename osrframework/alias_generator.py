@@ -21,18 +21,10 @@
 ################################################################################
 
 
-__author__ = "Felix Brezo, Yaiza Rubio "
-__copyright__ = "Copyright 2015-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "AGPLv3+"
-__version__ = "v6.0"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
-
-
 import argparse
 import json
 
+import osrframework
 import osrframework.utils.banner as banner
 import osrframework.utils.general as general
 
@@ -61,21 +53,22 @@ def main(name=None, surname1=None, surname2=None, city=None, country=None, year=
 
     Args:
     -----
-    name: String representing the known name of the investigated profile.
-    surname1: String representing the first surname of the investigated profile.
-    surname2: String representing the second surname of the investigated
-        profile.
-    city: String representing the city where the profile was born or works.
-    country: String representing the country.
-    year: String representing a year linked to the profile.
-    useNumbers: Boolean representing whether to use random numbers at the end.
-    useCommonWords: Boolean representing whether to use known commond words to
-        generate new nicknames.
-    useNumbers: Boolean representing whether to use random numbers at the end.
-    useLeet: Boolean representing whether to modify certain letters by numbers
-        using the leet (*133t*) codification.
-    extraWords: A list of strings with extra words to be appended to the
-        generatednicknames.
+        name: String representing the known name of the investigated profile.
+        surname1: String representing the first surname of the investigated
+            profile.
+        surname2: String representing the second surname of the investigated
+            profile.
+        city: String representing the city where the profile was born or works.
+        country: String representing the country.
+        year: String representing a year linked to the profile.
+        useNumbers: Boolean representing whether to use random numbers.
+        useCommonWords: Boolean representing whether to use known commond words
+            to generate new nicknames.
+        useNumbers: Boolean representing whether to use random numbers.
+        useLeet: Boolean representing whether to modify certain letters by
+            numbers using the leet (*133t*) codification.
+        extraWords: A list of strings with extra words to be appended to the
+            generatednicknames.
 
     Returns
     -------
@@ -2824,10 +2817,8 @@ def main(name=None, surname1=None, surname2=None, city=None, country=None, year=
 
     return listaFinal
 
-if __name__ == "__main__":
-    print(general.title(banner.text))
-
-    parser = argparse.ArgumentParser(description='alias_generator.py is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator.py', epilog="", add_help=False)
+def getParser():
+    parser = argparse.ArgumentParser(description='alias_generator is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator', epilog="", add_help=False)
 
     # Adding the main options
     # Defining the mutually exclusive group for the main options
@@ -2850,9 +2841,24 @@ if __name__ == "__main__":
 
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s '+__version__, help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework '+ osrframework.__version__, help='shows the version of the program and exists.')
 
-    args = parser.parse_args()
+    return parser
+
+
+def main(params=None):
+    """
+    Main function to launch alias_generator.
+
+    Args:
+    -----
+        params: The parameters as processed by this modules `getParser()`.
+    """
+    parser = getParser()
+
+    args = parser.parse_args(params)
+
+    print(general.title(banner.text))
 
     extraWords = args.extra_words
 
@@ -2874,7 +2880,6 @@ if __name__ == "__main__":
             extraWords += inputText.lower().split(',')
 
     lista=[]
-
 
     print("\nInput data:")
     print("-----------\n")
@@ -2907,3 +2912,7 @@ if __name__ == "__main__":
 
     # Urging users to place an issue on Github...
     print(banner.footer)
+
+
+if __name__ == "__main__":
+    main(sys.argv)

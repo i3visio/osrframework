@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 #
 ################################################################################
@@ -21,15 +21,6 @@
 ################################################################################
 
 
-__author__ = "Felix Brezo, Yaiza Rubio"
-__copyright__ = "Copyright 2016-2017, i3visio"
-__credits__ = ["Felix Brezo", "Yaiza Rubio"]
-__license__ = "AGPLv3+"
-__version__ = "v6.0"
-__maintainer__ = "Felix Brezo, Yaiza Rubio"
-__email__ = "contacto@i3visio.com"
-
-
 import argparse
 import datetime as dt
 import json
@@ -41,6 +32,7 @@ import whois
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
 
+import osrframework
 import osrframework.domains.gtld as gtld
 import osrframework.domains.cctld as cctld
 import osrframework.domains.generic_tld as generic_tld
@@ -367,9 +359,9 @@ def performSearch(domains=[], nThreads=16, launchWhois=False):
                 print(general.warning("\t- " + str(d["domain"])))
                 pending_tld += " " + str(d["tld"])
         print(general.warning("[!] If you want to relaunch the app with these domains you can always run the command with: "))
-        print(general.warning("\t domainfy.py ... -t none -u " + pending_tld))
+        print(general.warning("\t domainfy ... -t none -u " + pending_tld))
         print(general.warning("[!] If you prefer to avoid these platforms you can manually evade them for whatever reason with: "))
-        print(general.warning("\t domainfy.py ... -x " + pending_tld))
+        print(general.warning("\t domainfy ... -x " + pending_tld))
     pool.join()
 
     # Processing the results
@@ -381,7 +373,47 @@ def performSearch(domains=[], nThreads=16, launchWhois=False):
             results.append(data)
     return results
 
-def main(args):
+
+def getParser():
+    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("domainfy")
+    # Capturing errors just in case the option is not found in the configuration
+    try:
+        excludeList = [DEFAULT_VALUES["exclude_platforms"]]
+    except:
+        excludeList = []
+
+    parser = argparse.ArgumentParser(description='domainfy - Checking the existence of domains.', prog='domainfy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser._optionals.title = "Input options (one required)"
+
+    # Adding the main options
+    groupMainOptions = parser.add_mutually_exclusive_group(required=True)
+    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')
+    groupMainOptions.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the domains selected.')
+    groupMainOptions.add_argument('-N', '--nicks_file', metavar='<nicks_file>', action='store', help = 'the file with the list of nicks to be checked in the domains selected.')
+
+    # Configuring the processing options
+    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=["all", "none"] + TLD.keys(), action='store', help='List of tld types where the nick will be looked for.', required=False, default=DEFAULT_VALUES["tlds"])
+    groupProcessing.add_argument('-u', '--user_defined',  metavar='<new_tld>',  nargs='+', action='store', help='Additional TLD that will be searched.', required=False, default = DEFAULT_VALUES["user_defined"])
+    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=excludeList, action='store', help="select the domains to be avoided. The format should include the initial '.'.")
+    groupProcessing.add_argument('--whois', required=False, action='store_true', default=False, help='tells the program to launch whois queries.')
+
+    # Getting a sample header for the output files
+    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default= int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
+
+    # About options
+    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
+
+    return parser
+
+
+def main(params=None):
     """
     Main function to launch phonefy.
 
@@ -391,18 +423,23 @@ def main(args):
 
     Args:
     -----
-        args: The parameters as processed by this modules `getParser()`.
+        params: The parameters as processed by this modules `getParser()`.
 
     Results:
     --------
         list: Returns a list with i3visio entities.
     """
+    # Grabbing the parser
+    parser = getParser()
+
+    args = parser.parse_args(params)
+
     results = []
     if not args.quiet:
         print(general.title(banner.text))
 
         sayingHello = """
-domainfy.py Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
+domainfy Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
@@ -485,52 +522,6 @@ visit """ + general.LICENSE_URL + "\n"
 
     return results
 
-def getParser():
-    DEFAULT_VALUES = configuration.returnListOfConfigurationValues("domainfy")
-    # Capturing errors just in case the option is not found in the configuration
-    try:
-        excludeList = [DEFAULT_VALUES["exclude_platforms"]]
-    except:
-        excludeList = []
-
-    parser = argparse.ArgumentParser(description='domainfy.py - Checking the existence of domains.', prog='domainfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
-    parser._optionals.title = "Input options (one required)"
-
-    # Defining the mutually exclusive group for the main options
-    groupMainOptions = parser.add_mutually_exclusive_group(required=True)
-    # Adding the main options
-    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')
-    groupMainOptions.add_argument('-n', '--nicks', metavar='<nicks>', nargs='+', action='store', help = 'the list of nicks to be checked in the domains selected.')
-    groupMainOptions.add_argument('-N', '--nicks_file', metavar='<nicks_file>', action='store', help = 'the file with the list of nicks to be checked in the domains selected.')
-
-    # Configuring the processing options
-    groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
-    #groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    groupProcessing.add_argument('-t', '--tlds',  metavar='<tld_type>',  nargs='+', choices=["all", "none"] + TLD.keys(), action='store', help='List of tld types where the nick will be looked for.', required=False, default=DEFAULT_VALUES["tlds"])
-    groupProcessing.add_argument('-u', '--user_defined',  metavar='<new_tld>',  nargs='+', action='store', help='Additional TLD that will be searched.', required=False, default = DEFAULT_VALUES["user_defined"])
-    groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=excludeList, action='store', help="select the domains to be avoided. The format should include the initial '.'.")
-    groupProcessing.add_argument('--whois', required=False, action='store_true', default=False, help='tells the program to launch whois queries.')
-
-    # Getting a sample header for the output files
-    groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default= int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
-    groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
-
-    # About options
-    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
-    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    #groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
-    groupAbout.add_argument('--version', action='version', version='%(prog)s ' +" " +__version__, help='shows the version of the program and exists.')
-
-    return parser
 
 if __name__ == "__main__":
-    # Grabbing the parser
-    parser = getParser()
-
-    args = parser.parse_args()
-
-    # Calling the main function
-    main(args)
+    main(sys.argv)
