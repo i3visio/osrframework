@@ -1,4 +1,0 @@
-Introduction to OSRFConsole
-===========================
-
-TODO.
