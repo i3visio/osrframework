@@ -1,4 +1,0 @@
-Using the GUI
-=============
-
-TODO.
