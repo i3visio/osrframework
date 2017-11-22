@@ -142,7 +142,6 @@ setup(
             'enumerate-profiles.py = osrframework.enumeration:main',
             'mailfy = osrframework.mailfy:main',
             'mailfy.py = osrframework.mailfy:main',
-            'osrf = osrframework.osrfconsole:main',
             'phonefy = osrframework.phonefy:main',
             'phonefy.py = osrframework.phonefy:main',
             'searchfy = osrframework.searchfy:main',
