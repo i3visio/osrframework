@@ -1,24 +1,24 @@
-#!/usr/bin/env python2
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 #
-##################################################################################
+################################################################################
 #
-#    Copyright 2014-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
 #
-#    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
 
 import argparse
@@ -370,7 +370,7 @@ def getParser():
     return parser
 
 
-def main(params=None, is_entry_point=True):
+def main(params=None):
     """
     Main function to launch usufy.
 
@@ -380,8 +380,8 @@ def main(params=None, is_entry_point=True):
 
     Args:
     -----
-        params: The parameters as processed by this modules `getParser()`.
-        is_entry_point: Defines whether it is an entry_point.
+        params: A list with the parameters as grabbed by the terminal. It is
+            None when this is called by an entry_point.
 
     Returns:
     --------
@@ -390,7 +390,10 @@ def main(params=None, is_entry_point=True):
     # Grabbing the parser
     parser = getParser()
 
-    args = parser.parse_args(params)
+    if params != None:
+        args = parser.parse_args(params)
+    else:
+        args = parser.parse_args()
 
     # Recovering the logger
     # Calling the logger when being imported
@@ -402,7 +405,7 @@ def main(params=None, is_entry_point=True):
         print(general.title(banner.text))
 
         sayingHello = """
-usufy Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
+Usufy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
@@ -592,14 +595,14 @@ visit """ + general.LICENSE_URL + "\n"
             # Printing the results if requested
             else:
                 now = dt.datetime.now()
-                print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+                print(str(now) + "\tA summary of the results obtained is shown below:\n")
                 print(general.success(general.usufyToTextExport(res)))
 
                 if args.web_browser:
                     general.openResultsInBrowser(res)
 
                 now = dt.datetime.now()
-                print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
+                print("\n" + str(now) + "\tYou can find all the information here:")
                 for ext in args.extension:
                     # Showing the output files
                     print("\t" + general.emphasis(fileHeader + "." + ext))
@@ -613,9 +616,9 @@ visit """ + general.LICENSE_URL + "\n"
                 # Urging users to place an issue on Github...
                 print(banner.footer)
 
-        if not is_entry_point:
-            return res
+    if params:
+        return res
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main(sys.argv[1:])

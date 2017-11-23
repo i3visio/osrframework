@@ -1,9 +1,9 @@
-#!/usr/bin/env python2
+#!/usr/bin/python2
 # -*- coding: utf-8 -*-
 #
 ################################################################################
 #
-#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -240,7 +240,7 @@ def getParser():
     return parser
 
 
-def main(params=None, is_entry_point=True):
+def main(params=None):
     """
     Main function to launch phonefy.
 
@@ -250,8 +250,8 @@ def main(params=None, is_entry_point=True):
 
     Args:
     -----
-        params: The parameters as processed by this modules `getParser()`.
-        is_entry_point: Defines whether it is an entry_point.
+        params: A list with the parameters as grabbed by the terminal. It is
+            None when this is called by an entry_point.
 
     Results:
     --------
@@ -260,7 +260,10 @@ def main(params=None, is_entry_point=True):
     # Grabbing the parser
     parser = getParser()
 
-    args = parser.parse_args(params)
+    if params != None:
+        args = parser.parse_args(params)
+    else:
+        args = parser.parse_args()
 
     results = []
 
@@ -276,7 +279,7 @@ def main(params=None, is_entry_point=True):
         print(general.title(banner.text))
 
         sayingHello = """
-entify Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
+Entify | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
@@ -327,9 +330,9 @@ visit """ + general.LICENSE_URL + "\n"
             # Urging users to place an issue on Github...
             print(banner.footer)
 
-    if not is_entry_point:
+    if params:
         return results
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main(sys.argv[1:])

@@ -2852,11 +2852,16 @@ def main(params=None):
 
     Args:
     -----
-        params: The parameters as processed by this modules `getParser()`.
+        params: A list with the parameters as grabbed by the terminal. It is
+            None when this is called by an entry_point.
     """
+    # Grabbing the parser
     parser = getParser()
 
-    args = parser.parse_args(params)
+    if params != None:
+        args = parser.parse_args(params)
+    else:
+        args = parser.parse_args()
 
     print(general.title(banner.text))
 
@@ -2915,4 +2920,4 @@ def main(params=None):
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main(sys.argv[1:])
