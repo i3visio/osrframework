@@ -22,17 +22,27 @@ import argparse
 import codecs
 import json
 import os
-import Skype4Py
 import sys
 
+import Skype4Py
+
+import osrframework
+import osrframework.utils.general as general
+
+
 def checkInSkype(query=None):
-    '''
-        Method that checks if the given email is associated to any Skype account using the Skype4Py API.
+    """
+    Method that performs a query in Skype using the Skype4Py API
 
-        :param query:    query to be performed to verify.
+    Args:
+    -----
+        query: The query to be performed in Skype.
 
-        :return:    a Python structure for the Json received. If nothing was found, it will return an empty dictionary.
-    '''
+    Returns:
+    --------
+        A Python structure for the Json received. If nothing was found, it will
+            return an empty dictionary.
+    """
     jsonData = []
     try:
         # Instantianting Skype object, all further actions are done
@@ -151,6 +161,7 @@ def checkInSkype(query=None):
 
     return jsonData
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps a search onto Skype4Py.', prog='checkInSkype.py', epilog="NOTE: you must be logged in into Skype to use this program.", add_help=False)
 
@@ -161,7 +172,7 @@ if __name__ == "__main__":
 
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version="%(prog)s (OSRFramework " + osrframework.__version__ + ")"", help='shows the version of the program and exists.'")
 
     args = parser.parse_args()
 
