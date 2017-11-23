@@ -20,14 +20,17 @@
 #
 ##################################################################################
 
+import ConfigParser
 import os
 import sys
 import osrframework.utils.errors as errors
 
+
 def changePermissionsRecursively(path, uid, gid):
     """
-        Function to recursively change the user id and group id. It sets 700
-        permissions.
+    Function to recursively change the user id and group id.
+
+    It sets 700 permissions.
     """
     os.chown(path, uid, gid)
     for item in os.listdir(path):
@@ -55,10 +58,19 @@ def changePermissionsRecursively(path, uid, gid):
             # Recursive function to iterate the files
             changePermissionsRecursively(itempath, uid, gid)
 
-def getConfigPath(configFileName = None):
-    """ Auxiliar function to get the configuration paths depending on the system.
 
-        Returns a dictionary with the following keys: appPath, appPathDefaults, appPathTransforms, appPathPlugins, appPathPatterns, appPathPatterns.
+def getConfigPath(configFileName = None):
+    """
+    Auxiliar function to get the configuration paths depending on the system
+
+    Args:
+    -----
+        configFileName: TODO.
+
+    Returns:
+    --------
+        A dictionary with the following keys: appPath, appPathDefaults,
+            appPathTransforms, appPathPlugins, appPathPatterns, appPathPatterns.
     """
     paths = {}
     applicationPath = "./"
@@ -73,11 +85,7 @@ def getConfigPath(configFileName = None):
     paths = {
         "appPath": applicationPath,
         "appPathData": os.path.join(applicationPath, "data"),
-        "appPathServer": os.path.join(applicationPath, "server"),
-        "appPathServerStatic": os.path.join(applicationPath, "server", "static"),
-        "appPathServerTemplates": os.path.join(applicationPath, "server", "templates"),
         "appPathDefaults": os.path.join(applicationPath, "default"),
-        "appPathTransforms": os.path.join(applicationPath, "transforms"),
         "appPathPlugins": os.path.join(applicationPath, "plugins"),
         "appPathWrappers": os.path.join(applicationPath, "plugins", "wrappers"),
         "appPathPatterns": os.path.join(applicationPath, "plugins", "patterns"),
@@ -90,14 +98,23 @@ def getConfigPath(configFileName = None):
 
     return paths
 
-# Getting default configuration info
-import ConfigParser
 
 def returnListOfConfigurationValues(util):
-    ''' Method that recovers the configuration information about each and every program.
-        :param util: Any of the utils that are contained in the framework: domainfy, entify, mailfy, phonefy, searchfy, usufy.
-        :return: A dictionary containing the default configuration.
-    '''
+    """
+    Method that recovers the configuration information about each program
+
+    TODO: Grab the default file from the package data instead of storing it in
+    the main folder.
+
+    Args:
+    -----
+        util: Any of the utils that are contained in the framework: domainfy,
+            entify, mailfy, phonefy, searchfy, usufy.
+
+    Returns:
+    --------
+        A dictionary containing the default configuration.
+    """
 
     VALUES = {}
 
@@ -153,7 +170,7 @@ def returnListOfConfigurationValues(util):
                         else:
                             value = True
                     except Exception as err:
-                        print "Something happened when processing this debug option. Resetting to default."
+                        print("Something happened when processing this debug option. Resetting to default.")
                         # Copy the data from the default folder
                         defaultConfigPath = os.path.join(getConfigPath()["appPathDefaults"], "general.cfg")
 
