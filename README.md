@@ -73,7 +73,6 @@ to be an improvement from previous installations...). Examples:
 usufy.py -n i3visio febrezo yrubiosec -p twitter facebook
 searchfy.py -q "i3visio"
 mailfy.py -n i3visio
-osrfconsole.py
 ```
 
 Type -h or --help to get more information about which are the parameters of each
@@ -91,6 +90,18 @@ C:\Users\<User>\OSRFramework\
 OSRFramework will look for the configuration settings stored there. You can add
 new credentials there and if something goes wrong, you can always restore the
 files stored in the `defaults` subfolder.
+
+5 - Other utils
+---------------
+
+Previous versions of OSRFramework included several useful utils that now have
+been moved to separate packages. The server, the console UI and the Maltego
+transforms are packaged separatedly so as to make it easier the maintenance of
+these utils. Thus, you can still install this packages with:
+```
+pip install osrframework_server osrframework_console osrframework_maltego --user
+```
+
 
 5 - HACKING
 -----------

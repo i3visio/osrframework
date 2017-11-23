@@ -3,6 +3,8 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.0, 2017/11/30 -- Major updates to separate server, maltego and console package
+
 0.17.4, 2017/11/04 -- Some new additions and fixes
 - Fix issue #295: addressed the error found when exiting osrfconsole.py
 - Fix issue in gsmspain usufy wrapper
