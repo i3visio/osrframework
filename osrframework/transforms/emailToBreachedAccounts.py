@@ -25,7 +25,7 @@ import sys
 import urllib2
 
 from osrframework.transforms.lib.maltego import *
-import osrframework.thirdparties.haveibeenpwned_com.checkIfEmailWasHacked as HIBP
+import osrframework.thirdparties.haveibeenpwned_com.hibp as HIBP
 
 def emailToBreachedAccounts(email=None):
     ''' 

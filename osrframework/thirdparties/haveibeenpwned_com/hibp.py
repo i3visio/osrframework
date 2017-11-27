@@ -69,6 +69,11 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1.5):
                     "attributes": []
                 }
             ]
+            new['PwnCount'] = e['PwnCount']
+            new['Domain'] = e['Domain']
+            new['AddedDate'] = e['AddedDate']
+            new['BreachDate'] = e['BreachDate']
+            new['Description'] = e['Description']
 
             leaks.append(new)
 
