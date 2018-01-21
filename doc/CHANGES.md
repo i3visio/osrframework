@@ -3,7 +3,13 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.18.0, 2017/11/30 -- Major updates to separate server, maltego and console package
+0.18.0, 2018/01/21 -- Major updates to separate server, maltego and console package
+- Add feature #294: Add freemusicarchive.org usufy wrapper
+- Add feature: Update osrframework to match the new entry_points-friendly structure
+- Add feature: Update the way of launching the command removing the extension from the applications
+- Separate osrframework_server, osrframework_maltego and osrframework_console from the core wrapper
+- Patch issue #300: Remove Skype features
+- Fix some issues with non-working wrappers
 
 0.17.4, 2017/11/04 -- Some new additions and fixes
 - Fix issue #295: addressed the error found when exiting osrfconsole.py
