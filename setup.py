@@ -172,7 +172,6 @@ setup(
     install_requires=[
         "setuptools",
         "mechanize",
-        "Skype4Py",
         "requests",
         "python-emailahoy",
         "BeautifulSoup",
