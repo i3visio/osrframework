@@ -3,7 +3,7 @@
 #
 ################################################################################
 #
-#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -122,7 +122,7 @@ def main(params=None):
     print(general.title(banner.text))
 
     sayingHello = """
-Enumeration | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2017
+Enumeration | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,

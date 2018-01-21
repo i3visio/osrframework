@@ -3,7 +3,7 @@
 #
 ################################################################################
 #
-#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -224,7 +224,7 @@ def getParser():
 
     # adding the option
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the processing parameters.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default = DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default = DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
     # Getting a sample header for the output files
@@ -279,7 +279,7 @@ def main(params=None):
         print(general.title(banner.text))
 
         sayingHello = """
-Entify | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2017
+Entify | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,

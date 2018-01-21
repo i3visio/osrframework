@@ -3,7 +3,7 @@
 #
 ################################################################################
 #
-#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -79,9 +79,8 @@ def getParser():
 
     # Configuring the processing options
     groupProcessing = parser.add_argument_group('Processing arguments', 'Configuring the way in which searchfy will process the identified profiles.')
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>' )
-    groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='Parameter specified to let usufy.py know that he has been launched by a Maltego Transform.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default=DEFAULT_VALUES["platforms"] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')
     groupProcessing.add_argument('--process', required=False, default =False ,action='store_true', help='whether to process the info in the profiles recovered. NOTE: this would be much slower.')
@@ -123,16 +122,15 @@ def main(params=None):
 
     results = []
 
-    if not args.maltego:
-        print(general.title(banner.text))
+    print(general.title(banner.text))
 
-        sayingHello = """
-Searchfy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
+    sayingHello = """
+Searchfy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
 visit """ + general.LICENSE_URL + "\n"
-        print(general.title(sayingHello))
+    print(general.title(sayingHello))
 
     if args.license:
         general.showLicense()
@@ -150,48 +148,40 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Generating summary files for each ...
         if args.extension:
-            # Storing the file...
-            if not args.maltego:
-                # Verifying if the outputPath exists
-                if not os.path.exists (args.output_folder):
-                    os.makedirs(args.output_folder)
+            # Verifying if the outputPath exists
+            if not os.path.exists (args.output_folder):
+                os.makedirs(args.output_folder)
 
             # Grabbing the results
             fileHeader = os.path.join(args.output_folder, args.file_header)
 
-            if not args.maltego:
-                # Iterating through the given extensions to print its values
-                for ext in args.extension:
-                    # Generating output files
-                    general.exportUsufy(results, ext, fileHeader)
-
-        # Generating the Maltego output
-        if args.maltego:
-            general.listToMaltego(results)
+            # Iterating through the given extensions to print its values
+            for ext in args.extension:
+                # Generating output files
+                general.exportUsufy(results, ext, fileHeader)
 
         # Printing the results if requested
-        if not args.maltego:
-            now = dt.datetime.now()
-            print(str(now) + "\tA summary of the results obtained are listed in the following table:\n")
-            print(general.success(general.usufyToTextExport(results)))
+        now = dt.datetime.now()
+        print(str(now) + "\tA summary of the results obtained are listed in the following table:\n")
+        print(general.success(general.usufyToTextExport(results)))
 
-            if args.web_browser:
-                general.openResultsInBrowser(results)
+        if args.web_browser:
+            general.openResultsInBrowser(results)
 
-            now = dt.datetime.now()
-            print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
-            for ext in args.extension:
-                # Showing the output files
-                print("\t" + general.emphasis(fileHeader + "." + ext))
+        now = dt.datetime.now()
+        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
+        for ext in args.extension:
+            # Showing the output files
+            print("\t" + general.emphasis(fileHeader + "." + ext))
 
-            # Showing the execution time...
-            endTime= dt.datetime.now()
-            print("\n" + str(endTime) +"\tFinishing execution...\n")
-            print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
-            print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(args.platforms))) +" seconds\n")
+        # Showing the execution time...
+        endTime= dt.datetime.now()
+        print("\n" + str(endTime) +"\tFinishing execution...\n")
+        print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
+        print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(args.platforms))) +" seconds\n")
 
-            # Urging users to place an issue on Github...
-            print(banner.footer)
+        # Urging users to place an issue on Github...
+        print(banner.footer)
 
     if params:
         return results

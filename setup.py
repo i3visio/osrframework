@@ -253,14 +253,3 @@ for destiny in files_to_copy.keys():
                 cmd = "sudo cp -r -- \"" + fileToMove + "\" \"" + destiny + "\""
         #print cmd
         output = os.popen(cmd).read()
-
-print
-print "[*] Last part: trying to configure Maltego Transforms..."
-# Creating the configuration file
-try:
-    import osrframework.transforms.lib.configure_maltego as maltego
-    maltego.configureMaltego(transformsConfigFolder=paths["appPathTransforms"], base=os.path.join(HERE,"osrframework/transforms/lib/osrframework-maltego-settings"), debug=False, backupPath=paths["appPathDefaults"])
-except Exception, e:
-    print "[!] The Maltego configuration file to use i3visio transforms could not be created and thus, cannot be used. Check the following error:"
-    print str(e)
-print

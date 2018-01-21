@@ -33,8 +33,6 @@ import time
 import urllib
 import webbrowser as wb
 
-from osrframework.transforms.lib.maltego import MaltegoEntity, MaltegoTransform
-
 
 LICENSE_URL = "https://www.gnu.org/licenses/agpl-3.0.txt"
 
@@ -59,8 +57,6 @@ def exportUsufy(data, ext, fileH):
         usufyToGmlExport(data, fileH+"."+ext)
     elif ext == "json":
         usufyToJsonExport(data, fileH+"."+ext)
-    elif ext == "mtz":
-        usufyToMaltegoExport(data, fileH+"."+ext)
     elif ext == "ods":
         usufyToOdsExport(data, fileH+"."+ext)
     elif ext == "png":
@@ -638,121 +634,6 @@ def usufyToPngExport(d, fPath):
     # Writing the png file
     nx.draw(newGraph)
     plt.savefig(fPath)
-
-
-def usufyToMaltegoExport(profiles, fPath):
-    """
-    Workaround to export to a Maltego file.
-
-    Args:
-    -----
-        d: Data to export.
-        fPath: File path for the output file.
-    """
-    me = MaltegoTransform()
-    # A dictionary with the structure:
-
-    newEntities = []
-    for profile in profiles:
-	    # Defining the main entity
-        """aux ={}
-        aux["type"] = "i3visio.profile"
-        aux["value"] =  "Skype - " + str(user["i3visio.alias"])
-        aux["attributes"] = []
-
-        # Creation of a temp entity
-        aux = {}
-        aux["type"] = profile["value"]
-        aux["value"] = profile["type"]
-        aux["attributes"] = []"""
-        newEntities.append(profile)
-
-    me.addListOfEntities(newEntities)
-
-    # Storing the file
-    with open (fPath, "w") as oF:
-        oF.write(me.getOutput())
-
-
-def listToMaltego(profiles):
-    """
-    Method to generate the text to be appended to a Maltego file.
-
-    May need to be revisited.
-
-    Args:
-    -----
-        profiles: A list of dictionaries with the information of the profiles
-            in the following format: `{"a_nick": [<list_of_results>]}`. An
-            example is shown below:
-            ```
-            [
-                {
-                  "attributes": [
-                    {
-                      "attributes": [],
-                      "type": "i3visio.uri",
-                      "value": "http://twitter.com/i3visio"
-                    },
-                    {
-                      "attributes": [],
-                      "type": "i3visio.alias",
-                      "value": "i3visio"
-                    },
-                    {
-                      "attributes": [],
-                      "type": "i3visio.platform",
-                      "value": "Twitter"
-                    }
-                  ],
-                  "type": "i3visio.profile",
-                  "value": "Twitter - i3visio"
-                }
-                ,
-                ...
-            ]
-            ```
-
-    Returns:
-    --------
-        string: The .xml text to be written for a Maltego file.
-    """
-    logger = logging.getLogger("osrframework.utils")
-    logger.info( "Generating Maltego File...")
-
-    maltegoText = ""
-    logger.debug("Going through all the keys in the dictionary...")
-    me = MaltegoTransform()
-    # A dictionary with the structure:
-
-    newEntities = []
-    for profile in profiles:
-	    # Defining the main entity
-        """aux ={}
-        aux["type"] = "i3visio.profile"
-        aux["value"] =  "Skype - " + str(user["i3visio.alias"])
-        aux["attributes"] = []
-
-        # Creation of a temp entity
-        aux = {}
-        aux["type"] = profile["value"]
-        aux["value"] = profile["type"]
-        aux["attributes"] = []"""
-        newEntities.append(profile)
-
-    me.addListOfEntities(newEntities)
-
-    # Getting the output text
-    me.addUIMessage("Process completed!")
-    if len(newEntities)<=11:
-        me.addUIMessage("All the entities have been displayed!")
-    else:
-        me.addUIMessage("Ooops! Too many entities to display!")
-        me.addUIMessage("The following entities could not be added because of the limits in Maltego Community Edition:\n"+json.dumps(newEntities, indent=2))
-
-    # Returning the output text...
-    me.returnOutput()
-    return me.getOutput()
 
 
 def fileToMD5(filename, block_size=256*128, binary=False):

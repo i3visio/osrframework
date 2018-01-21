@@ -3,7 +3,7 @@
 #
 ################################################################################
 #
-#    Copyright 2015-2017 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -162,7 +162,6 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
         avoidDownload: Boolean var that defines whether the profiles will NOT be
             downloaded (stored in this version).
         outQueue: Queue where the information will be stored.
-        maltego: Parameter to tell usufy that he has been invoked by Malego.
 
     Returns:
     --------
@@ -207,7 +206,7 @@ def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload =
         return {"platform" : str(p), "status": "ERROR", "data": []}
 
 
-def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, maltego=False, verbosity=1, logFolder="./logs"):
+def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, verbosity=1, logFolder="./logs"):
     """
     Process a list of nicks to check whether they exist.
 
@@ -223,7 +222,6 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
             NOT be processed.
         avoidDownload: A boolean var that defines whether the profiles will NOT
             be downloaded.
-        maltego: A parameter to tell usufy that he has been invoked by Malego.
         verbosity: The level of verbosity to be used.
         logFolder: The path to the log folder.
 
@@ -353,9 +351,8 @@ def getParser():
     groupProcessing.add_argument('--avoid_processing', required=False, action='store_true', default=False, help='argument to force usufy NOT to perform any processing task with the valid profiles.')
     groupProcessing.add_argument('--fuzz_config',  metavar='<path_to_fuzz_list>', action='store', type=argparse.FileType('r'), help='path to the fuzzing config details. Wildcards such as the domains or the nicknames should come as: <DOMAIN>, <USERNAME>.')
     groupProcessing.add_argument('--nonvalid', metavar='<not_valid_characters>', required=False, default = '\\|<>=', action='store', help="string containing the characters considered as not valid for nicknames." )
-    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'mtz', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    groupProcessing.add_argument('-m', '--maltego', required=False, action='store_true', help='parameter specified to let usufy know that he has been launched by a Maltego Transform.')
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     groupProcessing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the uris returned in the default web browser.')
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
@@ -401,18 +398,17 @@ def main(params=None):
     # From now on, the logger can be recovered like this:
     logger = logging.getLogger("osrframework.usufy")
 
-    if not args.maltego:
-        print(general.title(banner.text))
+    print(general.title(banner.text))
 
-        sayingHello = """
-Usufy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2017
+    sayingHello = """
+Usufy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
 visit """ + general.LICENSE_URL + "\n"
-        logger.info(sayingHello)
-        print(general.title(sayingHello))
-        logger.info("Starting usufy...")
+    logger.info(sayingHello)
+    print(general.title(sayingHello))
+    logger.info("Starting usufy...")
 
     if args.license:
         general.showLicense()
@@ -478,10 +474,9 @@ visit """ + general.LICENSE_URL + "\n"
         # Executing the corresponding process...
         else:
             # Showing the execution time...
-            if not args.maltego:
-                startTime= dt.datetime.now()
-                print(str(startTime) + "\tStarting search in " + general.emphasis(str(len(listPlatforms))) + " platform(s)... Relax!\n")
-                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            startTime= dt.datetime.now()
+            print(str(startTime) + "\tStarting search in " + general.emphasis(str(len(listPlatforms))) + " platform(s)... Relax!\n")
+            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
             # Defining the list of users to monitor
             nicks = []
@@ -505,10 +500,9 @@ visit """ + general.LICENSE_URL + "\n"
             if args.output_folder != None:
                 # if Verifying an output folder was selected
                 logger.debug("Preparing the output folder...")
-                if not args.maltego:
-                    if not os.path.exists(args.output_folder):
-                        logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
-                        os.makedirs(args.output_folder)
+                if not os.path.exists(args.output_folder):
+                    logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
+                    os.makedirs(args.output_folder)
                 # Launching the process...
                 res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
 
@@ -575,46 +569,40 @@ visit """ + general.LICENSE_URL + "\n"
             if args.extension:
                 # Storing the file...
                 logger.info("Creating output files as requested.")
-                if not args.maltego:
-                    # Verifying if the outputPath exists
-                    if not os.path.exists (args.output_folder):
-                        logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
-                        os.makedirs(args.output_folder)
+                # Verifying if the outputPath exists
+                if not os.path.exists (args.output_folder):
+                    logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
+                    os.makedirs(args.output_folder)
 
-                    # Grabbing the results
-                    fileHeader = os.path.join(args.output_folder, args.file_header)
+                # Grabbing the results
+                fileHeader = os.path.join(args.output_folder, args.file_header)
 
-                    # Iterating through the given extensions to print its values
-                    for ext in args.extension:
-                        # Generating output files
-                        general.exportUsufy(res, ext, fileHeader)
-
-            # Generating the Maltego output
-            if args.maltego:
-                general.listToMaltego(res)
-            # Printing the results if requested
-            else:
-                now = dt.datetime.now()
-                print(str(now) + "\tA summary of the results obtained is shown below:\n")
-                print(general.success(general.usufyToTextExport(res)))
-
-                if args.web_browser:
-                    general.openResultsInBrowser(res)
-
-                now = dt.datetime.now()
-                print("\n" + str(now) + "\tYou can find all the information here:")
+                # Iterating through the given extensions to print its values
                 for ext in args.extension:
-                    # Showing the output files
-                    print("\t" + general.emphasis(fileHeader + "." + ext))
+                    # Generating output files
+                    general.exportUsufy(res, ext, fileHeader)
 
-                # Showing the execution time...
-                endTime= dt.datetime.now()
-                print("\n" + str(endTime) +"\tFinishing execution...\n")
-                print("Total time consumed:\t" + general.emphasis(str(endTime-startTime)))
-                print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(listPlatforms))) +" seconds\n")
+            now = dt.datetime.now()
+            print(str(now) + "\tA summary of the results obtained is shown below:\n")
+            print(general.success(general.usufyToTextExport(res)))
 
-                # Urging users to place an issue on Github...
-                print(banner.footer)
+            if args.web_browser:
+                general.openResultsInBrowser(res)
+
+            now = dt.datetime.now()
+            print("\n" + str(now) + "\tYou can find all the information here:")
+            for ext in args.extension:
+                # Showing the output files
+                print("\t" + general.emphasis(fileHeader + "." + ext))
+
+            # Showing the execution time...
+            endTime= dt.datetime.now()
+            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("Total time consumed:\t" + general.emphasis(str(endTime-startTime)))
+            print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(listPlatforms))) +" seconds\n")
+
+            # Urging users to place an issue on Github...
+            print(banner.footer)
 
     if params:
         return res
