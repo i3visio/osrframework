@@ -10,6 +10,7 @@ For more information, check the README.Add some wrappers
 - Separate osrframework_server, osrframework_maltego and osrframework_console from the core wrapper
 - Patch issue #300: Remove Skype features
 - Fix some issues with non-working wrappers
+- Remove any reference to Maltego code generation
 
 0.17.4, 2017/11/04 -- Some new additions and fixes
 - Fix issue #295: addressed the error found when exiting osrfconsole.py
