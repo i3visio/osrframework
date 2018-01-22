@@ -39,17 +39,17 @@ def changePermissionsRecursively(path, uid, gid):
             # Setting owner
             try:
                 os.chown(itempath, uid, gid)
-            except Exception, e:
+            except Exception as e:
                 # If this crashes it may be because we are running the
                 # application in Windows systems, where os.chown does NOT work.
                 pass
             # Setting permissions
-            os.chmod(itempath, 0600)
+            os.chmod(itempath, 600)
         elif os.path.isdir(itempath):
             # Setting owner
             try:
                 os.chown(itempath, uid, gid)
-            except Exception, e:
+            except Exception as e:
                 # If this crashes it may be because we are running the
                 # application in Windows systems, where os.chown does NOT work.
                 pass
@@ -133,7 +133,7 @@ def returnListOfConfigurationValues(util):
                 # Moving its contents as the default values
                 with open(configPath, "w") as oF:
                     oF.write(cont)
-        except Exception, e:
+        except Exception as e:
             raise errors.DefaultConfigurationFileNotFoundError(configPath, defaultConfigPath);
 
     # Reading the configuration file
@@ -181,7 +181,7 @@ def returnListOfConfigurationValues(util):
                                 # Moving its contents as the default values
                                 with open(configPath, "w") as oF:
                                     oF.write(cont)
-                        except Exception, e:
+                        except Exception as e:
                             raise errors.DefaultConfigurationFileNotFoundError(configPath, defaultConfigPath);
 
                         #raise errors.ConfigurationParameterNotValidError(configPath, section, param, value)

@@ -1,4 +1,4 @@
-# !/usr/bin/python2
+# !/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 ##################################################################################
@@ -27,69 +27,6 @@ from setuptools import setup, find_packages
 import shutil
 import site
 
-# Checking if obsolete versions are installed in the machine
-IS_VIRTUAL_ENV = False
-
-# Get packagesPaths depending on whether the user launched it with sudo or not
-if sys.platform == 'win32':
-    # This will throw two folders, but we need the first one only. Typically:
-    #   ['c:\\Users\\<a_user>\\AppData\\Roaming\\Python\\Python27\\site-packages']
-    packagesPaths = site.getusersitepackages()[0]
-    print "[*] The installation is going to be run as superuser."
-else:
-    # We need this verification because Windows does not have a wrapper ofr os.geteuid()
-    if not os.geteuid() == 0:
-        try:
-            packagesPaths = site.getusersitepackages()
-            # TODO: Check whether the packagesPaths is in the PATH, if not, add it
-            print "[*] The installation has not been launched as superuser."
-            user_bin_path = site.USER_BASE + "/bin"
-            print "[*] We will verify is the '" + user_bin_path + "' folder is in the path so as to make the utils available anywhere in the system."
-            bin_path = os.popen("echo $PATH").read()
-            if user_bin_path in bin_path:
-                print "[*] Great. '" + user_bin_path + "' is in the path. No further actions needed."
-            else:
-                print "[*] We are manually adding the '" + user_bin_path + "' folder to the ~/.bashrc file."
-                # Building the commands to be added to .bashrc
-                new_lines = """
-                # Added by OSRFramework
-                # ---------------------
-                # Check this issue in Github for additional information about why these lines where added: <https://github.com/i3visio/osrframework/issues/187>
-
-                export PY_USER_BIN= """ + user_bin_path + """
-                export PATH=$PATH:$PY_USER_BIN
-                """
-
-                command = "echo '''" + new_lines + "''' >> ~/.bashrc"
-                print "[*] As we want to be transparent, the command that is being run is the following:\n" + command
-                a = os.popen(command).read()
-        except:
-            IS_VIRTUAL_ENV = True
-    else:
-        # This will throw two folders, but we need the first one only:
-        #   ['/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages']
-        packagesPaths = site.getsitepackages()[0]
-        print "[*] The installation is going to be run as superuser."
-
-if not IS_VIRTUAL_ENV:
-    osrframeworkSystemPath = os.path.join(packagesPaths, "osrframework")
-
-    print "[*] The chosen installation path is: " + osrframeworkSystemPath
-
-    # Removing old installations first...
-    if os.path.isdir(osrframeworkSystemPath):
-        print "[!] Found an old installation at: " + osrframeworkSystemPath
-        try:
-            shutil.rmtree(osrframeworkSystemPath)
-            print "[*] Successfully removed the old installation. Installation will resume now to upgrade it..."
-        except Exception as e:
-            print str(e)
-            print "[E] The installed version of OSRFramework cannot be removed. Try to remove it manually in your python installation under 'local/lib/python2.7/dist-packages/'."
-            print sys.exit()
-    else:
-        print "[*] No OSRFramework installation found in the system."
-else:
-    print "[*] OSRFramework seems to be installed using `virtualenv`."
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
@@ -119,7 +56,7 @@ except:
 # Creating the application paths
 paths = configuration.getConfigPath()
 
-print "[*] Launching the installation of the osrframework module..."
+print("[*] Launching the installation of the osrframework module...")
 # Launching the setup
 setup(
     name="osrframework",
@@ -199,21 +136,22 @@ setup(
         "python-whois",
         "flask",
         "pyyaml",
-        "colorama"
+        "colorama",
+        "configparser"
     ],
 )
 
 ############################
 ### Creating other files ###
 ############################
-print "[*] Changing permissions of the user folders..."
+print("[*] Changing permissions of the user folders...")
 try:
     configuration.changePermissionsRecursively(paths["appPath"], int(os.getenv('SUDO_UID')), int(os.getenv('SUDO_GID')))
 except:
     # Something happened with the permissions... We omit this.
     pass
 
-print "[*] Copying relevant files..."
+print("[*] Copying relevant files...")
 files_to_copy= {
     paths["appPath"] : [
         os.path.join("config", "browser.cfg"),
@@ -239,6 +177,7 @@ for destiny in files_to_copy.keys():
     for sourceFile in files_to_copy[destiny]:
         fileToMove = os.path.join(HERE,sourceFile)
 
+        cmd = ""
         # Choosing the command depending on the SO
         if sys.platform == 'win32':
             if os.path.isdir(fileToMove):
@@ -250,5 +189,4 @@ for destiny in files_to_copy.keys():
                 cmd = "cp -r -- \"" + fileToMove + "\" \"" + destiny + "\""
             else:
                 cmd = "sudo cp -r -- \"" + fileToMove + "\" \"" + destiny + "\""
-        #print cmd
         output = os.popen(cmd).read()
