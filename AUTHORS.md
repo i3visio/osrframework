@@ -14,3 +14,4 @@ Contributors
 * Fran J. Gómez ([@ffranz](https://twitter.com/ffranz))
 * Abilio Almeida  ([@aabilio](https://github.com/aabilio))
 * Bruno Halopeau ([@BrHa11](https://github.com/BrHa11))
+* Alexey Miloserdov ([Mi-Al](https://github.com/Mi-Al))

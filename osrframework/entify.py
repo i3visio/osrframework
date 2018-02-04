@@ -22,6 +22,7 @@
 
 
 import argparse
+import datetime as dt
 import json
 import logging
 import os
@@ -216,6 +217,8 @@ def getParser():
     listAll = regexp_selection.getAllRegexpNames()
     groupMainOptions.add_argument('-r', '--regexp', metavar='<name>', choices=listAll, action='store', nargs='+', help='select the regular expressions to be looked for amongst the following: ' + str(listAll))
     groupMainOptions.add_argument('-R', '--new_regexp', metavar='<regular_expression>', action='store', help='add a new regular expression, for example, for testing purposes.')
+    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
+
 
     # Adding the main options
     groupInput = parser.add_mutually_exclusive_group(required=True)
@@ -318,6 +321,7 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Showing the information gathered if requested
         if not args.quiet:
+            now = dt.datetime.now()
             print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
             print(general.success(general.usufyToTextExport(results)))
 
