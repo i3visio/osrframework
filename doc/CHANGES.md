@@ -3,6 +3,12 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.1, 2018/02/04 -- Fix several issues.
+- Fix #305: Peerbackers wrapper takes to long to be resolve, delaying the answer
+- Fix #304: Multiple erros in entify.py
+- Fix #302: alias_generator fails with main
+- Fix #263: Problem with searchfy on facebook
+
 0.18.0, 2018/01/21 -- Major updates to separate server, maltego and console package
 - Add feature #294: Add freemusicarchive.org usufy wrapper
 - Add feature: Update osrframework to match the new entry_points-friendly structure
@@ -37,8 +43,8 @@ For more information, check the README.Add some wrappers
 - Move to pending Oroom and Backyardchickens
 
 0.17.1, 2017/08/20 -- Some fixes and new wrappers.
-- Add feature #283: Add Kiwi usufy wrapper
 - Add feature #284: Add Sarahah usufy wrapper
+- Add feature #283: Add Kiwi usufy wrapper
 - Fix issue #286: Remove intersect.es wrapper as the platform has been changed
 - Fix issue #282: Fix openstreetmap usufy wrapper when using usernames containing a dot
 - Fix issue #280: Fix serieadictos usufy wrapper
