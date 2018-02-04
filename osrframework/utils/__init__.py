@@ -17,8 +17,3 @@
 #
 ##################################################################################
 
-
-import logger
-
-# Calling the logger when being imported
-logger.setupLogger(loggerName="osrframework.utils")
