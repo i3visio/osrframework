@@ -45,11 +45,12 @@ LEET_TRANSFORMS = {
 }
 
 
-def main(name=None, surname1=None, surname2=None, city=None, country=None, year=None, useNumbers=False, useCommonWords=False, useLeet=False, useLocales=False, extraWords=[]):
+def generate(name=None, surname1=None, surname2=None, city=None, country=None, year=None, useNumbers=False, useCommonWords=False, useLeet=False, useLocales=False, extraWords=[]):
     """
-    The main method that generates the given aliases.
+    The method that generates the given aliases.
 
     It receives several parameters as parsed by this module's `getParser()`.
+    Previously referenced as `main`.
 
     Args:
     -----
@@ -2808,12 +2809,6 @@ def main(name=None, surname1=None, surname2=None, city=None, country=None, year=
     print("\nGenerated nicks:\n")
     print(general.success(json.dumps(listaFinal, indent=2, sort_keys=True)))
     print("\nUp to " + general.emphasis(str(len(listaFinal))) + " nicks generated.\n")
-    print("Writing the results onto the file:\n\t" + general.emphasis(args.outputFile))
-
-    oF=open(args.outputFile, "w")
-    for l in listaFinal:
-        oF.write(l+"\n")
-    oF.close()
 
     return listaFinal
 
@@ -2901,7 +2896,7 @@ def main(params=None):
     if args.country != "":
         print("Country: ".ljust(20, " ") + args.country)
 
-    main(
+    aliases = generate(
         name=args.name,
         surname1=args.surname1,
         surname2=args.surname2,
@@ -2914,6 +2909,14 @@ def main(params=None):
         useLocales=args.locales,
         extraWords=extraWords
     )
+
+    print("Writing the results onto the file:\n\t" + general.emphasis(args.outputFile))
+
+    oF=open(args.outputFile, "w")
+    for l in aliases:
+        oF.write(l+"\n")
+    oF.close()
+
 
     # Urging users to place an issue on Github...
     print(banner.footer)
