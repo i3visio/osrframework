@@ -440,7 +440,7 @@ def getParser():
     except:
         excludeList = []
 
-    parser = argparse.ArgumentParser(description='mailfy.py - Checking the existence of a given mail.', prog='mailfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description='mailfy - Checking the existence of a given mail.', prog='mailfy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
 
     # Adding the main options

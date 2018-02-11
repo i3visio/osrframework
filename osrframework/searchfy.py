@@ -67,7 +67,7 @@ def getParser():
     except:
         excludeList = []
 
-    parser = argparse.ArgumentParser(description='searchfy.py - Piece of software that performs a query on the platforms in OSRFramework.', prog='searchfy.py', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description='searchfy - Piece of software that performs a query on the platforms in OSRFramework.', prog='searchfy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
 
     # Adding the main options

@@ -326,13 +326,12 @@ def getParser():
     # Recovering all the possible options
     platOptions = platform_selection.getAllPlatformNames("usufy")
 
-    parser = argparse.ArgumentParser(description= 'usufy - Piece of software that checks the existence of a profile for a given user in dozens of different platforms.', prog='usufy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description= 'usufy - Piece of software that checks the existence of a profile for a given user in dozens of different platforms.', prog='usufy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
 
     # Adding the main options
     groupMainOptions = parser.add_mutually_exclusive_group(required=True)
     groupMainOptions.add_argument('--info', metavar='<action>', choices=['list_platforms', 'list_tags'], action='store', help='select the action to be performed amongst the following: list_platforms (list the details of the selected platforms), list_tags (list the tags of the selected platforms). Afterwards, it exists.')
-    groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
     groupMainOptions.add_argument('-b', '--benchmark',  action='store_true', default=False, help='perform the benchmarking tasks.')
     groupMainOptions.add_argument('-f', '--fuzz', metavar='<path_to_fuzzing_list>', action='store', type=argparse.FileType('r'), help='this option will try to find usufy-like URLs. The list of fuzzing platforms in the file should be (one per line): <BASE_DOMAIN>\t<VALID_NICK>')
     groupMainOptions.add_argument('-l', '--list',  metavar='<path_to_nick_list>', action='store', type=argparse.FileType('r'), help='path to the file where the list of nicks to verify is stored (one per line).')
@@ -362,7 +361,7 @@ def getParser():
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
-    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
+    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exits.')
 
     return parser
 
@@ -410,9 +409,7 @@ visit """ + general.LICENSE_URL + "\n"
     print(general.title(sayingHello))
     logger.info("Starting usufy...")
 
-    if args.license:
-        general.showLicense()
-    elif args.fuzz:
+    if args.fuzz:
         logger.info("Performing the fuzzing tasks...")
         res = fuzzUsufy(args.fuzz, args.fuzz_config)
         logger.info("Recovered platforms:\n" + str(res))

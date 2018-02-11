@@ -79,7 +79,7 @@ def enumerateURL(urlDict, outputFolder, startIndex= 0, maxErrors = 100):
 
 
 def getParser():
-    parser = argparse.ArgumentParser(description='enumerate-profiles - Checking the existence of a possible enumeration.', prog='enumerate-profiles', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False)
+    parser = argparse.ArgumentParser(description='enumerate-profiles - Checking the existence of a possible enumeration.', prog='enumerate-profiles', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
 
     # Adding the main options

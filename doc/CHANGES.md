@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.2, 2018/02/11 -- Add OSRFramework CLI.
+- Add feature: Add OSRFramework CLI with subcommands to invoke its utils
+
 0.18.1, 2018/02/04 -- Fix several issues.
 - Fix #305: Peerbackers wrapper takes to long to be resolve, delaying the answer
 - Fix #304: Multiple erros in entify.py

@@ -2813,7 +2813,7 @@ def generate(name=None, surname1=None, surname2=None, city=None, country=None, y
     return listaFinal
 
 def getParser():
-    parser = argparse.ArgumentParser(description='alias_generator is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator', epilog="", add_help=False)
+    parser = argparse.ArgumentParser(description='alias_generator is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator', epilog="", add_help=False, conflict_handler='resolve')
 
     # Adding the main options
     # Defining the mutually exclusive group for the main options

@@ -209,7 +209,7 @@ def scanResource(uri = None, listRegexp = None, verbosity=1, logFolder= "./logs"
 def getParser():
     DEFAULT_VALUES = configuration.returnListOfConfigurationValues("entify")
 
-    parser = argparse.ArgumentParser(description='entify - entify is a program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False)
+    parser = argparse.ArgumentParser(description='entify - A program designed to extract using regular expressions all the entities from the files on a given folder. This software also provides an interface to look for these entities in any given text.', prog='entify', epilog="Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.", add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
 
     # Adding the main options

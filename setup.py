@@ -85,6 +85,8 @@ setup(
             'searchfy.py = osrframework.searchfy:main',
             'usufy = osrframework.usufy:main',
             'usufy.py = osrframework.usufy:main',
+            'osrf = osrframework.launcher:main',
+            'osrframework-cli = osrframework.launcher:main',
         ],
     },
     classifiers=[
