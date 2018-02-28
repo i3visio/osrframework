@@ -81,7 +81,7 @@ class Sourceforge(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["We're sorry but we weren't able to process this request."]
+        self.notFoundText["usufy"] = ["We're sorry but we weren't able to process this request.", "The sourceforge.net website is temporarily in static offline mode."]
         #self.notFoundText["searchfy"] = []        
         
         #########################
