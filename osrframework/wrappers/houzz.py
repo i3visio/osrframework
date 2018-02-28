@@ -3,7 +3,7 @@
 #
 ##################################################################################
 #
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2016-2018 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,8 +20,8 @@
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
-__version__ = "1.0"
+__author__ = "i3visio <contacto@i3visio.com>"
+__version__ = "1.1"
 
 import argparse
 import json
@@ -57,7 +57,7 @@ class Houzz(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.houzz.es/pro/" + "<usufy>" 
+        self.url["usufy"] = "https://www.houzz.com/pro/" + "<usufy>" 
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,7 @@ class Houzz(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h1 class=\"header-1 top\">La página solicitada no existe.</h1>"]
+        self.notFoundText["usufy"] = ["<title>Best Home Improvement Professionals - Reviews, Past Projects & Photos | Houzz</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################
