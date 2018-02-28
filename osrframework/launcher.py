@@ -41,12 +41,18 @@ EPILOG = """
   program or follow us on Twitter in <http://twitter.com/i3visio>.
 """
 
+
+class OSRFParser(argparse.ArgumentParser):
+    def error(self, message):
+        sys.stderr.write("The following error was thrown by '%s' when parsing the provided parameters:\n\t%s\n\n" % (self.prog, message))
+        self.print_help()
+        sys.exit(2)
+
 def getParser():
-    parser = argparse.ArgumentParser(
+    parser = OSRFParser(
         description='OSRFramework CLI',
         prog='osrf',
         epilog=EPILOG,
-        add_help=False,
         conflict_handler='resolve'
     )
 
@@ -122,15 +128,21 @@ def main(params=None):
     """
     parser = getParser()
 
-    if params != None:
-        args = parser.parse_args(params)
-    else:
-        args = parser.parse_args()
+    try:
+        if params != None:
+            args = parser.parse_args(params)
+        else:
+            args = parser.parse_args()
+    except:
+        sys.exit(0)
 
     if args.license:
         general.showLicense()
 
-    print(str(args))
+    # Launch the appropiate util
+    module = __import__(args.command_name)
+    module.main(params[1:])
+    sys.exit(0)
 
 
 if __name__ == "__main__":
