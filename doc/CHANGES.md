@@ -5,6 +5,10 @@ For more information, check the README.Add some wrappers
 
 0.18.2, 2018/02/11 -- Add OSRFramework CLI.
 - Add feature: Add OSRFramework CLI with subcommands to invoke its utils
+- Fix #310: The houzz.es platform is no working properly
+- Fix #209: Remove Kiwi.qa wrapper
+- Patch issue: Sourceforge moved to pending as it does not work
+- Patch issue: Remove netlog wrapper after the website rebrand to twoo.com    
 
 0.18.1, 2018/02/04 -- Fix several issues.
 - Fix #305: Peerbackers wrapper takes to long to be resolve, delaying the answer
