@@ -81,7 +81,7 @@ class Cardinghispano(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["El miembro específicado no pudo ser encontrado. Por favor ingrese el nombre completo del miembro."]
+        self.notFoundText["usufy"] = ["<title>Miembros destacados | Carding en Español</title>"]
         #self.notFoundText["searchfy"] = []
         
         #########################
