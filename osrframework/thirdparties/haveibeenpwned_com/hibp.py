@@ -24,7 +24,7 @@ import requests
 import sys
 import time
 
-def checkIfEmailWasHacked(email=None, sleepSeconds=1.5):
+def checkIfEmailWasHacked(email=None, sleepSeconds=0.5):
     """
     Method that checks if the given email is stored in the HIBP website.
 
@@ -60,20 +60,40 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1.5):
         # Building the i3visio like structure
         for e in jsonData:
             new = {}
-            new["value"] = e["Name"]
+            new["value"] = "(HIBP) " + e["Name"]
             new["type"] = "i3visio.platform_leaked"
             new["attributes"] = [
+                {
+                    "value": "@source",
+                    "type": "haveibeenpwned.com",
+                    "attributes": []
+                },
                 {
                     "value": "i3visio_uri",
                     "type": apiURL,
                     "attributes": []
+                },
+                {
+                    "value": "@pwn_count",
+                    "type": e['PwnCount'],
+                    "attributes": []
+                },
+                {
+                    "value": "@added_date",
+                    "type": e['AddedDate'],
+                    "attributes": []
+                },
+                {
+                    "value": "@breach_date",
+                    "type": e['BreachDate'],
+                    "attributes": []
+                },
+                {
+                    "value": "@description",
+                    "type": e['Description'],
+                    "attributes": []
                 }
             ]
-            new['PwnCount'] = e['PwnCount']
-            new['Domain'] = e['Domain']
-            new['AddedDate'] = e['AddedDate']
-            new['BreachDate'] = e['BreachDate']
-            new['Description'] = e['Description']
 
             leaks.append(new)
 
