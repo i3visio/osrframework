@@ -3,7 +3,8 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.18.2, 2018/03/07 -- Fix some wrappers that needs an update.
+0.18.3, 2018/03/07 -- Fix some wrappers that needs an update.
+- Add #293: add hacked email search
 - Fix #312: Update cardinghispano usufy wrapper
 - Fix #311: Set --is_leaked option as default for mailfy 
 - Remove tuporno and genspot wrappers
