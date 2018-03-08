@@ -37,6 +37,7 @@ import validate_email
 
 import osrframework
 import osrframework.thirdparties.haveibeenpwned_com.hibp as hibp
+import osrframework.thirdparties.hesidohackeado_com.hesidohackeado as hesidohackeado
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
@@ -558,7 +559,11 @@ be used instead. Verification may be slower though."""))
             for r in tmp:
                 # We assume that the first attribute is always the email
                 query = r["attributes"][0]["value"]
+
+                # Iterate through the different leak platforms
                 leaks = hibp.checkIfEmailWasHacked(query)
+                leaks += hesidohackeado.checkIfEmailWasHacked(query)
+
                 if len(leaks) > 0:
                     if not args.quiet:
                         print(general.success("\t" + query + " has been found in at least " + str(len(leaks)) + " different leaks."))
@@ -582,15 +587,20 @@ be used instead. Verification may be slower though."""))
                         print(general.warning("\t" + query + " has NOT been found on any leak yet."))
         else:
             if not args.quiet:
-                print("\n" + str(startTime) +"\tStarting search of " + general.emphasis(str(len(emails))) + " different emails in leaked databases.\nNote that this will take between 1 and 2 seconds per query due to HIBP API restrictions:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
+                print("\n" + str(startTime) +"\tStarting search of " + general.emphasis(str(len(emails))) + " different emails in leaked databases.\n\nNote that this will take between 1 and 2 seconds per query due to the thirdparties API restrictions:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
                 print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
             # Perform is_leaked function
             results = []
+            print("Mailfy will use haveibeenpwned.com (HIBP) and hesidohackeado.com (HSH) APIs to find leaked emails...\n")
+
             for i, e in enumerate(emails):
                 if not args.quiet:
-                    print("\t" + str(i+1) + "/" + str(len(emails)) + " - Searching if " + e + " has been leaked somewhere...")
+                    print("\t" + str(i+1) + "/" + str(len(emails)) + " - Searching if " + e + " has been leaked...")
+
+                # Iterate through the different leak platforms
                 leaks = hibp.checkIfEmailWasHacked(e)
+                leaks += hesidohackeado.checkIfEmailWasHacked(e)
 
                 if len(leaks) > 0:
                     if not args.quiet:
