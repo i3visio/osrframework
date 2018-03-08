@@ -98,8 +98,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
           ]
         }
         isTerminal: If isTerminal is activated, only information related to
-            i3visio.alias, i3visio.platform and i3visio.uri will be displayed
-            in the terminal.
+            relevant utils will be shown.
         canUnicode: Variable that stores if the printed output can deal with
             Unicode characters.
 
@@ -143,13 +142,24 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
             string: The modified header.
         """
         if h[0] == "@":
-            h = h.replace("@","_")
+            h = h.replace("@", "_")
         elif "i3visio." in h:
             h = h.replace("i3visio.", "i3visio_")
         return h
 
     # Entities allowed for the output in terminal
-    allowedInTerminal = ["i3visio_alias", "i3visio_uri", "i3visio_platform", "i3visio_email", "i3visio_ipv4", "i3visio_phone", "i3visio_dni", "i3visio_domain", "i3visio_platform_leaked"]
+    allowedInTerminal = [
+        "i3visio_alias",
+        "i3visio_uri",
+        "i3visio_platform",
+        "i3visio_email",
+        "i3visio_ipv4",
+        "i3visio_phone",
+        "i3visio_dni",
+        "i3visio_domain",
+        "i3visio_platform_leaked",
+        "_source"
+    ]
     # List of profiles found
     values = {}
     headers = ["_id"]
@@ -162,11 +172,13 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
             oldHeaders = oldTabularData["OSRFramework"][0]
             headers = []
             for h in oldHeaders:
-                if h == "i3visio_domain" or h == "i3visio.domain":
-                    print h
                 h = _grabbingNewHeader(h)
                 if h in allowedInTerminal:
-                    headers.append(h)
+                    # Set to simplify the table shown in mailfy for leaked platforms
+                    if h in ["i3visio_domain", "i3visio_alias"] and "_source" in old_headers:
+                        pass
+                    else:
+                        headers.append(h)
         # Changing the starting @ for a '_' and changing the "i3visio." for "i3visio_". Changed in 0.9.4+
         for i, h in enumerate(headers):
             h = _grabbingNewHeader(h)
@@ -321,6 +333,7 @@ def usufyToTextExport(d, fPath=None):
     # Defining the headers
     sheet.name_columns_by_row(0)
     text.TABLEFMT = "grid"
+
     try:
         with open(fPath, "w") as oF:
             oF.write(str(sheet))
@@ -601,12 +614,12 @@ def usufyToGmlExport(d, fPath):
     try:
         oldData=nx.read_gml(fPath)
     except UnicodeDecodeError as e:
-        print "UnicodeDecodeError:\t" + str(e)
-        print "Something went wrong when reading the .gml file relating to the decoding of UNICODE."
+        print("UnicodeDecodeError:\t" + str(e))
+        print("Something went wrong when reading the .gml file relating to the decoding of UNICODE.")
         import time as time
         fPath+="_" +str(time.time())
-        print "To avoid losing data, the output file will be renamed to use the timestamp as:\n" + fPath + "_" + str(time.time())
-        print
+        print("To avoid losing data, the output file will be renamed to use the timestamp as:\n" + fPath + "_" + str(time.time()))
+        print()
         # No information has been recovered
         oldData = nx.Graph()
     except Exception as e:
