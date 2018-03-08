@@ -460,7 +460,7 @@ def getParser():
     groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=excludeList, action='store', help="select the domains to be excluded from the search.")
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
-    groupProcessing.add_argument('--is_leaked', required=False, default=False, action='store_true', help='Defines whether mailfy.py should search for leaked emails instead of verifying them.')
+    groupProcessing.add_argument('--verify_emails', required=False, default=False, action='store_true', help='Defines whether mailfy should try to verify the existence of an email. This is an unstable feature that uses "emailahoy" and "verify_email" packages.')
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options
@@ -519,11 +519,11 @@ be used instead. Verification may be slower though."""))
         general.showLicense()
     else:
         # Grabbing the list of global domains
-        if args.is_leaked:
-            domains = LEAKED_DOMAINS
+        if args.verify_emails:
+            domains = EMAIL_DOMAINS
             # Processing the options returned to remove the "all" option
         elif "all" in args.domains:
-            domains = EMAIL_DOMAINS
+            domains = LEAKED_DOMAINS
         else:
             # processing only the given domains and excluding the ones provided
             domains = []
@@ -538,7 +538,8 @@ be used instead. Verification may be slower though."""))
 
         startTime= dt.datetime.now()
 
-        if not args.is_leaked:
+        # Original functionality. UNSTABLE feature!
+        if args.verify_emails:
             # Showing the execution time...
             if not args.quiet:
                 print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
