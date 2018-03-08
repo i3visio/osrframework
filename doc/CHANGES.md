@@ -3,6 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.2, 2018/03/07 -- Fix some wrappers that needs an update.
+- Fix #312: Update cardinghispano usufy wrapper
+- Fix #311: Set --is_leaked option as default for mailfy 
+- Remove tuporno and genspot wrappers
+
 0.18.2, 2018/02/11 -- Add OSRFramework CLI.
 - Add feature: Add OSRFramework CLI with subcommands to invoke its utils
 - Fix #310: The houzz.es platform is no working properly
