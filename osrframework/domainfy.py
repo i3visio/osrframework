@@ -214,7 +214,15 @@ def isBlackListed(ipv4):
         "141.8.226.58",
         "144.76.162.245",
         "173.230.131.38",
-        "109.95.242.11"
+        "109.95.242.11",
+        "188.93.95.11",
+        "173.230.141.80",
+        "198.74.54.240",
+        "64.70.19.203",
+        "199.34.229.100",
+        "109.95.244.12",
+        "8.23.224.108",
+        "203.119.4.201"
     ]
 
     if ipv4 in BLACKLISTED:
@@ -500,7 +508,7 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Showing the information gathered if requested
         if not args.quiet:
-            print("A summary of the results obtained are shown in the following table:\n")
+            print("A summary of the results obtained is shown in the following table:\n")
             try:
                 print(general.success(general.usufyToTextExport(results)))
             except:
