@@ -634,7 +634,7 @@ be used instead. Verification may be slower though."""))
         # Showing the information gathered if requested
         if not args.quiet:
             now = dt.datetime.now()
-            print("\n" + str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+            print("\n" + str(now) + "\tA summary of the results obtained is shown in the following table:\n")
             print(general.success(general.usufyToTextExport(results)))
 
             now = dt.datetime.now()

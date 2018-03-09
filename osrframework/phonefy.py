@@ -161,7 +161,7 @@ visit """ + general.LICENSE_URL + "\n"
         # Showing the information gathered if requested
         if not args.quiet:
             now = dt.datetime.now()
-            print(str(now) + "\tA summary of the results obtained are shown in the following table:\n")
+            print(str(now) + "\tA summary of the results obtained is shown in the following table:\n")
             print(general.success(general.usufyToTextExport(results)))
 
             if args.web_browser:
