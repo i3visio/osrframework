@@ -3,7 +3,7 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.18.3, 2018/03/07 -- Stability version
+0.18.3, 2018/03/10 -- Stability version
 - Add #293: add hacked email search
 - Fix #312: Update cardinghispano usufy wrapper
 - Fix #311: Set --is_leaked option as default for mailfy 
