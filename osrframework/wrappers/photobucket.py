@@ -55,7 +55,7 @@ class Photobucket(Platform):
         # Strings with the URL for each and every mode
         self.url = {}        
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://smg.photobucket.com/user/" + "<usufy>" + "/library/?sort=3&page=1"
+        self.url["usufy"] = "http://photobucket.com/user/" + "<usufy>" + "/library/?sort=3&page=1"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
 
         ######################################
