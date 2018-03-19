@@ -21,12 +21,11 @@
 ##################################################################################
 
 # Required libraries
-import mechanize
 import cookielib
 import ConfigParser
-import random
+import mechanize
 import os
-
+import random
 
 import osrframework.utils.configuration as configuration
 
@@ -89,9 +88,9 @@ class Browser():
                     with open(configPath, "w") as oF:
                         oF.write(cont)
             except Exception, e:
-                print "WARNING. No configuration file could be found and the default file was not found either, so configuration will be set as default."
-                print str(e)
-                print
+                print("WARNING. No configuration file could be found and the default file was not found either, so configuration will be set as default.")
+                print(str(e))
+                print()
                 # Storing configuration as default
                 self.userAgents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
                 self.proxies = {}
@@ -149,7 +148,6 @@ class Browser():
             Returns:
                 Returns a resource that has to be read, for instance, with html = self.br.read()
         """
-
         logger = logging.getLogger("osrframework.utils")
 
         # Configuring user agents...
