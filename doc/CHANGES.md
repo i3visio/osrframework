@@ -3,6 +3,13 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.4, 2018/04/19 -- Release some fixes for broken wrappers
+- Fix of houzz.com wrapper
+- Fix of foros24h wrapper
+- Fix photobucket usufy wrapper
+- Fix break.com usufy wrapper
+- Fix minor issues in utils/browser.py
+
 0.18.3, 2018/03/10 -- Stability version
 - Add #293: add hacked email search
 - Fix #312: Update cardinghispano usufy wrapper
