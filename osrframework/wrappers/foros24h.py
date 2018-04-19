@@ -54,7 +54,7 @@ class Foros24h(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.foros24h.com/members/" + "<usufy>" + ".html"
+        self.url["usufy"] = "http://www.foros24h.com/perfil/" + "<usufy>" + ".html"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -81,7 +81,9 @@ class Foros24h(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Este usuario no se ha registrado y por lo tanto no tiene un perfil para ver."]
+        self.notFoundText["usufy"] = [
+            "<title>Usuarios de Foros24h.com</title>"
+        ]
         #self.notFoundText["searchfy"] = []
         
         #########################
