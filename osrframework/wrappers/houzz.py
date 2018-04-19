@@ -57,7 +57,7 @@ class Houzz(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.houzz.com/pro/" + "<usufy>" 
+        self.url["usufy"] = "https://www.houzz.com/user/" + "<usufy>" 
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +84,9 @@ class Houzz(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Best Home Improvement Professionals - Reviews, Past Projects & Photos | Houzz</title>"]
+        self.notFoundText["usufy"] = [
+            '<meta name="rating" content="General" />'
+        ]
         #self.notFoundText["searchfy"] = []
 
         #########################
