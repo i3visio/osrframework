@@ -3,6 +3,13 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.5, 2018/05/20 -- New release of May
+- Add Instagram to searchfy
+- Add xtelefonos.es phonefy wrapper
+- Remove Linkedin usufy wrapper (moved to pending until we add the API).
+- Remove Tumblr usufy wrapper (moved to pending until we add the API).
+- Remove foodspotting wrapper.
+
 0.18.4, 2018/04/19 -- Release some fixes for broken wrappers
 - Fix of houzz.com wrapper
 - Fix of foros24h wrapper
