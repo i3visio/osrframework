@@ -31,12 +31,12 @@ from osrframework.utils.platforms import Platform
 
 
 class Github(Platform):
-    """ 
+    """
         A <SocialNetwork> object for Github.
     """
     def __init__(self):
-        """ 
-            Constructor... 
+        """
+            Constructor...
         """
         self.platformName = "Github"
         self.tags = ["development"]
@@ -47,28 +47,28 @@ class Github(Platform):
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = True      
-        
+        self.isValidMode["searchfy"] = True
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://github.com/" + "<usufy>"       
-        self.url["searchfy"] = "https://github.com/search?utf8=%E2%9C%93&q=<searchfy>&type=Users&ref=searchresults"       
+        self.url["usufy"] = "https://github.com/" + "<usufy>"
+        self.url["searchfy"] = "https://github.com/search?utf8=%E2%9C%93&q=<searchfy>&type=Users&ref=searchresults"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
         self.needsCredentials["usufy"] = False
-        self.needsCredentials["searchfy"] = False 
-        
+        self.needsCredentials["searchfy"] = False
+
         #################
         # Valid queries #
         #################
@@ -78,7 +78,7 @@ class Github(Platform):
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         self.validQuery["searchfy"] = ".+"
-        
+
         ###################
         # Not_found clues #
         ###################
@@ -86,32 +86,30 @@ class Github(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = ["This is not the web page you are looking for"]
-        self.notFoundText["searchfy"] = []        
-        
+        self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "<img alt=\"@([^\"]+)\""                
+        self.searchfyAliasRegexp = "<img alt=\"@([^\"]+)\""
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-        
-        

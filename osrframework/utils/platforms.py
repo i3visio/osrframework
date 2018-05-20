@@ -217,15 +217,16 @@ class Platform():
                 qURL, query = self.createURL(word=query, mode=mode)
             i3Browser = browser.Browser()
             try:
-                # check if it needs creds
+                # TODO: check if it needs creds
                 if self.needsCredentials[mode]:
-                    authenticated = self._getAuthenticated(i3Browser)
+                    authenticated = self._getAuthenticated(i3Browser, qURL)
                     if authenticated:
                         # Accessing the resources
                         data = i3Browser.recoverURL(qURL)
                 else:
                     # Accessing the resources
                     data = i3Browser.recoverURL(qURL)
+                    print(data)
             except:
                 # No information was found, then we return a null entity
                 # TO-DO: i3BrowserException
@@ -305,44 +306,49 @@ class Platform():
                         r["value"] = self.platformName + " - " + i
                         r["attributes"] = []
 
+                        #print("id: {}".format(i))
                         # Appending platform URI
                         aux = {}
                         aux["type"] = "i3visio.uri"
                         # Creating the URI based on the base URL for the new profiles...
-                        uri, alias = self.createURL(word=i, mode="base")
-                        #uri=self.baseURL+i
+                        try:
+                            uri, alias = self.createURL(word=i, mode="usufy")
+                            #uri=self.baseURL+i
 
-                        aux["value"] = uri
+                            aux["value"] = uri
 
-                        aux["attributes"] = []
-                        r["attributes"].append(aux)
-                        # Appending the alias
-                        aux = {}
-                        aux["type"] = "i3visio.alias"
-                        aux["value"] = alias
-                        aux["attributes"] = []
-                        r["attributes"].append(aux)
-                        # Appending platform name
-                        aux = {}
-                        aux["type"] = "i3visio.platform"
-                        aux["value"] = self.platformName
-                        aux["attributes"] = []
-                        r["attributes"].append(aux)
-                        # Appending the query performed to grab this items
-                        aux = {}
-                        aux["type"] = "i3visio.search"
-                        aux["value"] = query
-                        aux["attributes"] = []
-                        r["attributes"].append(aux)
+                            aux["attributes"] = []
+                            r["attributes"].append(aux)
+                            # Appending the alias
+                            aux = {}
+                            aux["type"] = "i3visio.alias"
+                            aux["value"] = alias
+                            aux["attributes"] = []
+                            r["attributes"].append(aux)
+                            # Appending platform name
+                            aux = {}
+                            aux["type"] = "i3visio.platform"
+                            aux["value"] = self.platformName
+                            aux["attributes"] = []
+                            r["attributes"].append(aux)
+                            # Appending the query performed to grab this items
+                            aux = {}
+                            aux["type"] = "i3visio.search"
+                            aux["value"] = query
+                            aux["attributes"] = []
+                            r["attributes"].append(aux)
 
-                        # TO-DO:
-                        # Perform additional procesing
-                        # Iterating the requested profiles to extract more entities from the URI would be slow!
-                        """if process:
-                            # This function returns a json text in usufy format for the returned objects.
-                            r["attributes"] += json.loads(self.getInfo(process = True, mode="usufy", qURI=uri, query=i))
-                        # Appending the result to results: in this case only one profile will be grabbed"""
-                        results.append(r)
+                            # TO-DO:
+                            # Perform additional procesing
+                            # Iterating the requested profiles to extract more entities from the URI would be slow!
+                            """if process:
+                                # This function returns a json text in usufy format for the returned objects.
+                                r["attributes"] += json.loads(self.getInfo(process = True, mode="usufy", qURI=uri, query=i))
+                            # Appending the result to results: in this case only one profile will be grabbed"""
+                            results.append(r)
+                        except NameError:
+                            pass
+
         return json.dumps(results)
 
     def modeIsValid(self, mode):
@@ -521,16 +527,17 @@ class Platform():
         '''
         return self.platformName == obj.platformName
 
-    def _getAuthenticated(self, browser):
+    def _getAuthenticated(self, browser, url):
         '''
             Getting authenticated. This method will be overwritten.
 
             :param browser: The browser in which the user will be authenticated.
+            :param url: The URL to get authenticated in.
         '''
         # check if we have creds
         if len(self.creds) > 0:
-            # choosing a cred
-            c = random.choice(self.creds)
+            # TODO: in choosing a cred there is an uneeded nesting of arrays
+            c = random.choice(self.creds)[0]
             # adding the credential
             browser.setNewPassword(url, c.user, c.password)
             return True
