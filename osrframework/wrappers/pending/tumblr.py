@@ -81,9 +81,9 @@ class Tumblr(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Untitled</title>"]
-        #self.notFoundText["searchfy"] = []        
-        
+        self.notFoundText["usufy"] = ["<title>Tumblr</title>"]
+        #self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################

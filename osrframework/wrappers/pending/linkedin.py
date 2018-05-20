@@ -29,84 +29,84 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Foodspotting(Platform):
-    """ 
-        A <Platform> object for Foodspotting.
+class Linkedin(Platform):
+    """
+        A <Platform> object for Linkedin.
     """
     def __init__(self):
-        """ 
-            Constructor... 
         """
-        self.platformName = "Foodspotting"
-        self.tags = ["opinions"]
-
+            Constructor...
+        """
+        self.platformName = "Linkedin"
+        self.tags = ["professional", "contact"]
+        self.creds =[]
+        
         ########################
         # Defining valid modes #
         ########################
-        self.isValidMode = {}        
+        self.isValidMode = {}
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False      
-        
+        self.isValidMode["searchfy"] = True
+
         ######################################
         # Search URL for the different modes #
         ######################################
         # Strings with the URL for each and every mode
-        self.url = {}        
+        self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.foodspotting.com/" + "<usufy>"       
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"       
+        self.url["usufy"] = "https://www.linkedin.com/in/" + "<usufy>"
+        self.url["searchfy"] = "https://us.linkedin.com/pub/dir/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
         ######################################
-        self.needsCredentials = {}        
+        self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
-        self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False 
-        
+        self.needsCredentials["usufy"] = True
+        self.needsCredentials["searchfy"] = True
+
         #################
         # Valid queries #
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.+' will match any query.
-        #self.validQuery["phonefy"] = re.compile(".*")
-        self.validQuery["usufy"] = "[^0-9].+"
-        #self.validQuery["searchfy"] = re.compile(".*")
-        
+        #self.validQuery["phonefy"] = ".*"
+        self.validQuery["usufy"] = ".+"
+        self.validQuery["searchfy"] = ".+"
+
         ###################
         # Not_found clues #
         ###################
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>The page you were looking for doesn't exist (404)</title>"]
-        #self.notFoundText["searchfy"] = []        
-        
+        self.notFoundText["usufy"] = ["Perfil no encontrado"]
+        self.notFoundText["searchfy"] = []
+
         #########################
         # Fields to be searched #
         #########################
         self.fieldsRegExp = {}
-        
+
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
         #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-        
+
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
+        self.fieldsRegExp["searchfy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
-        
+        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
+        self.searchfyAliasRegexp = "<h3><a href=\"https://us.linkedin.com/in/([^\"]+)\">"
+        #self.searchfyAliasRegexp = "\" width=\"100\" height=\"100\"></a><div class=\"content\"><h3><a href=\"https://us.linkedin.com/in/([^\"]+)\
         ################
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
-        
-                        
