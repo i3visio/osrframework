@@ -226,7 +226,6 @@ class Platform():
                 else:
                     # Accessing the resources
                     data = i3Browser.recoverURL(qURL)
-                    print(data)
             except:
                 # No information was found, then we return a null entity
                 # TO-DO: i3BrowserException

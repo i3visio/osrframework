@@ -3,6 +3,9 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.6, 2018/05/21 -- Hotfix to remove a printing debug
+- Hotfix to remove an unneeded print line
+
 0.18.5, 2018/05/20 -- New release of May
 - Add Instagram to searchfy
 - Add xtelefonos.es phonefy wrapper

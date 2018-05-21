@@ -3,7 +3,7 @@ OSRFramework
 
 OSRFramework: Open Sources Research Framework
 
-Copyright (C) 2014-2017  F. Brezo and Y. Rubio, i3visio
+Copyright (C) 2014-2018  F. Brezo and Y. Rubio, i3visio
 
 [![Version in PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
 [![License](https://img.shields.io/badge/license-GNU%20Affero%20General%20Public%20License%20Version%203%20or%20Later-blue.svg)]()
@@ -46,11 +46,11 @@ For more details on this issue, check the [COPYING](COPYING) file.
 
 Fast way to do it on any system for a user with administration privileges:
 ```
-pip install osrframework
+pip2 install osrframework
 ```
 You can upgrade to the latest release of the framework with:
 ```
-pip install osrframework --upgrade
+pip2 install osrframework --upgrade
 ```
 This will manage all the dependencies for you and install the latest version of
 the framework.
@@ -70,9 +70,10 @@ mailfy.py and so on. But we are they? They are installed in your path meaning
 that you can open a terminal anywhere and typing the name of the program (seems
 to be an improvement from previous installations...). Examples:
 ```
-usufy.py -n i3visio febrezo yrubiosec -p twitter facebook
-searchfy.py -q "i3visio"
-mailfy.py -n i3visio
+osrf --help
+usufy -n i3visio febrezo yrubiosec -p twitter facebook
+searchfy -q "i3visio"
+mailfy -n i3visio
 ```
 
 Type -h or --help to get more information about which are the parameters of each
