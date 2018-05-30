@@ -20,8 +20,8 @@
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
-__version__ = "1.0"
+__author__ = "i3visio <contacto@i3visio.com>"
+__version__ = "1.1"
 
 import argparse
 import json
@@ -84,7 +84,7 @@ class Fotolog(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h2>Error 404 : No fue posible encontrar la página solicitada</h2>"]
+        self.notFoundText["usufy"] = ["<title>Fotolog - 404 undefined</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################
