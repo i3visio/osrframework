@@ -3,6 +3,11 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+0.18.7, 2018/05/30 -- Post GDPR update
+- Add Fotolog new usufy wrapper
+- Patch Buzznet usufy wrapper to fix positives when accessing from some locations
+- Remove Klout wrapper (the service has been closed)
+
 0.18.6, 2018/05/21 -- Hotfix to remove a printing debug
 - Hotfix to remove an unneeded print line
 
