@@ -35,14 +35,14 @@ class Github(Platform):
         A <SocialNetwork> object for Github.
     """
     def __init__(self):
-        """
+        '''
             Constructor...
-        """
+        '''
         self.platformName = "Github"
         self.tags = ["development"]
 
         # Base URL
-        self.baseURL = "http://github.com/"
+        self.baseURL = "https://github.com/"
 
         ########################
         # Defining valid modes #
@@ -59,7 +59,7 @@ class Github(Platform):
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "https://github.com/" + "<usufy>"
-        self.url["searchfy"] = "https://github.com/search?utf8=%E2%9C%93&q=<searchfy>&type=Users&ref=searchresults"
+        self.url["searchfy"] = "https://github.com/search?utf8=%E2%9C%93&q=" + "<searchfy>" + "&type=Users&ref=searchresults"
 
         ######################################
         # Whether the user needs credentials #
@@ -104,7 +104,9 @@ class Github(Platform):
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "<img alt=\"@([^\"]+)\""
+        #self.searchfyAliasRegexp = "<img alt=\"@([^\"]+)\""
+	self.searchfyAliasRegexp = "alt=\"@([^\"]+)\""
+	#self.searchfyAliasRegexp = "alt=\"@\""
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
 
