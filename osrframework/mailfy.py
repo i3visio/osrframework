@@ -37,7 +37,6 @@ import validate_email
 
 import osrframework
 import osrframework.thirdparties.haveibeenpwned_com.hibp as hibp
-import osrframework.thirdparties.hesidohackeado_com.hesidohackeado as hesidohackeado
 import osrframework.utils.banner as banner
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
@@ -562,7 +561,6 @@ be used instead. Verification may be slower though."""))
 
                 # Iterate through the different leak platforms
                 leaks = hibp.checkIfEmailWasHacked(query)
-                leaks += hesidohackeado.checkIfEmailWasHacked(query)
 
                 if len(leaks) > 0:
                     if not args.quiet:
@@ -592,7 +590,7 @@ be used instead. Verification may be slower though."""))
 
             # Perform is_leaked function
             results = []
-            print("Mailfy will use haveibeenpwned.com (HIBP) and hesidohackeado.com (HSH) APIs to find leaked emails...\n")
+            print("Mailfy will use haveibeenpwned.com (HIBP) API to find leaked emails...\n")
 
             for i, e in enumerate(emails):
                 if not args.quiet:
@@ -600,7 +598,6 @@ be used instead. Verification may be slower though."""))
 
                 # Iterate through the different leak platforms
                 leaks = hibp.checkIfEmailWasHacked(e)
-                leaks += hesidohackeado.checkIfEmailWasHacked(e)
 
                 if len(leaks) > 0:
                     if not args.quiet:
