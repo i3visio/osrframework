@@ -230,7 +230,7 @@ def isBlackListed(ipv4):
     else:
         return False
 
-def pool_function(domain, launchWhois = False):
+def pool_function(domain, launchWhois=False):
     """
     Wrapper for being able to launch all the threads of getPageWrapper.
 
@@ -344,8 +344,8 @@ def performSearch(domains=[], nThreads=16, launchWhois=False):
 
         for d in domains:
             # We need to create all the arguments that will be needed
-            parameters = ( d, launchWhois, )
-            pool.apply_async (pool_function, args= parameters, callback = log_result )
+            parameters = (d, launchWhois,)
+            pool.apply_async(pool_function, args=parameters, callback=log_result )
 
         # Waiting for results to be finished
         while len(poolResults) < len(domains):
@@ -479,13 +479,13 @@ visit """ + general.LICENSE_URL + "\n"
 
         for new in args.user_defined:
             if new not in args.exclude:
-                tlds.append( {"tld": new, "type": "user_defined"})
+                tlds.append({"tld": new, "type": "user_defined"})
 
         if args.nicks:
-            domains = createDomains(tlds, nicks = args.nicks)
+            domains = createDomains(tlds, nicks=args.nicks)
         else:
             # nicks_file
-            domains = createDomains(tlds, nicksFile = args.nicks_file)
+            domains = createDomains(tlds, nicksFile=args.nicks_file)
 
         # Showing the execution time...
         if not args.quiet:
