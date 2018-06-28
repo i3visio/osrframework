@@ -26,6 +26,7 @@ import sys
 import osrframework
 import osrframework.utils.general as general
 import osrframework.alias_generator as alias_generator
+import osrframework.checkfy as checkfy
 import osrframework.domainfy as domainfy
 import osrframework.entify as entify
 import osrframework.mailfy as mailfy
@@ -83,6 +84,11 @@ def getParser():
         "mailfy",
         help="Gets information about email accounts. ",
         parents=[mailfy.getParser()]
+    )
+    subparser_checkfy = subcommands.add_parser(
+        "checkfy",
+        help="Verifies if a given email address matches a pattern. ",
+        parents=[checkfy.getParser()]
     )
     subparser_phonefy = subcommands.add_parser(
         "phonefy",

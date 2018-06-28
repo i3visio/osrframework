@@ -77,6 +77,8 @@ setup(
             'entify.py = osrframework.entify:main',
             'enumerate-profiles = osrframework.enumeration:main',
             'enumerate-profiles.py = osrframework.enumeration:main',
+            'checkfy = osrframework.checkfy:main',
+            'checkfy.py = osrframework.checkfy:main',
             'mailfy = osrframework.mailfy:main',
             'mailfy.py = osrframework.mailfy:main',
             'phonefy = osrframework.phonefy:main',
@@ -139,7 +141,8 @@ setup(
         "flask",
         "pyyaml",
         "colorama",
-        "configparser"
+        "configparser",
+        "cfscrape"
     ],
 )
 
