@@ -19,6 +19,7 @@
 ##################################################################################
 
 import argparse
+import cfscrape
 import json
 import requests
 import sys
@@ -43,24 +44,36 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=0.5):
         A python structure for the json received. If nothing was found, it will
         return an empty list.
     """
-    # Sleeping a second
+    # Sleeping just a little bit
     time.sleep(sleepSeconds)
 
-    # Building API query
-    apiURL= "https://haveibeenpwned.com/api/v2/breachedaccount/" + email
+    print("\t\tBypassing Cloudflare Restriction...")
+    ua = 'osrframework 0.18'
+    useragent = {'User-Agent': ua}
+    cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent=ua)
+
+    leaks = []
+
+    apiURL = "https://haveibeenpwned.com/api/v2/breachedaccount/{}".format(email)
+
     # Accessing the HIBP API
+    time.sleep(sleepSeconds)
+    # Building API query
+    data = requests.get(
+        apiURL,
+        headers=useragent,
+        cookies=cookies,
+        verify=True
+    ).text
+
+    # Reading the text data onto python structures
+    jsonData = json.loads(data)
+
     try:
-        data = requests.get(apiURL).text
-
-        # Reading the text data onto python structures
-        jsonData = json.loads(data)
-
-        leaks = []
-
-        # Building the i3visio like structure
         for e in jsonData:
+            # Building the i3visio like structure
             new = {}
-            new["value"] = "(HIBP) " + e["Name"]
+            new["value"] = "(HIBP) " + e.get("Name")
             new["type"] = "i3visio.platform_leaked"
             new["attributes"] = [
                 {
@@ -75,33 +88,31 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=0.5):
                 },
                 {
                     "value": "@pwn_count",
-                    "type": e['PwnCount'],
+                    "type": e.get("PwnCount"),
                     "attributes": []
                 },
                 {
                     "value": "@added_date",
-                    "type": e['AddedDate'],
+                    "type": e.get("AddedDate"),
                     "attributes": []
                 },
                 {
                     "value": "@breach_date",
-                    "type": e['BreachDate'],
+                    "type": e.get("BreachDate"),
                     "attributes": []
                 },
                 {
                     "value": "@description",
-                    "type": e['Description'],
+                    "type": e.get("Description"),
                     "attributes": []
                 }
             ]
-
             leaks.append(new)
-
-        return leaks
-
     except:
-        # No information was found, then we return a null entity
+        print("ERROR: Something happenned when using HIBP API.")
         return []
+
+    return leaks
 
 
 if __name__ == "__main__":
