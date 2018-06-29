@@ -215,6 +215,7 @@ class Platform():
                 qURL = qURI
             else:
                 qURL, query = self.createURL(word=query, mode=mode)
+            print("[*] Launching search using the {} module...".format(self.__class__.__name__))
             i3Browser = browser.Browser()
             try:
                 # TODO: check if it needs creds

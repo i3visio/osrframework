@@ -178,7 +178,7 @@ class Browser():
         # [TO-DO]
         #    Additional things may be done here to load javascript.
         html = recurso.read()
-
+               
         return html
 
     def setNewPassword(self, url, username, password):

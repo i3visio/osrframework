@@ -162,21 +162,21 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Printing the results if requested
         now = dt.datetime.now()
-        print(str(now) + "\tA summary of the results obtained is shown in the following table:\n")
+        print("\n{date}\tA summary of the results obtained is shown in the following table:\n".format(date=str(now)))
         print(general.success(general.usufyToTextExport(results)))
 
         if args.web_browser:
             general.openResultsInBrowser(results)
 
         now = dt.datetime.now()
-        print("\n" + str(now) + "\tYou can find all the information collected in the following files:")
+        print("\n{date}\tYou can find all the information collected in the following files:".format(date=str(now)))
         for ext in args.extension:
             # Showing the output files
             print("\t" + general.emphasis(fileHeader + "." + ext))
 
         # Showing the execution time...
         endTime= dt.datetime.now()
-        print("\n" + str(endTime) +"\tFinishing execution...\n")
+        print("\n{date}\tFinishing execution...\n".format(date=str(endTime)))
         print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
         print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(args.platforms))) +" seconds\n")
 
