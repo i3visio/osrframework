@@ -47,7 +47,7 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=0.5):
     # Sleeping just a little bit
     time.sleep(sleepSeconds)
 
-    print("\t\tBypassing Cloudflare Restriction...")
+    print("\t[*] Bypassing Cloudflare Restriction...")
     ua = 'osrframework 0.18'
     useragent = {'User-Agent': ua}
     cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent=ua)

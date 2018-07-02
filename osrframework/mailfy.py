@@ -49,22 +49,9 @@ EMAIL_DOMAINS = [
     "126.com",
     "163.com",
     "189.cn",
-    #"aaathats3as.com",
-    "btinternet.com",
-    #"cocaine.ninja",
-    #"cock.lu",
-    #"cock.email",
-    #"firemail.cc",
-    #"getbackinthe.kitchen",
     "gmail.com",
-    #"hitler.rocks",
-    "hushmail.com",
     "icloud.com",
-    "keemail.me",
-    "lycos.com",
     "me.com",
-    #"memeware.net",
-    #"noob.com",
     "protonmail.ch",
     "protonmail.com",
     "rediffmail.com",
@@ -73,13 +60,12 @@ EMAIL_DOMAINS = [
     "tutamail.com",
     "tutanota.com",
     "tutanota.de",
-    #"waifu.club",
-    #"wp.pl",
     "ya.ru",
     "yandex.com",
     "yeah.net",
     "zoho.com"
 ]
+
 
 LEAKED_DOMAINS = [
     "126.com",
@@ -88,17 +74,10 @@ LEAKED_DOMAINS = [
     "aol.com",
     "bk.ru",
     "breakthru.com",
-    #"aaathats3as.com",
     "btinternet.com",
-    #"cocaine.ninja",
-    #"cock.lu",
-    #"cock.email",
-    #"firemail.cc",
-    #"getbackinthe.kitchen",
     "gmail.com",
     "gmx.com",
     "gmx.de",
-    #"hitler.rocks",
     "hotmail.com",
     "hushmail.com",
     "icloud.com",
@@ -110,8 +89,6 @@ LEAKED_DOMAINS = [
     "me.com",
     "mail.ru",
     "mail2tor.com",
-    #"memeware.net",
-    #"noob.com",
     "outlook.com",
     "protonmail.ch",
     "protonmail.com",
@@ -124,9 +101,6 @@ LEAKED_DOMAINS = [
     "tutamail.com",
     "tutanota.com",
     "tutanota.de",
-    "ukr.net",
-    #"waifu.club",
-    #"wp.pl",
     "ya.ru",
     "yahoo.com",
     "yandex.com",
@@ -221,7 +195,7 @@ def weCanCheckTheseDomains(email):
     return True
 
 
-def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains = EMAIL_DOMAINS, excludeDomains = []):
+def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains=EMAIL_DOMAINS, excludeDomains=[]):
     """
     Method that generates a list of emails.
 
@@ -292,7 +266,14 @@ def pool_function(args):
         if sys.platform == 'win32':
             is_valid = validate_email.validate_email(args, verify=True)
         else:
-            is_valid = emailahoy.verify_email_address(args)
+            checker = emailahoy.VerifyEmail()
+            status, message = checker.verify_email_smtp(args, from_host='gmail.com', from_email='sample@gmail.com')
+            if status == 250:
+                print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.success(args), general.success("SUCCESS ({})".format(str(status))), message))
+                is_valid = True
+            else:
+                print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.error(args), general.error("FAILED ({})".format(str(status))), message))
+                is_valid = False
     except Exception, e:
         print(general.warning("WARNING. An error was found when performing the search. You can omit this message.\n" + str(e)))
         is_valid = False
@@ -385,7 +366,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
         for m in emails:
             # We need to create all the arguments that will be needed
             parameters = ( m, )
-            pool.apply_async (pool_function, args= parameters, callback = log_result )
+            pool.apply_async (pool_function, args=parameters, callback=log_result )
 
         # Waiting for results to be finished or time to pass
         while len(poolResults) < len(emails) and not hasRunOutOfTime(_startTime):
@@ -552,7 +533,8 @@ be used instead. Verification may be slower though."""))
 
             if not args.quiet:
                 now = dt.datetime.now()
-                print(str(now) +"\tMailfy has found " + general.emphasis(str(len(results))) + " existing email(s). Has it been leaked somewhere?")
+                print("\n{}\tMailfy has found {} existing email(s). Have they been leaked somewhere?\n".format(str(now), general.emphasis(str(len(results)))))
+                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
             # Verify the existence of the mails found as leaked emails.
             for r in tmp:
@@ -564,7 +546,10 @@ be used instead. Verification may be slower though."""))
 
                 if len(leaks) > 0:
                     if not args.quiet:
-                        print(general.success("\t" + query + " has been found in at least " + str(len(leaks)) + " different leaks."))
+                        if len(leaks) > 0:
+                            print("\t[*] '{}' has been found in at least {} different leaks.".format(general.success(query), general.success(str(len(leaks)))))
+                        else:
+                            print("\t[*] '{}' has NOT been found in any leak.".format(general.error(query)))
                     email, alias, domain = getMoreInfo(query)
 
                     for leak in leaks:
