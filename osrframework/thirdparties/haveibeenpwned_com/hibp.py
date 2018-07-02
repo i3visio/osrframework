@@ -67,9 +67,9 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=0.5):
     ).text
 
     # Reading the text data onto python structures
-    jsonData = json.loads(data)
-
     try:
+        jsonData = json.loads(data)
+
         for e in jsonData:
             # Building the i3visio like structure
             new = {}
@@ -108,7 +108,9 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=0.5):
                 }
             ]
             leaks.append(new)
-    except:
+    except ValueError:
+        return []
+    except Exception:
         print("ERROR: Something happenned when using HIBP API.")
         return []
 
