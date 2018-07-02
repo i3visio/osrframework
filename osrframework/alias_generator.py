@@ -23,6 +23,7 @@
 
 import argparse
 import json
+import sys
 
 import osrframework
 import osrframework.utils.banner as banner
@@ -2862,22 +2863,26 @@ def main(params=None):
 
     extraWords = args.extra_words
 
-    if args.name == None and args.surname1 == None and args.surname2 == None and args.city == None and args.country == None and args.year == None:
-        print("\nCollecting information about the profile")
-        print("----------------------------------------\n")
+    try:
+        if args.name == None and args.surname1 == None and args.surname2 == None and args.city == None and args.country == None and args.year == None:
+            print("\nCollecting information about the profile")
+            print("----------------------------------------\n")
 
-        args.name = raw_input(general.emphasis("Insert a name: ".ljust(35, " "))).replace(' ','')
-        args.surname1 = raw_input(general.emphasis("Insert the first surname: ".ljust(35, " "))).replace(' ','')
-        args.surname2 = raw_input(general.emphasis("Insert the second surname: ".ljust(35, " "))).replace(' ','')
-        args.year = raw_input(general.emphasis("Insert a year (e. g.: birthyear): ".ljust(35, " "))).replace(' ','')
-        args.city = raw_input(general.emphasis("Insert a city: ".ljust(35, " "))).replace(' ','')
-        args.country = raw_input(general.emphasis("Insert a country: ".ljust(35, " "))).replace(' ','')
+            args.name = raw_input(general.emphasis("Insert a name: ".ljust(35, " "))).replace(' ','')
+            args.surname1 = raw_input(general.emphasis("Insert the first surname: ".ljust(35, " "))).replace(' ','')
+            args.surname2 = raw_input(general.emphasis("Insert the second surname: ".ljust(35, " "))).replace(' ','')
+            args.year = raw_input(general.emphasis("Insert a year (e. g.: birthyear): ".ljust(35, " "))).replace(' ','')
+            args.city = raw_input(general.emphasis("Insert a city: ".ljust(35, " "))).replace(' ','')
+            args.country = raw_input(general.emphasis("Insert a country: ".ljust(35, " "))).replace(' ','')
 
-        if args.extra_words == []:
-            print("\nAdditional transformations to be added")
-            print("--------------------------------------\n")
-            inputText = raw_input(general.emphasis("Extra words to add (',' separated): ".ljust(35, " "))).replace(' ','')
-            extraWords += inputText.lower().split(',')
+            if args.extra_words == []:
+                print("\nAdditional transformations to be added")
+                print("--------------------------------------\n")
+                inputText = raw_input(general.emphasis("Extra words to add (',' separated): ".ljust(35, " "))).replace(' ','')
+                extraWords += inputText.lower().split(',')
+    except KeyboardInterrupt:
+        print("\n\nThe user manually aborted the program. Exiting...")
+        sys.exit(2)
 
     lista=[]
 
