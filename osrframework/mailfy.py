@@ -244,9 +244,7 @@ def pool_function(args):
     """
     A wrapper for being able to launch all the threads.
 
-    We will use python-emailahoy library for the verification in non-Windows
-    systems as it is faster than validate_email. In Windows systems the latter
-    is preferred.
+    We will use python-emailahoy library for the verification.
 
     Args:
     -----
@@ -263,17 +261,14 @@ def pool_function(args):
     is_valid = True
 
     try:
-        if sys.platform == 'win32':
-            is_valid = validate_email.validate_email(args, verify=True)
+        checker = emailahoy.VerifyEmail()
+        status, message = checker.verify_email_smtp(args, from_host='gmail.com', from_email='sample@gmail.com')
+        if status == 250:
+            print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.success(args), general.success("SUCCESS ({})".format(str(status))), message))
+            is_valid = True
         else:
-            checker = emailahoy.VerifyEmail()
-            status, message = checker.verify_email_smtp(args, from_host='gmail.com', from_email='sample@gmail.com')
-            if status == 250:
-                print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.success(args), general.success("SUCCESS ({})".format(str(status))), message))
-                is_valid = True
-            else:
-                print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.error(args), general.error("FAILED ({})".format(str(status))), message))
-                is_valid = False
+            print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.error(args), general.error("FAILED ({})".format(str(status))), message))
+            is_valid = False
     except Exception, e:
         print(general.warning("WARNING. An error was found when performing the search. You can omit this message.\n" + str(e)))
         is_valid = False
