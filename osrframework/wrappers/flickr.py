@@ -38,7 +38,7 @@ class Flickr(Platform):
             Constructor... 
         """
         self.platformName = "Flickr"
-        self.tags = ["image", "social"]
+        self.tags = ["imagery", "social"]
 
         ########################
         # Defining valid modes #

@@ -39,7 +39,7 @@ class Px500(Platform):
             Constructor... 
         """
         self.platformName = "500px"
-        self.tags = ["professional", "image"]
+        self.tags = ["imagery"]
         
         ########################
         # Defining valid modes #

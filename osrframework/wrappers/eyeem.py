@@ -41,7 +41,7 @@ class Eyeem(Platform):
             Constructor... 
         """
         self.platformName = "Eyeem"
-        self.tags = ["photos"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

@@ -38,7 +38,7 @@ class Facesaerch(Platform):
             Constructor...
         '''
         self.platformName = "Facesaerch"        
-        self.tags = ["image", "search"]
+        self.tags = ["imagery", "search"]
         
         ########################
         # Defining valid modes #

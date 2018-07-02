@@ -20,7 +20,7 @@
 #
 ##################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
+__author__ = "Felix Brezo and Yaiza Rubio <contacto@i3visio.com>"
 __version__ = "1.0"
 
 import argparse
@@ -41,7 +41,7 @@ class Goblinrefuge(Platform):
             Constructor...
         """
         self.platformName = "Goblinrefuge"
-        self.tags = ["video", "audio", "image"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

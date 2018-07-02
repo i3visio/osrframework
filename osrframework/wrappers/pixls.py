@@ -38,7 +38,7 @@ class Pixls(Platform):
             Constructor... 
         """
         self.platformName = "Pixls"
-        self.tags = ["image", "professional", "development"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

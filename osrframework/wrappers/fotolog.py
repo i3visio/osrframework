@@ -41,7 +41,7 @@ class Fotolog(Platform):
             Constructor...
         """
         self.platformName = "Fotolog"
-        self.tags = ["photos"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

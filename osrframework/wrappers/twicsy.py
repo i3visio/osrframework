@@ -38,7 +38,7 @@ class Twicsy(Platform):
             Constructor... 
         """
         self.platformName = "Twicsy"
-        self.tags = ["social", "photos"]
+        self.tags = ["social", "imagery"]
 
         ########################
         # Defining valid modes #

@@ -38,7 +38,7 @@ class Instagram(Platform):
             Constructor...
         """
         self.platformName = "Instagram"
-        self.tags = ["image", "social"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

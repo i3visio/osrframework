@@ -39,7 +39,7 @@ class Pixinsight(Platform):
             Constructor... 
         """
         self.platformName = "Pixinsight"
-        self.tags = ["image"]
+        self.tags = ["imagery"]
         
         ########################
         # Defining valid modes #

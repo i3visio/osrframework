@@ -38,7 +38,7 @@ class Carbonmade(Platform):
             Constructor... 
         """
         self.platformName = "Carbonmade"
-        self.tags = ["image", "tools"]
+        self.tags = ["imagery"]
         
         ########################
         # Defining valid modes #

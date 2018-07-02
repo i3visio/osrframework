@@ -38,7 +38,7 @@ class Bordom(Platform):
             Constructor... 
         """
         self.platformName = "Bordom"
-        self.tags = ["image"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

@@ -48,7 +48,7 @@ class Bubok(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.bubok.es/autores/" + "<usufy>"
+        self.url["usufy"] = "https://www.bubok.es/autores/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -75,7 +75,7 @@ class Bubok(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Bubok - Distribución nacional e internacional de libros de autores noveles</title>"]
+        self.notFoundText["usufy"] = ["<title>Bubok - Publica tu libro y distribúyelo internacionalmente</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

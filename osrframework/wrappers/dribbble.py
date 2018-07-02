@@ -38,7 +38,7 @@ class Dribbble(Platform):
             Constructor... 
         """
         self.platformName = "Dribbble"
-        self.tags = ["image"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

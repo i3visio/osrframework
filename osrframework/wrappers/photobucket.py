@@ -39,7 +39,7 @@ class Photobucket(Platform):
             Constructor... 
         """
         self.platformName = "Photobucket"
-        self.tags = ["image"]
+        self.tags = ["imagery"]
    
         ########################
         # Defining valid modes #

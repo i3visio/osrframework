@@ -38,7 +38,7 @@ class Imgur(Platform):
             Constructor... 
         """
         self.platformName = "Imgur"
-        self.tags = ["image"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

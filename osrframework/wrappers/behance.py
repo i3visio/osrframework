@@ -38,7 +38,7 @@ class Behance(Platform):
             Constructor... 
         """
         self.platformName = "Behance"
-        self.tags = ["image"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #

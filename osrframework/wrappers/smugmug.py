@@ -41,7 +41,7 @@ class Smugmug(Platform):
             Constructor...
         """
         self.platformName = "Smugmug"
-        self.tags = ["photos"]
+        self.tags = ["imagery"]
 
         ########################
         # Defining valid modes #
