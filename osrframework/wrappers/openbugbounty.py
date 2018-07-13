@@ -84,7 +84,7 @@ class OpenBugBounty(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [ "<h1>404 Error: Page Not found</h1>" ]
+        self.notFoundText["usufy"] = [ "/images/404.jpg" ]
         #self.notFoundText["searchfy"] = []
 
         #########################
