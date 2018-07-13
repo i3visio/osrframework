@@ -3,6 +3,24 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
+
+0.18.8, 2018/07/13 -- Checkfy release
+- Add checkfy as a tool to find emails matching a pattern
+- Fix HIBP queries to deal with Cloudflare restrictions
+- Remove Hesidohackeado wrappers due to a change in their service policy
+- Add Unsplash usufy wrapper
+- Add Telegram usufy wrapper
+- Add Whattpad usufy wrapper
+- Add KhanAcademy usufy wrapper
+- Add Telegram usufy wrapper
+- Move to pending non working wrappers like cafemom, break or blackyard
+- Add additional information to Searchfy
+- Fix tags for imagery usufy wrappers
+- Capture KeyboardInterruptions in alias_generator
+- Fix formatting in mailfy.py
+- Force usage of emailahoy en Windows systems too
+- Fix OpenBugBounty wrapper
+
 0.18.7, 2018/05/30 -- Post GDPR update
 - Add Fotolog new usufy wrapper
 - Patch Buzznet usufy wrapper to fix positives when accessing from some locations
@@ -28,7 +46,7 @@ For more information, check the README.Add some wrappers
 0.18.3, 2018/03/10 -- Stability version
 - Add #293: add hacked email search
 - Fix #312: Update cardinghispano usufy wrapper
-- Fix #311: Set --is_leaked option as default for mailfy 
+- Fix #311: Set --is_leaked option as default for mailfy
 - Fix several false positives in domainfy resolution
 - Remove tuporno and genspot wrappers
 
