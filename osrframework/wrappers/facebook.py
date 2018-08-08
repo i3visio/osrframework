@@ -41,7 +41,7 @@ class Facebook(Platform):
         self.tags = ["social", "contact"]
 
         # Base URL
-        self.baseURL = "http://facebook.com/"
+        self.baseURL = "https://facebook.com/"
 
         ########################
         # Defining valid modes #
@@ -102,8 +102,10 @@ class Facebook(Platform):
         # Example of fields:
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
-        self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "tabindex=\"-1\" href=\"https://www.facebook.com/([^\"]+)\">"
+        #self.fieldsRegExp["searchfy"] = {}
+	self.fieldsRegExp["searchfy"] = ".+"
+        self.searchfyAliasRegexp = "href=\"https://www.facebook.com/people/([^\"]+)/([^\"]+)\">" 
+	self.searchfyAliasRegexp = "<a class=\"_2ial\" href=\"https://www.facebook.com/([^\"]+)"
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
 
