@@ -32,7 +32,7 @@ import urllib2
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Verbling(Platform):
+class Udemy(Platform):
     """
         A <Platform> object for Udemy.
     """
