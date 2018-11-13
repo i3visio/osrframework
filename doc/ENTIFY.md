@@ -1,4 +1,0 @@
-Using entify.py
-===============
-
-TODO.

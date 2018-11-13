@@ -1,4 +1,0 @@
-Configuring OSRFramework
-========================
-
-TODO.

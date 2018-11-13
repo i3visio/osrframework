@@ -1,4 +1,0 @@
-Using searchfy.py
-=================
-
-TODO.
