@@ -81,7 +81,7 @@ class Buzznet(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["The page you requested was not found.", "<div>Content Currently Unavailable</div>"]
+        self.notFoundText["usufy"] = ["<title>Page not found</title>", "<title>, Author at buzznet</title>"]
         #self.notFoundText["searchfy"] = []        
         
         #########################

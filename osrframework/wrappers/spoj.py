@@ -20,6 +20,9 @@
 #
 ##################################################################################
 
+__author__ = "Félix Brezo and Yaiza Rubio <contacto@i3visio.com>"
+__version__ = "1.1"
+
 import argparse
 import json
 import re
@@ -81,7 +84,7 @@ class Spoj(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [">History of submissions</a>"]
+        self.notFoundText["usufy"] = ['<div class="col-lg-12" id="main-banner">']
         #self.notFoundText["searchfy"] = []        
         
         #########################

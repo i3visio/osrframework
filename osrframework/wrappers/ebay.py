@@ -81,7 +81,7 @@ class Ebay(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["The User ID you entered was not found. Please check the User ID and try again"]  
+        self.notFoundText["usufy"] = ["The User ID you entered was not found. Please check the User ID and try again"]
         #self.notFoundText["searchfy"] = []
 
         #########################

@@ -21,7 +21,7 @@
 ##################################################################################
 
 __author__ = "Félix Brezo and Yaiza Rubio <contacto@i3visio.com>"
-__version__ = "1.0"
+__version__ = "1.1"
 
 import argparse
 import json
@@ -84,7 +84,7 @@ class ThisCrush(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['<title>ThisCrush - OMG, Awesome Fun, Crushes, Who likes you?</title>']
+        self.notFoundText["usufy"] = ['<title>OMG, Awesome Fun, Crushes, Who likes you?</title>']
         #self.notFoundText["searchfy"] = []
 
         #########################

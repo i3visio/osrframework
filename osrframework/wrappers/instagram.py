@@ -26,7 +26,7 @@ import re
 import sys
 import urllib2
 
-import osrframework.utils.browser as browser
+import osrframework.utils.general as general
 from osrframework.utils.platforms import Platform
 
 class Instagram(Platform):
@@ -44,6 +44,7 @@ class Instagram(Platform):
         # Defining valid modes #
         ########################
         self.isValidMode = {}
+        self.isValidMode["mailfy"] = True
         self.isValidMode["phonefy"] = False
         self.isValidMode["usufy"] = True
         self.isValidMode["searchfy"] = True
@@ -53,8 +54,8 @@ class Instagram(Platform):
         ######################################
         # Strings with the URL for each and every mode
         self.url = {}
-        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["usufy"] = "http://www.instagram.com/" + "<usufy>"
+        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         self.url["searchfy"] = "http://picbear.online/search/" + "<searchfy>"
 
         ######################################
@@ -62,6 +63,7 @@ class Instagram(Platform):
         ######################################
         self.needsCredentials = {}
         #self.needsCredentials["phonefy"] = False
+        self.needsCredentials["mailfy"] = False
         self.needsCredentials["usufy"] = False
         self.needsCredentials["searchfy"] = False
 
@@ -71,9 +73,10 @@ class Instagram(Platform):
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
         # The regular expression '.+' will match any query.
+        self.validQuery["mailfy"] = ".+"
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
         self.validQuery["searchfy"] = ".*"
+        self.validQuery["usufy"] = ".+"
 
         ###################
         # Not_found clues #
@@ -109,3 +112,41 @@ class Instagram(Platform):
         ################
         # This attribute will be feeded when running the program.
         self.foundFields = {}
+
+
+    def check_mailfy(self, query, kwargs={}):
+        """
+        Verifying a mailfy query in this platform.
+
+        This might be redefined in any class inheriting from Platform. The only
+        condition is that any of this should return a dictionary as defined.
+
+        Args:
+        -----
+            query: The element to be searched.
+            kwargs: Dictionary with extra parameters. Just in case.
+
+        Return:
+        -------
+            Returns the collected data if exists or None if not.
+        """
+        import re
+        import requests
+
+        s = requests.Session()
+
+        # Getting the first response to grab the csrf_token
+        r1 = s.get("https://www.instagram.com")
+        csrf_token = re.findall("csrf_token", r1.text)[0]
+
+        # Launching the query to Instagram
+        r2 = s.post(
+            'https://www.instagram.com/accounts/web_create_ajax/attempt/',
+            data={"email": query},
+            headers={"X-CSRFToken": csrf_token}
+        )
+
+        if '{"email": [{"message": "Another account is using' in r2.text:
+            return r2.text
+        else:
+            return None

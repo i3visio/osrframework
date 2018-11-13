@@ -104,7 +104,7 @@ class Github(Platform):
         #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "<img alt=\"@([^\"]+)\""
+        self.searchfyAliasRegexp = 'data-octo-dimensions="link_type:self" class="d-table" href="/([^"]+)">'
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
 

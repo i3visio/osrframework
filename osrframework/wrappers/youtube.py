@@ -84,7 +84,7 @@ class Youtube(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Este canal no existe.", "channel-empty-message banner-message"] 
+        self.notFoundText["usufy"] = ["channel-empty-message banner-message"] 
         self.notFoundText["searchfy"] = []        
         
         #########################
@@ -115,7 +115,7 @@ class Youtube(Platform):
         
         # Definition of regular expressions to be searched in searchfy mode
         self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = '<div class="yt-lockup-byline"><a href="([^\"]+)" class="yt-uix-sessionlink g-hovercard      spf-link "'
+        self.searchfyAliasRegexp = '{"webCommandMetadata":{"url":"/user/([^"]+)","webPageType":"WEB_PAGE_TYPE_BROWSE"}'
         # Example of fields:
         #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""        
         
@@ -125,33 +125,5 @@ class Youtube(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
 
-    def createURL(self, word, mode="phonefy"):
-        ''' 
-            Method to create the URL replacing the word in the appropriate URL.
-            
-            :param word:   Word to be searched.
-            :param mode:    Mode to be executed.
-            
-            :return:    The URL to be queried.
-        '''
-        # Youtube has two different types of profiles: channels and users
-        if "/user/" in word:
-            alias = word[6:]
-        else:
-            alias = word        
-        try:
-            if mode == "base":
-                if word[0] == "/":
-                    return self.baseURL+word[1:], alias
-                else:
-                    return self.baseURL+word, alias
-            else:
-                try:
-                    return self.url[mode].replace("<"+mode+">", word.replace(' ', '+')), alias
-                except:
-                    pass   
-        except:
-            pass
-            # TO-DO: BaseURLNotFoundExceptionThrow base URL not found for the mode.        
+     
          
-
