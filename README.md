@@ -95,18 +95,6 @@ files stored in the `defaults` subfolder.
 If you are experiencing problems, you might fight relevant information in the
 (FAQ Section)[doc/FAQ.md].
 
-5 - Other utils
----------------
-
-Previous versions of OSRFramework included several useful utils that now have
-been moved to separate packages. The server, the console UI and the Maltego
-transforms are packaged separatedly so as to make it easier the maintenance of
-these utils. Thus, you can still install this packages with:
-
-```
-pip install osrframework_server osrframework_console osrframework_maltego --user
-```
-
 5 - HACKING
 -----------
 

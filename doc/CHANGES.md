@@ -3,13 +3,14 @@ OSRFramework Changelog
 
 For more information, check the README.Add some wrappers
 
-0.19.0, 2018/11/14 -- Simplified wrapper systems
+0.19.0, 2018/11/23 -- Simplified wrapper systems
 - Add version 2 of wrappers
 - Provide support for both version of wrappers
 - Add verification of email registration in online platforms
 - Improve welcome banner
 - Add fortunes with tips and tricks
-- Remove nonworking usufy wrappers: streakgaming, cardinghispano 
+- Fix several wrappers and false positives
+- Remove nonworking usufy wrappers: streakgaming, cardinghispano, ehow, realcarders, looki
 - Improve documentation
 
 0.18.8, 2018/07/13 -- Checkfy release
