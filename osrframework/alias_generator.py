@@ -22,6 +22,7 @@
 
 
 import argparse
+import datetime as dt
 import json
 import sys
 
@@ -2806,9 +2807,16 @@ def generate(name=None, surname1=None, surname2=None, city=None, country=None, y
 
     # Sorting list
     listaFinal.sort()
-    print("\nProcess finished.")
-    print("\nGenerated nicks:\n")
-    print(general.success(json.dumps(listaFinal, indent=2, sort_keys=True)))
+    # Showing the execution time...
+    endTime= dt.datetime.now()
+    print("\n{}\tGeneration finished...\n".format(endTime))
+    try:
+        print("\nGenerated nicks:\n")
+        print(general.success(json.dumps(listaFinal, indent=2, sort_keys=True)))
+    except UnicodeDecodeError as _:
+        for n in listaFinal:
+            print(general.success(n))
+        print(general.warning("\nThe input provided includes a Unicode character. You may try it again without it."))
     print("\nUp to " + general.emphasis(str(len(listaFinal))) + " nicks generated.\n")
 
     return listaFinal
@@ -2849,15 +2857,14 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
+        args = params
 
     print(general.title(banner.text))
 

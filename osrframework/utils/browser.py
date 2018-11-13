@@ -40,7 +40,6 @@ class Browser():
         """
             Recovering an instance of a new Browser.
         """
-
         # Browser
         self.br = mechanize.Browser()
 
@@ -139,17 +138,18 @@ class Browser():
                     # We are not adding this protocol to be proxied
                     pass
 
-    def recoverURL(self,url):
+    def recoverURL(self, url):
         """
-            Public method to recover a resource.
-                url
-                Platform
+        Public method to recover a resource.
 
-            Returns:
-                Returns a resource that has to be read, for instance, with html = self.br.read()
+        Args:
+        -----
+            url: The URL to be collected.
+
+        Returns:
+        --------
+            Returns a resource that has to be read, for instance, with html = self.br.read()
         """
-        logger = logging.getLogger("osrframework.utils")
-
         # Configuring user agents...
         self.setUserAgent()
 
@@ -170,15 +170,15 @@ class Browser():
                 pass
             url = url.replace(".onion", ".onion.cab")
 
-        logger.debug("Retrieving the resource: " + url)
         # Opening the resource
-        recurso = self.br.open(url, timeout=self.timeout)
+        try:
+            recurso = self.br.open(url)
+        except:
+            # Something happened. Maybe the request was forbidden?
+            return None
 
-        logger.debug("Reading html code from: " + url)
-        # [TO-DO]
-        #    Additional things may be done here to load javascript.
         html = recurso.read()
-               
+
         return html
 
     def setNewPassword(self, url, username, password):

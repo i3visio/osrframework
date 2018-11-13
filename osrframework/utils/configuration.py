@@ -20,7 +20,11 @@
 #
 ##################################################################################
 
-import ConfigParser
+try:
+    import ConfigParser
+except:
+    # For Python 3 compatibility
+    import configparser
 import os
 import sys
 import osrframework.utils.errors as errors

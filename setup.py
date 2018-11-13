@@ -113,9 +113,9 @@ setup(
     install_requires=[
         "setuptools",
         "mechanize",
+        "BeautifulSoup",
         "requests",
         "python-emailahoy",
-        "BeautifulSoup",
         "pyexcel==0.2.1",
         "pyexcel_ods==0.1.1",
         "pyexcel_xls==0.1.0",
@@ -126,10 +126,12 @@ setup(
         "networkx",
         "decorator",
         "validate_email",
-        "pydns",
+        #"pydns",
+        # Python3
+        #"py3dns",
+        #"robobrowser",
         "tabulate",
         "oauthlib>=1.0.0",
-        # Added to dinamically import wrappers:
         "importlib",
         #"inspect",
         #"pkgutil",
@@ -138,7 +140,6 @@ setup(
         #"ndg-httpsclient",
         #"pyasn1"
         "python-whois",
-        "flask",
         "pyyaml",
         "colorama",
         "configparser",
@@ -170,6 +171,7 @@ files_to_copy= {
     ],
     paths["appPathWrappers"] : [
         os.path.join("config", "plugins", "wrapper.py.sample"),
+        os.path.join("config", "plugins", "wrapper_v2.py.sample"),
     ],
     paths["appPathPatterns"] : [
         os.path.join("config", "plugins", "pattern.py.sample"),

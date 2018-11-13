@@ -36,12 +36,17 @@ import osrframework.utils.general as general
 
 def processPhoneList(platformNames=[], numbers=[], excludePlatformNames=[]):
     """
-        Method to perform the phone list.
+    Method to perform searchs on a series of numbers.
 
-        :param platformNames: List of names fr the platforms.
-        :param numbers: List of numbers to be queried.
+    Args:
+    -----
+        platformNames: List of names of the platforms.
+        numbers: List of numbers to be queried.
+        excludePlatformNames: A list of platforms not to be searched.
 
-        :return:
+    Return:
+    -------
+        A list of verified emails.
     """
     # Grabbing the <Platform> objects
     platforms = platform_selection.getPlatformsByName(platformNames, mode="phonefy", excludePlatformNames=excludePlatformNames)
@@ -50,7 +55,7 @@ def processPhoneList(platformNames=[], numbers=[], excludePlatformNames=[]):
     for num in numbers:
         for pla in platforms:
             # This returns a json.txt!
-            entities = pla.getInfo(query=num, process = True, mode="phonefy")
+            entities = pla.getInfo(query=num, process=True, mode="phonefy")
             if entities != {}:
                 results+=json.loads(entities)
     return results
@@ -71,7 +76,7 @@ def getParser():
     groupMainOptions = parser.add_mutually_exclusive_group(required=True)
     # Adding the main options
     groupMainOptions.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')
-    groupMainOptions.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help = 'the list of phones to process (at least one is required).')
+    groupMainOptions.add_argument('-n', '--numbers', metavar='<phones>', nargs='+', action='store', help='the list of phones to process (at least one is required).')
 
     listAll = platform_selection.getAllPlatformNames("phonefy")
 
@@ -107,32 +112,32 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
 
     Returns:
     --------
         A list of i3visio entities.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
+        args = params
 
     results = []
 
     if not args.quiet:
         print(general.title(banner.text))
 
-        sayingHello = """
-Phonefy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2018
+    sayingHello = """
+     Phonefy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL + "\n"
-        print(general.title(sayingHello))
+visit <{}>.
+""".format(general.LICENSE_URL)
+    print(general.info(sayingHello))
 
     if args.license:
         general.showLicense()
@@ -161,7 +166,7 @@ visit """ + general.LICENSE_URL + "\n"
         # Showing the information gathered if requested
         if not args.quiet:
             now = dt.datetime.now()
-            print(str(now) + "\tA summary of the results obtained is shown in the following table:\n")
+            print("\n{}\tResults obtained:\n".format(str(now)))
             print(general.success(general.usufyToTextExport(results)))
 
             if args.web_browser:

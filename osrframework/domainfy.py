@@ -57,8 +57,8 @@ TLD["generic"] = generic_tld.tld
 TLD["geographic"] = geographic_tld.tld
 # Brand TLD
 TLD["brand"] = brand_tld.tld
-# Brand TLD
-TLD["other"] = other_subdomains.tld
+# Other TLD
+#TLD["other"] = other_subdomains.tld
 
 def getNumberTLD():
     """
@@ -432,31 +432,31 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
 
     Results:
     --------
         list: Returns a list with i3visio entities.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
+        args = params
 
     results = []
     if not args.quiet:
         print(general.title(banner.text))
 
-        sayingHello = """
-Domainfy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2018
+    sayingHello = """
+    Domainfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL + "\n"
-        print(general.title(sayingHello))
+visit <{}>.
+""".format(general.LICENSE_URL)
+    print(general.info(sayingHello))
 
     if args.license:
         general.showLicense()
@@ -490,7 +490,12 @@ visit """ + general.LICENSE_URL + "\n"
         # Showing the execution time...
         if not args.quiet:
             startTime= dt.datetime.now()
-            print(str(startTime) + "\tTrying to identify the existence of " + general.emphasis(str(len(domains))) + " domain(s)... Relax!\n")
+            print("{}\tTrying to resolve {} domain(s)…\n".format(str(startTime), general.emphasis(str(len(domains)))))
+            if len(domains) > 200:
+                print("""        Note that a full '-t all' search may take around 3.5 mins. If that's too 
+        long for you, try narrowing the search using '-t cc' or similar arguments. 
+        Otherwise, just wait and keep calm!
+                """)
             print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
         # Perform searches, using different Threads
@@ -508,7 +513,8 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Showing the information gathered if requested
         if not args.quiet:
-            print("A summary of the results obtained is shown in the following table:\n")
+            now = dt.datetime.now()
+            print("\n{}\tResults obtained:\n".format(str(now)))
             try:
                 print(general.success(general.usufyToTextExport(results)))
             except:
@@ -525,7 +531,7 @@ visit """ + general.LICENSE_URL + "\n"
         if not args.quiet:
             # Showing the execution time...
             endTime= dt.datetime.now()
-            print("\n" + str(endTime) +"\tFinishing execution...\n")
+            print("\n{}\tFinishing execution...\n".format(endTime))
             print("Total time used:\t" + general.emphasis(str(endTime-startTime)))
             print("Average seconds/query:\t" + general.emphasis(str((endTime-startTime).total_seconds()/len(domains))) +" seconds\n")
 

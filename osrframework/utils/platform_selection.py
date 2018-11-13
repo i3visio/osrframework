@@ -42,7 +42,7 @@ def getAllPlatformNames(mode):
     """
     # Recovering all the possible platforms installed
     platOptions = []
-    if mode in ["phonefy", "usufy", "searchfy"]:
+    if mode in ["phonefy", "usufy", "searchfy", "mailfy"]:
         allPlatforms = getAllPlatformObjects(mode=mode)
         # Defining the platOptions
         for p in allPlatforms:
@@ -56,8 +56,6 @@ def getAllPlatformNames(mode):
                 platOptions.append(parameter)
     elif mode == "domainfy":
         platOptions = osrframework.domainfy.TLD.keys()
-    elif mode == "mailfy":
-        platOptions = osrframework.mailfy.EMAIL_DOMAINS
 
     platOptions =  sorted(set(platOptions))
     platOptions.insert(0, 'all')
@@ -251,6 +249,9 @@ def getAllPlatformObjects(mode = None):
         # We are returning only those platforms which are required by the mode.
         selected = []
         for p in listAll:
-            if p.isValidMode[mode]:
-                selected.append(p)
+            try:
+                if p.isValidMode[mode]:
+                    selected.append(p)
+            except:
+                pass
         return selected

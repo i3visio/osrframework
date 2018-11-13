@@ -21,6 +21,7 @@
 ################################################################################
 
 import argparse
+import importlib
 import sys
 
 import osrframework
@@ -146,8 +147,8 @@ def main(params=None):
         general.showLicense()
 
     # Launch the appropiate util
-    module = __import__(args.command_name)
-    module.main(params[1:])
+    module = importlib.import_module("osrframework.{}".format(args.command_name))
+    module.main(args)
     sys.exit(0)
 
 

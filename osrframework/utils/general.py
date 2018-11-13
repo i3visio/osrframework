@@ -158,7 +158,7 @@ def _generateTabularData(res, oldTabularData = {}, isTerminal=False, canUnicode=
         "i3visio_dni",
         "i3visio_domain",
         "i3visio_platform_leaked",
-        "_source"
+        #"_source"
     ]
     # List of profiles found
     values = {}
@@ -464,37 +464,29 @@ def _generateGraphData(data, oldData=nx.Graph()):
     """
     def _addNewNode(ent, g):
         """
+        Wraps the creation of a node
+
+        Args:
+        -----
             ent:   The hi3visio-like entities to be used as the identifier.
                 ent = {
                     "value":"i3visio",
                     "type":"i3visio.alias,
                 }
             g:   The graph in which the entity will be stored.
-            :return:    newAtts, newEntties
+
+        Returns:
+        -------
+            The label used to represent this element.
         """
-        # Serialized entity
-        serEnt = json.dumps(ent)
-
-        # Calculating the hash
-        h = hashlib.new('md5')
-        h.update(serEnt)
-        hashLabel = h.hexdigest()
-
-        # Adding the node
-        g.add_node(hashLabel)
-
-        # Creating the main attributes such as the type and value
-        g.node[hashLabel]["type"] = ent["type"]
         try:
-            g.node[hashLabel]["value"] = unicode(ent["value"])
+            label = unicode(ent["value"])
         except UnicodeEncodeError as e:
             # Printing that an error was found
-            g.node[hashLabel]["value"] = "[WARNING: Unicode Encode]"
-        except:
-            # Printing that this is not applicable value
-            g.node[hashLabel]["value"] = "[N/A]"
-
-        return hashLabel
+            label = str(ent["value"])
+        g.add_node(label)
+        g.node[label]["type"] = ent["type"]
+        return label
 
     def _processAttributes(elems, g):
         """
@@ -569,26 +561,27 @@ def _generateGraphData(data, oldData=nx.Graph()):
         }
 
         # Appending the new node
-        hashLabel = _addNewNode(ent, graphData)
+        new_node = _addNewNode(ent, graphData)
 
         # Processing the attributes to grab the attributes (starting with "@..." and entities)
         newAtts, newEntities = _processAttributes(elem["attributes"], graphData)
 
         # Updating the attributes to the current entity
-        graphData.node[hashLabel].update(newAtts)
+        graphData.node[new_node].update(newAtts)
 
         # Creating the edges (the new entities have also been created in the _processAttributes
-        for new in newEntities:
+        for other_node in newEntities:
             # Serializing the second entity
-            serEnt = json.dumps(new)
+            serEnt = json.dumps(new_node)
 
-            # Calculating the hash of the second entity
-            h = hashlib.new('md5')
-            h.update(serEnt)
-            hashLabelSeconds = h.hexdigest()
+            try:
+                other_node = unicode(other_node["value"])
+            except UnicodeEncodeError as e:
+                # Printing that an error was found
+                other_node = str(other_node["value"])
 
             # Adding the edge
-            graphData.add_edge(hashLabel, hashLabelSeconds)
+            graphData.add_edge(new_node, other_node)
             try:
                 # Here, we would add the properties of the edge
                 #graphData.edge[hashLabel][hashLabelSeconds]["times_seen"] +=1
@@ -785,7 +778,7 @@ def colorize(text, messageType=None):
         string: Colorized if the option is correct, including a tag at the end
             to reset the formatting.
     """
-    formattedText = text
+    formattedText = str(text)
     # Set colors
     if "ERROR" in messageType:
         formattedText = colorama.Fore.RED + formattedText
@@ -843,3 +836,37 @@ def showLicense():
         print(text)
     except:
         print(warning("The license could not be downloaded and printed."))
+
+
+
+def expandEntitiesFromEmail(e):
+    """
+    Method that receives an email an creates linked entities
+
+    Args:
+    -----
+        e:   Email to verify.
+
+    Returns:
+    --------
+        Three different values: email, alias and domain in a list.
+    """
+    # Grabbing the email
+    email = {}
+    email["type"] = "i3visio.email"
+    email["value"] = e
+    email["attributes"] = []
+
+    # Grabbing the alias
+    alias = {}
+    alias["type"] = "i3visio.alias"
+    alias["value"] = e.split("@")[0]
+    alias["attributes"] = []
+
+    # Grabbing the domain
+    domain= {}
+    domain["type"] = "i3visio.domain"
+    domain["value"] = e.split("@")[1]
+    domain["attributes"] = []
+
+    return [email, alias, domain]

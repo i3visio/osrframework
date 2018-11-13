@@ -254,19 +254,18 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
 
     Results:
     --------
         Returns a list with i3visio entities.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
+        args = params
 
     results = []
 
@@ -281,14 +280,15 @@ def main(params=None):
     if not args.quiet:
         print(general.title(banner.text))
 
-        sayingHello = """
-Entify | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2015-2018
+    sayingHello = """
+      Entify | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL + "\n"
-        print(general.info(sayingHello))
-
+visit <{}>.
+""".format(general.LICENSE_URL)
+    print(general.info(sayingHello))
+    
     if args.license:
         general.showLicense()
     else:
@@ -322,7 +322,7 @@ visit """ + general.LICENSE_URL + "\n"
         # Showing the information gathered if requested
         if not args.quiet:
             now = dt.datetime.now()
-            print(str(now) + "\tA summary of the results obtained is shown in the following table:\n")
+            print("\n{}\tResults obtained:\n".format(str(now)))
             print(general.success(general.usufyToTextExport(results)))
 
             now = dt.datetime.now()

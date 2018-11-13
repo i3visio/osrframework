@@ -26,23 +26,25 @@ import colorama
 colorama.init(autoreset=True)
 import datetime as dt
 import json
-import logging
 # global issues for multiprocessing
 from multiprocessing import Process, Queue, Pool
 import os
 # Preparing to capture interruptions smoothly
 import signal
 import sys
+import time
 import traceback
+import textwrap
 
 # configuration and utils
+import osrframework
 import osrframework.utils.platform_selection as platform_selection
 import osrframework.utils.configuration as configuration
 import osrframework.utils.banner as banner
 import osrframework.utils.benchmark as benchmark
 import osrframework.utils.browser as browser
 import osrframework.utils.general as general
-import osrframework.utils.logger
+from osrframework.utils.exceptions import *
 
 
 def fuzzUsufy(fDomains = None, fFuzzStruct = None):
@@ -60,8 +62,6 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     --------
         dict: A dictionary of the form of `{"domain": "url"}`.
     """
-    logger = logging.getLogger("osrframework.usufy")
-
     if fFuzzStruct == None:
         # Loading these structures by default
         fuzzingStructures = [
@@ -108,7 +108,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
         try:
             fuzzingStructures = fFuzzStruct.read().splitlines()
         except:
-            logger.error("Usufy could NOT open the following file: " + fFuzzStruct )
+            print("Usufy could NOT open the following file: " + fFuzzStruct)
 
     res = {}
 
@@ -121,9 +121,6 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
 
         # selecting the number of nicks to be tested in this domain
         nick = l.split()[1]
-
-        # Choosing the errors from the input file
-        #errors = l.split('\t')[2:]
 
         # possibleURLs found
         possibleURL = []
@@ -140,7 +137,7 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
                     possibleURL.append(test)
                     print(general.success("\tPossible usufy found!!!\n"))
             except:
-                logger.error("The resource could not be downloaded.")
+                print("The resource could not be downloaded.")
 
         res[domain] = possibleURL
 
@@ -148,9 +145,11 @@ def fuzzUsufy(fDomains = None, fFuzzStruct = None):
     return res
 
 
-def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
+def pool_function(p, nick, rutaDescarga, avoidProcessing=True, avoidDownload=True, verbosity=1):
     """
-    Method that wraps the call to the getInfo. Before it was getUserPage.
+    Wrapper for being able to launch all the threads of getPageWrapper.
+
+    We receive the parameters for getPageWrapper as a tuple.
 
     Args:
     -----
@@ -161,49 +160,31 @@ def getPageWrapper(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload 
             be processed (stored in this version).
         avoidDownload: Boolean var that defines whether the profiles will NOT be
             downloaded (stored in this version).
-        outQueue: Queue where the information will be stored.
+        verbosity: The verbosity level: 1, shows errors; 2, shows warnings.
 
-    Returns:
-    --------
-        None if a queue is provided. Note that the values will be stored in the
-        outQueue or a dictionary is returned.
-    """
-    logger = logging.getLogger("osrframework.usufy")
-
-    logger.debug("\tLooking for profiles in " + str(p) + "...")
-    #res = p.getUserPage(nick, rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)
-    try:
-        res = p.getInfo(query=nick, mode="usufy", process=True)#rutaDescarga, avoidProcessing = avoidProcessing, avoidDownload = avoidDownload)
-
-        if res != []:
-            if outQueue != None:
-                # Storing in the output queue the values
-                outQueue.put((res))
-            else:
-                # If no queue was given, return the value normally
-                return res
-        else:
-            logger.debug("\t" + str(p) +" - User profile not found...")
-        return []
-    except:
-        print(general.error("ERROR: something happened when processing " + str(p) +". You may like to deactivate this wrapper if the error persist."))
-        return []
-
-
-def pool_function(p, nick, rutaDescarga, avoidProcessing = True, avoidDownload = True, outQueue=None):
-    """
-    Wrapper for being able to launch all the threads of getPageWrapper.
-
-    Args:
-    -----
-        args: We receive the parameters for getPageWrapper as a tuple.
+    Return:
+    -------
+        A dictionary with the following structure:
+        {
+        	"platform": "Platform",
+        	"status": "DONE",
+        	"data": "<data>"
+        }
+        Data is None or a serialized representation of the dictionary.
     """
     try:
-        res = getPageWrapper(p, nick, rutaDescarga, avoidProcessing, avoidDownload, outQueue)
-        return {"platform" : str(p), "status": "DONE", "data": res}
+        #res = getPageWrapper(p, nick, rutaDescarga, avoidProcessing, avoidDownload, outQueue)
+        res = p.getInfo(
+            query=nick,
+            mode="usufy",
+            process=True
+        )
+        return {"platform" : str(p), "status": "Ok", "data": res}
+
     except Exception as e:
-        print(general.error("\tERROR: " + str(p)))
-        return {"platform" : str(p), "status": "ERROR", "data": []}
+        if (isinstance(e, OSRFrameworkError) and verbosity >= 1) and (isinstance(e, OSRFrameworkException) and verbosity >= 2):
+            print(str(e))
+        return {"platform" : str(p), "status": e, "data": e.generic}
 
 
 def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=True, avoidDownload=True, nThreads=12, verbosity=1, logFolder="./logs"):
@@ -231,9 +212,6 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
         where the keys are the social networks and the value is the
         corresponding URL.
     """
-    osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=verbosity, logFolder=logFolder)
-    logger = logging.getLogger("osrframework.usufy")
-
     if platforms == None:
         platforms = platform_selection.getAllPlatformNames("usufy")
 
@@ -241,12 +219,9 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
     res = []
     # Processing the whole list of terms...
     for nick in nicks:
-        logger.info("Looking for '" + nick + "' in " + str(len(platforms)) + " different platforms:\n" +str( [ str(plat) for plat in platforms ] ) )
-
         # If the process is executed by the current app, we use the Processes. It is faster than pools.
         if nThreads <= 0 or nThreads > len(platforms):
             nThreads = len(platforms)
-        logger.info("Launching " + str(nThreads) + " different threads...")
 
         # Using threads in a pool if we are not running the program in main
         # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
@@ -267,12 +242,12 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
 
             for plat in platforms:
                 # We need to create all the arguments that will be needed
-                parameters = ( plat, nick, rutaDescarga, avoidProcessing, avoidDownload, )
-                pool.apply_async (pool_function, args= parameters, callback = log_result )
+                parameters = ( plat, nick, rutaDescarga, avoidProcessing, avoidDownload, verbosity)
+                pool.apply_async (pool_function, args=parameters, callback=log_result,)
 
             # Waiting for results to be finished
             while len(poolResults) < len(platforms):
-                pass
+                time.sleep(1)
 
             # Closing normal termination
             pool.close()
@@ -299,19 +274,45 @@ def processNickList(nicks, platforms=None, rutaDescarga="./", avoidProcessing=Tr
             print("\n")
         pool.join()
 
+        # Collecting the results
         profiles = []
+        errors = {}
+        warnings = {}
 
-        # Processing the results
-        # ----------------------
-        for serArray in poolResults:
-            data = serArray["data"]
-            # We need to recover the results and check if they are not an empty json or None
-            if data != None:
-                array = json.loads(data)
+        for info in poolResults:
+            if info["status"] == "Ok":
+                array = json.loads(info["data"])
                 for r in array:
                     if r != "{}":
                         profiles.append(r)
-        res+=profiles
+            else:
+                e = info["status"]
+                if isinstance(e, OSRFrameworkError):
+                    aux = errors.get(e.__class__.__name__, {})
+                    aux["info"] = info["data"]
+                    aux["counter"] = aux.get("counter", 0) + 1
+                    errors[e.__class__.__name__] = aux
+                else:
+                    aux = warnings.get(e.__class__.__name__, {})
+                    aux["info"] = info["data"]
+                    aux["counter"] = aux.get("counter", 0) + 1
+                    warnings[e.__class__.__name__] = aux
+        res += profiles
+
+        if errors:
+            now = dt.datetime.now()
+            print("\n{}\tSome errors where found in the process:".format(now))
+            for key, value in errors.items():
+                print(textwrap.fill("- {} (found: {}). Details:".format(general.error(key), general.error(value["counter"])), 90, initial_indent="\t"))
+                print(textwrap.fill("\t{}".format(value["info"]), 80, initial_indent="\t"))
+
+        if warnings and verbosity >= 2:
+            now = dt.datetime.now()
+            print("\n{}\tSome warnings where found in the process:".format(now))
+            for key, value in warnings.items():
+                print(textwrap.fill("- {} (found: {}). Details:".format(general.warning(key), general.warning(value["counter"])), 90, initial_indent="\t"))
+                print(textwrap.fill("\t{}".format(value["info"]), 80, initial_indent="\t"))
+
     return res
 
 
@@ -360,7 +361,7 @@ def getParser():
     # About options
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - none; 1 - normal (default); 2 - debug.', type=int)
+    groupAbout.add_argument('-v', '--verbose', metavar='<verbosity>', choices=[0, 1, 2], required=False, action='store', default=1, help='select the verbosity level: 0 - minimal; 1 - normal (default); 2 - debug.', type=int)
     groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exits.')
 
     return parser
@@ -377,47 +378,36 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
 
     Returns:
     --------
         dict: A Json representing the matching results.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
-
-    # Recovering the logger
-    # Calling the logger when being imported
-    osrframework.utils.logger.setupLogger(loggerName="osrframework.usufy", verbosity=args.verbose, logFolder=args.logfolder)
-    # From now on, the logger can be recovered like this:
-    logger = logging.getLogger("osrframework.usufy")
+        args = params
 
     print(general.title(banner.text))
 
     sayingHello = """
-Usufy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2018
+      Usufy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL + "\n"
-    logger.info(sayingHello)
-    print(general.title(sayingHello))
-    logger.info("Starting usufy...")
+visit <{}>.
+
+""".format(general.LICENSE_URL)
+    print(general.info(sayingHello))
 
     if args.fuzz:
-        logger.info("Performing the fuzzing tasks...")
         res = fuzzUsufy(args.fuzz, args.fuzz_config)
-        logger.info("Recovered platforms:\n" + str(res))
     else:
-        logger.debug("Recovering the list of platforms to be processed...")
         # Recovering the list of platforms to be launched
         listPlatforms = platform_selection.getPlatformsByName(platformNames=args.platforms, tags=args.tags, mode="usufy", excludePlatformNames=args.exclude)
-        logger.debug("Platforms recovered.")
 
         if args.info:
             # Information actions...
@@ -425,10 +415,8 @@ visit """ + general.LICENSE_URL + "\n"
                 infoPlatforms="Listing the platforms:\n"
                 for p in listPlatforms:
                     infoPlatforms += "\t\t" + (str(p) + ": ").ljust(16, ' ') + str(p.tags)+"\n"
-                logger.info(infoPlatforms)
                 return infoPlatforms
             elif args.info == 'list_tags':
-                logger.info("Listing the tags:")
                 tags = {}
                 # Going through all the selected platforms to get their tags
                 for p in listPlatforms:
@@ -441,28 +429,22 @@ visit """ + general.LICENSE_URL + "\n"
                 # Displaying the results in a sorted list
                 for t in tags.keys():
                     infoTags += "\t\t" + (t + ": ").ljust(16, ' ') + str(tags[t]) + "  time(s)\n"
-                logger.info(infoTags)
                 return infoTags
             else:
                 pass
 
         # performing the test
         elif args.benchmark:
-            logger.warning("The benchmark mode may last some minutes as it will be performing similar queries to the ones performed by the program in production. ")
-            logger.info("Launching the benchmarking tests...")
             platforms = platform_selection.getAllPlatformNames("usufy")
             res = benchmark.doBenchmark(platforms)
             strTimes = ""
             for e in sorted(res.keys()):
                 strTimes += str(e) + "\t" + str(res[e]) + "\n"
-            logger.info(strTimes)
             return strTimes
 
         # showing the tags of the usufy platforms
         elif args.show_tags:
-            logger.info("Collecting the list of tags...")
             tags = platform_selection.getAllPlatformNamesByTag("usufy")
-            logger.info(json.dumps(tags, indent=2))
             print(general.info("This is the list of platforms grouped by tag.\n"))
             print(json.dumps(tags, indent=2, sort_keys=True))
             print(general.info("[Tip] Remember that you can always launch the platform using the -t option followed by any of the aforementioned.\n"))
@@ -477,7 +459,6 @@ visit """ + general.LICENSE_URL + "\n"
 
             # Defining the list of users to monitor
             nicks = []
-            logger.debug("Recovering nicknames to be processed...")
             if args.nicks:
                 for n in args.nicks:
                     # TO-DO
@@ -489,16 +470,14 @@ visit """ + general.LICENSE_URL + "\n"
                 try:
                     nicks = args.list.read().splitlines()
                 except:
-                    logger.error("ERROR: there has been an error when opening the file that stores the nicks.\tPlease, check the existence of this file.")
+                    print(general.error("ERROR: there has been an error when opening the file that stores the nicks.\tPlease, check the existence of this file."))
 
             # Definning the results
             res = []
 
             if args.output_folder != None:
                 # if Verifying an output folder was selected
-                logger.debug("Preparing the output folder...")
                 if not os.path.exists(args.output_folder):
-                    logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
                     os.makedirs(args.output_folder)
                 # Launching the process...
                 res = processNickList(nicks, listPlatforms, args.output_folder, avoidProcessing = args.avoid_processing, avoidDownload = args.avoid_download, nThreads=args.threads, verbosity= args.verbose, logFolder=args.logfolder)
@@ -510,15 +489,13 @@ visit """ + general.LICENSE_URL + "\n"
                     print(general.error("Exception grabbed when processing the nicks: " + str(e)))
                     print(general.error(traceback.print_stack()))
 
-            logger.info("Listing the results obtained...")
             # We are going to iterate over the results...
             strResults = "\t"
 
             # Structure returned
             """
             [
-                {        print
-
+                {
                   "attributes": [
                     {
                       "attributes": [],
@@ -560,15 +537,10 @@ visit """ + general.LICENSE_URL + "\n"
                     except:
                         pass
 
-                logger.info(strResults)
-
             # Generating summary files for each ...
             if args.extension:
-                # Storing the file...
-                logger.info("Creating output files as requested.")
                 # Verifying if the outputPath exists
                 if not os.path.exists (args.output_folder):
-                    logger.warning("The output folder \'" + args.output_folder + "\' does not exist. The system will try to create it.")
                     os.makedirs(args.output_folder)
 
                 # Grabbing the results
@@ -580,7 +552,7 @@ visit """ + general.LICENSE_URL + "\n"
                     general.exportUsufy(res, ext, fileHeader)
 
             now = dt.datetime.now()
-            print(str(now) + "\tA summary of the results obtained is shown below:\n")
+            print("\n{}\tResults obtained:\n".format(str(now)))
             print(general.success(general.usufyToTextExport(res)))
 
             if args.web_browser:

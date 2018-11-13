@@ -106,31 +106,31 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
 
     Returns:
     --------
         A list of i3visio entities.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
-
+        args = params
+        
     results = []
 
     print(general.title(banner.text))
 
     sayingHello = """
-Searchfy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2014-2018
+     Searchfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL + "\n"
-    print(general.title(sayingHello))
+visit <{}>.
+""".format(general.LICENSE_URL)
+    print(general.info(sayingHello))
 
     if args.license:
         general.showLicense()
@@ -162,7 +162,7 @@ visit """ + general.LICENSE_URL + "\n"
 
         # Printing the results if requested
         now = dt.datetime.now()
-        print("\n{date}\tA summary of the results obtained is shown in the following table:\n".format(date=str(now)))
+        print("\n{}\tResults obtained:\n".format(str(now)))
         print(general.success(general.usufyToTextExport(results)))
 
         if args.web_browser:

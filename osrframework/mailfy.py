@@ -26,7 +26,7 @@ import datetime as dt
 import time
 import json
 # global issues for multiprocessing
-from multiprocessing import Process, Queue, Pool
+from multiprocessing import Process, Queue, Pool, TimeoutError
 import os
 import signal
 import sys
@@ -48,7 +48,6 @@ import osrframework.utils.general as general
 EMAIL_DOMAINS = [
     "126.com",
     "163.com",
-    "189.cn",
     "gmail.com",
     "icloud.com",
     "me.com",
@@ -110,39 +109,6 @@ LEAKED_DOMAINS = [
 ]
 
 
-def getMoreInfo(e):
-    """
-    Method that calls different third party API.
-
-    Args:
-    -----
-        e:   Email to verify.
-
-    Returns:
-    --------
-        Three different values: email, alias and domain.
-    """
-    # Grabbing the email
-    email = {}
-    email["type"] = "i3visio.email"
-    email["value"] = e
-    email["attributes"] = []
-
-    # Grabbing the alias
-    alias = {}
-    alias["type"] = "i3visio.alias"
-    alias["value"] = e.split("@")[0]
-    alias["attributes"] = []
-
-    # Grabbing the domain
-    domain= {}
-    domain["type"] = "i3visio.domain"
-    domain["value"] = e.split("@")[1]
-    domain["attributes"] = []
-
-    return email, alias, domain
-
-
 def weCanCheckTheseDomains(email):
     """
     Method that verifies if a domain can be safely verified.
@@ -179,19 +145,19 @@ def weCanCheckTheseDomains(email):
     #notWorking = []
     for n in notWorking:
         if n in email:
-            print(general.warning("WARNING: the domain of '" + email + "' has been blacklisted by mailfy.py as it CANNOT BE VERIFIED."))
+            print("\t[*] Verification of '{}' aborted. Details:\n\t\t{}".format(general.warning(email), "This domain CANNOT be verified using mailfy."))
             return False
 
     emailDomains = EMAIL_DOMAINS
     safe = False
 
-    for e in emailDomains:
+    for e in EMAIL_DOMAINS:
         if e in email:
             safe =  True
-            break
 
     if not safe:
-        print(general.warning("WARNING: the domain of '" + email + "' will not be safely verified."))
+        print("\t[*] Verification of '{}' aborted. Details:\n\t\t{}".format(general.warning(email), "This domain CANNOT be verified using mailfy."))
+        return False
     return True
 
 
@@ -240,6 +206,32 @@ def grabEmails(emails=None, emailsFile=None, nicks=None, nicksFile=None, domains
     return email_candidates
 
 
+def processMailList(platformNames=[], emails=[]):
+    """
+    Method to perform the email search.
+
+    Args:
+    -----
+        platformNames: List of names of the platforms.
+        emails: List of numbers to be queried.
+
+    Return:
+    -------
+        A list of verified emails.
+    """
+    # Grabbing the <Platform> objects
+    platforms = platform_selection.getPlatformsByName(platformNames, mode="mailfy")
+
+    results = []
+    for e in emails:
+        for pla in platforms:
+            # This returns a json.txt!
+            entities = pla.getInfo(query=e, mode="mailfy")
+            if entities != {}:
+                results += json.loads(entities)
+    return results
+
+
 def pool_function(args):
     """
     A wrapper for being able to launch all the threads.
@@ -264,28 +256,31 @@ def pool_function(args):
         checker = emailahoy.VerifyEmail()
         status, message = checker.verify_email_smtp(args, from_host='gmail.com', from_email='sample@gmail.com')
         if status == 250:
-            print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.success(args), general.success("SUCCESS ({})".format(str(status))), message))
+            print("\t[*] Verification of '{}' status: {}. Details:\n\t\t{}".format(general.success(args), general.success("SUCCESS ({})".format(str(status))), message.replace('\n', '\n\t\t')))
             is_valid = True
         else:
-            print("\t[*] Verification of '{}' status: {}. Details:\n{}".format(general.error(args), general.error("FAILED ({})".format(str(status))), message))
+            print("\t[*] Verification of '{}' status: {}. Details:\n\t\t{}".format(general.error(args), general.error("FAILED ({})".format(str(status))), message.replace('\n', '\n\t\t')))
             is_valid = False
     except Exception, e:
         print(general.warning("WARNING. An error was found when performing the search. You can omit this message.\n" + str(e)))
         is_valid = False
 
-    if is_valid:
-        email, alias, domain = getMoreInfo(args)
-        aux = {}
-        aux["type"] = "i3visio.profile"
-        aux["value"] = domain["value"] + " - " + alias["value"]
-        aux["attributes"] = []
-        aux["attributes"].append(email)
-        aux["attributes"].append(alias)
-        aux["attributes"].append(domain)
+    aux = {}
+    aux["type"] = "i3visio.profile"
+    aux["value"] = "Email - " + args
+    aux["attributes"] =  general.expandEntitiesFromEmail(args)
+    platform = aux["attributes"][2]["value"].title()
+    aux["attributes"].append({
+            "type": "i3visio.platform",
+            "value": platform,
+            "attributes": []
+        }
+    )
 
-        return {"platform": str(domain["value"]), "status": "DONE", "data": aux}
+    if is_valid:
+        return {"platform": platform, "status": "DONE", "data": aux}
     else:
-        return {"platform": str(domain["value"]), "status": "DONE", "data": {}}
+        return {"platform": platform, "status": "DONE", "data": {}}
 
 
 def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
@@ -295,6 +290,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
     Args:
     -----
         emails: list of emails to be verified.
+        platforms: list of strings representing the wrappers to be used.
         nThreads: the number of threads to be used. Default: 16 threads.
         secondsBeforeTimeout: number of seconds to wait before raising a
             timeout. Default: 5 seconds.
@@ -325,6 +321,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
         return now - oldEpoch >= secondsBeforeTimeout
 
     results = []
+
     args = []
 
     # Grabbing all the emails that would be validated
@@ -354,20 +351,18 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
     poolResults = []
     try:
         def log_result(result):
-            # This is called whenever foo_pool(i) returns a result.
-            # result_list is modified only by the main process, not the pool workers.
+            """
+            Callback to log the results by apply_async
+            """
             poolResults.append(result)
 
         for m in emails:
-            # We need to create all the arguments that will be needed
             parameters = ( m, )
-            pool.apply_async (pool_function, args=parameters, callback=log_result )
-
-        # Waiting for results to be finished or time to pass
-        while len(poolResults) < len(emails) and not hasRunOutOfTime(_startTime):
-            pass
-
-        # Closing normal termination
+            res = pool.apply_async(pool_function, args=parameters, callback=log_result)
+            try:
+                res.get(3)
+            except TimeoutError as e:
+                general.warning("\n[!] Process timeouted for '{}'.\n".format(parameters))
         pool.close()
     except KeyboardInterrupt:
         print(general.warning("\n[!] Process manually stopped by the user. Terminating workers.\n"))
@@ -375,7 +370,7 @@ def performSearch(emails=[], nThreads=16, secondsBeforeTimeout=5):
 
         pending = ""
 
-        print(general.warning("[!] The following platforms were not processed:"))
+        print(general.warning("[!] The following email providers were not processed:"))
         for m in emails:
             processed = False
             for result in poolResults:
@@ -416,6 +411,9 @@ def getParser():
     except:
         excludeList = []
 
+    # Recovering all the possible options
+    platOptions = platform_selection.getAllPlatformNames("mailfy")
+
     parser = argparse.ArgumentParser(description='mailfy - Checking the existence of a given mail.', prog='mailfy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
 
@@ -433,10 +431,10 @@ def getParser():
     groupProcessing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
     groupProcessing.add_argument('-d', '--domains',  metavar='<candidate_domains>',  nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default=DEFAULT_VALUES["domains"])
     groupProcessing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    groupProcessing.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=["all"], action='store', help='select the platforms where you want to perform the search amongst the following: {}. More than one option can be selected.'.format(str(platOptions)))
     groupProcessing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=excludeList, action='store', help="select the domains to be excluded from the search.")
     groupProcessing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     groupProcessing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
-    groupProcessing.add_argument('--verify_emails', required=False, default=False, action='store_true', help='Defines whether mailfy should try to verify the existence of an email. This is an unstable feature that uses "emailahoy" and "verify_email" packages.')
     groupProcessing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options
@@ -458,19 +456,18 @@ def main(params=None):
     Args:
     -----
         params: A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point.
+            None when this is called by an entry_point. If it is called by osrf
+            the data is already parsed.
 
     Returns:
     --------
         A list of i3visio entities.
     """
-    # Grabbing the parser
-    parser = getParser()
-
-    if params != None:
+    if params == None:
+        parser = getParser()
         args = parser.parse_args(params)
     else:
-        args = parser.parse_args()
+        args = params
 
     results = []
 
@@ -478,13 +475,13 @@ def main(params=None):
         print(general.title(banner.text))
 
         sayingHello = """
-Mailfy | Copyright (C) F. Brezo and Y. Rubio (i3visio) 2016-2018
+          Mailfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
 
-This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
-are welcome to redistribute it under certain conditions. For additional info,
-visit """ + general.LICENSE_URL + "\n"
-        print(general.title(sayingHello))
-
+    This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
+    are welcome to redistribute it under certain conditions. For additional info,
+    visit <{}>.
+    """.format(general.LICENSE_URL)
+        print(general.info(sayingHello))
         # Displaying a warning if this is being run in a windows system
         if sys.platform == 'win32':
             print(general.warning("""OSRFramework has detected that you are running mailfy.py in a Windows system.
@@ -494,109 +491,97 @@ be used instead. Verification may be slower though."""))
     if args.license:
         general.showLicense()
     else:
-        # Grabbing the list of global domains
-        if args.verify_emails:
-            domains = EMAIL_DOMAINS
-            # Processing the options returned to remove the "all" option
-        elif "all" in args.domains:
-            domains = LEAKED_DOMAINS
-        else:
-            # processing only the given domains and excluding the ones provided
-            domains = []
-            for d in args.domains:
-                if d not in args.exclude:
-                    domains.append(d)
+        # processing only the given domains and excluding the ones provided
+        extra_domains = []
 
+        for d in args.domains:
+            if d not in args.exclude and not d == "all":
+                extra_domains.append(d)
+
+        # Two different arrays are mantained since there are some domains that cannot be safely verified
         if args.create_emails:
-            emails = grabEmails(nicksFile=args.create_emails, domains=domains, excludeDomains=args.exclude)
+            potentially_existing_emails = grabEmails(
+                nicksFile=args.create_emails,
+                domains=EMAIL_DOMAINS + extra_domains,
+                excludeDomains=args.exclude
+            )
+            potentially_leaked_emails = grabEmails(
+                nicksFile=args.create_emails,
+                domains=LEAKED_DOMAINS + extra_domains,
+                excludeDomains=args.exclude
+            )
         else:
-            emails = grabEmails(emails=args.emails, emailsFile=args.emails_file, nicks=args.nicks, nicksFile=args.nicks_file, domains=domains, excludeDomains=args.exclude)
+            potentially_existing_emails = grabEmails(
+                emails=args.emails,
+                emailsFile=args.emails_file,
+                nicks=args.nicks,
+                nicksFile=args.nicks_file,
+                domains=EMAIL_DOMAINS + extra_domains,
+                excludeDomains=args.exclude
+            )
+            potentially_leaked_emails = grabEmails(
+                emails=args.emails,
+                emailsFile=args.emails_file,
+                nicks=args.nicks,
+                nicksFile=args.nicks_file,
+                domains=LEAKED_DOMAINS + extra_domains,
+                excludeDomains=args.exclude
+            )
 
-        startTime= dt.datetime.now()
+        emails = list(set(potentially_leaked_emails + potentially_existing_emails))
 
-        # Original functionality. UNSTABLE feature!
-        if args.verify_emails:
-            # Showing the execution time...
-            if not args.quiet:
-                print(str(startTime) +"\tStarting search in " + general.emphasis(str(len(emails))) + " different emails:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
-                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
-            # Perform searches, using different Threads
-            tmp = performSearch(emails, args.threads)
+        # Showing the execution time...
+        if not args.quiet:
+            startTime = dt.datetime.now()
+            print("{}\tStarting search of {} different emails:\n{}\n".format(
+                str(startTime),
+                general.emphasis(str(len(emails))),
+                json.dumps(emails, indent=2, sort_keys=True))
+            )
 
-            # We make a strict copy of the object
-            results = list(tmp)
+        if not args.quiet:
+            now = dt.datetime.now()
+            print("\n{}\tStep 1. Trying to determine if the emails provided do exist...\n".format(str(now)))
+            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
-            if not args.quiet:
-                now = dt.datetime.now()
-                print("\n{}\tMailfy has found {} existing email(s). Have they been leaked somewhere?\n".format(str(now), general.emphasis(str(len(results)))))
-                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        # Perform searches, using different Threads
+        results = performSearch(potentially_existing_emails, nThreads=args.threads)
 
-            # Verify the existence of the mails found as leaked emails.
-            for r in tmp:
-                # We assume that the first attribute is always the email
-                query = r["attributes"][0]["value"]
+        if not args.quiet:
+            now = dt.datetime.now()
+            print("\n{}\tStep 2. Checking if the emails have been used to register socialmedia accounts...\n".format(str(now)))
+            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
-                # Iterate through the different leak platforms
-                leaks = hibp.checkIfEmailWasHacked(query)
+        registered = processMailList(platformNames=args.platforms, emails=potentially_existing_emails)
+        results += registered
 
-                if len(leaks) > 0:
-                    if not args.quiet:
-                        if len(leaks) > 0:
-                            print("\t[*] '{}' has been found in at least {} different leaks.".format(general.success(query), general.success(str(len(leaks)))))
-                        else:
-                            print("\t[*] '{}' has NOT been found in any leak.".format(general.error(query)))
-                    email, alias, domain = getMoreInfo(query)
+        if not args.quiet:
+            if len(results) > 0:
+                for r in registered:
+                    print("\t[*] Registered account found: {}".format(general.success(r["value"])))
+            else:
+                print("\t[*] Registered account found: {}".format(general.error("None")))
 
-                    for leak in leaks:
-                        # Creating a new full entity from scratch
-                        new = {}
-                        new["type"] = "i3visio.profile"
-                        new["value"] = leak["value"] + " - " + alias["value"]
-                        new["attributes"] = []
-                        new["attributes"].append(email)
-                        new["attributes"].append(alias)
-                        new["attributes"].append(domain)
+            now = dt.datetime.now()
+            print("\n{}\tStep 3. Verifying if the provided emails have  been leaked somewhere?\n".format(str(now)))
+            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
-                        # leak contains a i3visio.platform built by HIBP
-                        new["attributes"].append(leak)
-                        results.append(new)
-                else:
-                    if not args.quiet:
-                        print(general.warning("\t" + query + " has NOT been found on any leak yet."))
-        else:
-            if not args.quiet:
-                print("\n" + str(startTime) +"\tStarting search of " + general.emphasis(str(len(emails))) + " different emails in leaked databases.\n\nNote that this will take between 1 and 2 seconds per query due to the thirdparties API restrictions:\n"+ json.dumps(emails, indent=2, sort_keys=True) + "\n")
-                print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+        # Verify the existence of the mails found as leaked emails.
+        for query in potentially_leaked_emails:
+            # Iterate through the different leak platforms
+            leaks = hibp.checkIfEmailWasHacked(query)
 
-            # Perform is_leaked function
-            results = []
-            print("Mailfy will use haveibeenpwned.com (HIBP) API to find leaked emails...\n")
-
-            for i, e in enumerate(emails):
+            if len(leaks) > 0:
                 if not args.quiet:
-                    print("\t" + str(i+1) + "/" + str(len(emails)) + " - Searching if " + e + " has been leaked...")
+                    if len(leaks) > 0:
+                        print("\t[*] '{}' has been found in at least {} different leaks.".format(general.success(query), general.success(str(len(leaks)))))
+                    else:
+                        print("\t[*] '{}' has NOT been found in any leak.".format(general.error(query)))
+            else:
+                if not args.quiet:
+                    print("\t[*] '{}' has NOT been found on any leak yet.".format(general.error(query)))
 
-                # Iterate through the different leak platforms
-                leaks = hibp.checkIfEmailWasHacked(e)
-
-                if len(leaks) > 0:
-                    if not args.quiet:
-                        print(general.success("\t" + e + " has been found in at least " + str(len(leaks)) + " different leaks."))
-
-                    email, alias, domain = getMoreInfo(e)
-                    for leak in leaks:
-                        # Creating a new full entity from scratch
-                        new = {}
-                        new["type"] = "i3visio.profile"
-                        new["value"] = leak["value"] + " - " + alias["value"]
-                        new["attributes"] = []
-                        new["attributes"].append(email)
-                        new["attributes"].append(alias)
-                        new["attributes"].append(domain)
-
-                        # leak contains a i3visio.platform built by HIBP
-                        new["attributes"].append(leak)
-                        results.append(new)
+            results += leaks
 
         # Trying to store the information recovered
         if args.output_folder != None:
@@ -611,7 +596,7 @@ be used instead. Verification may be slower though."""))
         # Showing the information gathered if requested
         if not args.quiet:
             now = dt.datetime.now()
-            print("\n" + str(now) + "\tA summary of the results obtained is shown in the following table:\n")
+            print("\n{}\tResults obtained:\n".format(str(now)))
             print(general.success(general.usufyToTextExport(results)))
 
             now = dt.datetime.now()
