@@ -15,3 +15,5 @@ Contributors
 * Abilio Almeida  ([@aabilio](https://github.com/aabilio))
 * Bruno Halopeau ([@BrHa11](https://github.com/BrHa11))
 * Alexey Miloserdov ([Mi-Al](https://github.com/Mi-Al))
+* Momoisacat ([@momoisacat](https://github.com/momoisacat))
+* Luis Alberto Lopez Alva ([@lopezalvar](https://github.com/lopezalvar))
