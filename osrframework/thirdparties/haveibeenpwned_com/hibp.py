@@ -25,6 +25,8 @@ import requests
 import sys
 import time
 
+import osrframework.utils.general as general
+
 def checkIfEmailWasHacked(email=None, sleepSeconds=1):
     """
     Method that checks if the given email is stored in the HIBP website.
@@ -73,40 +75,45 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1):
         for e in jsonData:
             # Building the i3visio like structure
             new = {}
-            new["value"] = "(HIBP) " + e.get("Name")
-            new["type"] = "i3visio.platform_leaked"
+            new["value"] = "(HIBP) " + e.get("Name") + " - " + email
+            new["type"] = "i3visio.profile"
             new["attributes"] = [
                 {
-                    "value": "@source",
-                    "type": "haveibeenpwned.com",
+                    "type": "i3visio.platform_leaked",
+                    "value": e.get("Name"),
                     "attributes": []
                 },
                 {
-                    "value": "i3visio_uri",
-                    "type": apiURL,
+                    "type": "@source",
+                    "value": "haveibeenpwned.com",
                     "attributes": []
                 },
                 {
-                    "value": "@pwn_count",
-                    "type": e.get("PwnCount"),
+                    "type": "@source_uri",
+                    "value": apiURL,
                     "attributes": []
                 },
                 {
-                    "value": "@added_date",
-                    "type": e.get("AddedDate"),
+                    "type": "@pwn_count",
+                    "value": e.get("PwnCount"),
                     "attributes": []
                 },
                 {
-                    "value": "@breach_date",
-                    "type": e.get("BreachDate"),
+                    "type": "@added_date",
+                    "value": e.get("AddedDate"),
                     "attributes": []
                 },
                 {
-                    "value": "@description",
-                    "type": e.get("Description"),
+                    "type": "@breach_date",
+                    "value": e.get("BreachDate"),
+                    "attributes": []
+                },
+                {
+                    "type": "@description",
+                    "value": e.get("Description"),
                     "attributes": []
                 }
-            ]
+            ] + general.expandEntitiesFromEmail(email)
             leaks.append(new)
     except ValueError:
         return []
