@@ -30,6 +30,7 @@ import osrframework
 import osrframework.utils.banner as banner
 import osrframework.utils.general as general
 
+
 # GLOBAL OPTIONS
 SEPARATORS = ["_", ".", '']
 COMMON_WORDS = ["666", "home", "mr", "news",  "official", "real", "xxx"]
@@ -47,15 +48,15 @@ LEET_TRANSFORMS = {
 }
 
 
-def generate(name=None, surname1=None, surname2=None, city=None, country=None, year=None, useNumbers=False, useCommonWords=False, useLeet=False, useLocales=False, extraWords=[]):
-    """
-    The method that generates the given aliases.
+def generate(name=None, surname1=None, surname2=None, city=None, country=None,
+             year=None, useNumbers=False, useCommonWords=False, useLeet=False,
+             useLocales=False, extraWords=[]):
+    """The method that generates the given aliases.
 
     It receives several parameters as parsed by this module's `getParser()`.
     Previously referenced as `main`.
 
     Args:
-    -----
         name: String representing the known name of the investigated profile.
         surname1: String representing the first surname of the investigated
             profile.
@@ -74,7 +75,6 @@ def generate(name=None, surname1=None, surname2=None, city=None, country=None, y
             generatednicknames.
 
     Returns
-    -------
         list: An ordered list of the nicknames generated.
     """
     # Lowering all the info received
@@ -2821,7 +2821,13 @@ def generate(name=None, surname1=None, surname2=None, city=None, country=None, y
 
     return listaFinal
 
+
 def getParser():
+    """Defines the argument parser
+
+    Returns:
+        argparse.ArgumentParser.
+    """
     parser = argparse.ArgumentParser(description='alias_generator is a tool that tries to create possible aliases based on the inputs known from a person.', prog='alias_generator', epilog="", add_help=False, conflict_handler='resolve')
 
     # Adding the main options
@@ -2851,11 +2857,9 @@ def getParser():
 
 
 def main(params=None):
-    """
-    Main function to launch alias_generator.
+    """Main function to launch alias_generator
 
     Args:
-    -----
         params: A list with the parameters as grabbed by the terminal. It is
             None when this is called by an entry_point. If it is called by osrf
             the data is already parsed.
@@ -2875,17 +2879,17 @@ def main(params=None):
             print("\nCollecting information about the profile")
             print("----------------------------------------\n")
 
-            args.name = raw_input(general.emphasis("Insert a name: ".ljust(35, " "))).replace(' ','')
-            args.surname1 = raw_input(general.emphasis("Insert the first surname: ".ljust(35, " "))).replace(' ','')
-            args.surname2 = raw_input(general.emphasis("Insert the second surname: ".ljust(35, " "))).replace(' ','')
-            args.year = raw_input(general.emphasis("Insert a year (e. g.: birthyear): ".ljust(35, " "))).replace(' ','')
-            args.city = raw_input(general.emphasis("Insert a city: ".ljust(35, " "))).replace(' ','')
-            args.country = raw_input(general.emphasis("Insert a country: ".ljust(35, " "))).replace(' ','')
+            args.name = input(general.emphasis("Insert a name: ".ljust(35, " "))).replace(' ','')
+            args.surname1 = input(general.emphasis("Insert the first surname: ".ljust(35, " "))).replace(' ','')
+            args.surname2 = input(general.emphasis("Insert the second surname: ".ljust(35, " "))).replace(' ','')
+            args.year = input(general.emphasis("Insert a year (e. g.: birthyear): ".ljust(35, " "))).replace(' ','')
+            args.city = input(general.emphasis("Insert a city: ".ljust(35, " "))).replace(' ','')
+            args.country = input(general.emphasis("Insert a country: ".ljust(35, " "))).replace(' ','')
 
             if args.extra_words == []:
                 print("\nAdditional transformations to be added")
                 print("--------------------------------------\n")
-                inputText = raw_input(general.emphasis("Extra words to add (',' separated): ".ljust(35, " "))).replace(' ','')
+                inputText = input(general.emphasis("Extra words to add (',' separated): ".ljust(35, " "))).replace(' ','')
                 extraWords += inputText.lower().split(',')
     except KeyboardInterrupt:
         print("\n\nThe user manually aborted the program. Exiting...")
