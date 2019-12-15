@@ -36,22 +36,12 @@ NEW_VERSION = osrframework.__version__
 
 import osrframework.utils.configuration as configuration
 
-# Depending on the place in which the project is going to be upgraded
-try:
-    raise Exception('Trying to load the markdown manually!')
-    from pypandoc import convert
-    read_md = lambda f: convert(f, 'rst')
-except ImportError:
-    print("[!] pypandoc module not found, could not convert Markdown to RST")
-    read_md = lambda f: open(f, 'r').read()
-except Exception:
-    read_md = lambda f: open(f, 'r').read()
+with open("requirements.txt") as iF:
+    requirements = iF.read().splitlines()
 
-# Reading the .md file
-try:
-    long_description = read_md(os.path.join(HERE,"README.md"))
-except:
-    long_description = ""
+# Depending on the place in which the project is going to be upgraded
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 # Creating the application paths
 paths = configuration.getConfigPath()
@@ -109,42 +99,9 @@ setup(
         'Topic :: Text Processing :: Markup :: HTML'
     ],
     packages=find_packages(),
-    long_description=long_description,
-    install_requires=[
-        "setuptools",
-        "mechanize",
-        "BeautifulSoup",
-        "requests",
-        "python-emailahoy",
-        "pyexcel==0.2.1",
-        "pyexcel_ods==0.1.1",
-        "pyexcel_xls==0.1.0",
-        "pyexcel_xlsx==0.1.0",
-        "pyexcel_io==0.1.0",
-        "pyexcel_text==0.2.0",
-        "tweepy",
-        "networkx",
-        "decorator",
-        "validate_email",
-        #"pydns",
-        # Python3
-        #"py3dns",
-        #"robobrowser",
-        "tabulate",
-        "oauthlib>=1.0.0",
-        "importlib",
-        #"inspect",
-        #"pkgutil",
-        # Adding dependencies to avoid the InsecurePlatformWarning when calling Twitter API dealing with SSL: <http://stackoverflow.com/a/29202163>. Other options would require the user to upgrade to Python 2.7.9.
-        #"pyopenssl",
-        #"ndg-httpsclient",
-        #"pyasn1"
-        "python-whois",
-        "pyyaml",
-        "colorama",
-        "configparser",
-        "cfscrape"
-    ],
+    long_description=read('README.md'),
+    long_description_content_type="text/markdown",
+    install_requires=requirements,
 )
 
 ############################

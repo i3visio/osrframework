@@ -1,40 +1,35 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+###############################################################################
 #
-##################################################################################
+#   Copyright 2016-2019
+#       Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#   This program is part of OSRFramework. You can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
 #
-#    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##################################################################################
+###############################################################################
 
-try:
-    import ConfigParser
-except:
-    # For Python 3 compatibility
-    import configparser
 import os
 import sys
+
+from configparser import ConfigParser
+
 import osrframework.utils.errors as errors
 
 
 def changePermissionsRecursively(path, uid, gid):
-    """
-    Function to recursively change the user id and group id.
+    """Function to recursively change the user id and group id
 
-    It sets 700 permissions.
+    It sets 700 permissions in the different files.
     """
     os.chown(path, uid, gid)
     for item in os.listdir(path):
@@ -64,15 +59,12 @@ def changePermissionsRecursively(path, uid, gid):
 
 
 def getConfigPath(configFileName = None):
-    """
-    Auxiliar function to get the configuration paths depending on the system
+    """Auxiliar function to get the configuration paths depending on the system
 
     Args:
-    -----
         configFileName: TODO.
 
     Returns:
-    --------
         A dictionary with the following keys: appPath, appPathDefaults,
             appPathTransforms, appPathPlugins, appPathPatterns, appPathPatterns.
     """
@@ -103,20 +95,14 @@ def getConfigPath(configFileName = None):
     return paths
 
 
-def returnListOfConfigurationValues(util):
-    """
-    Method that recovers the configuration information about each program
-
-    TODO: Grab the default file from the package data instead of storing it in
-    the main folder.
+def get_configuration_values_for(util):
+    """Method that recovers the configuration information about each program
 
     Args:
-    -----
-        util: Any of the utils that are contained in the framework: domainfy,
-            entify, mailfy, phonefy, searchfy, usufy.
+        util: Any of the utils that are contained in the framework: checkfy,
+            domainfy, entify, mailfy, phonefy, searchfy, usufy.
 
     Returns:
-    --------
         A dictionary containing the default configuration.
     """
 
@@ -141,7 +127,7 @@ def returnListOfConfigurationValues(util):
             raise errors.DefaultConfigurationFileNotFoundError(configPath, defaultConfigPath);
 
     # Reading the configuration file
-    config = ConfigParser.ConfigParser()
+    config = ConfigParser()
     config.read(configPath)
 
     LISTS = ["tlds", "domains", "platforms", "extension", "exclude_platforms", "exclude_domains"]

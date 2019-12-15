@@ -6,3 +6,4 @@ recursive-include osrframework/static *
 recursive-include osrframework/templates *
 include *md
 recursive-include doc *md
+include requirements.txt
