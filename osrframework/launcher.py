@@ -1,9 +1,6 @@
-#!/usr/bin/python2
-# -*- coding: utf-8 -*-
-#
 ################################################################################
 #
-#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -29,7 +26,6 @@ import osrframework.utils.general as general
 import osrframework.alias_generator as alias_generator
 import osrframework.checkfy as checkfy
 import osrframework.domainfy as domainfy
-import osrframework.entify as entify
 import osrframework.mailfy as mailfy
 import osrframework.phonefy as phonefy
 import osrframework.searchfy as searchfy
@@ -50,7 +46,13 @@ class OSRFParser(argparse.ArgumentParser):
         self.print_help()
         sys.exit(2)
 
+
 def getParser():
+    """Defines the argument parser
+
+    Returns:
+        argparse.ArgumentParser.
+    """
     parser = OSRFParser(
         description='OSRFramework CLI',
         prog='osrf',
@@ -75,11 +77,6 @@ def getParser():
         "domainfy",
         help="Checks whether domain names using words and nicknames are available.",
         parents=[domainfy.getParser()]
-    )
-    subparser_entify = subcommands.add_parser(
-        "entify",
-        help="Extracts entities using regular expressions from provided URIs.",
-        parents=[entify.getParser()]
     )
     subparser_mailfy = subcommands.add_parser(
         "mailfy",
@@ -108,39 +105,36 @@ def getParser():
     )
 
     # About options
-    groupAbout = parser.add_argument_group('ABOUT ARGUMENTS', 'Showing additional information about this program.')
-    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--license', action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
-    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
+    group_about = parser.add_argument_group('ABOUT ARGUMENTS', 'Showing additional information about this program.')
+    group_about.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    group_about.add_argument('--license', action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
+    group_about.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
 
     return parser
 
 
 def main(params=None):
-    """
-    Main function to launch OSRFramework CLI
+    """Main function to launch OSRFramework CLI
 
     The function is created in this way so as to let other applications make
     use of the full configuration capabilities of the application. The
     parameters received are used as parsed by this modules `getParser()`.
 
     Args:
-    -----
         params: A list with the parameters as grabbed by the terminal. It is
             None when this is called by an entry_point.
 
     Returns:
-    --------
         Returns 0 if execution was successful and 1 for failed executions.
     """
     parser = getParser()
 
     try:
-        if params != None:
+        if params is None:
             args = parser.parse_args(params)
         else:
             args = parser.parse_args()
-    except:
+    except Exception:
         sys.exit(0)
 
     if args.license:

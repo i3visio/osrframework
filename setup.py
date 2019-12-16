@@ -60,8 +60,6 @@ setup(
             'alias_generator.py = osrframework.alias_generator:main',
             'domainfy = osrframework.domainfy:main',
             'domainfy.py = osrframework.domainfy:main',
-            'entify = osrframework.entify:main',
-            'entify.py = osrframework.entify:main',
             'enumerate-profiles = osrframework.enumeration:main',
             'enumerate-profiles.py = osrframework.enumeration:main',
             'checkfy = osrframework.checkfy:main',
