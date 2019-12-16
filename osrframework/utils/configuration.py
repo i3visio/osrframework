@@ -1,7 +1,6 @@
-###############################################################################
+################################################################################
 #
-#   Copyright 2016-2019
-#       Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #   This program is part of OSRFramework. You can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by

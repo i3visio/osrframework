@@ -1,7 +1,6 @@
-###############################################################################
+################################################################################
 #
-#   Copyright 2016-2019
-#       Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #   This program is part of OSRFramework. You can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -33,5 +32,8 @@ messages = [
     "-- When you reach an email pattern, try checkfy to find candidate emails. --",
     "-- Use 'domainfy -n <alias> -t all' to find domain names using that alias. --",
     "-- Use '-t global cc' to narrow the verifications launched by domainfy. --",
-    "-- Use checkfy to find emails matching using a nick that match a pattern. --"
+    "-- Use checkfy to find emails matching using a nick that match a pattern. --",
+    "-- `--extra-words hack` in `alias_generator` will add `hack` to the nicks. --",
+    "-- In `alias_generator`, `--common-words` adds words like `xxx`, `real`… --",
+    "-- Use `--leet` with `alias_generator` to build h4x0r n1ckn4m3s. --"
 ]

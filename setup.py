@@ -1,9 +1,6 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2018 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This file is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
