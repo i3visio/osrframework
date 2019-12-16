@@ -72,7 +72,6 @@ The tools installed in this package include:
 - `alais_generator`. Generates candidate nicknames based on known info about the target. **Input**: information about the target. **Output**: list of possible nicknames.
 - `checkfy`. Guesses possible emails based on a list of candidate nicknames and a pattern. **Input**: list of nicknames and an email pattern. **Output**. list of emails matching the pattern..
 - `domainfy`. Finds domains that currently resolve using a given word or nickname. **Input**: liat of words. **Output**: domains using that word that currently resolve.
-- `enumerate-profiles`. Enumerates users by providing a base URL. **Inputs**: a base URL to enumerate profiles. **Output**: List of profiles downloaded.
 - `mailfy`. Find more information about emails taken as a reference either a nickname (to generate a  list of possible emails) or the email list. **Input**: list of nicknames or emails. **Output**: found information about the email.
 - `osrf`. Shared wrapper for the rest of the applications. All commands can also be used as `osrf usufy…`, `osrf mailfy…`, etc.
 - `phonefy`. Recovers information about mobile phones linked to known spam practices. **Inputs**: list of phones. **Outputs**: Phones linked to spam.
