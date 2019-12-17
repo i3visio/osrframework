@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-#
 ################################################################################
 #
-#    Copyright 2014-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
-#    This file is part of OSRFramework. You can redistribute it and/or modify
+#    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
@@ -25,78 +23,81 @@ import sys
 import pkgutil
 import importlib
 import inspect
-import osrframework.wrappers
 
+import osrframework.wrappers
 import osrframework.utils.credentials as credentials
 import osrframework.utils.configuration as configuration
 import osrframework
 
 
-def getAllPlatformNames(mode):
-    """Method that defines the whole list of available parameters.
+def get_all_platform_names(mode):
+    """Method that defines the whole list of available parameters
 
-        :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+    Args:
+        mode (str): The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
 
-        Return values:
-            Returns a list [] of strings for the platform objects.
+    Returns:
+        list. Returns a list [] of strings for the platform objects.
     """
     # Recovering all the possible platforms installed
-    platOptions = []
+    plat_options = []
     if mode in ["phonefy", "usufy", "searchfy", "mailfy"]:
-        allPlatforms = getAllPlatformObjects(mode=mode)
-        # Defining the platOptions
-        for p in allPlatforms:
+        all_platforms = get_all_platform_objects(mode=mode)
+        # Defining the plat_options
+        for p in all_platforms:
             try:
                 # E. g.: to use wikipedia instead of wikipedia_ca and so on
-                parameter = p.parameterName
+                parameter = p.parameter_name
             except:
                 parameter = p.platformName.lower()
 
-            if parameter not in platOptions:
-                platOptions.append(parameter)
+            if parameter not in plat_options:
+                plat_options.append(parameter)
     elif mode == "domainfy":
-        platOptions = osrframework.domainfy.TLD.keys()
+        plat_options = osrframework.domainfy.TLD.keys()
 
-    platOptions =  sorted(set(platOptions))
-    platOptions.insert(0, 'all')
-    return platOptions
+    plat_options = sorted(set(plat_options))
+    plat_options.insert(0, 'all')
+    return plat_options
 
 
-def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatformNames=[]):
-    """Method that recovers the names of the <Platforms> in a given list.
+def get_platforms_by_name(platform_names=['all'], mode=None, tags=[], exclude_platform_names=[]):
+    """Method that recovers the names of the <Platforms> in a given list
 
-        :param platformNames:    List of strings containing the possible platforms.
-        :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
-        :param tags:    Just in case the method to select the candidates is a series of tags.
-        :param excludePlatformNames:    List of strings to be excluded from the search.
-        :return:    Array of <Platforms> classes.
+    Args:
+        platform_names (list): List of strings containing the possible platforms.
+        mode (str): The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+        tags (list): Just in case the method to select the candidates is a series of tags.
+        exclude_platform_names (list): List of strings to be excluded from the search.
+
+    Returns:
+        list. Array of <Platforms> classes.
     """
+    all_platforms_list = get_all_platform_objects(mode)
 
-    allPlatformsList = getAllPlatformObjects(mode)
-
-    platformList = []
+    platform_list = []
 
     # Tags has priority over platform
-    if "all" in platformNames and len(tags) == 0:
+    if "all" in platform_names and len(tags) == 0:
         # Last condition: checking if "all" has been provided
-        for plat in allPlatformsList:
-            if str(plat.platformName).lower() not in excludePlatformNames:
-                platformList.append(plat)
-        return platformList
+        for plat in all_platforms_list:
+            if str(plat.platformName).lower() not in exclude_platform_names:
+                platform_list.append(plat)
+        return platform_list
     else:
         # going through the regexpList
-        for name in platformNames:
-            if name not in excludePlatformNames:
-                for plat in allPlatformsList:
+        for name in platform_names:
+            if name not in exclude_platform_names:
+                for plat in all_platforms_list:
                     # Verifying if the parameter was provided
                     if name == str(plat.platformName).lower():
-                        platformList.append(plat)
+                        platform_list.append(plat)
                         break
 
                     # We need to perform additional checks to verify the Wikipedia platforms, which are called with a single parameter
                     try:
-                        if name == str(plat.parameterName).lower():
-                            platformList.append(plat)
+                        if name == str(plat.parameter_name).lower():
+                            platform_list.append(plat)
                             break
                     except:
                         pass
@@ -104,24 +105,30 @@ def getPlatformsByName(platformNames=['all'], mode=None, tags=[], excludePlatfor
                     # Verifying if any of the platform tags match the original tag
                     for t in plat.tags:
                         if t in tags:
-                            platformList.append(plat)
+                            platform_list.append(plat)
                             break
-    # If the platformList is empty, we will return all
-    if platformList == []:
-        return allPlatformsList
+    # If the platform_list is empty, we will return all
+    if platform_list == []:
+        return all_platforms_list
     else:
-        return platformList
+        return platform_list
 
-def getAllPlatformNamesByTag (mode = None):
-    """Returns the platforms in the framework grouped by tags.
-        :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+
+def get_all_platform_names_by_tag (mode = None):
+    """Returns the platforms in the framework grouped by tags
+
+    Args:
+        mode (str): The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+
+    Returns:
+        list.
     """
     tags = {}
 
-    allPlatformsList = getAllPlatformObjects(mode)
+    all_platforms_list = get_all_platform_objects(mode)
 
     # Iterating the list of platforms to collect the tags
-    for plat in allPlatformsList:
+    for plat in all_platforms_list:
         # Grabbing the tags and providing them
         for t in plat.tags:
             if t not in tags.keys():
@@ -132,17 +139,19 @@ def getAllPlatformNamesByTag (mode = None):
     return tags
 
 
-def getAllPlatformObjects(mode = None):
-    """Method that recovers ALL the list of <Platform> classes to be processed....
+def get_all_platform_objects(mode = None):
+    """Method that recovers ALL the list of <Platform> classes to be processed
 
-        :param mode:    The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+    The method dinamically loads all the wrappers stored under [OSRFrameworkHOME]/plugins/wrappers/.
 
-        :return:    Returns a list [] of <Platform> objects.
+    Args:
+        mode (str):The mode of the search. The following can be chosen: ["phonefy", "usufy", "searchfy"].
+
+    Returns:
+        Returns a list [] of <Platform> objects.
     """
+    list_all = []
 
-    listAll = []
-
-    ############################################################################
     ############################################################################
 
     # --------------------------------------------------------------------------
@@ -157,50 +166,50 @@ def getAllPlatformObjects(mode = None):
         all_modules.append("osrframework.wrappers." + name)
 
     # Iterating through all the module names to grab them
-    for moduleName in all_modules:
+    for module_name in all_modules:
         # Importing the module
-        my_module = importlib.import_module(moduleName)
+        my_module = importlib.import_module(module_name)
 
         # Getting all the classNames.
-        classNames = [m[0] for m in inspect.getmembers(my_module, inspect.isclass) if m[1].__module__ == moduleName]
+        classNames = [m[0] for m in inspect.getmembers(my_module, inspect.isclass) if m[1].__module__ == module_name]
 
         # Dinamically grabbing the first class of the module. IT SHOULD BE ALONE!
         MyClass = getattr(my_module, classNames[0])
 
         # Instantiating the object
-        newInstance = MyClass()
+        new_instance = MyClass()
 
         # Adding to the list!
-        listAll.append(newInstance)
+        list_all.append(new_instance)
 
     # --------------------------------------------------------------------------
     # Loading user-defined wrappers under [OSRFrameworkHOME]/plugins/wrappers/
     # --------------------------------------------------------------------------
 
     # Creating the application paths
-    paths = configuration.getConfigPath()
+    paths = configuration.get_config_path()
 
-    newPath = os.path.abspath(paths["appPathWrappers"])
+    new_path = os.path.abspath(paths["appPathWrappers"])
 
     # Inserting in the System Path
-    if not newPath in sys.path:
-        sys.path.append(newPath)
+    if not new_path in sys.path:
+        sys.path.append(new_path)
 
-    userImportedModules = {}
+    user_imported_modules = {}
 
-    for module in os.listdir(newPath):
+    for module in os.listdir(new_path):
         if module[-3:] == '.py':
             current = module.replace('.py', '')
-            userImportedModules[current] = __import__(current)
+            user_imported_modules[current] = __import__(current)
 
-    del newPath
+    del new_path
 
-    userClasses = []
+    user_classes = []
 
     # Iterating through all the files
-    for userModule in userImportedModules.keys():
+    for userModule in user_imported_modules.keys():
 
-        my_module = userImportedModules[userModule]
+        my_module = user_imported_modules[userModule]
         # Getting all the classNames.
         classNames = [m[0] for m in inspect.getmembers(my_module, inspect.isclass) if m[1].__module__ == userModule]
 
@@ -208,47 +217,48 @@ def getAllPlatformObjects(mode = None):
         MyClass = getattr(my_module, classNames[0])
 
         # Instantiating the object
-        newInstance = MyClass()
+        new_instance = MyClass()
 
         # Adding to the list!
-        userClasses.append(newInstance)
+        user_classes.append(new_instance)
 
     # --------------------------------------------------------------------------
     # Overwriting original modules with the user plugins
     # --------------------------------------------------------------------------
-    listToAdd = []
-    for userClass in userClasses:
+    list_to_add = []
+
+    for user_class in user_classes:
         overwritten = False
-        for i, officialClass in enumerate(listAll):
+        for i, official_class in enumerate(list_all):
             # Checking if the name is the same
-            if str(userClass) == str(officialClass):
+            if str(user_class) == str(official_class):
                 # Replacing the official module if a user module exists for it
-                listAll[i] = userClass
+                list_all[i] = user_class
                 # We stop iterating this loop
                 overwritten = True
                 break
         if not overwritten:
             # Appending the new class
-            listToAdd.append(userClass)
+            list_to_add.append(user_class)
 
-    # Merging listAll and listToAdd
-    listAll = listAll + listToAdd
+    # Merging list_all and list_to_add
+    list_all = list_all + list_to_add
     ############################################################################
     ############################################################################
 
-    creds = credentials.getCredentials()
+    creds = credentials.get_credentials()
 
-    for p in listAll:
+    for p in list_all:
         # Verify if there are credentials to be loaded
         if p.platformName.lower() in creds.keys():
             p.setCredentials(creds[p.platformName.lower()])
 
     if mode == None:
-        return listAll
+        return list_all
     else:
         # We are returning only those platforms which are required by the mode.
         selected = []
-        for p in listAll:
+        for p in list_all:
             try:
                 if p.isValidMode[mode]:
                     selected.append(p)

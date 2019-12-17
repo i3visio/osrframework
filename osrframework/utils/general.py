@@ -1,22 +1,21 @@
-###############################################################################
+################################################################################
 #
-#   Copyright 2016-2020
-#       Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
-#   This program is part of OSRFramework. You can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
 #
-#   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-###############################################################################
+################################################################################
 
 import datetime
 import hashlib
@@ -34,18 +33,16 @@ import networkx as nx
 LICENSE_URL = "https://www.gnu.org/licenses/agpl-3.0.txt"
 
 
-def exportUsufy(data, ext, fileH):
+def export_usufy(data, ext, fileH):
     """
     Method that exports the different structures onto different formats.
 
     Args:
-    -----
         data: Data to export.
         ext: One of the following: csv, excel, json, ods.
         fileH: Fileheader for the output files.
 
     Returns:
-    --------
         Performs the export as requested by parameter.
     """
     if ext == "csv":
@@ -126,11 +123,9 @@ def _generate_tabular_data(res, oldtabular_data={}, is_terminal=False):
         Changing the starting @ for a '_'. Changed in 0.9.4+.
 
         Args:
-        -----
             h: A header to be sanitised.
 
         Returns:
-        --------
             string: The modified header.
         """
         if h[0] == "@":
@@ -461,12 +456,10 @@ def _generate_graph_data(data, old_data=nx.Graph()):
         Function that processes a list of elements to obtain new attributes.
 
         Args:
-        -----
-            elems: List of i3visio-like entities.
+            elems (list): List of i3visio-like entities.
             g: The graph in which the entity will be stored.
 
         Returns:
-        --------
             newAtts: Dict of attributes (to be stored as attributes for the
                 given entity).
             newEntities: List of new Entities (to be stored as attributes for
@@ -563,22 +556,20 @@ def _generate_graph_data(data, old_data=nx.Graph()):
 
 
 def usufyToGmlExport(d, file_path):
-    """
-    Workaround to export data to a .gml file.
+    """Workaround to export data to a .gml file.
 
     Args:
-    -----
         d: Data to export.
-        file_path: File path for the output file.
+        file_path (str): File path for the output file.
     """
     # Reading the previous gml file
     try:
-        old_data=nx.read_gml(file_path)
+        old_data = nx.read_gml(file_path)
     except UnicodeDecodeError as e:
         print("UnicodeDecodeError:\t" + str(e))
         print("Something went wrong when reading the .gml file relating to the decoding of UNICODE.")
         import time as time
-        file_path+="_" +str(time.time())
+        file_path += "_" + str(time.time())
         print("To avoid losing data, the output file will be renamed to use the timestamp as:\n" + file_path + "_" + str(time.time()))
         print()
         # No information has been recovered
@@ -594,11 +585,9 @@ def usufyToGmlExport(d, file_path):
 
 
 def usufyToPngExport(d, file_path):
-    """
-    Workaround to export to a png file.
+    """Workaround to export to a png file.
 
     Args:
-    -----
         d: Data to export.
         file_path: File path for the output file.
     """
@@ -611,21 +600,18 @@ def usufyToPngExport(d, file_path):
 
 
 def fileToMD5(filename, block_size=256*128, binary=False):
-    """
-    A function that calculates the MD5 hash of a file.
+    """A function that calculates the MD5 hash of a file.
 
     Args:
-    -----
-        filename: Path to the file.
-        block_size: Chunks of suitable size. Block size directly depends on
+        filename (str): Path to the file.
+        block_size (int): Chunks of suitable size. Block size directly depends on
             the block size of your filesystem to avoid performances issues.
             Blocks of 4096 octets (Default NTFS).
-        binary: A boolean representing whether the returned info is in binary
+        binary (bool): A boolean representing whether the returned info is in binary
             format or not.
 
     Returns:
-    --------
-        string: The  MD5 hash of the file.
+        str: The  MD5 hash of the file.
     """
     md5 = hashlib.md5()
     with open(filename,'rb') as f:
@@ -637,12 +623,10 @@ def fileToMD5(filename, block_size=256*128, binary=False):
 
 
 def getCurrentStrDatetime():
-    """
-    Generating the current Datetime with a given format
+    """Generating the current Datetime with a given format
 
     Returns:
-    --------
-        string: The string of a date.
+        str: The string of a date.
     """
     # Generating current time
     i = datetime.datetime.now()
@@ -655,11 +639,9 @@ def getFilesFromAFolder(path):
     Getting all the files in a folder.
 
     Args:
-    -----
-        path: The path in which looking for the files
+        path (str): The path in which looking for the files
 
     Returns:
-    --------
         list: The list of filenames found.
     """
     from os import listdir
@@ -673,8 +655,7 @@ def getFilesFromAFolder(path):
 
 
 def urisToBrowser(uris=[], autoraise=True):
-    """
-    Method that launches the URI in the default browser of the system
+    """Method that launches the URI in the default browser of the system
 
     This function temporally deactivates the standard ouptut and errors to
     prevent the system to show unwanted messages. This method is based on this
@@ -682,8 +663,7 @@ def urisToBrowser(uris=[], autoraise=True):
     https://stackoverflow.com/questions/2323080/how-can-i-disable-the-webbrowser-message-in-python
 
     Args:
-    -----
-        uri: a list of strings representing the URI to be opened in the browser.
+        uri (str): a list of strings representing the URI to be opened in the browser.
     """
 
     # Cloning stdout (1) and stderr (2)
@@ -712,7 +692,7 @@ def openResultsInBrowser(res):
     """Method that collects the URI from a list of entities and opens them
 
     Args:
-        res: A list containing several i3visio entities.
+        res (list): A list containing several i3visio entities.
     """
     print(emphasis("\n\tOpening URIs in the default web browser..."))
 
@@ -733,8 +713,8 @@ def colorize(text, messageType=None):
     """Function that colorizes a message.
 
     Args:
-        text: The string to be colorized. If not a string, it is converted.
-        messageType: Possible options include "ERROR", "WARNING", "SUCCESS",
+        text (str): The string to be colorized. If not a string, it is converted.
+        messageType (str): Possible options include "ERROR", "WARNING", "SUCCESS",
             "INFO" or "BOLD".
 
     Returns:
@@ -833,8 +813,7 @@ def emphasis(text):
 
 
 def showLicense():
-    """
-    Method that prints the license if requested.
+    """Method that prints the license if requested.
 
     It tries to find the license online and manually download it. This method
     only prints its contents in plain text.
@@ -851,16 +830,13 @@ def showLicense():
 
 
 
-def expandEntitiesFromEmail(e):
-    """
-    Method that receives an email an creates linked entities
+def expand_entities_from_email(e):
+    """Method that receives an email an creates linked entities
 
     Args:
-    -----
-        e:   Email to verify.
+        e (str): Email to verify.
 
     Returns:
-    --------
         Three different values: email, alias and domain in a list.
     """
     # Grabbing the email

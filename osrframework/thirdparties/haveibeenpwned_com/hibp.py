@@ -1,35 +1,36 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
 import argparse
-import cfscrape
 import json
-import requests
-import sys
+import os
 import time
 
-import osrframework.utils.general as general
+import cfscrape
+import requests
 
-def checkIfEmailWasHacked(email=None, sleepSeconds=1):
-    """
-    Method that checks if the given email is stored in the HIBP website.
+import osrframework.utils.general as general
+import osrframework.utils.configuration as configuration
+
+
+def check_if_email_was_hacked(email=None, sleep_seconds=1, api_key=None):
+    """Method that checks if the given email is stored in the HIBP website.
 
     This function automatically waits a second to avoid problems with the API
     rate limit. An example of the json received:
@@ -38,35 +39,53 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1):
     ```
 
     Args:
-    -----
-        email: Email to verify in HIBP.
+        email (str): Email to verify in HIBP.
+        sleep_seconds (int): Number of seconds to wait between calls.
+        api_key (str): API key for Have I Been Pwned
 
     Returns:
-    --------
         A python structure for the json received. If nothing was found, it will
         return an empty list.
     """
-    # Sleeping just a little bit
-    time.sleep(sleepSeconds)
-
-    print("\t[*] Bypassing Cloudflare Restriction...")
-    ua = 'osrframework 0.18'
-    useragent = {'User-Agent': ua}
-    cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent=ua)
-
     leaks = []
 
-    apiURL = "https://haveibeenpwned.com/api/v2/breachedaccount/{}".format(email)
+    # Sleeping just a little bit
+    time.sleep(sleep_seconds)
+
+    print("\t[*] Bypassing Cloudflare Restriction...")
+    ua = 'osrframework 0.20.0'
+
+    if api_key is None:
+        api_key = input("Insert the HIBP API KEY here:\t")
+
+    headers = {
+        'hibp-api-key': api_key,
+        'User-Agent': ua
+    }
+
+    try:
+        cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v3/breachedaccount/test@example.com', user_agent=ua)
+    except requests.exceptions.HTTPError as e:
+        print(f"\t[*] Unauthorised: '{str(e)}'")
+        return leaks
+
+    api_url = f"https://haveibeenpwned.com/api/v3/breachedaccount/{email}"
 
     # Accessing the HIBP API
-    time.sleep(sleepSeconds)
+    time.sleep(sleep_seconds)
+
     # Building API query
-    data = requests.get(
-        apiURL,
-        headers=useragent,
-        cookies=cookies,
-        verify=True
-    ).text
+    try:
+        resp = requests.get(
+            api_url,
+            headers=headers,
+            cookies=cookies,
+            verify=True
+        )
+        data = resp.text
+    except requests.exceptions.HTTPError as e:
+        print(f"\t[*] Unauthorised: '{str(e)}'")
+        return leaks
 
     # Reading the text data onto python structures
     try:
@@ -76,10 +95,10 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1):
             # Building the i3visio like structure
             new = {}
             new["value"] = "(HIBP) " + e.get("Name") + " - " + email
-            new["type"] = "i3visio.profile"
+            new["type"] = "com.i3visio.Profile"
             new["attributes"] = [
                 {
-                    "type": "i3visio.platform_leaked",
+                    "type": "com.i3visio.Platform.Leaked",
                     "value": e.get("Name"),
                     "attributes": []
                 },
@@ -90,7 +109,7 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1):
                 },
                 {
                     "type": "@source_uri",
-                    "value": apiURL,
+                    "value": api_url,
                     "attributes": []
                 },
                 {
@@ -99,12 +118,12 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1):
                     "attributes": []
                 },
                 {
-                    "type": "@added_date",
+                    "type": "com.i3visio.Date.Known",
                     "value": e.get("AddedDate"),
                     "attributes": []
                 },
                 {
-                    "type": "@breach_date",
+                    "type": "com.i3visio.Date.Breached",
                     "value": e.get("BreachDate"),
                     "attributes": []
                 },
@@ -113,7 +132,7 @@ def checkIfEmailWasHacked(email=None, sleepSeconds=1):
                     "value": e.get("Description"),
                     "attributes": []
                 }
-            ] + general.expandEntitiesFromEmail(email)
+            ] + general.expand_entities_from_email(email)
             leaks.append(new)
     except ValueError:
         return []
@@ -128,12 +147,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps an account search onto haveibeenpwned.com.', prog='checkIfEmailWasHacked.py', epilog="", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
-    parser.add_argument('-q', '--query', metavar='<hash>', action='store', help='query to be performed to haveibeenpwned.com.', required=True)
+    parser.add_argument('-q', '--query', metavar='<email>', action='store', help='query to be performed to haveibeenpwned.com.', required=True)
 
-    groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
-    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
+    group_about = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
+    group_about.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    group_about.add_argument('--version', action='version', version='%(prog)s 0.2.0', help='shows the version of the program and exists.')
 
     args = parser.parse_args()
-    print("Results found for " + args.query + ":\n")
-    print(json.dumps(checkIfEmailWasHacked(email=args.query), indent=2))
+
+    result = check_if_email_was_hacked(email=args.query)
+    print(f"Results found for {args.query}:\n")
+    print(json.dumps(result, indent=2))

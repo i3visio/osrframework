@@ -1,7 +1,7 @@
 setuptools
 bs4
 requests
-python-emailahoy
+python-emailahoy3
 pyexcel==0.2.1
 pyexcel_ods==0.1.1
 pyexcel_xls==0.1.0

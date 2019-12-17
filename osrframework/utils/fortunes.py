@@ -41,8 +41,12 @@ messages = [
     "-- In 'domainfy', use '-t cc' to find domains resolving to ccTLDs. --",
     "-- In 'usufy', you can add several nicks to '-n'. E. g.: '-n felix yaiza'. --",
     "-- In 'domainfy', you may use several words with '-n'. E. g.: '-n felix yaiza'. --",
-    "-- If you have a list of brand names (1 per line), use 'domainfy' with '-N'. --",
+    "-- If you have a file with brand names (1 per line), use 'domainfy' with '-N'. --",
     "-- In OSRF CLI apps, you can set a different output folder with '-o'. --",
     "-- Hey! '--help' is your friend, pal! --",
     "-- With '--whois' in 'domainfy' you can find WhoIs info about a domain. --",
+    "-- You can get information about an email using 'mailfy -m john@example.com'. --",
+    "-- With 'mailfy' you can make reverse Whois queries with ViewDNS.info. --",
+    "-- Troy Hunt's Have I Been Pwned is no longer free to use! :( --",
+    "-- A Reverse Whois query gets domains registed by a person. --"
 ]
