@@ -513,7 +513,7 @@ be used instead. Verification may be slower though."""))
         platforms = platform_selection.get_platforms_by_name(args.platforms, mode="mailfy")
         names = [p.platformName for p in platforms]
 
-        '''if not args.quiet:
+        if not args.quiet:
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 2/5')}. Checking if the emails have been used to register accounts in {general.emphasis(str(len(platforms)))} platforms...\n{general.emphasis(json.dumps(names, indent=2))}\n")
             print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
@@ -550,7 +550,7 @@ be used instead. Verification may be slower though."""))
         except KeyError:
             # API_Key not found
             config_path = os.path.join(configuration.get_config_path()["appPath"], "api_keys.cfg")
-            print(general.warning(f"No API found for HaveIBeenPwned. Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'."))'''
+            print(general.warning(f"No API found for HaveIBeenPwned. Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'."))
 
         if not args.quiet:
             now = dt.datetime.now()

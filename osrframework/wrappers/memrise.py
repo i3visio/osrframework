@@ -1,9 +1,6 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -18,29 +15,22 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-__author__ = "Luis Alberto López Alvar <luisalberto.lopez.alvar@gmail.com>"
-__version__ = "1.0"
+__author__ = (
+    "Luis Alberto López Alvar <luisalberto.lopez.alvar@gmail.com>; "
+    "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+)
+__version__ = "2.0"
 
-import argparse
-import json
-import re
-import sys
-import urllib2
 
-import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
+
 class Memrise(Platform):
-    """
-        A <Platform> object for memrise.
-    """
+    """A <Platform> object for Memrise"""
     def __init__(self):
-        """
-            Constructor...
-        """
-        self.platformName = "memrise"
+        self.platformName = "Memrise"
         self.tags = ["education","social"]
 
         ########################
@@ -57,7 +47,7 @@ class Memrise(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.memrise.com/user/" + "<usufy>" +"/"
+        self.url["usufy"] = "https://www.memrise.com/user/<usufy>/"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +74,9 @@ class Memrise(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<img src=\"https://static.memrise.com/general/img/error/404_bg.svg\""]
+        self.notFoundText["usufy"] = [
+            "<img src=\"https://static.memrise.com/general/img/error/404_bg.svg\""
+        ]
         #self.notFoundText["searchfy"] = []
 
         #########################

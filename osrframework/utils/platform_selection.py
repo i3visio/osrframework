@@ -139,7 +139,7 @@ def get_all_platform_names_by_tag (mode = None):
     return tags
 
 
-def get_all_platform_objects(mode = None):
+def get_all_platform_objects(mode=None):
     """Method that recovers ALL the list of <Platform> classes to be processed
 
     The method dinamically loads all the wrappers stored under [OSRFrameworkHOME]/plugins/wrappers/.
@@ -253,15 +253,12 @@ def get_all_platform_objects(mode = None):
         if p.platformName.lower() in creds.keys():
             p.setCredentials(creds[p.platformName.lower()])
 
-    if mode == None:
+    if mode is None:
         return list_all
     else:
         # We are returning only those platforms which are required by the mode.
         selected = []
         for p in list_all:
-            try:
-                if p.isValidMode[mode]:
-                    selected.append(p)
-            except:
-                pass
+            if p._mode_is_valid(mode):
+                selected.append(p)
         return selected

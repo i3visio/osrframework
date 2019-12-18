@@ -24,35 +24,25 @@ __version__ = "2.0"
 from osrframework.utils.platforms import Platform
 
 
-class Youtube(Platform):
+class Minds(Platform):
     """<Platform> class"""
     def __init__(self):
         """Constructor with parameters
 
         This method permits the developer to instantiate dinamically Platform
         objects."""
-        self.platformName = "Youtube"
-        self.tags = ["social", "video"]
+        self.platformName = "Minds"
+        self.tags = ["social"]
         self.modes = {
             "usufy": {
                 "debug": False,
                 "extra_fields": {
-                    "com.i3visio.Date.Create": '{"start": "<li class=\"about-stat joined-date\">", "end": "</li>"}',    # Regular expresion to extract the alias
+                    "com.i3visio.Name": '<h2>([^<]+)</h2>',    # Regular expresion to extract the alias
                 },
                 "needs_credentials": False,
-                "not_found_text": "channel-empty-message banner-message",                   # Text that indicates a missing profile
-                "query_validator": "[^@, ]+",                            # Regular expression that the alias SHOULD match
-                "url": "https://www.youtube.com/user/{placeholder}/about",       # Target URL where {placeholder} would be modified by the alias
-            },
-            "searchfy": {
-                "debug": False,
-                "extra_fields": {},
-                "needs_credentials": False,
-                "not_found_text": "style-scope ytd-background-promo-renderer",
-                "query_validator": ".+",
-                "url": "https://www.youtube.com/results?filters=channel&lclk=channel&search_query={placeholder}&sp=EgIQAg%253D%253D",
-                # Needed function to extract aliases from the website
-                "alias_regexp": 'url":"/user/([^"]+)","webPageType":"WEB_PAGE_TYPE_BROWSE'
+                "not_found_text": "<title>Minds</title>",                   # Text that indicates a missing profile
+                "query_validator": "[a-z0-9A-Z_]+",                            # Regular expression that the alias SHOULD match
+                "url": "https://www.minds.com/{placeholder}",       # Target URL where {placeholder} would be modified by the alias
             },
             # Reimplementation needed of check_mailfy
             "mailfy": {},

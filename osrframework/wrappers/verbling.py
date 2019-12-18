@@ -1,9 +1,6 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -18,28 +15,19 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-__author__ = "Luis Alberto Lopez Alvar <luisalberto.lopez.alvar@gmail.com>"
-__version__ = "1.0"
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import argparse
-import json
-import re
-import sys
-import urllib2
 
 import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
+
 class Verbling(Platform):
-    """
-        A <Platform> object for Verbling.
-    """
+    """A <Platform> object for Verbling"""
     def __init__(self):
-        """
-            Constructor...
-        """
         self.platformName = "Verbling"
         self.tags = ["education","professional"]
 
@@ -84,7 +72,7 @@ class Verbling(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h1 class=\"notranslate\">Error<!-- --> (<!-- -->404<!-- -->)</h1>"]
+        self.notFoundText["usufy"] = ["(<!-- -->404<!-- -->)"]
         #self.notFoundText["searchfy"] = []
 
         #########################

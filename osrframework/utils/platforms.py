@@ -32,13 +32,13 @@ class Platform(object):
     def __init__(self):
         pass
 
-    def __init__(self, pName, tags):
+    def __init__(self, name, tags):
         """Constructor with parameters
 
         This method permits the developer to instantiate dinamically Platform
         objects."""
-        self.platformName = "Demo"
-        self.tags = ["demo"]
+        self.platformName = name.lower().title()
+        self.tags = tags
         self.modes = {
             "usufy": {
                 "debug": False,
@@ -77,7 +77,7 @@ class Platform(object):
             The URL to be queried.
         """
         try:
-            return self.modes[mode]["url"].format(placeholder=urllib.pathname2url(word))
+            return self.modes[mode]["url"].replace("{placeholder}", word)
         except:
             if mode == "base":
                 if word[0] == "/":
@@ -103,10 +103,18 @@ class Platform(object):
         # Creating the query URL for that mode
         qURL = self.create_url(word=query, mode=mode)
         i3Browser = browser.Browser()
-
         try:
             # Check if it needs creds
-            if self.needsCredentials[mode]:
+            needs_credentials =False
+            try:
+                # Suport for version 2 of wrappers
+                if self.modes[mode]["needs_credentials"]:
+                    needs_credentials = True
+            except AttributeError as e:
+                if self.needsCredentials[mode]:
+                    needs_credentials = True
+
+            if needs_credentials:
                 self._getAuthenticated(i3Browser, qURL)
                 data = i3Browser.recover_url(qURL)
             else:
@@ -161,11 +169,8 @@ class Platform(object):
             return mode in self.modes.keys()
         except AttributeError as e:
             # Legacy for mantaining old wrappers
-            if mode in self.isValidMode.keys():
-                if mode in self.isValidMode.keys():
-                    return True
+            return self.isValidMode.get(mode, False)
         return False
-
 
     def __str__(self):
         """Function to represent the text when printing the object
@@ -402,23 +407,25 @@ class Platform(object):
         if test:
             # Add flexibility
             try:
-                regexp = self.searchfyAliasRegexp
-                entity_type = "com.i3visio.Alias"
-            except AttributeError:
-                regexp = self.searchfyEmailRegexp
-                entity_type = "com.i3visio.Email"
+                try:
+                    regexp = self.searchfyAliasRegexp
+                    entity_type = "com.i3visio.Alias"
+                except AttributeError:
+                    regexp = self.searchfyEmailRegexp
+                    entity_type = "com.i3visio.Email"
 
-            try:
                 # Recovering all the found aliases in the traditional way
                 ids = re.findall(regexp, test, re.DOTALL)
             except:
                 # Version 2 of the wrappers
-                verifier = self.modes.get(mode)
+                verifier = self.modes.get("searchfy")
 
-                if verifier and verifier.get("alias_extractor"):
-                    ids = re.findall(verifier.get("alias_extractor"), test, re.DOTALL)
-                else:
-                    return []
+                if verifier and verifier.get("alias_regexp"):
+                    entity_type = "com.i3visio.Alias"
+                    ids = re.findall(verifier.get("alias_regexp"), test, re.DOTALL)
+                if verifier and verifier.get("email_regexp"):
+                    entity_type = "com.i3visio.Email"
+                    ids = re.findall(verifier.get("email_regexp"), test, re.DOTALL)
 
             for j, alias in enumerate(ids):
                 r = {
@@ -456,8 +463,13 @@ class Platform(object):
                     aux["value"] = uri
                     aux["attributes"] = []
                     r["attributes"].append(aux)
-                except NameError:
-                    pass
+                except AttributeError:
+                    aux = {}
+                    aux["type"] = "com.i3visio.URI"
+                    uri = self.create_url(word=alias, mode="usufy")
+                    aux["value"] = uri
+                    aux["attributes"] = []
+                    r["attributes"].append(aux)
 
                 if entity_type == "com.i3visio.Email":
                     r["attributes"] += general.expand_entities_from_email(alias)

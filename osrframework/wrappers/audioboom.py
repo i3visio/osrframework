@@ -1,47 +1,34 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
-__version__ = "1.0"
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import argparse
-import json
-import re
-import sys
-import urllib2
 
-import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
-class Abou(Platform):
-    """
-        A <Platform> object for Abou.
-    """
+
+class Audioboom(Platform):
+    """A <Platform> object for Audioboom"""
     def __init__(self):
-        """
-            Constructor...
-        """
-        self.platformName = "Abou"
-        self.tags = ["social"]
+        self.platformName = "Audioboom"
+        self.tags = ["audio"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +44,7 @@ class Abou(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://abou.to/" + "<usufy>"
+        self.url["usufy"] = "https://audioboom.com/" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -73,9 +60,9 @@ class Abou(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query
+        # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
+        self.validQuery["usufy"] = "[^@]+"
         #self.validQuery["searchfy"] = ".*"
 
         ###################
@@ -84,7 +71,7 @@ class Abou(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h1>404</h1>","<h2>Oops, the page you're looking for does not exist.</h2>"]
+        self.notFoundText["usufy"] = ["<title>Audioboom / Not Found</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################
@@ -100,15 +87,10 @@ class Abou(Platform):
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
         # Example of fields:
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<div id="h11"><h1 id="profile_info">', "end": "</h1></div>"}
-        self.fieldsRegExp["usufy"]["i3visio.alias.youtube"] = {"start": '<a href="http://youtube.com/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.alias.facebook"] = {"start": '<a href="http://facebook.com/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.alias.linkedin"] = {"start": 'href="http://linkedin.com/in/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.alias.googleplus"] = {"start": 'href="http://google.com/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.alias.twitter"] = {"start": 'href="http://twitter.com/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.alias.eksisozluk"] = {"start": 'href="http://eksisozluk.com/biri/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.alias.academia"] = {"start": 'href="http://pima.academia.edu/', "end": '"'}
-        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<img src="', "end": '" id="profileaimg">'}
+        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<a href="/', "end": '"><img alt="avatar"'}
+        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": 'class="avatar-image avatar-image--with-image t-br-50pc di js-img-bg" style=";background-color:#db9c86"\nsrc="', "end": '" /></a>'}
+        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<p class='location'>", "end": '</p>'}
+
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

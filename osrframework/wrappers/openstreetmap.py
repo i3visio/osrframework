@@ -1,9 +1,6 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -18,26 +15,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import osrframework.utils.browser as browser
+
 from osrframework.utils.platforms import Platform
 
 
 class Openstreetmap(Platform):
-    """
-        A <Platform> object for Openstreetmap.
-    """
+    """A <Platform> object for Openstreetmap"""
     def __init__(self):
-        """
-            Constructor...
-        """
         self.platformName = "Openstreetmap"
         self.tags = ["maps", "wiki"]
 
@@ -55,7 +44,7 @@ class Openstreetmap(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.openstreetmap.org/user/" + "<usufy>"
+        self.url["usufy"] = "https://www.openstreetmap.org/user/<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -82,7 +71,7 @@ class Openstreetmap(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [ '<title>OpenStreetMap | No such user</title>' ]
+        self.notFoundText["usufy"] = [ '<title>No such user' ]
         #self.notFoundText["searchfy"] = []
 
         #########################

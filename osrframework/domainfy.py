@@ -17,7 +17,6 @@
 #
 ################################################################################
 
-
 import argparse
 import datetime as dt
 import json
@@ -553,7 +552,7 @@ visit <{general.LICENSE_URL}>.
             file_header = os.path.join(args.output_folder, args.file_header)
             for ext in args.extension:
                 # Generating output files
-                general.exportUsufy(results, ext, file_header)
+                general.export_usufy(results, ext, file_header)
 
         # Showing the information gathered if requested
         if not args.quiet:
