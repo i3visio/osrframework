@@ -48,19 +48,19 @@ def export_usufy(data, ext, fileH):
     if ext == "csv":
         osrf_to_csv_export(data, fileH+"."+ext)
     elif ext == "gml":
-        usufyToGmlExport(data, fileH+"."+ext)
+        osrf_to_gml_export(data, fileH+"."+ext)
     elif ext == "json":
         osrf_to_json_export(data, fileH+"."+ext)
     elif ext == "ods":
         osrf_to_ods_export(data, fileH+"."+ext)
     elif ext == "png":
-        usufyToPngExport(data, fileH+"."+ext)
+        osrf_to_png_export(data, fileH+"."+ext)
     elif ext == "txt":
         osrf_to_text_export(data, fileH+"."+ext)
     elif ext == "xls":
-        usufy_to_xls_export(data, fileH+"."+ext)
+        osrf_to_xls_export(data, fileH+"."+ext)
     elif ext == "xlsx":
-        usufy_to_xlsx_export(data, fileH+"."+ext)
+        osrf_to_xlsx_export(data, fileH+"."+ext)
 
 
 def _generate_tabular_data(res, oldtabular_data={}, is_terminal=False):
@@ -70,8 +70,8 @@ def _generate_tabular_data(res, oldtabular_data={}, is_terminal=False):
     This method is used by:
         - osrf_to_csv_export
         - osrf_to_ods_export
-        - usufy_to_xls_export
-        - usufy_to_xlsx_export
+        - osrf_to_xls_export
+        - osrf_to_xlsx_export
 
     Args:
         res: New data to export.
@@ -363,7 +363,7 @@ def osrf_to_ods_export(data, file_path):
     save_data(file_path, tabular_data)
 
 
-def usufy_to_xls_export(data, file_path):
+def osrf_to_xls_export(data, file_path):
     """
     Workaround to export to a .xls file.
 
@@ -387,7 +387,7 @@ def usufy_to_xls_export(data, file_path):
     save_data(file_path, tabular_data)
 
 
-def usufy_to_xlsx_export(data, file_path):
+def osrf_to_xlsx_export(data, file_path):
     """
     Workaround to export to a .xlsx file.
 
@@ -555,7 +555,7 @@ def _generate_graph_data(data, old_data=nx.Graph()):
     return graphData
 
 
-def usufyToGmlExport(d, file_path):
+def osrf_to_gml_export(d, file_path):
     """Workaround to export data to a .gml file.
 
     Args:
@@ -584,7 +584,7 @@ def usufyToGmlExport(d, file_path):
     nx.write_gml(newGraph,file_path)
 
 
-def usufyToPngExport(d, file_path):
+def osrf_to_png_export(d, file_path):
     """Workaround to export to a png file.
 
     Args:
@@ -688,7 +688,7 @@ def urisToBrowser(uris=[], autoraise=True):
         os.dup2(savout2, 2)
 
 
-def openResultsInBrowser(res):
+def open_results_in_browser(res):
     """Method that collects the URI from a list of entities and opens them
 
     Args:

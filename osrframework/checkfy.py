@@ -142,7 +142,7 @@ def main(params=None):
         print(general.title(banner.text))
 
         saying_hello = """
-     Checkfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2018
+     Checkfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2020
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,

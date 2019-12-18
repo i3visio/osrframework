@@ -25,7 +25,7 @@ from configparser import ConfigParser
 import osrframework.utils.errors as errors
 
 
-def changePermissionsRecursively(path, uid, gid):
+def change_permissions_recursively(path, uid, gid):
     """Function to recursively change the user id and group id
 
     It sets 700 permissions in the different files.
@@ -54,7 +54,7 @@ def changePermissionsRecursively(path, uid, gid):
             # Setting permissions
             os.chmod(itempath, 6600)
             # Recursive function to iterate the files
-            changePermissionsRecursively(itempath, uid, gid)
+            change_permissions_recursively(itempath, uid, gid)
 
 
 def get_config_path(config_file_name=None):
