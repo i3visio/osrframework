@@ -44,7 +44,7 @@ def check_if_email_was_hacked(email=None, sleep_seconds=1):
     # Sleeping just a little bit
     time.sleep(sleep_seconds)
 
-    target_url = f"https://www.dehashed.com/search?query={email}"
+    target_url = f"https://www.dehashed.com/search?query=\"{email}\""
 
     # Building API query
     resp = requests.get(

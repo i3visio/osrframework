@@ -365,12 +365,15 @@ def process_mail_list_step_2(platforms=[], emails=[]):
         list. A list of verified emails.
     """
     results = []
-    for e in emails:
+    print(f"\n\t[*] Starting the research of {len(emails)} email(s) in {len(platforms)} platform(s)... This may take a while.")
+    for i, e in enumerate(emails):
+        print(f"\n\t[*] {i+1}/{len(emails)} Checking '{general.title(e)}'...")
         for pla in platforms:
             # This returns a json.txt!
             entities = pla.get_info(query=e, mode="mailfy")
-            if entities != {}:
-                results += json.loads(entities)
+            data = json.loads(entities)
+            if data:
+                results += data
     return results
 
 
@@ -510,20 +513,20 @@ be used instead. Verification may be slower though."""))
         platforms = platform_selection.get_platforms_by_name(args.platforms, mode="mailfy")
         names = [p.platformName for p in platforms]
 
-        if not args.quiet:
+        '''if not args.quiet:
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 2/5')}. Checking if the emails have been used to register accounts in {general.emphasis(str(len(platforms)))} platforms...\n{general.emphasis(json.dumps(names, indent=2))}\n")
             print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
-        registered = process_mail_list_step_2(platforms=platforms, emails=potentially_existing_emails)
+        registered = process_mail_list_step_2(platforms=platforms, emails=emails)
         results += registered
 
         if not args.quiet:
             if len(results) > 0:
                 for r in registered:
-                    print(f"\t[*] Registered account found: {general.success(r['value'])}")
+                    print(f"\t[*] Linked account found: {general.success(r['value'])}")
             else:
-                print(f"\t[*] Registered account found: {general.error('None')}")
+                print(f"\t[*] No account found.")
 
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 3/5')}. Verifying if the provided emails have been leaked somewhere using HaveIBeenPwned.com...\n")
@@ -547,7 +550,7 @@ be used instead. Verification may be slower though."""))
         except KeyError:
             # API_Key not found
             config_path = os.path.join(configuration.get_config_path()["appPath"], "api_keys.cfg")
-            print(general.warning(f"No API found for HaveIBeenPwned. Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'."))
+            print(general.warning(f"No API found for HaveIBeenPwned. Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'."))'''
 
         if not args.quiet:
             now = dt.datetime.now()
@@ -555,11 +558,10 @@ be used instead. Verification may be slower though."""))
             print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
 
         # Verify the existence of the mails found as leaked emails.
-        for query in potentially_leaked_emails:
+        for query in emails:
             try:
                 # Iterate through the different leak platforms
                 leaks = dehashed.check_if_email_was_hacked(query)
-
                 if len(leaks) > 0:
                     if not args.quiet:
                         print(f"\t[*] '{general.success(query)}' has been found in at least {general.success(len(leaks))} different leaks as shown by Dehashed.com.")

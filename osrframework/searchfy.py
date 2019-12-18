@@ -160,7 +160,7 @@ visit <{general.LICENSE_URL}>.
         print(general.success(general.osrf_to_text_export(results)))
 
         if args.web_browser:
-            general.openResultsInBrowser(results)
+            general.open_results_in_browser(results)
 
         now = dt.datetime.now()
         print("\n{date}\tYou can find all the information collected in the following files:".format(date=str(now)))
