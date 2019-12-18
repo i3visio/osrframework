@@ -81,9 +81,9 @@ class Platform(object):
         except:
             if mode == "base":
                 if word[0] == "/":
-                    return self.baseURL+word[1:], word
+                    return self.baseURL + word[1:], word
                 else:
-                    return self.baseURL+word
+                    return self.baseURL + word
             else:
                 try:
                     return self.url[mode].replace("<"+mode+">", word)
@@ -286,7 +286,7 @@ class Platform(object):
     # Verifiers
     # ---------
 
-    def check_mailfy(self, query, kwargs={}):
+    def check_mailfy(self, query, **kwargs):
         """Verifying a mailfy query in this platform
 
         This might be redefined in any class inheriting from Platform. The only
@@ -344,7 +344,7 @@ class Platform(object):
               }
             ]
         """
-        if self.check_mailfy(query, kwargs):
+        if self.check_mailfy(query, **kwargs):
             expandedEntities = general.expand_entities_from_email(query)
             r = {
                 "type": "com.i3visio.Profile",
@@ -360,7 +360,7 @@ class Platform(object):
             return [r]
         return []
 
-    def check_searchfy(self, query, kwargs={}):
+    def check_searchfy(self, query, **kwargs):
         """Verifying a mailfy query in this platform
 
         This might be redefined in any class inheriting from Platform. The only
@@ -397,12 +397,20 @@ class Platform(object):
         """
         results = []
         print(f"[*] Launching search using the {self.__class__.__name__} module...")
-        test = self.check_searchfy(query, kwargs)
+        test = self.check_searchfy(query, **kwargs)
 
         if test:
+            # Add flexibility
+            try:
+                regexp = self.searchfyAliasRegexp
+                entity_type = "com.i3visio.Alias"
+            except AttributeError:
+                regexp = self.searchfyEmailRegexp
+                entity_type = "com.i3visio.Email"
+
             try:
                 # Recovering all the found aliases in the traditional way
-                ids = re.findall(self.searchfyAliasRegexp, test, re.DOTALL)
+                ids = re.findall(regexp, test, re.DOTALL)
             except:
                 # Version 2 of the wrappers
                 verifier = self.modes.get(mode)
@@ -428,7 +436,7 @@ class Platform(object):
 
                 # Appending the alias
                 aux = {}
-                aux["type"] = "com.i3visio.Alias"
+                aux["type"] = entity_type
                 aux["value"] = alias
                 aux["attributes"] = []
                 r["attributes"].append(aux)
@@ -444,18 +452,21 @@ class Platform(object):
                 try:
                     aux = {}
                     aux["type"] = "com.i3visio.URI"
-                    uri = self.create_url(word=alias, mode="usufy")
+                    uri = self.create_url(word=alias, mode="base")
                     aux["value"] = uri
                     aux["attributes"] = []
                     r["attributes"].append(aux)
                 except NameError:
                     pass
 
+                if entity_type == "com.i3visio.Email":
+                    r["attributes"] += general.expand_entities_from_email(alias)
+
                 # Appending the result to results: in this case only one profile will be grabbed"""
                 results.append(r)
         return results
 
-    def check_phonefy(self, query, kwargs={}):
+    def check_phonefy(self, query, **kwargs):
         """Verifying a mailfy query in this platform
 
         This might be redefined in any class inheriting from Platform.
