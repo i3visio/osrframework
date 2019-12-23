@@ -72,7 +72,8 @@ class Gsmspain(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = [
-            "<b>Error 404: Página no encontrada (Not Found)</b>"
+            "alert alert-danger",
+            "<b>Error 404:"
         ]
         #self.notFoundText["searchfy"] = []
 

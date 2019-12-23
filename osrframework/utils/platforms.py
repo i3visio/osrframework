@@ -509,7 +509,7 @@ class Platform(object):
         """
         results = []
 
-        test = self.check_phonefy(query, kwargs)
+        test = self.check_phonefy(query, **kwargs)
 
         if test:
             r = {

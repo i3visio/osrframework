@@ -31,7 +31,7 @@ import osrframework.utils.general as general
 
 # GLOBAL OPTIONS
 SEPARATORS = ["_", ".", '']
-COMMON_WORDS = ["666", "home", "mr", "news",  "official", "real", "xxx"]
+COMMON_WORDS = ["666", "home", "dr", "mr", "mrs", "news", "official", "real", "xxx"]
 LOCALES = ["ar", "de", "en", "es", "fr", "ru"]
 LEET_TRANSFORMS = {
     "a" : ["4"],
@@ -2726,6 +2726,8 @@ def generate(name=None, surname1=None, surname2=None, city=None, country=None,
                 try:
                     tmp = f"{nick}<SEPARATOR>{word}"
                     if tmp not in lista_additions: lista_additions.append(tmp)
+                    tmp = f"{word}<SEPARATOR>{nick}"
+                    if tmp not in lista_additions: lista_additions.append(tmp)
                 except Exception:
                     pass # An element is missing
 
@@ -2744,6 +2746,8 @@ def generate(name=None, surname1=None, surname2=None, city=None, country=None,
             for local in LOCALES:
                 try:
                     tmp = f"{nick}<SEPARATOR>{local}"
+                    if tmp not in lista_additions: lista_additions.append(tmp)
+                    tmp = f"{local}<SEPARATOR>{nick}"
                     if tmp not in lista_additions: lista_additions.append(tmp)
                 except Exception:
                     pass # An element is missing
@@ -2913,8 +2917,8 @@ def main(params=None):
     if args.country:
         input_data += "Country: ".ljust(20, " ") + general.info(args.country) + "\n"
     if args.extra_words:
-        print(args.extra_words)
-        input_data += "Extra words: ".ljust(20, " ") + general.info(args.extra_words) + "\n"
+        extra_words += args.extra_words
+        input_data += "Extra words: ".ljust(20, " ") + general.info(" | ".join(extra_words))+ "\n"
 
     if not input_data:
         print(general.warning("No data provided."))

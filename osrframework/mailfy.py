@@ -302,43 +302,19 @@ def verify_with_emailahoy_step_1(emails=[], num_threads=16, seconds_before_timeo
         pool = Pool(num_threads)
 
     pool_results = []
-    try:
-        def log_result(result):
-            """Callback to log the results by apply_async"""
-            pool_results.append(result)
 
-        for email in emails:
-            parameters = (email, )
-            res = pool.apply_async(pool_function, args=parameters, callback=log_result)
-            try:
-                res.get(3)
-            except TimeoutError:
-                general.warning(f"\n[!] Process timeouted for '{parameters}'.\n")
-        pool.close()
-    except KeyboardInterrupt:
-        print(general.warning("\n[!] Process manually stopped by the user. Terminating workers.\n"))
-        pool.terminate()
+    def log_result(result):
+        """Callback to log the results by apply_async"""
+        pool_results.append(result)
 
-        pending = ""
-
-        print(general.warning("[!] The following email providers were not processed:"))
-        for m in emails:
-            processed = False
-            for result in pool_results:
-                if str(m) in json.dumps(result["data"]):
-                    processed = True
-                    break
-            if not processed:
-                print("\t- " + str(p))
-                pending += " " + str(m)
-
-        print("\n")
-        print(general.warning("If you want to relaunch the app with these platforms you can always run the command with: "))
-        print("\t mailfy.py ... -p " + general.emphasis(pending))
-        print("\n")
-        print(general.warning("If you prefer to avoid these platforms you can manually evade them for whatever reason with: "))
-        print("\t mailfy.py ... -x " + general.emphasis(pending))
-        print("\n")
+    for email in emails:
+        parameters = (email, )
+        res = pool.apply_async(pool_function, args=parameters, callback=log_result)
+        try:
+            res.get(3)
+        except TimeoutError:
+            general.warning(f"\n[!] Process timeouted for '{parameters}'.\n")
+    pool.close()
     pool.join()
 
     # Processing the results
@@ -504,10 +480,14 @@ be used instead. Verification may be slower though."""))
         if not args.quiet:
             start_time = dt.datetime.now()
             print(f"\n{start_time}\t{general.emphasis('Step 1/5')}. Trying to determine if any of the following {general.emphasis(str(len(potentially_existing_emails)))} emails exist using emailahoy3...\n{general.emphasis(json.dumps(potentially_existing_emails, indent=2))}\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
         # Perform searches, using different Threads
-        results = verify_with_emailahoy_step_1(potentially_existing_emails, num_threads=args.threads)
+        try:
+            results = verify_with_emailahoy_step_1(potentially_existing_emails, num_threads=args.threads)
+        except KeyboardInterrupt:
+            print(general.warning("\tStep 1 manually skipped by the user...\n"))
+            results = []
 
         # Grabbing the <Platform> objects
         platforms = platform_selection.get_platforms_by_name(args.platforms, mode="mailfy")
@@ -516,9 +496,14 @@ be used instead. Verification may be slower though."""))
         if not args.quiet:
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 2/5')}. Checking if the emails have been used to register accounts in {general.emphasis(str(len(platforms)))} platforms...\n{general.emphasis(json.dumps(names, indent=2))}\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
-        registered = process_mail_list_step_2(platforms=platforms, emails=emails)
+        try:
+            registered = process_mail_list_step_2(platforms=platforms, emails=emails)
+        except KeyboardInterrupt:
+            print(general.warning("\tStep 2 manually skipped by the user...\n"))
+            registered = []
+
         results += registered
 
         if not args.quiet:
@@ -530,7 +515,7 @@ be used instead. Verification may be slower though."""))
 
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 3/5')}. Verifying if the provided emails have been leaked somewhere using HaveIBeenPwned.com...\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
         all_keys = config_api_keys.get_list_of_api_keys()
         try:
@@ -551,49 +536,57 @@ be used instead. Verification may be slower though."""))
             # API_Key not found
             config_path = os.path.join(configuration.get_config_path()["appPath"], "api_keys.cfg")
             print(general.warning(f"No API found for HaveIBeenPwned. Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'."))
+        except KeyboardInterrupt:
+            print(general.warning("\tStep 3 manually skipped by the user...\n"))
 
         if not args.quiet:
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 4/5')}. Verifying if the provided emails have been leaked somewhere using Dehashed.com...\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
-        # Verify the existence of the mails found as leaked emails.
-        for query in emails:
-            try:
-                # Iterate through the different leak platforms
-                leaks = dehashed.check_if_email_was_hacked(query)
-                if len(leaks) > 0:
-                    if not args.quiet:
-                        print(f"\t[*] '{general.success(query)}' has been found in at least {general.success(len(leaks))} different leaks as shown by Dehashed.com.")
-                else:
-                    if not args.quiet:
-                        print(f"\t[*] '{general.error(query)}' has NOT been found on any leak yet.")
+        try:
+            # Verify the existence of the mails found as leaked emails.
+            for query in emails:
+                try:
+                    # Iterate through the different leak platforms
+                    leaks = dehashed.check_if_email_was_hacked(query)
+                    if len(leaks) > 0:
+                        if not args.quiet:
+                            print(f"\t[*] '{general.success(query)}' has been found in at least {general.success(len(leaks))} different leaks as shown by Dehashed.com.")
+                    else:
+                        if not args.quiet:
+                            print(f"\t[*] '{general.error(query)}' has NOT been found on any leak yet.")
 
-                results += leaks
-            except Exception as e:
-                print(general.warning(f"Something happened when querying Dehashed.com about '{email}'. Omitting..."))
+                    results += leaks
+                except Exception as e:
+                    print(general.warning(f"Something happened when querying Dehashed.com about '{email}'. Omitting..."))
+        except KeyboardInterrupt:
+            print(general.warning("\tStep 4 manually skipped by the user...\n"))
 
         if not args.quiet:
             now = dt.datetime.now()
             print(f"\n{now}\t{general.emphasis('Step 5/5')}. Verifying if the provided emails have registered a domain using ViewDNS.info...\n")
-            print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
+            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
-        # Verify the existence of the mails found as leaked emails.
-        for query in potentially_leaked_emails:
-            try:
-                # Iterate through the different leak platforms
-                domains = viewdns.check_reverse_whois(query)
+        try:
+            # Verify the existence of the mails found as leaked emails.
+            for query in potentially_leaked_emails:
+                try:
+                    # Iterate through the different leak platforms
+                    domains = viewdns.check_reverse_whois(query)
 
-                if len(domains) > 0:
-                    if not args.quiet:
-                        print(f"\t[*] '{general.success(query)}' has registered at least {general.success(len(domains))} different domains as shown by ViewDNS.info.")
-                else:
-                    if not args.quiet:
-                        print(f"\t[*] '{general.error(query)}' has NOT registered a domain yet.")
+                    if len(domains) > 0:
+                        if not args.quiet:
+                            print(f"\t[*] '{general.success(query)}' has registered at least {general.success(len(domains))} different domains as shown by ViewDNS.info.")
+                    else:
+                        if not args.quiet:
+                            print(f"\t[*] '{general.error(query)}' has NOT registered a domain yet.")
 
-                results += domains
-            except Exception as e:
-                print(general.warning(f"Something happened when querying Viewdns.info about '{query}'. Omitting..."))
+                    results += domains
+                except Exception as e:
+                    print(general.warning(f"Something happened when querying Viewdns.info about '{query}'. Omitting..."))
+        except KeyboardInterrupt:
+            print(general.warning("\tStep 5 manually skipped by the user...\n"))
 
         # Trying to store the information recovered
         if args.output_folder != None:

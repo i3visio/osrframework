@@ -71,7 +71,7 @@ class Mediavida(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h1>ERROR</h1>"]
+        self.notFoundText["usufy"] = ["<h1>ERROR</h1>", "<title>404 Not Found</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

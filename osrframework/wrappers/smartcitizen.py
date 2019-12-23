@@ -71,7 +71,7 @@ class Smartcitizen(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h1>Page Not Found</h1>"]
+        self.notFoundText["usufy"] = ["page-not-found"]
         #self.notFoundText["searchfy"] = []
 
         #########################

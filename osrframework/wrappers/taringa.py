@@ -71,7 +71,7 @@ class Taringa(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [ '>Taringa! - Inteligencia Colectiva en Taringa!</title>', '>Taringa! - Inteligencia Colectiva en Taringa!</title>' ]
+        self.notFoundText["usufy"] = ['/dist/404Retina.png', '>Taringa! - Inteligencia Colectiva en Taringa!</title>', '>Taringa! - Inteligencia Colectiva en Taringa!</title>' ]
         #self.notFoundText["searchfy"] = []
 
         #########################
