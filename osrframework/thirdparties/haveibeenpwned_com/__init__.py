@@ -16,7 +16,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-
-import osrframework.utils.logger
-# Calling the logger when being imported
-osrframework.utils.logger.setupLogger(loggerName="osrframework.thirdparties.haveibeenpwned_com")
