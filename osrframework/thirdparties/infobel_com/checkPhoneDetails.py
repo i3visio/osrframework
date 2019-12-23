@@ -51,25 +51,25 @@ def checkPhoneDetails(query=None):
         for r in textResults:
             person = {}
             fullname = ""
-            person["type"]="i3visio.person"
+            person["type"]="com.i3visio.Person"
             person["value"] = "FULLNAME_NOT_FOUND"
             person["attributes"] = processing.extractFieldsFromResult(r)
 
             for entity in person["attributes"]:
-                if entity["type"] == "i3visio.fullname":
+                if entity["type"] == "com.i3visio.Name":
                     person["value"] = entity["value"]
                     break
 
             # Appending the Uri of the infobel record:
             aux = {}
-            aux["type"]= "i3visio.uri"
+            aux["type"]= "com.i3visio.URI"
             aux["value"] = uri["value"]
             aux["attributes"] = []
             person["attributes"].append(aux)
 
             # Appending the platform of the infobel record:
             aux = {}
-            aux["type"]= "i3visio.platform"
+            aux["type"]= "com.i3visio.Platform"
             aux["value"] = "Infobel"
             aux["attributes"] = []
             person["attributes"].append(aux)

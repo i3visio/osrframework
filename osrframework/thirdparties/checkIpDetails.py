@@ -39,4 +39,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print json.dumps(ip_api_com.checkIpDetails(query=args.query), indent=2)
+    print(json.dumps(ip_api_com.checkIpDetails(query=args.query), indent=2))

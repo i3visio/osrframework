@@ -40,9 +40,9 @@ def checkIfHashIsCracked(hash=None, api_key=None):
             }
 	'''
 	# This is for i3visio
-	if api_key==None:
+	if api_key is None:
 		#api_key = raw_input("Insert the API KEY here:\t")
-		allKeys = config_api_keys.returnListOfAPIKeys()
+		allKeys = config_api_keys.get_list_of_api_keys()
 		try:
 			api_key_data = allKeys["md5crack_com"]
 			api_key = api_key_data["api_key"]
@@ -75,4 +75,4 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	print json.dumps(checkIfHashIsCracked(hash=args.query, api_key=args.api_key), indent=2)
+	print(json.dumps(checkIfHashIsCracked(hash=args.query, api_key=args.api_key), indent=2))

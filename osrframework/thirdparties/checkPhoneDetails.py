@@ -36,4 +36,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print json.dumps(infobel_com.checkPhoneDetails(query=args.query), indent=2)
+    print(json.dumps(infobel_com.checkPhoneDetails(query=args.query), indent=2))

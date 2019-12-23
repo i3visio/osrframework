@@ -34,4 +34,4 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	print json.dumps(md5crack_com.checkIfHashIsCracked(hash=args.query, api_key=args.api_key), indent=2)
+	print(json.dumps(md5crack_com.checkIfHashIsCracked(hash=args.query, api_key=args.api_key), indent=2))

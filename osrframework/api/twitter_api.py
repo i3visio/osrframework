@@ -26,20 +26,23 @@ import time
 import tweepy #https://github.com/tweepy/tweepy
 import csv
 
+
 import osrframework.utils.config_api_keys as api_keys
 from osrframework.utils.global_api import APIWrapper as APIWrapper
 
+
 class TwitterAPIWrapper(APIWrapper):
-    """
-        Twitter API wrapper using tweepy API.
-    """
+    """Twitter API wrapper using tweepy API"""
 
     def __init__(self, api_data=None):
+        """Constructor
+
+        Args:
+            api_data (dict): dictionary containing the credentials for the
+                given platform.
         """
-            :param api_data:    dictionary containing the credentials for the given platform.
-        """
-        if api_data == None:
-            api_data = api_keys.returnListOfAPIKeys()["twitter"]
+        if api_data is None:
+            api_data = api_keys.get_list_of_api_keys()["twitter"]
         # Processing the results received by parameter
         self.consumer_key= api_data["consumer_key"]
         self.consumer_secret= api_data["consumer_secret"]
@@ -51,7 +54,8 @@ class TwitterAPIWrapper(APIWrapper):
 
     def _connectToAPI(self):
         """
-            :return: A tweepy.API object that performs the queries
+        Return:
+            A tweepy.API object that performs the queries
         """
         #authorize twitter, initialize tweepy
         auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
@@ -60,15 +64,13 @@ class TwitterAPIWrapper(APIWrapper):
         return api
 
     def _rate_limit_status(self, api=None, mode=None):
-        """
-            Verifying the API limits
-        """
-        if api == None:
+        """Verifying the API limits"""
+        if api is None:
             api = self.connectToAPI()
 
-        if mode == None:
-            print json.dumps(api.rate_limit_status(), indent=2)
-            raw_input("<Press ENTER>")
+        if mode is None:
+            print(json.dumps(api.rate_limit_status(), indent=2))
+            input("<Press ENTER>")
         else:
             # Testing if we have enough queries
             while True:
@@ -107,112 +109,112 @@ class TwitterAPIWrapper(APIWrapper):
                     break
                 else:
                     waitTime = 60
-                    print "No more queries remaining, sleeping for " + str(waitTime) +" seconds..."
+                    print("No more queries remaining, sleeping for " + str(waitTime) +" seconds...")
                     time.sleep(waitTime)
 
         return 0
 
     def _processUser(self, jUser):
-        """
-            Convert tweepy.User to a i3visio-like user. This will process the returned JSON object that the API returns to transform it to the i3visio-like format. A sample answer is copied now when testing it to the @i3visio user in Twitter.
-{
-  "follow_request_sent": false,
-  "has_extended_profile": false,
-  "profile_use_background_image": true,
-  "profile_text_color": "333333",
-  "default_profile_image": false,
-  "id": 2594815981,
-  "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
-  "verified": false,
-  "profile_location": null,
-  "profile_image_url_https": "https://pbs.twimg.com/profile_images/491716630292881408/FBqYf9qv_normal.png",
-  "profile_sidebar_fill_color": "DDEEF6",
-  "entities": {
-    "url": {
-      "urls": [
+        """Convert tweepy.User to a i3visio-like user. This will process the returned JSON object that the API returns to transform it to the i3visio-like format. A sample answer is copied now when testing it to the @i3visio user in Twitter.
+
         {
+          "follow_request_sent": false,
+          "has_extended_profile": false,
+          "profile_use_background_image": true,
+          "profile_text_color": "333333",
+          "default_profile_image": false,
+          "id": 2594815981,
+          "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+          "verified": false,
+          "profile_location": null,
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/491716630292881408/FBqYf9qv_normal.png",
+          "profile_sidebar_fill_color": "DDEEF6",
+          "entities": {
+            "url": {
+              "urls": [
+                {
+                  "url": "http://t.co/Vus95W8ub6",
+                  "indices": [
+                    0,
+                    22
+                  ],
+                  "expanded_url": "http://www.i3visio.com",
+                  "display_url": "com.i3visio.com"
+                }
+              ]
+            },
+            "description": {
+              "urls": [
+                {
+                  "url": "http://t.co/SGty7or6SQ",
+                  "indices": [
+                    30,
+                    52
+                  ],
+                  "expanded_url": "http://github.com/i3visio/osrframework",
+                  "display_url": "github.com/i3visio/osrfra\u2026"
+                }
+              ]
+            }
+          },
+          "followers_count": 21,
+          "profile_sidebar_border_color": "C0DEED",
+          "id_str": "2594815981",
+          "profile_background_color": "C0DEED",
+          "listed_count": 5,
+          "status": {
+            "lang": "es",
+            "favorited": false,
+            "entities": {
+              "symbols": [],
+              "user_mentions": [],
+              "hashtags": [],
+              "urls": []
+            },
+            "contributors": null,
+            "truncated": false,
+            "text": "Podemos confirmar que Alpify, aunque acabe en ...fy no es una aplicaci\u00f3n nuestra. ;) \u00a1A aprovechar lo que queda de domingo!",
+            "created_at": "Sun Aug 16 17:35:37 +0000 2015",
+            "retweeted": true,
+            "in_reply_to_status_id_str": null,
+            "coordinates": null,
+            "in_reply_to_user_id_str": null,
+            "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+            "in_reply_to_status_id": null,
+            "in_reply_to_screen_name": null,
+            "id_str": "632968969662689280",
+            "place": null,
+            "retweet_count": 1,
+            "geo": null,
+            "id": 632968969662689280,
+            "favorite_count": 0,
+            "in_reply_to_user_id": null
+          },
+          "is_translation_enabled": false,
+          "utc_offset": null,
+          "statuses_count": 56,
+          "description": "Leading OSRFramework project (http://t.co/SGty7or6SQ) for researching in Open Sources. #security #osint #socialengineering",
+          "friends_count": 10,
+          "location": "Espa\u00f1a",
+          "profile_link_color": "0084B4",
+          "profile_image_url": "http://pbs.twimg.com/profile_images/491716630292881408/FBqYf9qv_normal.png",
+          "following": true,
+          "geo_enabled": false,
+          "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+          "name": "i3visio",
+          "lang": "en",
+          "profile_background_tile": false,
+          "favourites_count": 6,
+          "screen_name": "i3visio",
+          "notifications": false,
           "url": "http://t.co/Vus95W8ub6",
-          "indices": [
-            0,
-            22
-          ],
-          "expanded_url": "http://www.i3visio.com",
-          "display_url": "i3visio.com"
+          "created_at": "Sun Jun 29 13:27:20 +0000 2014",
+          "contributors_enabled": false,
+          "time_zone": null,
+          "protected": false,
+          "default_profile": true,
+          "is_translator": false
         }
-      ]
-    },
-    "description": {
-      "urls": [
-        {
-          "url": "http://t.co/SGty7or6SQ",
-          "indices": [
-            30,
-            52
-          ],
-          "expanded_url": "http://github.com/i3visio/osrframework",
-          "display_url": "github.com/i3visio/osrfra\u2026"
-        }
-      ]
-    }
-  },
-  "followers_count": 21,
-  "profile_sidebar_border_color": "C0DEED",
-  "id_str": "2594815981",
-  "profile_background_color": "C0DEED",
-  "listed_count": 5,
-  "status": {
-    "lang": "es",
-    "favorited": false,
-    "entities": {
-      "symbols": [],
-      "user_mentions": [],
-      "hashtags": [],
-      "urls": []
-    },
-    "contributors": null,
-    "truncated": false,
-    "text": "Podemos confirmar que Alpify, aunque acabe en ...fy no es una aplicaci\u00f3n nuestra. ;) \u00a1A aprovechar lo que queda de domingo!",
-    "created_at": "Sun Aug 16 17:35:37 +0000 2015",
-    "retweeted": true,
-    "in_reply_to_status_id_str": null,
-    "coordinates": null,
-    "in_reply_to_user_id_str": null,
-    "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
-    "in_reply_to_status_id": null,
-    "in_reply_to_screen_name": null,
-    "id_str": "632968969662689280",
-    "place": null,
-    "retweet_count": 1,
-    "geo": null,
-    "id": 632968969662689280,
-    "favorite_count": 0,
-    "in_reply_to_user_id": null
-  },
-  "is_translation_enabled": false,
-  "utc_offset": null,
-  "statuses_count": 56,
-  "description": "Leading OSRFramework project (http://t.co/SGty7or6SQ) for researching in Open Sources. #security #osint #socialengineering",
-  "friends_count": 10,
-  "location": "Espa\u00f1a",
-  "profile_link_color": "0084B4",
-  "profile_image_url": "http://pbs.twimg.com/profile_images/491716630292881408/FBqYf9qv_normal.png",
-  "following": true,
-  "geo_enabled": false,
-  "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
-  "name": "i3visio",
-  "lang": "en",
-  "profile_background_tile": false,
-  "favourites_count": 6,
-  "screen_name": "i3visio",
-  "notifications": false,
-  "url": "http://t.co/Vus95W8ub6",
-  "created_at": "Sun Jun 29 13:27:20 +0000 2014",
-  "contributors_enabled": false,
-  "time_zone": null,
-  "protected": false,
-  "default_profile": true,
-  "is_translator": false
-}
 
             :param jUser:   A Json representing the information of a profile as returned by the API.
 
@@ -221,13 +223,13 @@ class TwitterAPIWrapper(APIWrapper):
         """
         #raw_input(json.dumps(jUser, indent=2))
         r = {}
-        r["type"] = "i3visio.profile"
+        r["type"] = "com.i3visio.Profile"
         r["value"] = self.platformName + " - " + jUser["screen_name"]
         r["attributes"] = []
 
         # Appending platform URI
         """aux = {}
-        aux["type"] = "i3visio.uri"
+        aux["type"] = "com.i3visio.uri"
         aux["value"] = qURL
         aux["attributes"] = []
         r["attributes"].append(aux) """
@@ -240,37 +242,37 @@ class TwitterAPIWrapper(APIWrapper):
 
         # Appending the alias
         aux = {}
-        aux["type"] = "i3visio.alias"
+        aux["type"] = "com.i3visio.Alias"
         aux["value"] = jUser["screen_name"]
         aux["attributes"] = []
         r["attributes"].append(aux)
         # Appending fullname
         aux = {}
-        aux["type"] = "i3visio.fullname"
+        aux["type"] = "com.i3visio.Name"
         aux["value"] = jUser["name"]
         aux["attributes"] = []
         r["attributes"].append(aux)
         # Appending description
         aux = {}
-        aux["type"] = "i3visio.text"
+        aux["type"] = "com.i3visio.Text"
         aux["value"] = jUser["description"] if jUser["description"] != "" else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)
         # Appending platform name
         aux = {}
-        aux["type"] = "i3visio.platform"
+        aux["type"] = "com.i3visio.Platform"
         aux["value"] = self.platformName
         aux["attributes"] = []
         r["attributes"].append(aux)
         # Appending location
         aux = {}
-        aux["type"] = "i3visio.location"
+        aux["type"] = "com.i3visio.Location"
         aux["value"] = jUser["location"] if jUser["location"] != "" else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)
         # Appending profile_location
         aux = {}
-        aux["type"] = "i3visio.location.current"
+        aux["type"] = "com.i3visio.Location"
         aux["value"] = jUser["profile_location"] if jUser["profile_location"] != None else "[N/A]"
         aux["attributes"] = []
         r["attributes"].append(aux)
@@ -279,42 +281,42 @@ class TwitterAPIWrapper(APIWrapper):
             urls = jUser["entities" ]["url"]["urls"]
             for url in urls:
                 aux = {}
-                aux["type"] = "i3visio.uri.homepage"
+                aux["type"] = "com.i3visio.URI.Homepage"
                 aux["value"] = url["expanded_url"] if url["expanded_url"] != None else "[N/A]"
                 aux["attributes"] = []
                 r["attributes"].append(aux)
         except Exception as e:
             #Something happenned when parsing the URLS
             aux = {}
-            aux["type"] = "i3visio.uri.homepage"
+            aux["type"] = "com.i3visio.URI.Homepage"
             aux["value"] = "[N/A]"
             aux["attributes"] = []
             r["attributes"].append(aux)
         # Appending profile uri homepage
         try:
             aux = {}
-            aux["type"] = "i3visio.uri.image.profile"
+            aux["type"] = "com.i3visio.URI.Image"
             aux["value"] = jUser["profile_image_url"] if jUser["profile_image_url"] != None else "[N/A]"
             aux["attributes"] = []
             r["attributes"].append(aux)
         except Exception as e:
             #Something happenned when parsing the Profile URL
             aux = {}
-            aux["type"] = "i3visio.uri.image.profile"
+            aux["type"] = "com.i3visio.URI.Image"
             aux["value"] = "[N/A]"
             aux["attributes"] = []
             r["attributes"].append(aux)
         # Appending uri background
         try:
             aux = {}
-            aux["type"] = "i3visio.uri.image.background"
+            aux["type"] = "com.i3visio.URI.Image.Background"
             aux["value"] = jUser["profile_background_image_url"] if jUser["profile_background_image_url"] != None else "[N/A]"
             aux["attributes"] = []
             r["attributes"].append(aux)
         except Exception as e:
             #Something happenned when parsing the background URL
             aux = {}
-            aux["type"] = "i3visio.uri.image.background"
+            aux["type"] = "com.i3visio.URI.Image.Background"
             aux["value"] = "[N/A]"
             aux["attributes"] = []
             r["attributes"].append(aux)
@@ -432,9 +434,9 @@ class TwitterAPIWrapper(APIWrapper):
                 except Exception as e:
                     # Error... We will have to wait
                     #waiting = True
-                    print str(e)
+                    print(str(e))
                     #print(traceback.format_exc())
-                    print "No more queries remaining, sleeping for " + str(waitTime) +" seconds..."
+                    print("No more queries remaining, sleeping for " + str(waitTime) +" seconds...")
                     time.sleep(waitTime)
 
             return new_tweets
@@ -468,7 +470,7 @@ class TwitterAPIWrapper(APIWrapper):
 
             #keep grabbing tweets until there are no tweets left to grab
             while len(new_tweets) > 0:
-                print "Getting tweets before %s" % (oldest)
+                print("Getting tweets before %s" % (oldest))
 
                 """ #all subsequent requests use the max_id param to prevent duplicates
                 waiting = True
@@ -492,13 +494,13 @@ class TwitterAPIWrapper(APIWrapper):
 
                 #update the id of the oldest tweet less one
                 oldest = alltweets[-1].id - 1
-                print "... %s tweets downloaded so far" % (len(alltweets))
+                print("... %s tweets downloaded so far" % (len(alltweets)))
                 # Storing manually all the json representation for the tweets
                 for n in new_tweets:
                     jTweets.append(n._json)
         else:
             # Verifying the limits of the API
-            print json.dumps(self._rate_limit_status(api=api, mode="get_all_docs"), indent =2)
+            print(json.dumps(self._rate_limit_status(api=api, mode="get_all_docs"), indent =2))
 
         #transform the tweepy tweets into a 2D array that will populate the csv
         outtweets = []
@@ -573,8 +575,8 @@ class TwitterAPIWrapper(APIWrapper):
                 for i, u in enumerate(urls):
                     str_urls += u
                     # Appending a separator
-                    if i+1 <> len(urls):
-                        str_urls+= "|"
+                    if i + 1 != len(urls):
+                        str_urls += "|"
             row.append(str_urls.encode('utf-8'))
 
             # TODO: Extract Mentions
@@ -601,7 +603,7 @@ class TwitterAPIWrapper(APIWrapper):
                 for i, m in enumerate(mentions):
                     str_mentions += m
                     # Appending a separator
-                    if i+1 <> len(mentions):
+                    if i+1 != len(mentions):
                         str_mentions+= "|"
             row.append(str_mentions.encode('utf-8'))
 
@@ -634,13 +636,12 @@ class TwitterAPIWrapper(APIWrapper):
                 try:
                     writer.writerow(o)
                 except:
-                    print o
+                    print(o)
 
         return jTweets
 
     def get_followers(self, query):
-        """
-            Method to get the followers of a user.
+        """Method to get the followers of a user
 
             :param query:   Query to be performed.
 
@@ -667,8 +668,7 @@ class TwitterAPIWrapper(APIWrapper):
         return friends_ids
 
     def get_friends(self, query):
-        """
-            Method to get the friends of a user.
+        """Method to get the friends of a user
 
             :param query:   Query to be performed.
 
@@ -696,8 +696,7 @@ class TwitterAPIWrapper(APIWrapper):
 
 
     def get_user(self, screen_name):
-        """
-            Method to perform the usufy searches.
+        """Method to perform the usufy searches.
 
             :param screen_name: nickname to be searched.
 
@@ -724,8 +723,7 @@ class TwitterAPIWrapper(APIWrapper):
         return res
 
     def search_users(self, query, n=20, maxUsers=60):
-        """
-            Method to perform the searchfy searches.
+        """Method to perform the searchfy searches.
 
             :param query:   Query to be performed.
             :param n:   Number of results per query.
@@ -753,8 +751,8 @@ class TwitterAPIWrapper(APIWrapper):
 
             #keep grabbing tweets until there are no tweets left to grab
             while len(aux) < maxUsers & len(newUsers)>0:
-                page+=1
-                print "Getting page %s of new users..." % page
+                page += 1
+                print("Getting page %s of new users..." % page)
 
                 # Grabbing new Users
                 newUsers = api.search_users(query, n, page)
@@ -773,9 +771,7 @@ class TwitterAPIWrapper(APIWrapper):
 
 
 def main(args):
-    """
-        Query manager.
-    """
+    """Query manager"""
     # Creating the instance
     tAW = TwitterAPIWrapper()
 
@@ -789,7 +785,7 @@ def main(args):
     elif args.type == "get_followers":
         results = tAW.get_followers(args.query)
 
-        print "... %s followers downloaded... " % (len(results))
+        print("... %s followers downloaded... " % (len(results)))
         #write the csv
         with open('%s_followers.csv' % args.query, 'wb') as f:
             writer = csv.writer(f)
@@ -798,7 +794,7 @@ def main(args):
 
     elif args.type == "get_friends":
         results = tAW.get_friends(args.query)
-        print "... %s friends downloaded... " % (len(results))
+        print("... %s friends downloaded... " % (len(results)))
         #write the csv
         with open('%s_friends.csv' % args.query, 'wb') as f:
             writer = csv.writer(f)
@@ -809,6 +805,7 @@ def main(args):
         results = tAW.search_users(args.query)
 
     return results
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='A library that wraps searches onto the Twitter API.', prog='twitter_api.py', epilog="NOTE: the API tokens will be searched in api_keys.cfg configuration file.", add_help=False)
@@ -825,4 +822,4 @@ if __name__ == '__main__':
 
     results = main(args)
 
-    print json.dumps(results, indent=2)
+    print(json.dumps(results, indent=2))

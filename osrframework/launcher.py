@@ -30,6 +30,7 @@ import osrframework.mailfy as mailfy
 import osrframework.phonefy as phonefy
 import osrframework.searchfy as searchfy
 import osrframework.usufy as usufy
+import osrframework.upgrade as upgrade
 
 
 EPILOG = """
@@ -47,61 +48,78 @@ class OSRFParser(argparse.ArgumentParser):
         sys.exit(2)
 
 
-def getParser():
+def get_parser():
     """Defines the argument parser
 
     Returns:
         argparse.ArgumentParser.
     """
     parser = OSRFParser(
-        description='OSRFramework CLI',
+        description='OSRFramework CLI. Collection of tools included in the framework.',
         prog='osrf',
         epilog=EPILOG,
         conflict_handler='resolve'
     )
 
-    # Add subcommands as subparsers
-    subcommands = parser.add_subparsers(
-        title="SUBCOMMANDS",
-        description="List of available commands that can be invoked using OSRFramework CLI.",
-        metavar="<sub_command> <sub_command_options>",
-        dest='command_name'
-    )
+    # Add subcommands as subparsers.
+    try:
+        # Add subcommands as subparsers
+        subcommands = parser.add_subparsers(
+            title="SUBCOMMANDS",
+            description="List of available commands that can be invoked using OSRFramework CLI.",
+            metavar="<sub_command> <sub_command_options>",
+            dest='command_name',
+            required=True
+        )
+    except AssertionError:
+        # Note that add_subparsers in Python 3.6 is incompatible with `required`
+        subcommands = parser.add_subparsers(
+            title="SUBCOMMANDS",
+            description="List of available commands that can be invoked using OSRFramework CLI.",
+            metavar="<sub_command> <sub_command_options>",
+            dest='command_name',
+        )
+
 
     subparser_alias_generator = subcommands.add_parser(
         "alias_generator",
         help="Generates a list of candidate usernames based on known information.",
-        parents=[alias_generator.getParser()]
+        parents=[alias_generator.get_parser()]
+    )
+    subparser_checkfy = subcommands.add_parser(
+        "checkfy",
+        help="Verifies if a given email address matches a pattern.",
+        parents=[checkfy.get_parser()]
     )
     subparser_domainfy = subcommands.add_parser(
         "domainfy",
         help="Checks whether domain names using words and nicknames are available.",
-        parents=[domainfy.getParser()]
+        parents=[domainfy.get_parser()]
     )
     subparser_mailfy = subcommands.add_parser(
         "mailfy",
         help="Gets information about email accounts. ",
-        parents=[mailfy.getParser()]
-    )
-    subparser_checkfy = subcommands.add_parser(
-        "checkfy",
-        help="Verifies if a given email address matches a pattern. ",
-        parents=[checkfy.getParser()]
+        parents=[mailfy.get_parser()]
     )
     subparser_phonefy = subcommands.add_parser(
         "phonefy",
         help="Looks for information linked to spam practices by a phone number.",
-        parents=[phonefy.getParser()]
+        parents=[phonefy.get_parser()]
     )
     subparser_searchfy = subcommands.add_parser(
         "searchfy",
-        help="Performs queries on several platforms",
-        parents=[searchfy.getParser()]
+        help="Performs queries on several platforms.",
+        parents=[searchfy.get_parser()]
     )
     subparser_usufy = subcommands.add_parser(
         "usufy",
-        help="Looks for registered accounts with given nicknames",
-        parents=[usufy.getParser()]
+        help="Looks for registered accounts with given nicknames.",
+        parents=[usufy.get_parser()]
+    )
+    subparser_upgrade = subcommands.add_parser(
+        "upgrade",
+        help="Updates the module.",
+        parents=[upgrade.get_parser()]
     )
 
     # About options
@@ -118,7 +136,7 @@ def main(params=None):
 
     The function is created in this way so as to let other applications make
     use of the full configuration capabilities of the application. The
-    parameters received are used as parsed by this modules `getParser()`.
+    parameters received are used as parsed by this modules `get_parser()`.
 
     Args:
         params: A list with the parameters as grabbed by the terminal. It is
@@ -127,7 +145,7 @@ def main(params=None):
     Returns:
         Returns 0 if execution was successful and 1 for failed executions.
     """
-    parser = getParser()
+    parser = get_parser()
 
     try:
         if params is None:

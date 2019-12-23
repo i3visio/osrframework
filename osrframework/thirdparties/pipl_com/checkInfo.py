@@ -37,7 +37,7 @@ def checkInfo(email=None, username=None, api_key=None):
         :return:    Python structure for the Json received. It has the following structure:
     '''
     # This is for i3visio
-    if api_key==None:
+    if api_key is None:
         #api_key = raw_input("Insert the API KEY here:\t")
         allKeys = config_api_keys.returnListOfAPIKeys()
         try:
@@ -90,9 +90,9 @@ def launchRequest(request):
         except:
             pass
     except SearchAPIError as e:
-        print e.http_status_code, e
+        print(e.http_status_code, e)
 
-    return  person, records
+    return person, records
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps a search onto pipl.com API.', prog='checkInfo.py', epilog="NOTE: if not provided, the API key will be searched in the config_api_keys.py file.", add_help=False)
@@ -111,4 +111,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print json.dumps(checkInfo(email=args.email, username=args.username, api_key=args.api_key), indent=2)
+    print(json.dumps(checkInfo(email=args.email, username=args.username, api_key=args.api_key), indent=2))

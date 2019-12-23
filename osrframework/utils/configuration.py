@@ -83,7 +83,6 @@ def get_config_path(config_file_name=None):
         "appPathDefaults": os.path.join(application_path, "default"),
         "appPathPlugins": os.path.join(application_path, "plugins"),
         "appPathWrappers": os.path.join(application_path, "plugins", "wrappers"),
-        "appPathPatterns": os.path.join(application_path, "plugins", "patterns"),
     }
 
     # Creating them if they don't exist

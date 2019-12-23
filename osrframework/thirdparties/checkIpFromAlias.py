@@ -34,4 +34,4 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	print json.dumps(resolvethem_com.checkIPFromAlias(alias=args.query), indent=2)
+	print(json.dumps(resolvethem_com.checkIPFromAlias(alias=args.query), indent=2))

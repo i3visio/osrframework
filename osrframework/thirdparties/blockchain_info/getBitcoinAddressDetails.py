@@ -23,6 +23,7 @@ import json
 import sys
 import urllib2
 
+
 def getBitcoinAddressDetails(address=None):
     '''
         Method that checks the presence of a Bitcoin Address in blockchain.info:
@@ -52,6 +53,7 @@ def getBitcoinAddressDetails(address=None):
         # No information was found, then we return a null entity
         return {}
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps the search about a Bitcoin address in blockchain.info.', prog='getBitcoinAddressDetails.py', epilog="", add_help=False)
     # Adding the main options
@@ -64,4 +66,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print json.dumps(getBitcoinAddressDetails(address=args.query), indent=2)
+    print(json.dumps(getBitcoinAddressDetails(address=args.query), indent=2))

@@ -56,5 +56,5 @@ if __name__ == "__main__":
 	groupAbout.add_argument('--version', action='version', version='%(prog)s 0.1.0', help='shows the version of the program and exists.')
 
 	args = parser.parse_args()
-	print "Resolved hash for " + args.query + ":\n"
-	print json.dumps(checkIfHashIsCracked(hash=args.query), indent=2)
+	print("Resolved hash for " + args.query + ":\n")
+	print(json.dumps(checkIfHashIsCracked(hash=args.query), indent=2))

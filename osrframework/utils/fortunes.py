@@ -17,6 +17,8 @@
 #
 ###############################################################################
 
+import osrframework.utils.configuration as configuration
+
 
 messages = [
     "-- OSINT is not fingerprinting. OSINT is Open Sources Intelligence. -- ",
@@ -27,7 +29,7 @@ messages = [
     "-- Use 'alias_generator' to create aliases based on known info. --",
     "-- Launch 'usufy' against a list of aliases in a file (1 per line) using '-l'. --",
     "-- With 'searchfy' you can find profiles using full names or other data. --",
-    "-- With ¡you can guess if a given phone number is linked to spam. --",
+    "-- With 'phonefy' you can guess if a given phone number is linked to spam. --",
     "-- To automagically open the collected results in the browser use '-w'. --",
     "-- You can find different emails using an alias with 'mailfy -n <alias>'. --",
     "-- If you want to verify infomation about an email, use 'mailfy -m <email>'. --",
@@ -48,5 +50,11 @@ messages = [
     "-- You can get information about an email using 'mailfy -m john@example.com'. --",
     "-- With 'mailfy' you can make reverse Whois queries with ViewDNS.info. --",
     "-- Troy Hunt's Have I Been Pwned is no longer free to use! :( --",
-    "-- A Reverse Whois query gets domains registed by a person. --"
+    "-- A Reverse Whois query gets domains registed by a person. --",
+    "-- Run 'osrf upgrade' to upgrade OSRFramework to the latest version in PyPI. --",
+    "-- Use 'osrf upgrade --only-check' to check for newer versions in PyPI. --",
+    "-- Use 'osrf upgrade --use-development' to grab development versions. --",
+    "-- The 'osrf' tool will list all the tools as subcommands. --",
+    "-- 'osrf usufy -n i3visio ' and 'usufy -n i3visio' has the same effect. --",
+    "-- Config files live in '{configuration.get_config_path['appPath']}'. --"
 ]

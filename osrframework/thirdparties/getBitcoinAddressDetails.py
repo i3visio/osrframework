@@ -35,4 +35,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print json.dumps(blockchain_info.getBitcoinAddressDetails(address=args.query), indent=2)
+    print(json.dumps(blockchain_info.getBitcoinAddressDetails(address=args.query), indent=2))
