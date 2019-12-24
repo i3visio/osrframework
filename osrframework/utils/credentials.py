@@ -1,70 +1,61 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
 import os
-import logging
+
 import osrframework.utils.config_credentials as c_creds
+import osrframework.utils.general as general
+
 
 class Credential():
-    """ 
-        Class to match the credentials needed by a platform.
+    """Class to match the credentials needed by a platform
     """
     def __init__(self, user, password):
-        """ 
-            Creation of the credentials.
-            
-            :param user:    Login name.
-            :param password:    Password.
+        """Creation of the credentials
+
+        Args:
+            user (str): Login name.
+            password (str): Password.
         """
         self.user = user
         self.password = password
 
 
-def getCredentials():
-    ''' 
-        Recovering the credentials from a file with the following structure:
-        
-        :return: A dictionary with the following struture:
+def get_credentials():
+    """Recovering the credentials from a file with the following structure
+
+    Returns:
+        A dictionary with the following struture:
             { "platform1": [C1<Credential>, C2<Credential>], "platform2": [C3<Credential>]}
-    '''
-    logger = logging.getLogger("osrframework.utils")
-    # Dictionary of lists:
-    #     {'Twitter': {cred1, cred2, ...}}
-    creds = {} 
-    try:
-        credsTuples = c_creds.returnListOfCreds()
+    """
+    creds = {}
 
-        for cTuple in credsTuples:
-            plat, user, password = cTuple
+    creds_tuples = c_creds.get_list_of_credentials()
 
-            c = Credential(user, password)
+    for cTuple in creds_tuples:
+        plat, user, password = cTuple
 
-            if plat not in creds.keys():
-                creds[plat] = [c]
-            else:
-                creds[plat] = creds[plat].append(c)
-        logger.info(str(len(credsTuples)) + " credentials have been loaded.")    
-        return creds
-    except Exception, e:
-        logger.error("WARNING. Something happened when loading credentials.")
-        logger.error(str(e))        
-        logger.debug("No credentials were loaded.")    
-    return {}
+        c = Credential(user, password)
 
+        if plat not in creds.keys():
+            creds[plat] = [c]
+        else:
+            creds[plat] = creds[plat].append(c)
+    print(f"{general.info(str(len(creds_tuples)))} credentials have been loaded.")
+    return creds

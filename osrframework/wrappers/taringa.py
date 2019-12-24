@@ -1,9 +1,6 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -18,26 +15,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import osrframework.utils.browser as browser
+
 from osrframework.utils.platforms import Platform
 
 
 class Taringa(Platform):
-    """
-        A <Platform> object for Taringa.
-    """
+    """A <Platform> object for Taringa"""
     def __init__(self):
-        """
-            Constructor...
-        """
         self.platformName = "Taringa"
         self.tags = ["social"]
 
@@ -82,7 +71,7 @@ class Taringa(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [ '>Taringa! - Inteligencia Colectiva en Taringa!</title>', '>Taringa! - Inteligencia Colectiva en Taringa!</title>' ]
+        self.notFoundText["usufy"] = ['/dist/404Retina.png', '>Taringa! - Inteligencia Colectiva en Taringa!</title>', '>Taringa! - Inteligencia Colectiva en Taringa!</title>' ]
         #self.notFoundText["searchfy"] = []
 
         #########################

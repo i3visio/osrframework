@@ -1,9 +1,6 @@
-# !/usr/bin/python
-# -*- coding: utf-8 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -18,23 +15,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import osrframework.utils.browser as browser
+
 from osrframework.utils.platforms import Platform
 
+
 class Xtelefono(Platform):
-    """ <Platform> object for Xtelefono.
-    """
+    """A <Platform> object for Xtelefono."""
     def __init__(self):
-        """Consstructor...
-        """
         self.platformName = "Xtelefonos"
         self.tags = ["phone"]
 

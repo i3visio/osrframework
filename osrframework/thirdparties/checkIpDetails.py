@@ -25,19 +25,18 @@ import json
 
 import osrframework.thirdparties.ip_api_com.checkIpDetails as ip_api_com
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A library that wraps a search onto ip-api.com.', prog='checkIpDetails.py', epilog="", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
     general = parser.add_mutually_exclusive_group(required=True)
-    general.add_argument('-q', '--query', metavar='<ip_or_domain>', action='store', help='query to be resolved by ip-api.com.')        
-    
+    general.add_argument('-q', '--query', metavar='<ip_or_domain>', action='store', help='query to be resolved by ip-api.com.')
+
     groupAbout = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
     groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
     groupAbout.add_argument('--version', action='version', version='%(prog)s 0.2.0', help='shows the version of the program and exists.')
 
-    args = parser.parse_args()        
-    
-    print json.dumps(ip_api_com.checkIpDetails(query=args.query), indent=2)
+    args = parser.parse_args()
 
-
+    print(json.dumps(ip_api_com.checkIpDetails(query=args.query), indent=2))

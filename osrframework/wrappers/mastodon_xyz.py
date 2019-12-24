@@ -1,47 +1,34 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-__author__ = "Félix Brezo and Yaiza Rubio <contacto@i3visio.com>"
-__version__ = "1.0"
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import argparse
-import json
-import re
-import sys
-import urllib2
 
-import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
+
 class MastodonXyz(Platform):
-    """
-        A <Platform> object for MastodonXyz.
-    """
+    """A <Platform> object for MastodonXyz"""
     def __init__(self):
-        """
-            Constructor...
-        """
         self.platformName = "MastodonXyz"
-        self.tags = ["microblogging", "social", "mastodon"]
+        self.tags = ["social", "mastodon"]
 
         ########################
         # Defining valid modes #
@@ -57,7 +44,7 @@ class MastodonXyz(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://mastodon.xyz/@" + "<usufy>"
+        self.url["usufy"] = "https://mastodon.xyz/@<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -84,7 +71,9 @@ class MastodonXyz(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['<h1>The page you were looking for doesn&#39;t exist.']
+        self.notFoundText["usufy"] = [
+            '<h1>The page you were looking for doesn&#39;t exist.'
+        ]
         #self.notFoundText["searchfy"] = []
 
         #########################

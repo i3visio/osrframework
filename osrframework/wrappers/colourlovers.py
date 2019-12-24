@@ -1,45 +1,32 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016-2017 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-__author__ = "John Doe <johndoe@mailcatch.com>"
-__version__ = "1.0"
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import argparse
-import json
-import re
-import sys
-import urllib2
 
-import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
+
 class Colourlovers(Platform):
-    """
-        A <Platform> object for Colourlovers.
-    """
+    """A <Platform> object for Colourlovers"""
     def __init__(self):
-        """
-            Constructor...
-        """
         self.platformName = "Colourlovers"
         self.tags = ["art"]
 

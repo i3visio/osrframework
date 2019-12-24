@@ -1,9 +1,6 @@
-#!/usr/bin/python2
-# -*- coding: utf-8 -*-
-#
 ################################################################################
 #
-#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -29,11 +26,11 @@ import osrframework.utils.general as general
 import osrframework.alias_generator as alias_generator
 import osrframework.checkfy as checkfy
 import osrframework.domainfy as domainfy
-import osrframework.entify as entify
 import osrframework.mailfy as mailfy
 import osrframework.phonefy as phonefy
 import osrframework.searchfy as searchfy
 import osrframework.usufy as usufy
+import osrframework.upgrade as upgrade
 
 
 EPILOG = """
@@ -50,15 +47,21 @@ class OSRFParser(argparse.ArgumentParser):
         self.print_help()
         sys.exit(2)
 
-def getParser():
+
+def get_parser():
+    """Defines the argument parser
+
+    Returns:
+        argparse.ArgumentParser.
+    """
     parser = OSRFParser(
-        description='OSRFramework CLI',
+        description='OSRFramework CLI. Collection of tools included in the framework.',
         prog='osrf',
         epilog=EPILOG,
         conflict_handler='resolve'
     )
 
-    # Add subcommands as subparsers
+    # Add subcommands as subparsers.
     subcommands = parser.add_subparsers(
         title="SUBCOMMANDS",
         description="List of available commands that can be invoked using OSRFramework CLI.",
@@ -69,87 +72,88 @@ def getParser():
     subparser_alias_generator = subcommands.add_parser(
         "alias_generator",
         help="Generates a list of candidate usernames based on known information.",
-        parents=[alias_generator.getParser()]
+        parents=[alias_generator.get_parser()]
+    )
+    subparser_checkfy = subcommands.add_parser(
+        "checkfy",
+        help="Verifies if a given email address matches a pattern.",
+        parents=[checkfy.get_parser()]
     )
     subparser_domainfy = subcommands.add_parser(
         "domainfy",
         help="Checks whether domain names using words and nicknames are available.",
-        parents=[domainfy.getParser()]
-    )
-    subparser_entify = subcommands.add_parser(
-        "entify",
-        help="Extracts entities using regular expressions from provided URIs.",
-        parents=[entify.getParser()]
+        parents=[domainfy.get_parser()]
     )
     subparser_mailfy = subcommands.add_parser(
         "mailfy",
         help="Gets information about email accounts. ",
-        parents=[mailfy.getParser()]
-    )
-    subparser_checkfy = subcommands.add_parser(
-        "checkfy",
-        help="Verifies if a given email address matches a pattern. ",
-        parents=[checkfy.getParser()]
+        parents=[mailfy.get_parser()]
     )
     subparser_phonefy = subcommands.add_parser(
         "phonefy",
         help="Looks for information linked to spam practices by a phone number.",
-        parents=[phonefy.getParser()]
+        parents=[phonefy.get_parser()]
     )
     subparser_searchfy = subcommands.add_parser(
         "searchfy",
-        help="Performs queries on several platforms",
-        parents=[searchfy.getParser()]
+        help="Performs queries on several platforms.",
+        parents=[searchfy.get_parser()]
     )
     subparser_usufy = subcommands.add_parser(
         "usufy",
-        help="Looks for registered accounts with given nicknames",
-        parents=[usufy.getParser()]
+        help="Looks for registered accounts with given nicknames.",
+        parents=[usufy.get_parser()]
+    )
+    subparser_upgrade = subcommands.add_parser(
+        "upgrade",
+        help="Updates the module.",
+        parents=[upgrade.get_parser()]
     )
 
     # About options
-    groupAbout = parser.add_argument_group('ABOUT ARGUMENTS', 'Showing additional information about this program.')
-    groupAbout.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    groupAbout.add_argument('--license', action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
-    groupAbout.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
+    group_about = parser.add_argument_group('ABOUT ARGUMENTS', 'Showing additional information about this program.')
+    group_about.add_argument('-h', '--help', action='help', help='shows this help and exists.')
+    group_about.add_argument('--license', action='store_true', default=False, help='shows the AGPLv3+ license and exists.')
+    group_about.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
 
     return parser
 
 
 def main(params=None):
-    """
-    Main function to launch OSRFramework CLI
+    """Main function to launch OSRFramework CLI
 
     The function is created in this way so as to let other applications make
     use of the full configuration capabilities of the application. The
-    parameters received are used as parsed by this modules `getParser()`.
+    parameters received are used as parsed by this modules `get_parser()`.
 
     Args:
-    -----
         params: A list with the parameters as grabbed by the terminal. It is
             None when this is called by an entry_point.
 
     Returns:
-    --------
         Returns 0 if execution was successful and 1 for failed executions.
     """
-    parser = getParser()
+    parser = get_parser()
 
     try:
-        if params != None:
+        if params is None:
             args = parser.parse_args(params)
         else:
             args = parser.parse_args()
-    except:
+    except Exception:
         sys.exit(0)
 
     if args.license:
         general.showLicense()
 
     # Launch the appropiate util
-    module = importlib.import_module("osrframework.{}".format(args.command_name))
-    module.main(args)
-    sys.exit(0)
+    if args.command_name:
+        module = importlib.import_module("osrframework.{}".format(args.command_name))
+        module.main(args)
+        sys.exit(0)
+    else:
+        parser.print_help()
+        sys.exit(0)
 
 
 if __name__ == "__main__":

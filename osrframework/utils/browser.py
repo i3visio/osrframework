@@ -1,104 +1,75 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
-#
-#    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    This program is part of OSRFramework. You can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-# Required libraries
-import cookielib
-import ConfigParser
-import mechanize
+from configparser import ConfigParser
 import os
 import random
 
+import requests
+
 import osrframework.utils.configuration as configuration
 
-# logging imports
-import logging
 
 class Browser():
-    """
-        Utility used to code a Browser.
+    """Utility used to code a Browser and to wrap the requests methods.
+
+    Attributes:
+        auth (tuple): The username and password authentication.
+        proxies (list): A list of proxies.
+        timeout (int): The number of seconds to wait until timeout.
+        user_agents (list): The list of User Agents recognised for this browser.
     """
     def __init__(self):
-        """
-            Recovering an instance of a new Browser.
-        """
-        # Browser
-        self.br = mechanize.Browser()
-
-        # Cookie Jar
-        self.cj = cookielib.LWPCookieJar()
-        self.br.set_cookiejar(self.cj)
-
-        # Browser options
-        self.br.set_handle_equiv(True)
-        self.br.set_handle_gzip(False)
-        self.br.set_handle_redirect(True)
-        self.br.set_handle_referer(False)
-        self.br.set_handle_robots(False)
-        self.br.set_handled_schemes(['http', 'https'])
-
-        # Follows refresh 0 but not hangs on refresh > 0
-        self.br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
-
-        # Defining User Agents
-        self.userAgents = []
-
-        # Handling proxies
+        """Recovering an instance of a new Browser"""
+        self.auth = None
+        self.user_agents = []
         self.proxies = {}
         self.timeout = 2
-
-        # Want debugging messages?
-        #self.br.set_debug_http(True)
-        #self.br.set_debug_redirects(True)
-        #self.br.set_debug_responses(True)
 
         # Trying to read the configuration
         # --------------------------------
         # If a current.cfg has not been found, creating it by copying from default
-        configPath = configuration.getConfigPath("browser.cfg")
-        configPath = os.path.join(configuration.getConfigPath()["appPath"], "browser.cfg")
+        config_path = os.path.join(configuration.get_config_path()["appPath"], "browser.cfg")
 
         # Checking if the configuration file exists
-        if not os.path.exists(configPath):
+        if not os.path.exists(config_path):
             try:
                 # Copy the data from the default folder
-                defaultConfigPath = os.path.join(configuration.getConfigPath()["appPathDefaults"], "browser.cfg")
+                default_config_path = os.path.join(configuration.get_config_path()["appPathDefaults"], "browser.cfg")
 
-                with open(defaultConfigPath) as iF:
-                    cont = iF.read()
-                    with open(configPath, "w") as oF:
-                        oF.write(cont)
-            except Exception, e:
+                with open(default_config_path) as file:
+                    cont = file.read()
+                    with open(config_path, "w") as output_file:
+                        output_file.write(cont)
+            except Exception:
                 print("WARNING. No configuration file could be found and the default file was not found either, so configuration will be set as default.")
                 print(str(e))
                 print()
                 # Storing configuration as default
-                self.userAgents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
+                self.user_agents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
                 self.proxies = {}
 
                 return None
 
         # Reading the configuration file
-        config = ConfigParser.ConfigParser()
-        config.read(configPath)
+        config = ConfigParser()
+        config.read(config_path)
 
         proxy = {}
 
@@ -109,9 +80,9 @@ class Browser():
                 for (param, value) in config.items(conf):
                     if param == "user_agent":
                         if value != '':
-                            self.userAgents.append(value)
+                            self.user_agents.append(value)
                         else:
-                            self.userAgents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
+                            self.user_agents = ['Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36']
                     if param == "timeout":
                         try:
                             self.timeout = int(value)
@@ -119,7 +90,7 @@ class Browser():
                             self.timeout = 2
             else:
                 proxy[conf] = {}
-                # Iterating through parametgers
+                # Iterating through parameters
                 for (param, value) in config.items(conf):
                     if value != '':
                         proxy[conf][param] = value
@@ -138,91 +109,49 @@ class Browser():
                     # We are not adding this protocol to be proxied
                     pass
 
-    def recoverURL(self, url):
-        """
-        Public method to recover a resource.
+    def recover_url(self, url):
+        """Public method to recover a resource.
 
         Args:
-        -----
-            url: The URL to be collected.
+            url (str): The URL to be collected.
 
         Returns:
-        --------
-            Returns a resource that has to be read, for instance, with html = self.br.read()
+            Returns a resource that has to be read, for instance, with
+                html = self.br.read()
         """
-        # Configuring user agents...
-        self.setUserAgent()
-
-        # Configuring proxies
-        if "https://" in url:
-            self.setProxy(protocol = "https")
-        else:
-            self.setProxy(protocol = "http")
-
-        # Giving special treatment for .onion platforms
-        if ".onion" in url:
-            try:
-                # TODO: configuring manually the tor bundle
-                pass
-            except:
-                # TODO: capturing the error and eventually trying the tor2web approach
-                #url = url.replace(".onion", ".tor2web.org")
-                pass
-            url = url.replace(".onion", ".onion.cab")
+        headers = {
+            "User-Agent": self.getUserAgent(),
+        }
 
         # Opening the resource
         try:
-            recurso = self.br.open(url)
-        except:
+            r = requests.get(
+                url,
+                headers=headers,
+                auth=self.auth
+            )
+            return r.text
+        except Exception:
             # Something happened. Maybe the request was forbidden?
             return None
 
-        html = recurso.read()
+    def setNewPassword(self, username, password):
+        """Public method to manually set the credentials for a url in the browser
 
-        return html
-
-    def setNewPassword(self, url, username, password):
+        Args:
+            username (str): The username of the session.
+            password (str): The password of the session.
         """
-            Public method to manually set the credentials for a url in the browser.
+        self.auth = (username, password)
+
+    def getUserAgent(self):
+        """This method will be called whenever a new query will be executed
+
+        Returns:
+            Returns a string with the User Agent.
         """
-        self.br.add_password(url, username, password)
-
-    def setProxy(self, protocol="http"):
-        """
-            Public method to set a proxy for the browser.
-        """
-        # Setting proxy
-        try:
-            new = { protocol: self.proxies[protocol]}
-            self.br.set_proxies( new )
-        except:
-            # No proxy defined for that protocol
-            pass
-
-    def setUserAgent(self, uA=None):
-        """
-            This method will be called whenever a new query will be executed.
-
-            :param uA:    Any User Agent that was needed to be inserted. This parameter is optional.
-
-            :return:    Returns True if a User Agent was inserted and False if no User Agent could be inserted.
-        """
-        logger = logging.getLogger("osrframework.utils")
-
-        if not uA:
-            # Setting the User Agents
-            if self.userAgents:
-                # User-Agent (this is cheating, ok?)
-                logger = logging.debug("Selecting a new random User Agent.")
-                uA = random.choice(self.userAgents)
-            else:
-                logger = logging.debug("No user agent was inserted.")
-                return False
-
-        #logger.debug("Setting the user agent:\t" + str(uA))
-
-        self.br.addheaders = [ ('User-agent', uA), ]
-        #self.br.addheaders = [('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'), ('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'), ('Accept-Charset', 'ISO-8859-1,utf-8;q=0.7,*;q=0.3'), ('Accept-Encoding', 'none'), ('Accept-Language', 'es-es,es;q=0.8'), ('Connection', 'keep-alive')]
-        #self.br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
-
-        return True
+        if self.user_agents:
+            # User-Agent (this is cheating, ok?)
+            return random.choice(self.user_agents)
+        else:
+            return "Python3"

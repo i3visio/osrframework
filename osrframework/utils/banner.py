@@ -1,23 +1,21 @@
-# -*- coding: utf-8 -*-
 ################################################################################
 #
-#    Copyright 2015-2018 
-#       Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
-#    This file is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#   This program is part of OSRFramework. You can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-################################################################################
+###############################################################################
 
 import textwrap
 import random
@@ -26,8 +24,9 @@ import osrframework
 import osrframework.utils.general as general
 import osrframework.utils.fortunes as fortunes
 
+release = "OSRFramework " + osrframework.__version__
 
-logo = """    
+logo = """
         .===========================================================.
         |...........................................................|
         |...........................................................|
@@ -56,10 +55,10 @@ logo = """
         |..............                               ..............|
         |..........                                       ..........|
         |......                                               ......|
-        |....                {}                ....|
+        |....{}....|
         |..                                                       ..|
-        '==========================================================='        
-    """.format("OSRFramework " + osrframework.__version__)
+        '==========================================================='
+    """.format(release.center(51))
 
 
 title = """
@@ -70,23 +69,22 @@ title = """
     \___/|____/|_| \_\_|  |_|  \__,_|_| |_| |_|\___| \_/\_/ \___/|_|  |_|\_\\
 """
 
-header = """                                                            
+header = """
     {}
-    
+
     {}
-                        
+
                    Coded with {} by {} & {}
-                        
-                                            
+
+
 {}
     """
-    
+
 text = textwrap.dedent(
     header.format(
-        #general.colorize(logo, random.choice(("ERROR BOLD", "WARNING BOLD", "SUCCESS BOLD", "INFO BOLD", "BOLD"))),
         general.colorize(logo, "INFO BOLD"),
         general.colorize(title, "BOLD"),
-        general.colorize("♥", "ERROR BOLD"), 
+        general.colorize("♥", "ERROR BOLD"),
         general.colorize("Yaiza Rubio", "SUCCESS BOLD"),
         general.colorize("Félix Brezo", "SUCCESS BOLD"),
         general.colorize(random.choice(fortunes.messages).center(80), "WARNING")

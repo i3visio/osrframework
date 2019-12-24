@@ -1,9 +1,6 @@
-#!/usr/bin/python2
-# -*- coding: utf-8 -*-
-#
 ################################################################################
 #
-#    Copyright 2015-2018 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -20,4 +17,4 @@
 #
 ################################################################################
 
-__version__ = "0.19.0"
+__version__ = "0.20.0"

@@ -1,44 +1,37 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import osrframework.utils.general as general
+
 from osrframework.utils.platforms import Platform
 
+
 class Instagram(Platform):
-    """
-        A <Platform> object for Instagram.
-    """
+    """A <Platform> object for Instagram"""
     def __init__(self):
-        """
-            Constructor...
-        """
         self.platformName = "Instagram"
-        self.tags = ["imagery"]
+        self.tags = ["social"]
+
+        # Base URL
+        self.baseURL = "http://instagram.com/"
 
         ########################
         # Defining valid modes #
@@ -84,7 +77,7 @@ class Instagram(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Página no encontrada"]
+        self.notFoundText["usufy"] = ["p-error dialog-404"]
         self.notFoundText["searchfy"] = []
 
         #########################
@@ -113,22 +106,17 @@ class Instagram(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
 
-
     def check_mailfy(self, query, kwargs={}):
-        """
-        Verifying a mailfy query in this platform.
+        """Verifying a mailfy query in this platform
 
         This might be redefined in any class inheriting from Platform. The only
         condition is that any of this should return a dictionary as defined.
 
         Args:
-        -----
-            query: The element to be searched.
-            kwargs: Dictionary with extra parameters. Just in case.
+            query (str): The element to be searched.
 
-        Return:
-        -------
-            Returns the collected data if exists or None if not.
+        Returns:
+            String. Returns the collected data if exists or None if not.
         """
         import re
         import requests

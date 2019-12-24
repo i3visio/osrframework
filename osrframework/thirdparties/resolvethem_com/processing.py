@@ -24,8 +24,8 @@ import requests
 import urllib
 
 def checkIPFromAlias(alias=None):
-    ''' 
-		Method that checks if the given alias is currently connected to Skype and returns its IP address. 
+    """
+		Method that checks if the given alias is currently connected to Skype and returns its IP address.
 
 		:param alias:	Alias to be searched.
 
@@ -35,21 +35,21 @@ def checkIPFromAlias(alias=None):
               "value": "1.1.1.1",
               "attributes" : []
             }
-	'''
+	"""
     headers = {
-    "Content-type": "text/html",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Encoding": " gzip, deflate",
-    "Accept-Language": " es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3",
-    "Connection": "keep-alive",
-    "DNT": "1",
-    "Host": "www.resolvethem.com",
-    "Referer": "http://www.resolvethem.com/index.php",
-    "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:38.0) Gecko/20100101 Firefox/38.0",
-    "Content-Length": "26",
-    "Content-Type": "application/x-www-form-urlencoded",
-    }    
-    
+        "Content-type": "text/html",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Encoding": " gzip, deflate",
+        "Accept-Language": " es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3",
+        "Connection": "keep-alive",
+        "DNT": "1",
+        "Host": "www.resolvethem.com",
+        "Referer": "http://www.resolvethem.com/index.php",
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; rv:38.0) Gecko/20100101 Firefox/38.0",
+        "Content-Length": "26",
+        "Content-Type": "application/x-www-form-urlencoded",
+    }
+
     req = requests.post("http://www.resolvethem.com/index.php",headers=headers,data={'skypeUsername': alias,'submit':''})
     # Data returned
     data = req.content
@@ -60,9 +60,6 @@ def checkIPFromAlias(alias=None):
         jsonData = {}
         jsonData["type"]="i3visio.ip"
         jsonData["value"]=allMatches[0]
-        jsonData["attributes"]=[]     
+        jsonData["attributes"]=[]
         return jsonData
     return {}
-
-
-

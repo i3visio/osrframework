@@ -1,42 +1,32 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import osrframework.utils.browser as browser
+
 from osrframework.utils.platforms import Platform
 
+
 class Ivoox(Platform):
-    '''
-        A <Platform> object for Ivoox.
-    '''
+    """A <Platform> object for Ivoox"""
     def __init__(self):
-        '''
-            Constructor...
-        '''
         self.platformName = "Ivoox"
         self.tags = ["opinions", "contact"]
 
@@ -54,7 +44,7 @@ class Ivoox(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://" + "<usufy>" + ".ivoox.com" 
+        self.url["usufy"] = "https://" + "<usufy>" + ".ivoox.com"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -81,7 +71,7 @@ class Ivoox(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["El contenido que estás buscando no existe."]
+        self.notFoundText["usufy"] = ["pag_404"]
         #self.notFoundText["searchfy"] = []
 
         #########################

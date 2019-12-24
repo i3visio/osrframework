@@ -1,44 +1,33 @@
-# !/usr/bin/python
-# -*- coding: cp1252 -*-
+################################################################################
 #
-##################################################################################
-#
-#    Copyright 2016 Félix Brezo and Yaiza Rubio (i3visio, contacto@i3visio.com)
+#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
+#    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################
+################################################################################
 
-import argparse
-import json
-import re
-import sys
-import urllib2
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__version__ = "2.0"
 
-import osrframework.utils.browser as browser
+
 from osrframework.utils.platforms import Platform
-# Importing the API Wrapper
 from osrframework.api.twitter_api import TwitterAPIWrapper as TwitterAPIWrapper
 
+
 class Twitter(Platform):
-    """
-        A <Platform> object for Twitter.
-    """
+    """A <Platform> object for Twitter"""
     def __init__(self):
-        '''
-            Constructor...
-        '''
         self.platformName = "Twitter"
         self.tags = ["contact", "microblogging", "social"]
 
@@ -158,21 +147,18 @@ class Twitter(Platform):
                 r["attributes"].append(aux)
 
         # Standard execution
-        except Exception, e:
+        except Exception as e:
             return super(Twitter, self).do_usufy(query, **kwargs)
 
     def do_searchfy(self, query, **kwargs):
-        """
-        Verifying a usufy query in this platform.
+        """Verifying a usufy query in this platform
 
         This might be redefined in any class inheriting from Platform.
 
         Args:
-        -----
-            query: The element to be searched.
+            query (str): The element to be searched.
 
         Return:
-        -------
             A list of elements to be appended.
         """
         # Trying to interact with the API Wrapper
@@ -189,5 +175,5 @@ class Twitter(Platform):
                 r["attributes"].append(aux)
 
         # Standard execution
-        except Exception, e:
+        except Exception as e:
             return super(Twitter, self).do_searchfy(query, **kwargs)

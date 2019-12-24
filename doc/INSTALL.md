@@ -6,20 +6,22 @@ More detailed installation instructions can be found in this file. This will use
 1.- Verifying the Python and Pip Installation
 ---------------------------------------------
 
-First of all, on any system we should verify that we have a Python 2.7 installation and a Pip installation setup properly. Opening the terminal or the powershell, we can try the following to check your python installation:
+First of all, on any system we should verify that we have a Python 3.6+ installation and a Pip installation setup properly. Opening the terminal or the powershell, we can try the following to check your python installation:
 ```
 python --version
 ```
-If you get errors at this point or the Python version is not appeating, your system is not yet prepared. You will need to install Python 2.7 from the official website:
+If you get errors at this point or the Python version is not appeating, your system is not yet prepared. You will need to install Python 3.6 from the official website:
 ```
 https://www.python.org/downloads/
 ```
-Follow the installation steps for your system. Note that in one step of the Windows installation process you WILL NEED to manually add c:\Python27 and C:\Python27\scripts to the system. Try again after completing this task.
+Follow the installation steps for your system. Note that in one step of the Windows installation process you WILL NEED to manually add c:\Python36 and C:\Python36\scripts to the system. Try again after completing this task.
 
-Now it's the turn of the package manager. Check that you have the pip version installed:
+Now it's the turn of the package manager. Check that you have the pip version installed. `pip` SHOULD mostly work, but just in case and for legacy compatibilities with systems also using `pip` for Python 2, `pip3` is preferred:
+
 ```
-pip --version
+pip3 --version
 ```
+
 If you get any errors at this point, you have several options:
 * If your running Ubuntu or Debian-like systems, try `sudo apt-get install python-pip`.
 * In any case you can always download <https://bootstrap.pypa.io/get-pip.py> and install it manually. In Windows-like systems, you do NOT need to type sudo.
