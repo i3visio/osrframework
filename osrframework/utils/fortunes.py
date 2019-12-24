@@ -56,5 +56,6 @@ messages = [
     "-- Use 'osrf upgrade --use-development' to grab development versions. --",
     "-- The 'osrf' tool will list all the tools as subcommands. --",
     "-- 'osrf usufy -n i3visio ' and 'usufy -n i3visio' has the same effect. --",
-    "-- Config files live in '{configuration.get_config_path['appPath']}'. --"
+    "-- Config files live in '{configuration.get_config_path['appPath']}'. --",
+    "-- FAQ at <https://github.com/i3visio/osrframework/blob/master/doc/FAQ.md>! --"
 ]

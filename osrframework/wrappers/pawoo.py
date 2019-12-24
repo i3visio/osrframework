@@ -43,7 +43,5 @@ class Pawoo(Platform):
                 "not_found_text": "<img alt='Mastodon' data-status-code='404' id='error_image' src=''>",                   # Text that indicates a missing profile
                 "query_validator": "[a-z0-9A-Z_]+",                            # Regular expression that the alias SHOULD match
                 "url": "https://pawoo.net/@{placeholder}",       # Target URL where {placeholder} would be modified by the alias
-            },
-            # Reimplementation needed of check_mailfy
-            "mailfy": {},
+            }
         }
