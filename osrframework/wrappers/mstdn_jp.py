@@ -43,7 +43,5 @@ class MstdnJP(Platform):
                 "not_found_text": "<img alt='Mastodon' src='/oops.png'>",                   # Text that indicates a missing profile
                 "query_validator": "[a-z0-9A-Z_]+",                            # Regular expression that the alias SHOULD match
                 "url": "https://mstdn.jp/@{placeholder}",       # Target URL where {placeholder} would be modified by the alias
-            },
-            # Reimplementation needed of check_mailfy
-            "mailfy": {},
+            }
         }
