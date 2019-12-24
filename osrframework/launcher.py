@@ -62,24 +62,12 @@ def get_parser():
     )
 
     # Add subcommands as subparsers.
-    try:
-        # Add subcommands as subparsers
-        subcommands = parser.add_subparsers(
-            title="SUBCOMMANDS",
-            description="List of available commands that can be invoked using OSRFramework CLI.",
-            metavar="<sub_command> <sub_command_options>",
-            dest='command_name',
-            required=True
-        )
-    except AssertionError:
-        # Note that add_subparsers in Python 3.6 is incompatible with `required`
-        subcommands = parser.add_subparsers(
-            title="SUBCOMMANDS",
-            description="List of available commands that can be invoked using OSRFramework CLI.",
-            metavar="<sub_command> <sub_command_options>",
-            dest='command_name',
-        )
-
+    subcommands = parser.add_subparsers(
+        title="SUBCOMMANDS",
+        description="List of available commands that can be invoked using OSRFramework CLI.",
+        metavar="<sub_command> <sub_command_options>",
+        dest='command_name'
+    )
 
     subparser_alias_generator = subcommands.add_parser(
         "alias_generator",
@@ -159,9 +147,13 @@ def main(params=None):
         general.showLicense()
 
     # Launch the appropiate util
-    module = importlib.import_module("osrframework.{}".format(args.command_name))
-    module.main(args)
-    sys.exit(0)
+    if args.command_name:
+        module = importlib.import_module("osrframework.{}".format(args.command_name))
+        module.main(args)
+        sys.exit(0)
+    else:
+        parser.print_help()
+        sys.exit(0)
 
 
 if __name__ == "__main__":
