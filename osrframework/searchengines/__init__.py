@@ -17,7 +17,3 @@
 #
 ##################################################################################
 
-import osrframework.utils.logger as logger
-
-# Calling the logger when being imported
-logger.setupLogger(loggerName="osrframework.searchengines")

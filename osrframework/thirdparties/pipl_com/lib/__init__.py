@@ -20,11 +20,6 @@
 ##################################################################################
 
 
-import osrframework.utils.logger
-
-# Calling the logger when being imported
-osrframework.utils.logger.setupLogger(loggerName="osrframework.thirdparties.pipl_com.lib")
-
 
 __version__ = '1.0'
 """Python implementation of Pipl's data model.

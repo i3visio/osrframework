@@ -47,7 +47,7 @@ class NoCredentialsException(OSRFrameworkException):
             """.format(
             self.__class__.__name__,
             platform,
-            os.path.join(configuration.getConfigPath()["appPath"], "accounts.cfg"),
+            os.path.join(configuration.get_config_path()["appPath"], "accounts.cfg"),
             general.emphasis("-x " + platform)
         )
         OSRFrameworkException.__init__(self, general.warning(msg))
