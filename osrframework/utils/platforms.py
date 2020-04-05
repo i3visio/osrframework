@@ -21,6 +21,7 @@ import json
 import random
 import re
 import urllib
+import tempfile
 
 import osrframework.utils.browser as browser
 import osrframework.utils.general as general
@@ -81,7 +82,7 @@ class Platform(object):
         except:
             if mode == "base":
                 if word[0] == "/":
-                    return self.baseURL + word[1:], word
+                    return self.baseURL + word[1:]
                 else:
                     return self.baseURL + word
             else:
@@ -120,6 +121,15 @@ class Platform(object):
             else:
                 # Accessing the resources
                 data = i3Browser.recover_url(qURL)
+
+            try:
+                if self.modes[mode]["debug"]:
+                    with open(os.path.join(tempfile.gettempdir(), self.platformName) + ".html", "w") as file:
+                        print(f"DEBUG mode is active for '{general.emphasis(self.platformName)}'. Data grabbed saved to: '{general.warning(file.name)}'")
+                        file.write(data)
+            except:
+                pass
+
             return data
         except KeyError:
             print(general.error("[*] '{}' is not a valid mode for this wrapper ({}).".format(mode, self.__class__.__name__)))

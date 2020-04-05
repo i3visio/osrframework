@@ -427,7 +427,7 @@ visit <{general.LICENSE_URL}>.
         # performing the test
         elif args.benchmark:
             platforms = platform_selection.get_all_platform_names("usufy")
-            res = benchmark.doBenchmark(platforms)
+            res = benchmark.do_benchmark(platforms)
             str_times = ""
             for e in sorted(res.keys()):
                 str_times += str(e) + "\t" + str(res[e]) + "\n"
