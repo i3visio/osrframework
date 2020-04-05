@@ -18,7 +18,7 @@
 ################################################################################
 
 __author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
-__version__ = "2.0"
+__version__ = "3.0"
 
 
 from osrframework.utils.platforms import Platform
@@ -37,11 +37,11 @@ class Minds(Platform):
             "usufy": {
                 "debug": False,
                 "extra_fields": {
-                    "com.i3visio.Name": '<h2>([^<]+)</h2>',    # Regular expresion to extract the alias
+                    "com.i3visio.Name": '<h2>([^<]+)</h2>',
                 },
                 "needs_credentials": False,
-                "not_found_text": "<title>Minds</title>",                   # Text that indicates a missing profile
-                "query_validator": "[a-z0-9A-Z_]+",                            # Regular expression that the alias SHOULD match
-                "url": "https://www.minds.com/{placeholder}",       # Target URL where {placeholder} would be modified by the alias
+                "not_found_text": "Sorry, the channel couldn't be found",
+                "query_validator": "[a-z0-9A-Z_]+",
+                "url": "https://www.minds.com/{placeholder}",
             }
         }
