@@ -18,84 +18,28 @@
 ################################################################################
 
 __author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
-__version__ = "2.0"
+__version__ = "3.0"
 
 
 from osrframework.utils.platforms import Platform
 
 
 class Douban(Platform):
-    """A <Platform> object for Douban"""
+    """<Platform> class"""
     def __init__(self):
+        """Constructor with parameters
+
+        This method permits the developer to instantiate dinamically Platform
+        objects."""
         self.platformName = "Douban"
-        self.tags = ["social", "opinions"]
-
-        ########################
-        # Defining valid modes #
-        ########################
-        self.isValidMode = {}
-        self.isValidMode["phonefy"] = False
-        self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False
-
-        ######################################
-        # Search URL for the different modes #
-        ######################################
-        # Strings with the URL for each and every mode
-        self.url = {}
-        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://site.douban.com/"  + "<usufy>"
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
-
-        ######################################
-        # Whether the user needs credentials #
-        ######################################
-        self.needsCredentials = {}
-        #self.needsCredentials["phonefy"] = False
-        self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False
-
-        #################
-        # Valid queries #
-        #################
-        # Strings that will imply that the query number is not appearing
-        self.validQuery = {}
-        # The regular expression '.+' will match any query.
-        #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
-        #self.validQuery["searchfy"] = ".*"
-
-        ###################
-        # Not_found clues #
-        ###################
-        # Strings that will imply that the query number is not appearing
-        self.notFoundText = {}
-        #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["https://img3.doubanio.com/pics/douban_error.gif"]
-        #self.notFoundText["searchfy"] = []
-
-        #########################
-        # Fields to be searched #
-        #########################
-        self.fieldsRegExp = {}
-
-        # Definition of regular expressions to be searched in phonefy mode
-        #self.fieldsRegExp["phonefy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-
-        # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-
-        # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-
-        ################
-        # Fields found #
-        ################
-        # This attribute will be feeded when running the program.
-        self.foundFields = {}
+        self.tags = ["social"]
+        self.modes = {
+            "usufy": {
+                "debug": False,
+                "extra_fields": {},
+                "needs_credentials": False,
+                "not_found_text": 'https://img9.doubanio.com/pics/douban_error.gif"/>',
+                "query_validator": "[a-z0-9A-Z_]+",
+                "url": "https://site.douban.com/{placeholder}",
+            }
+        }
