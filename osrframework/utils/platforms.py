@@ -132,7 +132,7 @@ class Platform(object):
 
             return data
         except KeyError:
-            print(general.error("[*] '{}' is not a valid mode for this wrapper ({}).".format(mode, self.__class__.__name__)))
+            print(general.error("\t[*] '{}' is not a valid mode for this wrapper ({}).".format(mode, self.__class__.__name__)))
 
         return None
 
@@ -360,11 +360,11 @@ class Platform(object):
             ]
         """
         if self.check_mailfy(query, **kwargs):
-            expandedEntities = general.expand_entities_from_email(query)
+            expanded_entities = general.expand_entities_from_email(query)
             r = {
                 "type": "com.i3visio.Profile",
                 "value": self.platformName + " - " + query,
-                "attributes": expandedEntities + [
+                "attributes": expanded_entities + [
                     {
                         "type": "com.i3visio.Platform",
                         "value": self.platformName,
