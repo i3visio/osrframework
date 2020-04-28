@@ -56,8 +56,8 @@ In any case, we recommend you yo have a look at the [INSTALL.md](doc/INSTALL.md)
 ---------------
 
 If everything went correctly (we hope so!), it's time for trying usufy., mailfy and so on.
-But we are they
-? They are installed in your path meaning that you can open a terminal anywhere and typing the name of the program (seems to be an improvement from previous installations...). Examples:
+But where are they locally? They are installed in your path meaning that you can open a terminal anywhere and typing the name of the program (seems to be an improvement from previous installations...). Examples:
+
 ```
 osrf --help
 usufy -n i3visio febrezo yrubiosec -p twitter facebook
