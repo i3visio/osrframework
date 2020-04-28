@@ -60,7 +60,6 @@ class Infojobs(Platform):
         # This attribute will be feeded when running the program.
         self.foundFields = {}
 
-
     def check_mailfy(self, query, kwargs={}):
         """Verifying a mailfy query in this platform
 

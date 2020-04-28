@@ -137,7 +137,7 @@ class KeyServerIO(Platform):
             else:
                 return resp.text
         else:
-            print(general.warning(f"Something happened. keyserver.io returned status '{resp.status_code}' for '{query}'."))
+            print(general.warning(f"\t[*] Something happened. keyserver.io returned status '{resp.status_code}' for '{query}'."))
             return None
 
     def do_mailfy(self, query, **kwargs):
