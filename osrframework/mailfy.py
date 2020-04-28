@@ -346,10 +346,9 @@ def process_mail_list_step_2(platforms=[], emails=[]):
         print(f"\n\t[*] {i+1}/{len(emails)} Checking '{general.title(e)}'...")
         for pla in platforms:
             # This returns a json.txt!
-            entities = pla.get_info(query=e, mode="mailfy")
-            data = json.loads(entities)
-            if data:
-                results += data
+            entities = pla.do_mailfy(query=e)
+            if entities:
+                results += entities
     return results
 
 
@@ -535,7 +534,7 @@ be used instead. Verification may be slower though."""))
         except KeyError:
             # API_Key not found
             config_path = os.path.join(configuration.get_config_path()["appPath"], "api_keys.cfg")
-            print(general.warning(f"No API found for HaveIBeenPwned. Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'."))
+            print("\t[*] " + general.warning("No API found for HaveIBeenPwned") + f". Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'.")
         except KeyboardInterrupt:
             print(general.warning("\tStep 3 manually skipped by the user...\n"))
 
