@@ -27,14 +27,14 @@ import osrframework.utils.general as general
 from osrframework.utils.platforms import Platform
 
 
-class KeyServerIO(Platform):
+class GnuPGKeys(Platform):
     """A <Platform> object for the MIT PGP public keys repository"""
     def __init__(self):
-        self.platformName = "KeyServerIO"
+        self.platformName = "GnuPGKeys"
         self.tags = ["mails", "cryptography"]
 
         # Base URL
-        self.baseURL = "https://pgp.key-server.io/pks/lookup?search="
+        self.baseURL = "http://keys.gnupg.net/pks/lookup?search="
         ########################
         # Defining valid modes #
         ########################
@@ -51,7 +51,7 @@ class KeyServerIO(Platform):
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         #self.url["usufy"] = "https://github.com/" + "<usufy>"
-        self.url["searchfy"] = "https://pgp.key-server.io/pks/lookup?search=<searchfy>"
+        self.url["searchfy"] = "http://keys.gnupg.net/pks/lookup?search=<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
@@ -129,7 +129,7 @@ class KeyServerIO(Platform):
         s = requests.Session()
 
         # Getting the first response to grab the csrf_token
-        resp = s.get(f"https://pgp.key-server.io/pks/lookup?search={query}")
+        resp = s.get(f"http://keys.gnupg.net/pks/lookup?search={query}")
 
         if resp.status_code == 200 or resp.status_code == 404:
             if '         0 keys found..' in resp.text:
