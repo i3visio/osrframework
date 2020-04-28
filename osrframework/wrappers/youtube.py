@@ -40,7 +40,7 @@ class Youtube(Platform):
                     "com.i3visio.Date.Create": '{"start": "<li class=\"about-stat joined-date\">", "end": "</li>"}',    # Regular expresion to extract the alias
                 },
                 "needs_credentials": False,
-                "not_found_text": "channel-empty-message banner-message",                   # Text that indicates a missing profile
+                "not_found_text": "error-page",                   # Text that indicates a missing profile
                 "query_validator": "[^@, ]+",                            # Regular expression that the alias SHOULD match
                 "url": "https://www.youtube.com/user/{placeholder}/about",       # Target URL where {placeholder} would be modified by the alias
             },
