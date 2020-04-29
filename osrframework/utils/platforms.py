@@ -411,7 +411,7 @@ class Platform(object):
             A list of elements to be appended.
         """
         results = []
-        print(f"[*] Launching search using the {self.__class__.__name__} module...")
+        print(f"\t[*] Launching search using the {self.__class__.__name__} module...")
         test = self.check_searchfy(query, **kwargs)
 
         if test:
@@ -654,7 +654,7 @@ class Platform(object):
             # Appending platform URI
             aux = {}
             aux["type"] = "com.i3visio.URI"
-            aux["value"] = self.create_url(word=query, mode="usufy")
+            aux["value"] = self.create_url(word=query, mode="base")
             aux["attributes"] = []
             r["attributes"].append(aux)
             # Appending the alias
