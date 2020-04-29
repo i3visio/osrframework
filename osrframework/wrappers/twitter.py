@@ -32,103 +32,39 @@ class Twitter(Platform):
         self.tags = ["contact", "microblogging", "social"]
 
         # Base URL
-        self.baseURL = "http://twitter.com/"
+        self.baseURL = "https://twitter.com/"
 
-        ########################
-        # Defining valid modes #
-        ########################
-        self.isValidMode = {}
-        self.isValidMode["mailfy"] = True
-        self.isValidMode["phonefy"] = False
-        self.isValidMode["searchfy"] = True
-        self.isValidMode["usufy"] = True
-
-        ######################################
-        # Search URL for the different modes #
-        ######################################
-        # Strings with the URL for each and every mode
-        self.url = {}
-        self.url["mailfy"] = "https://api.twitter.com/i/users/email_available.json?email=<mailfy>"
-        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["searchfy"] = "https://twitter.com/search?f=users&vertical=default&q=\"" + "<searchfy>" + "\""
-        self.url["usufy"] = "http://twitter.com/" + "<usufy>"
-
-        ######################################
-        # Whether the user needs credentials #
-        ######################################
-        self.needsCredentials = {}
-        self.needsCredentials["mailfy"] = False
-        #self.needsCredentials["phonefy"] = False
-        self.needsCredentials["usufy"] = False
-        self.needsCredentials["searchfy"] = False
-
-        #################
-        # Valid queries #
-        #################
-        # Strings that will imply that the query number is not appearing
-        self.validQuery = {}
-        # The regular expression '.+' will match any query.
-        #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = "[a-zA-Z0-9_]+"
-        self.validQuery["searchfy"] = ".+"
-        self.validQuery["mailfy"] = ".+"
-
-        ###################
-        # Not_found clues #
-        ###################
-        # Strings that will imply that the query number is not appearing
-        self.notFoundText = {}
-        self.notFoundText["mailfy"] = ['"valid":true']
-        #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<form class=\"search-404\""]
-        self.notFoundText["searchfy"] = []
-
-        #########################
-        # Fields to be searched #
-        #########################
-        self.fieldsRegExp = {}
-
-        # Definition of regular expressions to be searched in phonefy mode
-        #self.fieldsRegExp["phonefy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-
-        # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
-        # Examples (do NOT forget to escape the quoting marks inside any string: \"):
-        self.fieldsRegExp["usufy"]["@protected"] = {"start": "data-protected=\"", "end": "\">\n      <span class=\"UserActions"}
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": "class=\"ProfileHeaderCard-nameLink u-textInheritColor js-nav\n\">", "end": "</a>\n  </h1>"}
-        #self.fieldsRegExp["usufy"]["ProfileHeaderCard-bio"] = {"start": "<p class=\"ProfileHeaderCard-bio u-dir\"\n    \n    dir=\"ltr\">", "end": "</p>"}
-        self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": "<span class=\"ProfileHeaderCard-locationText u-dir\" dir=\"ltr\">\n            ", "end": "\n        </span>\n      </div>\n\n    <div class=\"ProfileHeaderCard-url"}
-        self.fieldsRegExp["usufy"]["@created_at"] = {"start": "<span class=\"ProfileHeaderCard-joinDateText js-tooltip u-dir\" dir=\"ltr\" title=\"", "end": "\">Se uni"}
-        self.fieldsRegExp["usufy"]["i3visio.uri.homepage"] = {"start": "<span class=\"ProfileHeaderCard-urlText u-dir\" dir=\"ltr\"><a class=\"u-textUserColor\" target=\"_blank\" rel=\"me nofollow\" href=\"[^\"]*\" title=\"", "end": "\">"}
-        #self.fieldsRegExp["usufy"]["PhotoRail-headingText"] = {"start": "class=\"js-nav\">\n                \n                ", "end": "             </a>"}
-
-        # Definition of regular expressions to be searched in searchfy mode
-        self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "data-screen-name=\"([^\"]+)\""
-        # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-
-        ################
-        # Fields found #
-        ################
-        # This attribute will be feeded when running the program.
-        self.foundFields = {}
-
+        self.modes = {
+            "usufy": {
+                "debug": False,
+                "extra_fields": {
+                    "com.i3visio.FullName": ' \((.+)\)</title>',    # Regular expresion to extract the alias
+                },
+                "needs_credentials": False,
+                "not_found_text": "Sorry, that page does not exist. ",                   # Text that indicates a missing profile
+                "query_validator": "[a-zA-Z0-9_]{3,15}",                            # Regular expression that the alias SHOULD match
+                "url": "https://tweettunnel.com/{placeholder}",       # Target URL where {placeholder} would be modified by the alias
+            },
+            # Reimplementation needed of check_mailfy
+            "mailfy": {
+                "debug": False,
+                "extra_fields": {},
+                "needs_credentials": False,
+                "not_found_text": '"valid":true',
+                "query_validator": ".+",
+                "url": "https://api.twitter.com/i/users/email_available.json?email=",
+            },
+        }
 
     def do_usufy(self, query, **kwargs):
-        """
-        Verifying a usufy query in this platform.
+        """Verifying a usufy query in this platform using the API
 
-        This might be redefined in any class inheriting from Platform.
+        If no credentials are provided, the standard verifier will be raised.
 
         Args:
-        -----
             query: The element to be searched.
 
         Return:
-        -------
             A list of elements to be appended.
         """
         # Trying to interact with the API Wrapper
@@ -151,9 +87,9 @@ class Twitter(Platform):
             return super(Twitter, self).do_usufy(query, **kwargs)
 
     def do_searchfy(self, query, **kwargs):
-        """Verifying a usufy query in this platform
+        """Verifying a searchfy query in this platform using the API
 
-        This might be redefined in any class inheriting from Platform.
+        If no credentials are provided, the standard verifier will be raised.
 
         Args:
             query (str): The element to be searched.
