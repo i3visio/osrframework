@@ -57,5 +57,5 @@ def get_credentials():
             creds[plat] = [c]
         else:
             creds[plat] = creds[plat].append(c)
-    print(f"{general.info(str(len(creds_tuples)))} credentials have been loaded.")
+    print(f"\t[*] {general.info(str(len(creds_tuples)))} credentials have been loaded.")
     return creds
