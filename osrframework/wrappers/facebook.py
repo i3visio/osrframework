@@ -33,72 +33,27 @@ class Facebook(Platform):
         # Base URL
         self.baseURL = "https://facebook.com/"
 
-        ########################
-        # Defining valid modes #
-        ########################
-        self.isValidMode = {}
-        self.isValidMode["phonefy"] = False
-        self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = True
-
-        ######################################
-        # Search URL for the different modes #
-        ######################################
-        # Strings with the URL for each and every mode
-        self.url = {}
-        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.facebook.com/" + "<usufy>"
-        self.url["searchfy"] = "https://www.facebook.com/public?query=" + "<searchfy>"
-
-        ######################################
-        # Whether the user needs credentials #
-        ######################################
-        self.needsCredentials = {}
-        #self.needsCredentials["phonefy"] = False
-        self.needsCredentials["usufy"] = False
-        self.needsCredentials["searchfy"] = False
-
-        #################
-        # Valid queries #
-        #################
-        # Strings that will imply that the query number is not appearing
-        self.validQuery = {}
-        # The regular expression '.+' will match any query.
-        #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
-        self.validQuery["searchfy"] = ".+"
-
-        ###################
-        # Not_found clues #
-        ###################
-        # Strings that will imply that the query number is not appearing
-        self.notFoundText = {}
-        #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["https://static.xx.fbcdn.net/rsrc.php/v3/yp/r/U4B06nLMGQt.png"]
-        self.notFoundText["searchfy"] = []
-
-        #########################
-        # Fields to be searched #
-        #########################
-        self.fieldsRegExp = {}
-
-        # Definition of regular expressions to be searched in phonefy mode
-        #self.fieldsRegExp["phonefy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-
-        # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-        # Definition of regular expressions to be searched in searchfy mode
-        self.fieldsRegExp["searchfy"] = {}
-        self.searchfyAliasRegexp = "<a title=\"[^\"]+\" class=\"_2ial\" aria-label=\"[^\"]+\" href=\"https://www.facebook.com/([^\"]+)"
-        # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-
-        ################
-        # Fields found #
-        ################
-        # This attribute will be feeded when running the program.
-        self.foundFields = {}
+        self.modes = {
+            "usufy": {
+                "debug": False,
+                "extra_fields": {
+                    "com.i3visio.FullName": '<title id="pageTitle">(.+) \| Facebook</title>',    # Regular expresion to extract the alias
+                },
+                "needs_credentials": False,
+                "not_found_text": "https://static.xx.fbcdn.net/rsrc.php/v3/yp/r/U4B06nLMGQt.png",                   # Text that indicates a missing profile
+                "query_validator": "[a-zA-Z\.0-9_\-]+",                            # Regular expression that the alias SHOULD match
+                "url": "https://www.facebook.com/{placeholder}",       # Target URL where {placeholder} would be modified by the alias
+            },
+            "searchfy": {
+                "debug": False,
+                "extra_fields": {},
+                "needs_credentials": False,
+                "not_found_text": "We couldn&#039;t find anything for",
+                "query_validator": ".+",
+                "url": "https://www.facebook.com/public?query={placeholder}",
+                # Needed function to extract aliases from the website
+                "alias_regexp": '<a title="[^\"]+" class="_32mo" href="https://www.facebook.com/([^\"]+)"><span>'
+            },
+            # Reimplementation needed of check_mailfy
+            "mailfy": {},
+        }
