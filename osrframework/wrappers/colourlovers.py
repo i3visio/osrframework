@@ -18,83 +18,31 @@
 ################################################################################
 
 __author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
-__version__ = "2.0"
+__version__ = "3.0"
 
 
 from osrframework.utils.platforms import Platform
 
 
 class Colourlovers(Platform):
-    """A <Platform> object for Colourlovers"""
+    """<Platform> class"""
     def __init__(self):
         self.platformName = "Colourlovers"
         self.tags = ["art"]
 
-        ########################
-        # Defining valid modes #
-        ########################
-        self.isValidMode = {}
-        self.isValidMode["phonefy"] = False
-        self.isValidMode["usufy"] = True
-        self.isValidMode["searchfy"] = False
-
-        ######################################
-        # Search URL for the different modes #
-        ######################################
-        # Strings with the URL for each and every mode
-        self.url = {}
-        #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.colourlovers.com/lover/" + "<usufy>"
-        #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
-
-        ######################################
-        # Whether the user needs credentials #
-        ######################################
-        self.needsCredentials = {}
-        #self.needsCredentials["phonefy"] = False
-        self.needsCredentials["usufy"] = False
-        #self.needsCredentials["searchfy"] = False
-
-        #################
-        # Valid queries #
-        #################
-        # Strings that will imply that the query number is not appearing
-        self.validQuery = {}
-        # The regular expression '.+' will match any query
-        #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = ".+"
-        #self.validQuery["searchfy"] = ".*"
-
-        ###################
-        # Not_found clues #
-        ###################
-        # Strings that will imply that the query number is not appearing
-        self.notFoundText = {}
-        #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<h4>No one's home</h4>"]
-        #self.notFoundText["searchfy"] = []
-
-        #########################
-        # Fields to be searched #
-        #########################
-        self.fieldsRegExp = {}
-
-        # Definition of regular expressions to be searched in phonefy mode
-        #self.fieldsRegExp["phonefy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
-
-        # Definition of regular expressions to be searched in usufy mode
-        self.fieldsRegExp["usufy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
-        # Definition of regular expressions to be searched in searchfy mode
-        #self.fieldsRegExp["searchfy"] = {}
-        # Example of fields:
-        #self.fieldsRegExp["searchfy"]["i3visio.location"] = ""
-
-        ################
-        # Fields found #
-        ################
-        # This attribute will be feeded when running the program.
-        self.foundFields = {}
+        self.modes = {
+            "usufy": {
+                "debug": False,
+                "extra_fields": {
+                    "com.i3visio.FullName": ' \((.+)\)</title>',    # Regular expresion to extract the alias
+                },
+                "needs_credentials": False,
+                "not_found_text": "<h4>No one's home</h4>",                   # Text that indicates a missing profile
+                "query_validator": "[a-zA-Z0-9_]{3,15}",                            # Regular expression that the alias SHOULD match
+                "url": "https://www.colourlovers.com/lover/{placeholder}",       # Target URL where {placeholder} would be modified by the alias
+                "test": {
+                    "valid": "james",
+                    "inavlid": "7ddf32e17a6ac5"
+                }
+            }
+        }
