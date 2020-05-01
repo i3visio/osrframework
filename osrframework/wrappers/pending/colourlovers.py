@@ -32,9 +32,10 @@ class Colourlovers(Platform):
 
         self.modes = {
             "usufy": {
-                "debug": False,
+                "debug": True,
                 "extra_fields": {
-                    "com.i3visio.FullName": ' \((.+)\)</title>',    # Regular expresion to extract the alias
+                    "com.i3visio.Location.Country": '<span itemprop="addressCountry" class="profile-location-name">[\n]? +(.+)\n',    # Regular expresion to extract the alias
+                    "com.i3visio.Location.City": '<span class="PageProfile-info-locality" itemprop="addressLocality">([^<]+)</span>',    # Regular expresion to extract the alias
                 },
                 "needs_credentials": False,
                 "not_found_text": "<h4>No one's home</h4>",                   # Text that indicates a missing profile
