@@ -70,26 +70,32 @@ class Platform(object):
     def create_url(self, word, mode="phonefy"):
         """Method to create the URL replacing the word in the appropriate URL
 
+        Depending on the module it returns the corresponding URL. However,
+        a special keyword can be provided as mode ("base") to use a different
+        URL instead. This is useful when the check is performed towards a
+        different platform (e. g., tweettunnel.com) but the URI to be shown is
+        expected to be the original one (e. g., twitter.com).
+
         Args:
             word (str): Word to be searched.
             mode (str): Mode to be executed.
 
         Returns:
-            The URL to be queried.
+            The URL to be queried. It returns None if no base has been provided.
         """
         try:
-            if word[0] == "/":
-                return self.baseURL + word[1:]
+            if mode == "base":
+                if word[0] == "/":
+                    return self.baseURL + word[1:]
+                else:
+                    return self.baseURL + word
             else:
-                return self.baseURL + word
-        except:
-            try:
-                return self.modes[mode]["url"].replace("{placeholder}", word)
-            except:
                 try:
-                    return self.url[mode].replace("<"+mode+">", word)
+                    return self.modes[mode]["url"].replace("{placeholder}", word)
                 except:
-                    return None
+                    return self.url[mode].replace("<"+mode+">", word)
+        except:
+            return None
 
     def launch_query_for_mode(self, query=None, mode=None):
         """Method that launches an i3Browser to collect data
@@ -653,7 +659,13 @@ class Platform(object):
             # Appending platform URI
             aux = {}
             aux["type"] = "com.i3visio.URI"
-            aux["value"] = self.create_url(word=query, mode="usufy")
+
+            uri = self.create_url(word=query, mode="base")
+            if uri:
+                aux["value"] = uri
+            else:
+                aux["value"] = self.create_url(word=query, mode="usufy")
+
             aux["attributes"] = []
             r["attributes"].append(aux)
             # Appending the alias
