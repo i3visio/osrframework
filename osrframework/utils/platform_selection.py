@@ -114,7 +114,7 @@ def get_platforms_by_name(platform_names=['all'], mode=None, tags=[], exclude_pl
         return platform_list
 
 
-def get_all_platform_names_by_tag (mode = None):
+def get_all_platform_names_by_tag(mode=None):
     """Returns the platforms in the framework grouped by tags
 
     Args:
