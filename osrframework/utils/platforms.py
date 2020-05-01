@@ -78,19 +78,18 @@ class Platform(object):
             The URL to be queried.
         """
         try:
-            return self.modes[mode]["url"].replace("{placeholder}", word)
-        except:
-            if mode == "base":
-                if word[0] == "/":
-                    return self.baseURL + word[1:]
-                else:
-                    return self.baseURL + word
+            if word[0] == "/":
+                return self.baseURL + word[1:]
             else:
+                return self.baseURL + word
+        except:
+            try:
+                return self.modes[mode]["url"].replace("{placeholder}", word)
+            except:
                 try:
                     return self.url[mode].replace("<"+mode+">", word)
                 except:
-                    pass
-        return None
+                    return None
 
     def launch_query_for_mode(self, query=None, mode=None):
         """Method that launches an i3Browser to collect data
@@ -654,7 +653,7 @@ class Platform(object):
             # Appending platform URI
             aux = {}
             aux["type"] = "com.i3visio.URI"
-            aux["value"] = self.create_url(word=query, mode="base")
+            aux["value"] = self.create_url(word=query, mode="usufy")
             aux["attributes"] = []
             r["attributes"].append(aux)
             # Appending the alias

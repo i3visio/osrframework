@@ -435,11 +435,10 @@ visit <{general.LICENSE_URL}>.
 
         # showing the tags of the usufy platforms
         elif args.show_tags:
-            tags = platform_selection.get_all_platform_namesByTag("usufy")
+            tags = platform_selection.get_all_platform_names_by_tag("usufy")
             print(general.info("This is the list of platforms grouped by tag.\n"))
             print(json.dumps(tags, indent=2, sort_keys=True))
             print(general.info("[Tip] Remember that you can always launch the platform using the -t option followed by any of the aforementioned.\n"))
-            return tags
 
         # Executing the corresponding process...
         else:
