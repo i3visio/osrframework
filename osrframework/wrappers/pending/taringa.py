@@ -35,7 +35,7 @@ class Taringa(Platform):
         self.tags = ["social"]
         self.modes = {
             "usufy": {
-                "debug": False,
+                "debug": True,
                 "extra_fields": {
                     "com.i3visio.Name": '<h2>([^<]+)</h2>',
                     "com.i3visio.Name": '"firstname":"([^"]+)"',
