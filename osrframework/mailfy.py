@@ -377,13 +377,13 @@ def get_parser():
 
     # Configuring the processing options
     group_processing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
-    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    group_processing.add_argument('-d', '--domains', metavar='<candidate_domains>', nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False, default=DEFAULT_VALUES["domains"])
-    group_processing.add_argument('-o', '--output-folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx'], required=False,  default=DEFAULT_VALUES.get("extension", ["csv"]), action='store', help='output extension for the summary files. Default: csv.')
+    group_processing.add_argument('-d', '--domains', metavar='<candidate_domains>', nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False,  default=DEFAULT_VALUES.get("domains", []))
+    group_processing.add_argument('-o', '--output-folder', metavar='<path_to_output_folder>', required=False,  default=DEFAULT_VALUES.get("output_folder"), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     group_processing.add_argument('-p', '--platforms', metavar='<platform>', choices=plat_options, nargs='+', required=False, default=["all"], action='store', help='select the platforms where you want to perform the search amongst the following: {}. More than one option can be selected.'.format(str(plat_options)))
     group_processing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=exclude_list, action='store', help="select the domains to be excluded from the search.")
-    group_processing.add_argument('-F', '--file-header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    group_processing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    group_processing.add_argument('-F', '--file-header', metavar='<alternative_header_file>', required=False,  default=DEFAULT_VALUES.get("file_header", "profiles"), action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    group_processing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default = int(DEFAULT_VALUES.get("threads", 0)), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
     group_processing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
 
     # About options
@@ -604,15 +604,17 @@ be used instead. Verification may be slower though."""))
             print(general.success(general.osrf_to_text_export(results)))
 
             now = dt.datetime.now()
+            """#TODO fix
             print(f"\n{now}\tYou can find all the information collected in the following files:")
+            fileHeader = os.path.join(args.output_folder, args.file_header)
             for ext in args.extension:
                 # Showing the output files
-                print(general.emphasis("\t" + fileHeader + "." + ext))
+                print(general.emphasis("\t" + fileHeader + "." + ext))"""
 
         # Showing the execution time...
         if not args.quiet:
             end_time = dt.datetime.now()
-            print("\n{end_time}\tFinishing execution...\n")
+            print(f"\n{end_time}\tFinishing execution...\n")
             print("Total time used:\t" + general.emphasis(str(end_time - start_time)))
 
         if not args.quiet:

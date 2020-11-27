@@ -98,4 +98,4 @@ class V7n(Platform):
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
-        self.foundFields = {}
+

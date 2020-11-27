@@ -50,8 +50,8 @@ with open("requirements.txt") as file:
     requirements = file.read().splitlines()
 
 # Depending on the place in which the project is going to be upgraded
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+"""def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()"""
 
 # Creating the application paths
 paths = configuration.get_config_path()
@@ -105,7 +105,7 @@ setup(
         'Topic :: Text Processing :: Markup :: HTML'
     ],
     packages=find_packages(),
-    long_description=read('README.md'),
+    #long_description=read('README.md'),
     long_description_content_type="text/markdown",
     install_requires=requirements,
 )
