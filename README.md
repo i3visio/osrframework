@@ -41,11 +41,11 @@ For more details on this issue, check the [COPYING](COPYING) file.
 
 Fast way to do it on any system for a user with administration privileges:
 ```
-pip3 install osrframework
+sudo pip3 install osrframework
 ```
 You can upgrade to the latest release of the framework with:
 ```
-pip3 install osrframework --upgrade
+sudo pip3 install osrframework --upgrade
 ```
 This will manage all the dependencies for you and install the latest version of the framework.
 
