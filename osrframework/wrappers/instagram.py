@@ -125,7 +125,11 @@ class Instagram(Platform):
 
         # Getting the first response to grab the csrf_token
         r1 = s.get("https://www.instagram.com")
-        csrf_token = re.findall("csrf_token", r1.text)[0]
+
+        try:
+            csrf_token = re.findall("csrf_token", r1.text)[0]
+        except IndexError as e:
+            return None
 
         # Launching the query to Instagram
         r2 = s.post(
