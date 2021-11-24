@@ -31,10 +31,12 @@ import sys
 # Email verification libraries
 from emailahoy3 import verify_email_address
 
+
 import osrframework
 import osrframework.thirdparties.haveibeenpwned_com.hibp as hibp
 import osrframework.thirdparties.dehashed_com.dehashed as dehashed
 import osrframework.thirdparties.viewdns_info.viewdns as viewdns
+import osrframework.thirdparties.duckduckgo_com.duckduckgo as duckduckgo
 import osrframework.utils.banner as banner
 import osrframework.utils.config_api_keys as config_api_keys
 import osrframework.utils.configuration as configuration
@@ -45,6 +47,7 @@ import osrframework.utils.platform_selection as platform_selection
 EMAIL_DOMAINS = [
     "protonmail.ch",         # Expected value on successful matches
     "protonmail.com",
+    "pm.me",
     "ya.ru",
     "yandex.com",
 ]
@@ -213,6 +216,7 @@ def pool_function(args):
         ok_is_1 = [
             "protonmail.ch",         # Expected value on successful matches
             "protonmail.com",
+            "pm.me"
         ]
 
         for domain in ok_is_1:
@@ -260,77 +264,7 @@ def pool_function(args):
         return {"platform": platform, "status": "ERROR", "data": {}}
 
 
-def verify_with_emailahoy_step_1(emails=[], num_threads=16, seconds_before_timeout=5):
-    """Method to perform the mail verification process
-
-    Args:
-        emails (list): list of emails to be verified.
-        platforms (list): list of strings representing the wrappers to be used.
-        num_threads (int): the number of threads to be used. Default: 16 threads.
-        seconds_before_timeout (int): number of seconds to wait before raising a
-            timeout. Default: 5 seconds.
-
-    Returns:
-        The results collected.
-    """
-    results = []
-
-    args = []
-
-    # Grabbing all the emails that would be validated
-    for email in emails:
-        if email_is_verifiable(email):
-            args.append((email))
-
-    # Returning None if no valid domain has been returned
-    if len(args) == 0:
-        return results
-
-    # If the process is executed by the current app, we use the Processes. It is faster than pools.
-    if num_threads <= 0 or num_threads > len(args):
-        num_threads = len(args)
-
-    # Launching the Pool
-    # ------------------
-    # Example catched from: https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
-    try:
-        original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
-        pool = Pool(num_threads)
-        signal.signal(signal.SIGINT, original_sigint_handler)
-    except ValueError:
-        # To avoid: ValueError: signal only works in main thread
-        pool = Pool(num_threads)
-
-    pool_results = []
-
-    def log_result(result):
-        """Callback to log the results by apply_async"""
-        pool_results.append(result)
-
-    for email in emails:
-        parameters = (email, )
-        res = pool.apply_async(pool_function, args=parameters, callback=log_result)
-        try:
-            res.get(3)
-        except TimeoutError:
-            general.warning(f"\n[!] Process timeouted for '{parameters}'.\n")
-    pool.close()
-    pool.join()
-
-    # Processing the results
-    # ----------------------
-    for serArray in pool_results:
-        data = serArray["data"]
-        # We need to recover the results and check if they are not an empty json or None
-        if data is not None and data != {}:
-            results.append(data)
-
-    pool.close()
-
-    return results
-
-
-def process_mail_list_step_2(platforms=[], emails=[]):
+def process_mail_list_step_1(platforms=[], emails=[]):
     """Method to perform the email search
 
     Args:
@@ -355,10 +289,7 @@ def process_mail_list_step_2(platforms=[], emails=[]):
 def get_parser():
     DEFAULT_VALUES = configuration.get_configuration_values_for("mailfy")
     # Capturing errors just in case the option is not found in the configuration
-    try:
-        exclude_list = [DEFAULT_VALUES["exclude_domains"]]
-    except:
-        exclude_list = []
+    exclude_list = DEFAULT_VALUES.get("exclude_domains", [])
 
     # Recovering all the possible options
     plat_options = platform_selection.get_all_platform_names("mailfy")
@@ -379,7 +310,7 @@ def get_parser():
     group_processing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
     group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx'], required=False,  default=DEFAULT_VALUES.get("extension", ["csv"]), action='store', help='output extension for the summary files. Default: csv.')
     group_processing.add_argument('-d', '--domains', metavar='<candidate_domains>', nargs='+', choices=['all'] + EMAIL_DOMAINS, action='store', help='list of domains where the nick will be looked for.', required=False,  default=DEFAULT_VALUES.get("domains", []))
-    group_processing.add_argument('-o', '--output-folder', metavar='<path_to_output_folder>', required=False,  default=DEFAULT_VALUES.get("output_folder"), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    group_processing.add_argument('-o', '--output-folder', metavar='<path_to_output_folder>', required=False,  default=DEFAULT_VALUES.get("output_folder", "./"), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     group_processing.add_argument('-p', '--platforms', metavar='<platform>', choices=plat_options, nargs='+', required=False, default=["all"], action='store', help='select the platforms where you want to perform the search amongst the following: {}. More than one option can be selected.'.format(str(plat_options)))
     group_processing.add_argument('-x', '--exclude', metavar='<domain>', choices=EMAIL_DOMAINS, nargs='+', required=False, default=exclude_list, action='store', help="select the domains to be excluded from the search.")
     group_processing.add_argument('-F', '--file-header', metavar='<alternative_header_file>', required=False,  default=DEFAULT_VALUES.get("file_header", "profiles"), action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
@@ -476,99 +407,32 @@ be used instead. Verification may be slower though."""))
 
         emails = list(set(potentially_leaked_emails + potentially_existing_emails))
 
-        if not args.quiet:
-            start_time = dt.datetime.now()
-            print(f"\n{start_time}\t{general.emphasis('Step 1/5')}. Trying to determine if any of the following {general.emphasis(str(len(potentially_existing_emails)))} emails exist using emailahoy3...\n{general.emphasis(json.dumps(potentially_existing_emails, indent=2))}\n")
-            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
-
-        # Perform searches, using different Threads
-        try:
-            results = verify_with_emailahoy_step_1(potentially_existing_emails, num_threads=args.threads)
-        except KeyboardInterrupt:
-            print(general.warning("\tStep 1 manually skipped by the user...\n"))
-            results = []
-
         # Grabbing the <Platform> objects
         platforms = platform_selection.get_platforms_by_name(args.platforms, mode="mailfy")
         names = [p.platformName for p in platforms]
+        results = []
 
         if not args.quiet:
-            now = dt.datetime.now()
-            print(f"\n{now}\t{general.emphasis('Step 2/5')}. Checking if the emails have been used to register accounts in {general.emphasis(str(len(platforms)))} platforms...\n{general.emphasis(json.dumps(names, indent=2))}\n")
+            start_time = dt.datetime.now()
+            now = start_time
+            print(f"\n{now}\t{general.emphasis('Step 1/3')}. Checking if the emails have been used to register accounts in {general.emphasis(str(len(platforms)))} platforms...\n{general.emphasis(json.dumps(names, indent=2))}\n")
             print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
         try:
-            registered = process_mail_list_step_2(platforms=platforms, emails=emails)
+            registered = process_mail_list_step_1(platforms=platforms, emails=emails)
         except KeyboardInterrupt:
-            print(general.warning("\tStep 2 manually skipped by the user...\n"))
+            print(general.warning("\tStep 1 manually skipped by the user...\n"))
             registered = []
 
         results += registered
 
         if not args.quiet:
-            if len(results) > 0:
-                for r in registered:
-                    print(f"\t[*] Linked account found: {general.success(r['value'])}")
-            else:
-                print(f"\t[*] No account found.")
-
             now = dt.datetime.now()
-            print(f"\n{now}\t{general.emphasis('Step 3/5')}. Verifying if the provided emails have been leaked somewhere using HaveIBeenPwned.com...\n")
-            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
-
-        all_keys = config_api_keys.get_list_of_api_keys()
-        try:
-            # Verify the existence of the mails found as leaked emails.
-            for query in potentially_leaked_emails:
-                # Iterate through the different leak platforms
-                leaks = hibp.check_if_email_was_hacked(query, api_key=all_keys["haveibeenpwned_com"]["api_key"])
-
-                if len(leaks) > 0:
-                    if not args.quiet:
-                        print(f"\t[*] '{general.success(query)}' has been found in at least {general.success(len(leaks))} different leaks.")
-                else:
-                    if not args.quiet:
-                        print(f"\t[*] '{general.error(query)}' has NOT been found on any leak yet.")
-
-                results += leaks
-        except KeyError:
-            # API_Key not found
-            config_path = os.path.join(configuration.get_config_path()["appPath"], "api_keys.cfg")
-            print("\t[*] " + general.warning("No API found for HaveIBeenPwned") + f". Request one at <https://haveibeenpwned.com/API/Key> and add it to '{config_path}'.")
-        except KeyboardInterrupt:
-            print(general.warning("\tStep 3 manually skipped by the user...\n"))
-
-        if not args.quiet:
-            now = dt.datetime.now()
-            print(f"\n{now}\t{general.emphasis('Step 4/5')}. Verifying if the provided emails have been leaked somewhere using Dehashed.com...\n")
+            print(f"\n{now}\t{general.emphasis('Step 2/3')}. Verifying if the provided emails have registered a domain using ViewDNS.info...\n")
             print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
 
         try:
-            # Verify the existence of the mails found as leaked emails.
-            for query in emails:
-                try:
-                    # Iterate through the different leak platforms
-                    leaks = dehashed.check_if_email_was_hacked(query)
-                    if len(leaks) > 0:
-                        if not args.quiet:
-                            print(f"\t[*] '{general.success(query)}' has been found in at least {general.success(len(leaks))} different leaks as shown by Dehashed.com.")
-                    else:
-                        if not args.quiet:
-                            print(f"\t[*] '{general.error(query)}' has NOT been found on any leak yet.")
-
-                    results += leaks
-                except Exception as e:
-                    print(general.warning(f"Something happened when querying Dehashed.com about '{email}'. Omitting..."))
-        except KeyboardInterrupt:
-            print(general.warning("\tStep 4 manually skipped by the user...\n"))
-
-        if not args.quiet:
-            now = dt.datetime.now()
-            print(f"\n{now}\t{general.emphasis('Step 5/5')}. Verifying if the provided emails have registered a domain using ViewDNS.info...\n")
-            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
-
-        try:
-            # Verify the existence of the mails found as leaked emails.
+            # Verify the existence of the mails found
             for query in potentially_leaked_emails:
                 try:
                     # Iterate through the different leak platforms
@@ -584,8 +448,35 @@ be used instead. Verification may be slower though."""))
                     results += domains
                 except Exception as e:
                     print(general.warning(f"Something happened when querying Viewdns.info about '{query}'. Omitting..."))
+                    print(e)
         except KeyboardInterrupt:
-            print(general.warning("\tStep 5 manually skipped by the user...\n"))
+            print(general.warning("\tStep 2 manually skipped by the user...\n"))
+
+        if not args.quiet:
+            now = dt.datetime.now()
+            print(f"\n{now}\t{general.emphasis('Step 3/3')}. Verifying if the provided emails can be found using DuckDuckGo...\n")
+            print(general.emphasis("\tPress <Ctrl + C> to skip this step...\n"))
+
+        try:
+            # Verify the existence of the mails found
+            for query in potentially_leaked_emails:
+                try:
+                    # Iterate through the different leak platforms
+                    search_results = duckduckgo.check_info(f'"{query}"')
+
+                    if len(search_results) > 0:
+                        if not args.quiet:
+                            print(f"\t[*] '{general.success(query)}' has been located in, at least, {general.success(len(search_results))} different URL as shown by DuckDuckGo.")
+                    else:
+                        if not args.quiet:
+                            print(f"\t[*] '{general.error(query)}' was NOT located using DuckDuckGo.")
+
+                    results += search_results
+                except Exception as e:
+                    print(general.warning(f"Something happened when querying DuckDuckGo about '{query}'. Omitting..."))
+                    print(e)
+        except KeyboardInterrupt:
+            print(general.warning("\tStep 3 manually skipped by the user...\n"))
 
         # Trying to store the information recovered
         if args.output_folder != None:
@@ -604,12 +495,11 @@ be used instead. Verification may be slower though."""))
             print(general.success(general.osrf_to_text_export(results)))
 
             now = dt.datetime.now()
-            """#TODO fix
             print(f"\n{now}\tYou can find all the information collected in the following files:")
             fileHeader = os.path.join(args.output_folder, args.file_header)
             for ext in args.extension:
                 # Showing the output files
-                print(general.emphasis("\t" + fileHeader + "." + ext))"""
+                print(general.emphasis("\t" + fileHeader + "." + ext))
 
         # Showing the execution time...
         if not args.quiet:

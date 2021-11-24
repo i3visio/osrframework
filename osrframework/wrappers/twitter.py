@@ -18,9 +18,10 @@
 ################################################################################
 
 __author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
-__version__ = "2.0"
+__version__ = "2.1"
 
 
+import requests
 from osrframework.utils.platforms import Platform
 from osrframework.api.twitter_api import TwitterAPIWrapper as TwitterAPIWrapper
 
@@ -113,3 +114,28 @@ class Twitter(Platform):
         # Standard execution
         except Exception as e:
             return super(Twitter, self).do_searchfy(query, **kwargs)
+
+
+    def check_mailfy(self, query, **kwargs):
+        """Verifying a mailfy query in this platform
+
+        This might be redefined in any class inheriting from Platform. The only
+        condition is that any of this should return a dictionary as defined.
+
+        Args:
+            query: The element to be searched.
+            kwargs: Dictionary with extra parameters. Just in case.
+
+        Returns:
+            Returns the collected data if exists or None if not.
+        """
+        try:
+            response = requests.get(f"https://api.twitter.com/i/users/email_available.json?email={query}")
+            # It is occupied, so it exists
+            if '"valid":false' in response.text:
+                return query
+            # It is not occupied, so it is not registered
+            else:
+                return False
+        except Exception as _:
+            return False

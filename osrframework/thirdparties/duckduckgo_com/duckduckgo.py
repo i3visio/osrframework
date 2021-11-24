@@ -1,6 +1,6 @@
 ################################################################################
 #
-#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
+#    Copyright 2021 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -19,22 +19,17 @@
 
 import argparse
 import json
-import os
-import re
-import time
 
-import cfscrape
-import requests
+import duckpy
 
 import osrframework.utils.general as general
 
 
-def check_reverse_whois(query=None, sleep_seconds=1):
-    """Method that checks if the given string is linked to a domain.
+def check_info(query=None):
+    """Method that checks the information in DDG
 
     Args:
         query (str): query to verify.
-        sleep_seconds (int): Number of seconds to wait between calls.
 
     Returns:
         A python structure for the json received. If nothing was found, it will
@@ -42,62 +37,56 @@ def check_reverse_whois(query=None, sleep_seconds=1):
     """
     results = []
 
-    # Sleeping just a little bit
-    time.sleep(sleep_seconds)
-
-    target_url = f"https://viewdns.info/reversewhois/?q={query}"
-
-    scraper = cfscrape.create_scraper()
-    resp = scraper.get(target_url)
-
-    domains_found = re.findall("</td></tr><tr><td>([^<]+)</td>", resp.text)
+    client = duckpy.Client()
+    response = client.search(query)
 
     # Reading the text data onto python structures
     try:
-        for domain in domains_found:
+        for result in response:
             # Building the i3visio like structure
             new = {}
-            new["value"] = f"(ViewDNS.info) {domain} - {query}"
+            new["value"] = f"(DuckDuckGo) {result['title']} - {query}"
             new["type"] = "com.i3visio.Profile"
             new["attributes"] = [
                 {
                     "type": "@source",
-                    "value": "viewdns.info",
+                    "value": "duckduckgo.com",
                     "attributes": []
                 },
                 {
                     "type": "@source_uri",
-                    "value": target_url,
-                    "attributes": []
-                },
-                {
-                    "type": "com.i3visio.Platform",
-                    "value": "Viewdns.info",
-                    "attributes": []
-                },
-                {
-                    "type": "com.i3visio.Domain",
-                    "value": domain,
+                    "value": result["url"],
                     "attributes": []
                 },
                 {
                     "type": "com.i3visio.Email",
-                    "value": query,
+                    "value": result["url"],
+                    "attributes": []
+                },
+                {
+                    "type": "com.i3visio.Platform",
+                    "value": result["title"],
+                    "attributes": []
+                },
+                {
+                    "type": "com.i3visio.Text",
+                    "value": result["description"],
                     "attributes": []
                 }
             ]
+            print(new)
             results.append(new)
     except ValueError:
         return []
     except Exception as _:
-        print("ERROR: Something happenned when using ViewDNS.com.")
+        print(f"ERROR: Something happenned when using DuckDuckGo. Details: {_}")
         return []
 
     return results
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='A library that wraps an account search onto viewdns.info reverse Whois service.', prog='viewdns.py', epilog="", add_help=False)
+    parser = argparse.ArgumentParser(description='A library that wraps an account search onto DuckDuckGo.', prog='duckduckgo.py', epilog="", add_help=False)
     # Adding the main options
     # Defining the mutually exclusive group for the main options
     parser.add_argument('-q', '--query', metavar='<text>', action='store', help='query to be performed to viewdns.info.', required=True)
@@ -108,6 +97,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    result = check_reverse_whois(email=args.query)
+    result = check_info(email=args.query)
     print(f"Results found for {args.query}:\n")
     print(json.dumps(result, indent=2))
