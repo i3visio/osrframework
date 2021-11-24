@@ -21,15 +21,14 @@ __author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
 __version__ = "2.0"
 
 
-import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 
-class Virustotal(Platform):
-    """A <Platform> object for Virustotal"""
+class Fandom(Platform):
+    """A <Platform> object for Fandom"""
     def __init__(self):
-        self.platformName = "Virustotal"
-        self.tags = ["social", "news"]
+        self.platformName = "Fandom"
+        self.tags = ["gaming"]
 
         ########################
         # Defining valid modes #
@@ -45,7 +44,7 @@ class Virustotal(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.virustotal.com/en/user/" + "<usufy>"
+        self.url["usufy"] = "https://community.fandom.com/wiki/User:" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -61,7 +60,7 @@ class Virustotal(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query.
+        # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
@@ -72,7 +71,7 @@ class Virustotal(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Page not found"]
+        self.notFoundText["usufy"] = ['This user has not filled out their profile page yet']
         #self.notFoundText["searchfy"] = []
 
         #########################

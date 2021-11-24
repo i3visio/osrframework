@@ -1,6 +1,6 @@
 ################################################################################
 #
-#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2021 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -42,7 +42,11 @@ def process_phone_list(platformNames=[], numbers=[], exclude_platform_names=[]):
         A list of verified emails.
     """
     # Grabbing the <Platform> objects
-    platforms = platform_selection.get_platforms_by_name(platformNames, mode="phonefy", exclude_platform_names=exclude_platform_names)
+    platforms = platform_selection.get_platforms_by_name(
+        platformNames,
+        mode="phonefy",
+        exclude_platform_names=exclude_platform_names
+    )
 
     results = []
     for num in numbers:
@@ -57,10 +61,7 @@ def process_phone_list(platformNames=[], numbers=[], exclude_platform_names=[]):
 def get_parser():
     DEFAULT_VALUES = configuration.get_configuration_values_for("phonefy")
     # Capturing errors just in case the option is not found in the configuration
-    try:
-        exclude_list = [DEFAULT_VALUES["exclude_platforms"]]
-    except:
-        exclude_list = []
+    exclude_list = DEFAULT_VALUES.get("exclude_domains", [])
 
     parser = argparse.ArgumentParser(description='phonefy - Piece of software that checks the existence of a given series of phones in a bunch of phone number lists associated to malicious activities.', prog='phonefy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
     parser._optionals.title = "Input options (one required)"
@@ -75,10 +76,10 @@ def get_parser():
 
     # Configuring the processing options
     group_processing = parser.add_argument_group('Processing arguments', 'Configuring the way in which usufy will process the identified profiles.')
-    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    group_processing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    group_processing.add_argument('-p', '--platforms', metavar='<platform>', choices=list_all, nargs='+', required=False, default=DEFAULT_VALUES["platforms"] ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(list_all) + '. More than one option can be selected.')
-    group_processing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES.get("extension", ["csv"]), action='store', help='output extension for the summary files. Default: xls.')
+    group_processing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES.get("output_folder", "./"), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    group_processing.add_argument('-p', '--platforms', metavar='<platform>', choices=list_all, nargs='+', required=False, default=DEFAULT_VALUES.get("platforms", ["all"]) ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(list_all) + '. More than one option can be selected.')
+    group_processing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES.get("file_header", "profiles"), action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
     group_processing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
     group_processing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the URIs returned in the default web browser.')
     group_processing.add_argument('-x', '--exclude', metavar='<platform>', choices=list_all, nargs='+', required=False, default=exclude_list, action='store', help='select the platforms that you want to exclude from the processing.')
@@ -119,7 +120,7 @@ def main(params=None):
         print(general.title(banner.text))
 
     saying_hello = f"""
-     Phonefy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2020
+     Phonefy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2021
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
@@ -140,13 +141,14 @@ visit <{general.LICENSE_URL}>.
         except KeyboardInterrupt:
             print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
 
+        # Building the file name
+        file_header = os.path.join(args.output_folder, args.file_header)
+
         # Trying to store the information recovered
         if args.output_folder != None:
             # Verifying an output folder was selected
             if not os.path.exists(args.output_folder):
                 os.makedirs(args.output_folder)
-            # Grabbing the results
-            file_header = os.path.join(args.output_folder, args.file_header)
             for ext in args.extension:
                 # Generating output files
                 general.export_usufy(results, ext, file_header)

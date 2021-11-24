@@ -40,7 +40,7 @@ class Facebook(Platform):
                     "com.i3visio.FullName": '<title id="pageTitle">(.+) \| Facebook</title>',    # Regular expresion to extract the alias
                 },
                 "needs_credentials": False,
-                "not_found_text": "https://static.xx.fbcdn.net/rsrc.php/v3/yp/r/U4B06nLMGQt.png",                   # Text that indicates a missing profile
+                "not_found_text": "/help/?ref=404",                   # Text that indicates a missing profile
                 "query_validator": "[a-zA-Z\.0-9_\-]+",                            # Regular expression that the alias SHOULD match
                 "url": "https://www.facebook.com/{placeholder}",       # Target URL where {placeholder} would be modified by the alias
             },

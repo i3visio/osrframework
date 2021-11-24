@@ -17,18 +17,21 @@
 #
 ################################################################################
 
-__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
+__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
 __version__ = "2.0"
 
 
 from osrframework.utils.platforms import Platform
 
 
-class OpenBugBounty(Platform):
-    """A <Platform> object for OpenBugBounty"""
+class Forocoches(Platform):
+    """A <Platform> object for Forocoches"""
     def __init__(self):
-        self.platformName = "OpenBugBounty"
-        self.tags = ["hacking"]
+        self.platformName = "Forocoches"
+        self.tags = ["opinions", "activism"]
+
+        # Add the URL for enumeration below
+        #self.urlEnumeration = "http://www.forocoches.com/foro/member.php?u=" + "<HERE_GOES_THE_USER_ID>"
 
         ########################
         # Defining valid modes #
@@ -44,7 +47,7 @@ class OpenBugBounty(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.openbugbounty.org/researchers/<usufy>/"
+        self.url["usufy"] = "http://www.forocoches.com/foro/member.php?username=" + "<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -60,7 +63,7 @@ class OpenBugBounty(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query
+        # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
@@ -71,7 +74,7 @@ class OpenBugBounty(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = [ "/images/404.jpg" ]
+        self.notFoundText["usufy"] = ["main error message"]
         #self.notFoundText["searchfy"] = []
 
         #########################

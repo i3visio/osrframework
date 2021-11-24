@@ -1,6 +1,6 @@
 ################################################################################
 #
-#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2021 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -335,7 +335,7 @@ def get_parser():
 
     # Selecting the platforms where performing the search
     groupPlatforms = parser.add_argument_group('Platform selection arguments', 'Criteria for selecting the platforms where performing the search.')
-    groupPlatforms.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=DEFAULT_VALUES["platforms"], action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(platOptions) + '. More than one option can be selected.')
+    groupPlatforms.add_argument('-p', '--platforms', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=DEFAULT_VALUES.get("platforms", []), action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(platOptions) + '. More than one option can be selected.')
     groupPlatforms.add_argument('-t', '--tags', metavar='<tag>', default = [], nargs='+', required=False, action='store', help='select the list of tags that fit the platforms in which you want to perform the search. More than one option can be selected.')
     groupPlatforms.add_argument('-x', '--exclude', metavar='<platform>', choices=platOptions, nargs='+', required=False, default=excludeList, action='store', help='select the platforms that you want to exclude from the processing.')
 
@@ -345,12 +345,12 @@ def get_parser():
     group_processing.add_argument('--avoid_processing', required=False, action='store_true', default=False, help='argument to force usufy NOT to perform any processing task with the valid profiles.')
     group_processing.add_argument('--fuzz_config', metavar='<path_to_fuzz_list>', action='store', type=argparse.FileType('r'), help='path to the fuzzing config details. Wildcards such as the domains or the nicknames should come as: <DOMAIN>, <USERNAME>.')
     group_processing.add_argument('--nonvalid', metavar='<not_valid_characters>', required=False, default = '\\|<>=', action='store', help="string containing the characters considered as not valid for nicknames." )
-    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
+    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES.get("extension", ["csv"]), action='store', help='output extension for the summary files. Default: csv.')
     group_processing.add_argument('-L', '--logfolder', metavar='<path_to_log_folder', required=False, default = './logs', action='store', help='path to the log folder. If none was provided, ./logs is assumed.')
-    group_processing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    group_processing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES.get("output_folder", "."), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
     group_processing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the uris returned in the default web browser.')
-    group_processing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    group_processing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    group_processing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES.get("file_header", "profiles"), action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    group_processing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=int(DEFAULT_VALUES.get("threads", 0)), type=int, help='write down the number of threads to be used (default 32). If 0, the maximum number possible will be used, which may make the system feel unstable.')
 
     # About options
     group_about = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
@@ -385,7 +385,7 @@ def main(params=None):
     print(general.title(banner.text))
 
     saying_hello = f"""
-      Usufy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2020
+      Usufy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2021
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,

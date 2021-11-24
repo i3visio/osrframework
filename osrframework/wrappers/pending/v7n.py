@@ -21,14 +21,15 @@ __author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
 __version__ = "2.0"
 
 
+import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 
-class Twoplustwo(Platform):
-    """A <Platform> object for Twoplustwo"""
+class V7n(Platform):
+    """A <Platform> object for V7n"""
     def __init__(self):
-        self.platformName = "Twoplustwo"
-        self.tags = ["social", "news"]
+        self.platformName = "V7n"
+        self.tags = ["development"]
 
         ########################
         # Defining valid modes #
@@ -44,7 +45,7 @@ class Twoplustwo(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://forumserver.twoplustwo.com/member.php?username="  + "<usufy>"
+        self.url["usufy"] = "http://www.v7n.com/forums/members/" + "<usufy>" + ".html"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -60,7 +61,7 @@ class Twoplustwo(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query.
+        # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
@@ -97,4 +98,4 @@ class Twoplustwo(Platform):
         # Fields found #
         ################
         # This attribute will be feeded when running the program.
-        self.foundFields = {}
+

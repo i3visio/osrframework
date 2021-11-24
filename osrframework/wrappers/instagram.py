@@ -47,9 +47,9 @@ class Instagram(Platform):
         ######################################
         # Strings with the URL for each and every mode
         self.url = {}
-        self.url["usufy"] = "http://www.instagram.com/" + "<usufy>"
+        self.url["usufy"] = "https://dumpor.com/v/" + "<usufy>"
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["searchfy"] = "http://picbear.online/search/" + "<searchfy>"
+        self.url["searchfy"] = "https://picbear.online/search/" + "<searchfy>"
 
         ######################################
         # Whether the user needs credentials #
@@ -77,7 +77,7 @@ class Instagram(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["p-error dialog-404"]
+        self.notFoundText["usufy"] = ["<title>Profile doesn"]
         self.notFoundText["searchfy"] = []
 
         #########################
@@ -125,7 +125,11 @@ class Instagram(Platform):
 
         # Getting the first response to grab the csrf_token
         r1 = s.get("https://www.instagram.com")
-        csrf_token = re.findall("csrf_token", r1.text)[0]
+
+        try:
+            csrf_token = re.findall("csrf_token", r1.text)[0]
+        except IndexError as e:
+            return None
 
         # Launching the query to Instagram
         r2 = s.post(

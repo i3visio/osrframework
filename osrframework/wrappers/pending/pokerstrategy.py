@@ -24,11 +24,11 @@ __version__ = "2.0"
 from osrframework.utils.platforms import Platform
 
 
-class Singletrackworld(Platform):
-    """A <Platform> object for Singletrackworld"""
+class Pokerstrategy(Platform):
+    """A <Platform> object for Pokerstrategy"""
     def __init__(self):
-        self.platformName = "Singletrackworld"
-        self.tags = ["sports"]
+        self.platformName = "Pokerstrategy"
+        self.tags = ["gambling"]
 
         ########################
         # Defining valid modes #
@@ -44,7 +44,7 @@ class Singletrackworld(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://singletrackworld.com/members/" + "<usufy>"
+        self.url["usufy"] = "https://www.pokerstrategy.com/user/<usufy>/profile/"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -55,12 +55,15 @@ class Singletrackworld(Platform):
         self.needsCredentials["usufy"] = False
         #self.needsCredentials["searchfy"] = False
 
+        # Array of credentials to be used
+        self.creds = []
+
         #################
         # Valid queries #
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query
+        # The regular expression '.+' will match any query.
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
@@ -71,7 +74,9 @@ class Singletrackworld(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Page not found | ", "Nothing Found"]
+        self.notFoundText["usufy"] = [
+            "<h1>Sorry, the requested page couldn't be found!</h1>"
+        ]
         #self.notFoundText["searchfy"] = []
 
         #########################

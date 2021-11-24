@@ -72,7 +72,7 @@ class MastodonXyz(Platform):
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
         self.notFoundText["usufy"] = [
-            '<h1>The page you were looking for doesn&#39;t exist.'
+            "<body class='error'>"
         ]
         #self.notFoundText["searchfy"] = []
 

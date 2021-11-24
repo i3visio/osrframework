@@ -48,7 +48,7 @@ def get_list_of_api_keys():
                 with open(config_path, "w") as output_file:
                     output_file.write(cont)
         except Exception as e:
-            raise errors.ConfigurationFileNotFoundError(config_path, default_config_path);
+            #raise errors.ConfigurationFileNotFoundError(config_path, default_config_path);
             return dict_api_keys
 
     # Reading the configuration file

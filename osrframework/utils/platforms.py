@@ -1,6 +1,6 @@
 ################################################################################
 #
-#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2021 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -137,8 +137,8 @@ class Platform(object):
 
             return data
         except KeyError:
-            print(general.error("\t[*] '{}' is not a valid mode for this wrapper ({}).".format(mode, self.__class__.__name__)))
-
+            #print(general.error("\t[*] '{}' is not a valid mode for this wrapper ({}).".format(mode, self.__class__.__name__)))
+            pass
         return None
 
     def get_info(self, query=None, mode="phonefy"):

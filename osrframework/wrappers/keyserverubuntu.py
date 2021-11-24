@@ -1,6 +1,6 @@
 ################################################################################
 #
-#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2021 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@
 ################################################################################
 
 __author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
-__version__ = "2.0"
+__version__ = "1.0"
 
 
 import re
@@ -27,14 +27,14 @@ import osrframework.utils.general as general
 from osrframework.utils.platforms import Platform
 
 
-class GnuPGKeys(Platform):
-    """A <Platform> object for the MIT PGP public keys repository"""
+class KeyServerUbuntu(Platform):
+    """A <Platform> object for the Ubuntu's PGP public keys repository"""
     def __init__(self):
-        self.platformName = "GnuPGKeys"
+        self.platformName = "KeyServerUbuntu"
         self.tags = ["mails", "cryptography"]
 
         # Base URL
-        self.baseURL = "http://keys.gnupg.net/pks/lookup?search="
+        self.baseURL = "https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=index&search="
         ########################
         # Defining valid modes #
         ########################
@@ -51,7 +51,7 @@ class GnuPGKeys(Platform):
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
         #self.url["usufy"] = "https://github.com/" + "<usufy>"
-        self.url["searchfy"] = "http://keys.gnupg.net/pks/lookup?search=<searchfy>"
+        self.url["searchfy"] = "https://keyserver.ubuntu.com/pks/lookup?search=<searchfy>&fingerprint=on&op=index"
 
         ######################################
         # Whether the user needs credentials #
@@ -129,16 +129,21 @@ class GnuPGKeys(Platform):
         s = requests.Session()
 
         # Getting the first response to grab the csrf_token
-        resp = s.get(f"http://keys.gnupg.net/pks/lookup?search={query}")
+        try:
+            resp = s.get(f"https://keyserver.ubuntu.com/pks/lookup?search={query}&fingerprint=on&op=index")
 
-        if resp.status_code == 200 or resp.status_code == 404:
-            if '         0 keys found..' in resp.text:
-                return None
+            if resp.status_code == 200 or resp.status_code == 404:
+                if '         0 keys found..' in resp.text:
+                    return None
+                else:
+                    return resp.text
             else:
-                return resp.text
-        else:
-            print(general.warning(f"\t[*] Something happened. keyserver.io returned status '{resp.status_code}' for '{query}'."))
+                print(general.warning(f"\t[*] Something happened. keyserver.io returned status '{resp.status_code}' for '{query}'."))
+                return None
+        except Exception as _:
+            print(general.warning(f"\t[*] Something happened. when getting information from gnupg.net"))
             return None
+
 
     def do_mailfy(self, query, **kwargs):
         """Verifying a mailfy query in this platform
@@ -196,6 +201,11 @@ class GnuPGKeys(Platform):
                             {
                                 "type": "com.i3visio.Platform",
                                 "value": self.platformName,
+                                "attributes": []
+                            },
+                            {
+                                "type": "com.i3visio.URI",
+                                "value": self.baseURL + email,
                                 "attributes": []
                             }
                         ]

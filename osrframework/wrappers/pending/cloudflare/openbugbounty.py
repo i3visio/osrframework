@@ -17,19 +17,18 @@
 #
 ################################################################################
 
-__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
 __version__ = "2.0"
 
 
-import osrframework.utils.browser as browser
 from osrframework.utils.platforms import Platform
 
 
-class V7n(Platform):
-    """A <Platform> object for V7n"""
+class OpenBugBounty(Platform):
+    """A <Platform> object for OpenBugBounty"""
     def __init__(self):
-        self.platformName = "V7n"
-        self.tags = ["development"]
+        self.platformName = "OpenBugBounty"
+        self.tags = ["hacking"]
 
         ########################
         # Defining valid modes #
@@ -45,7 +44,7 @@ class V7n(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.v7n.com/forums/members/" + "<usufy>" + ".html"
+        self.url["usufy"] = "https://www.openbugbounty.org/researchers/<usufy>/"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -72,7 +71,7 @@ class V7n(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["This user has not registered and therefore does not have a profile to view."]
+        self.notFoundText["usufy"] = [ "404.jpg" ]
         #self.notFoundText["searchfy"] = []
 
         #########################

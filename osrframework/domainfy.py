@@ -1,6 +1,6 @@
 ################################################################################
 #
-#    Copyright 2015-2020 Félix Brezo and Yaiza Rubio
+#    Copyright 2015-2021 Félix Brezo and Yaiza Rubio
 #
 #    This program is part of OSRFramework. You can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -446,13 +446,13 @@ def get_parser():
 
     # Configuring the processing options
     group_processing = parser.add_argument_group('Processing arguments', 'Configuring the way in which mailfy will process the identified profiles.')
-    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES["extension"], action='store', help='output extension for the summary files. Default: xls.')
-    group_processing.add_argument('-o', '--output-folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES["output_folder"], action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    group_processing.add_argument('-t', '--tlds', metavar='<tld_type>', nargs='+', choices=["all", "none"] + list(TLD.keys()), action='store', help='list of TLD types where the nick will be looked for.', required=False, default=DEFAULT_VALUES["tlds"])
-    group_processing.add_argument('-u', '--user-defined', metavar='<new_tld>', nargs='+', action='store', help='additional TLD that will be searched.', required=False, default=DEFAULT_VALUES["user_defined"])
+    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES.get("extension", ["csv"]), action='store', help='output extension for the summary files. Default: xls.')
+    group_processing.add_argument('-o', '--output-folder', metavar='<path_to_output_folder>', required=False, default=DEFAULT_VALUES.get("output_folder", "."), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
+    group_processing.add_argument('-t', '--tlds', metavar='<tld_type>', nargs='+', choices=["all", "none"] + list(TLD.keys()), action='store', help='list of TLD types where the nick will be looked for.', required=False, default=DEFAULT_VALUES.get("tlds", ["global"]))
+    group_processing.add_argument('-u', '--user-defined', metavar='<new_tld>', nargs='+', action='store', help='additional TLD that will be searched.', required=False, default=DEFAULT_VALUES.get("user_defined", []))
     group_processing.add_argument('-x', '--exclude', metavar='<domain>', nargs='+', required=False, default=exclude_list, action='store', help="select the domains to be avoided. The format should include the initial '.'.")
-    group_processing.add_argument('-F', '--file-header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES["file_header"], action='store', help='header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
-    group_processing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=int(DEFAULT_VALUES["threads"]), type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
+    group_processing.add_argument('-F', '--file-header', metavar='<alternative_header_file>', required=False, default="profiles", action='store', help='header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>.' )
+    group_processing.add_argument('-T', '--threads', metavar='<num_threads>', required=False, action='store', default=16, type=int, help='write down the number of threads to be used (default 16). If 0, the maximum number possible will be used, which may make the system feel unstable.')
     group_processing.add_argument('--quiet', required=False, action='store_true', default=False, help='tells the program not to show anything.')
     group_processing.add_argument('--whois', required=False, action='store_true', default=False, help='tells the program to launch whois queries.')
 
@@ -490,7 +490,7 @@ def main(params=None):
         print(general.title(banner.text))
 
     saying_hello = f"""
-    Domainfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2020
+    Domainfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2021
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
