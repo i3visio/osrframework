@@ -71,7 +71,7 @@ class Trakt(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>The page you were looking for doesn't exist (404) - Trakt.tv</title>"]
+        self.notFoundText["usufy"] = ["<h1>404</h1>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

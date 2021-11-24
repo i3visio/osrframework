@@ -71,7 +71,7 @@ class Causes(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Not Found (404)"]
+        self.notFoundText["usufy"] = [" (404)</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

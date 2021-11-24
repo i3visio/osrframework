@@ -24,11 +24,11 @@ __version__ = "2.0"
 from osrframework.utils.platforms import Platform
 
 
-class Authorstream(Platform):
-    """A <Platform> object for Authorstream"""
+class Watpadd(Platform):
+    """A <Platform> object for Wattpad"""
     def __init__(self):
-        self.platformName = "Authorstream"
-        self.tags = ["professional"]
+        self.platformName = "wattpad"
+        self.tags = ["blog"]
 
         ########################
         # Defining valid modes #
@@ -44,7 +44,7 @@ class Authorstream(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://www.authorstream.com/" + "<usufy>"
+        self.url["usufy"] = "https://www.wattpad.com/user/<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -60,9 +60,9 @@ class Authorstream(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query.
+        # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
-        self.validQuery["usufy"] = "[^@]+"
+        self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
 
         ###################
@@ -71,7 +71,7 @@ class Authorstream(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<span> We apologize for this inconvenience. "]
+        self.notFoundText["usufy"] = ["user-not-found"]
         #self.notFoundText["searchfy"] = []
 
         #########################
@@ -82,19 +82,12 @@ class Authorstream(Platform):
         # Definition of regular expressions to be searched in phonefy mode
         #self.fieldsRegExp["phonefy"] = {}
         # Example of fields:
-        #self.fieldsRegExp["phonefy"]["i3visio.location"] = {"start": '<span id="LeftPanel1_lblname">', "end": '</span></h2>'}
+        #self.fieldsRegExp["phonefy"]["i3visio.location"] = ""
 
         # Definition of regular expressions to be searched in usufy mode
         self.fieldsRegExp["usufy"] = {}
-
         # Example of fields:
-        self.fieldsRegExp["usufy"]["i3visio.fullname"] = {"start": '<span id="LeftPanel1_lblname">', "end": '</span></h2>'}
-        #self.fieldsRegExp["usufy"]["i3visio.location"] = {"start": '<p class="light_text11" style="line-height: 12px">\n ', "end": ', '}
-        self.fieldsRegExp["usufy"]["i3visio.uri_image_profile"] = {"start": '<img src="', "end": '" id="LeftPanel1_imgUserPic"'}
-        self.fieldsRegExp["usufy"]["i3visio.description"] = {"start": '<p class="light_text12 dv100per" style="line-height: 14px; word-wrap: break-word">\n', "end": '\n</p>\n'}
-        self.fieldsRegExp["usufy"]["@created_at"] = {"start": '<span id="LeftPanel1_LabelJoinDate">', "end": '</span></span>'}
-        self.fieldsRegExp["usufy"]["i3visio.domain"] = {"start": '<span><strong>Website:</strong></span> <span><a rel="nofollow" target="_blank" href=\'', "end": '\'>'}
-
+        #self.fieldsRegExp["usufy"]["i3visio.location"] = ""
         # Definition of regular expressions to be searched in searchfy mode
         #self.fieldsRegExp["searchfy"] = {}
         # Example of fields:

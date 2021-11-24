@@ -71,7 +71,7 @@ class Chess(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["error-pages-title"]
+        self.notFoundText["usufy"] = ["error-404-main-container"]
         #self.notFoundText["searchfy"] = []
 
         #########################

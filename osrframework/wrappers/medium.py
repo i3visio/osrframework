@@ -72,7 +72,7 @@ class Medium(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["404</div></div>"]
+        self.notFoundText["usufy"] = ["PAGE NOT FOUND"]
         #self.notFoundText["searchfy"] = []
 
         #########################

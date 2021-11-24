@@ -17,18 +17,18 @@
 #
 ################################################################################
 
-__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
 __version__ = "2.0"
 
 
 from osrframework.utils.platforms import Platform
 
 
-class Watpadd(Platform):
-    """A <Platform> object for Wattpad"""
+class Phishtank(Platform):
+    """A <Platform> object for Phishtank"""
     def __init__(self):
-        self.platformName = "wattpad"
-        self.tags = ["blog"]
+        self.platformName = "Phishtank"
+        self.tags = ["phishing"]
 
         ########################
         # Defining valid modes #
@@ -44,7 +44,7 @@ class Watpadd(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "https://www.wattpad.com/user/<usufy>"
+        self.url["usufy"] = "https://www.phishtank.com/user.php?username=<usufy>"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -71,7 +71,10 @@ class Watpadd(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["userError-404"]
+        self.notFoundText["usufy"] = [
+            "<title>PhishTank | Join the fight against phishing</title>",
+            "PhishTank | Join the fight against phishing"
+        ]
         #self.notFoundText["searchfy"] = []
 
         #########################

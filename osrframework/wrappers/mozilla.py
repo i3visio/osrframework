@@ -71,7 +71,7 @@ class Mozilla(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["beast404le"]
+        self.notFoundText["usufy"] = ["page-not-found"]
         #self.notFoundText["searchfy"] = []
 
         #########################

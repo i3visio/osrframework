@@ -71,7 +71,7 @@ class Eyeem(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>Not Found (404) | EyeEm</title>"]
+        self.notFoundText["usufy"] = ["Not Found (404)"]
         #self.notFoundText["searchfy"] = []
 
         #########################

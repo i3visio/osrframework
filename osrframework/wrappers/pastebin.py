@@ -71,7 +71,7 @@ class Pastebin(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["Optional Paste Settings"]
+        self.notFoundText["usufy"] = ["Not Found (#404)</title>"]
         #self.notFoundText["searchfy"] = []
 
         #########################
