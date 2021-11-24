@@ -72,7 +72,7 @@ class Burbuja(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<title>¡Oops! "]
+        self.notFoundText["usufy"] = ["Ups! Nos hemos encontrado con algunos problemas.</h1>"]
         #self.notFoundText["searchfy"] = []
 
         #########################

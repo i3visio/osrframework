@@ -71,7 +71,7 @@ class Betblog(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["<span>404. Page not found.</span>"]
+        self.notFoundText["usufy"] = ["<title>{username} / Tipster"]
         #self.notFoundText["searchfy"] = []
 
         #########################

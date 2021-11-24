@@ -71,7 +71,7 @@ class Patreon(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ['"title": "404",']
+        self.notFoundText["usufy"] = ['"errorCode": 404,']
         #self.notFoundText["searchfy"] = []
 
         #########################

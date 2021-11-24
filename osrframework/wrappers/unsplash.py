@@ -72,7 +72,7 @@ class Unsplash(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["04 | Unsplash</title>"]
+        self.notFoundText["usufy"] = ["Page not found"]
         #self.notFoundText["searchfy"] = []
 
         #########################

@@ -17,18 +17,18 @@
 #
 ################################################################################
 
-__author__ = "Felix Brezo, Yaiza Rubio  <contacto@i3visio.com>"
+__author__ = "Felix Brezo, Yaiza Rubio <contacto@i3visio.com>"
 __version__ = "2.0"
 
 
 from osrframework.utils.platforms import Platform
 
 
-class Twoplustwo(Platform):
-    """A <Platform> object for Twoplustwo"""
+class OpenBugBounty(Platform):
+    """A <Platform> object for OpenBugBounty"""
     def __init__(self):
-        self.platformName = "Twoplustwo"
-        self.tags = ["social", "news"]
+        self.platformName = "OpenBugBounty"
+        self.tags = ["hacking"]
 
         ########################
         # Defining valid modes #
@@ -44,7 +44,7 @@ class Twoplustwo(Platform):
         # Strings with the URL for each and every mode
         self.url = {}
         #self.url["phonefy"] = "http://anyurl.com//phone/" + "<phonefy>"
-        self.url["usufy"] = "http://forumserver.twoplustwo.com/member.php?username="  + "<usufy>"
+        self.url["usufy"] = "https://www.openbugbounty.org/researchers/<usufy>/"
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"
 
         ######################################
@@ -60,7 +60,7 @@ class Twoplustwo(Platform):
         #################
         # Strings that will imply that the query number is not appearing
         self.validQuery = {}
-        # The regular expression '.+' will match any query.
+        # The regular expression '.+' will match any query
         #self.validQuery["phonefy"] = ".*"
         self.validQuery["usufy"] = ".+"
         #self.validQuery["searchfy"] = ".*"
@@ -71,7 +71,7 @@ class Twoplustwo(Platform):
         # Strings that will imply that the query number is not appearing
         self.notFoundText = {}
         #self.notFoundText["phonefy"] = []
-        self.notFoundText["usufy"] = ["This user has not registered and therefore does not have a profile to view."]
+        self.notFoundText["usufy"] = [ "404.jpg" ]
         #self.notFoundText["searchfy"] = []
 
         #########################

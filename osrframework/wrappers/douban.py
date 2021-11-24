@@ -38,7 +38,7 @@ class Douban(Platform):
                 "debug": False,
                 "extra_fields": {},
                 "needs_credentials": False,
-                "not_found_text": 'https://img9.doubanio.com/pics/douban_error.gif"/>',
+                "not_found_text": '/pics/douban_error.gif"/>',
                 "query_validator": "[a-z0-9A-Z_]+",
                 "url": "https://site.douban.com/{placeholder}",
             }
