@@ -3,7 +3,7 @@ OSRFramework
 
 OSRFramework: Open Sources Research Framework
 
-Copyright (C) 2014-2020  F. Brezo and Y. Rubio, i3visio
+Copyright (C) 2014-2021  F. Brezo and Y. Rubio, i3visio
 
 [![Version in PyPI](https://img.shields.io/pypi/v/osrframework.svg)]()
 [![License](https://img.shields.io/badge/license-GNU%20Affero%20General%20Public%20License%20Version%203%20or%20Later-blue.svg)]()
@@ -69,7 +69,7 @@ Type -h or --help to get more information about which are the parameters of each
 
 The tools installed in this package include:
 
-- `alais_generator`. Generates candidate nicknames based on known info about the target. **Input**: information about the target. **Output**: list of possible nicknames.
+- `alias_generator`. Generates candidate nicknames based on known info about the target. **Input**: information about the target. **Output**: list of possible nicknames.
 - `checkfy`. Guesses possible emails based on a list of candidate nicknames and a pattern. **Input**: list of nicknames and an email pattern. **Output**. list of emails matching the pattern..
 - `domainfy`. Finds domains that currently resolve using a given word or nickname. **Input**: liat of words. **Output**: domains using that word that currently resolve.
 - `mailfy`. Find more information about emails taken as a reference either a nickname (to generate a  list of possible emails) or the email list. **Input**: list of nicknames or emails. **Output**: found information about the email.
