@@ -18,75 +18,78 @@
 ################################################################################
 
 import xmlrpc.client
-try:
-    from pip._internal.utils.misc import get_installed_distributions
-except ImportError:  # pip<10
-    from pip import get_installed_distributions
+import xmlrpc.client
+import sys
+
+if sys.version_info >= (3, 8):
+	from importlib import metadata as importlib_metadata
+else:
+	import importlib_metadata
 
 
 class UpgradablePackage(object):
-    def __init__(self, package_name="osrframework",
-                 repository='https://pypi.python.org/pypi'):
-        """Checks if a locally installed package has an update
+	def __init__(self, package_name="osrframework",
+				 repository='https://pypi.python.org/pypi'):
+		"""Checks if a locally installed package has an update
 
-        Args:
-            packake_name (str): The name of the package.
-            repository (str): Defines the repository. By default, the official
-                one.
-        """
-        installed_package = None
-        self.local_version = None
-        self.remote_version = None
-        self.repository = repository
+		Args:
+			packake_name (str): The name of the package.
+			repository (str): Defines the repository. By default, the official
+				one.
+		"""
+		installed_package = None
+		self.local_version = None
+		self.remote_version = None
+		self.repository = repository
 
-        for dist in get_installed_distributions():
-            if dist.project_name == package_name:
-                installed_package = dist
-                try:
-                    self.local_version = installed_package.version
-                except AttributeError:
-                    pass
-                break
+		for dist in importlib_metadata.distributions():
+			if dist.project_name == package_name:
+				installed_package = dist
+				try:
+					self.local_version = installed_package.version
+				except AttributeError:
+					pass
+				break
 
-        pypi = xmlrpc.client .ServerProxy(repository)
-        # This is an array
-        version_available = pypi.package_releases(package_name)
+		pypi = xmlrpc.client .ServerProxy(repository)
+		# This is an array
+		version_available = pypi.package_releases(package_name)
 
-        try:
-            self.remote_version = version_available[0]
-            if version_available[0] < installed_package.version:
-                # No updates available
-                self.status = "unstable"
-            elif version_available[0] == installed_package.version:
-                # No updates available
-                self.status = "up-to-date"
-            else:
-                # There are updates available!
-                self.status = "outdated"
-        except IndexError:
-            self.status = "unknown"
+		try:
+			self.remote_version = version_available[0]
+			if version_available[0] < installed_package.version:
+				# No updates available
+				self.status = "unstable"
+			elif version_available[0] == installed_package.version:
+				# No updates available
+				self.status = "up-to-date"
+			else:
+				# There are updates available!
+				self.status = "outdated"
+		except IndexError:
+			self.status = "unknown"
 
-    def get_dict(self):
-        """Returns a dict representing the object representation
+	def get_dict(self):
+		"""Returns a dict representing the object representation
 
-        Returns:
-            A dict representing the information stored.
-        """
-        return {
-            "status": self.status,
-            "local_version": self.local_version,
-            "remote_version": self.remote_version,
-            "repository": self.repository,
-        }
+		Returns:
+			A dict representing the information stored.
+		"""
+		return {
+			"status": self.status,
+			"local_version": self.local_version,
+			"remote_version": self.remote_version,
+			"repository": self.repository,
+		}
 
-    def is_upgradable(self):
-        """Checks if a locally stored version of a file is outdated
+	def is_upgradable(self):
+		"""Checks if a locally stored version of a file is outdated
 
-        Returns:
-            Bool if the local version is smaller than the remote one.
-        """
-        return self.local_version < self.remote_version
+		Returns:
+			Bool if the local version is smaller than the remote one.
+		"""
+		return self.local_version < self.remote_version
 
 
 if __name__ == "__main__":
-    print(UpgradablePackage(package_name="osrframework").get_dict())
+	print(UpgradablePackage(package_name="osrframework").get_dict())
