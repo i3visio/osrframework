@@ -19,7 +19,10 @@
 
 import xmlrpc.client
 try:
-    from pip._internal.utils.misc import get_installed_distributions
+    import pkg_resources
+    
+    dists = [d for d in pkg_resources.working_set]
+    # Filter out distributions you don't care about and use.
 except ImportError:  # pip<10
     from pip import get_installed_distributions
 
