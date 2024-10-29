@@ -73,7 +73,7 @@ We will provide the URL patern:
         #self.url["searchfy"] = "http://anyurl.com/search/" + "<searchfy>"  
 ```
 
-We will know tell if the platform needs credentials to work:
+We will now tell if the platform needs credentials to work:
 ```
         ######################################
         # Whether the user needs credentials #
