@@ -18,3 +18,4 @@ pandas
 xlwt
 odfpy
 openpyxl
+aiohttp
