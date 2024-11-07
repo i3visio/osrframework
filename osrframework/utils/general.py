@@ -28,7 +28,13 @@ import webbrowser as wb
 import colorama
 colorama.init(autoreset=True)
 import networkx as nx
-
+import pandas as pd
+import xlwt
+from odf.opendocument import OpenDocumentSpreadsheet
+from odf.table import Table, TableRow, TableCell
+from odf.text import P
+from openpyxl import Workbook
+from datetime import datetime
 
 LICENSE_URL = "https://www.gnu.org/licenses/agpl-3.0.txt"
 
@@ -272,95 +278,97 @@ def osrf_to_json_export(d, file_path):
 
 def osrf_to_text_export(data, file_path=None):
     """
-    Workaround to export to a .txt file or to show the information.
+    Exporta datos a un archivo .txt o muestra la información en formato de tabla.
 
     Args:
-        data (list): Data to export.
-        file_path: File path for the output file. If None was provided, it will
-            assume that it has to print it.
+        data (list): Datos a exportar.
+        file_path: Ruta del archivo de salida. Si es None, se imprime en lugar de guardarse.
 
     Returns:
-        str: It sometimes returns a unicode representation of the Sheet
-            received.
+        str: Representación en formato de tabla de los datos, o None si se guarda en archivo.
     """
-    # Manual check...
     if len(data) == 0:
         return "+------------------+\n| No data found... |\n+------------------+"
 
-    import pyexcel as pe
-    import pyexcel.ext.text as text
-
+    # Crear un DataFrame con los datos
     try:
-        old_data = get_data(file_path)
-    except Exception:
-        # No information has been recovered
-        old_data = {"OSRFramework":[]}
+        # Convertir los datos en DataFrame
+        df = pd.DataFrame(data)
+        
+        # Si hay columnas, asignar nombres automáticamente
+        if df.empty:
+            return "+------------------+\n| No data found... |\n+------------------+"
 
-    # Generating the new tabular data
-    tabular_data = _generate_tabular_data(data, {"OSRFramework":[[]]}, is_terminal=True)
-
-    # The tabular data contains a dict representing the whole book and we need only the sheet!!
-    sheet = pe.Sheet(tabular_data["OSRFramework"])
-    sheet.name = "Objects recovered (" + getCurrentStrDatetime() +")."
-    # Defining the headers
-    sheet.name_columns_by_row(0)
-    text.TABLEFMT = "grid"
-
-    try:
-        with open(file_path, "w") as file:
-            file.write(str(sheet))
-    except Exception:
-        # If a file_path was not provided... We will only return the info to be printed:
-        return sheet
+        # Exportar a archivo o mostrar como texto
+        if file_path:
+            df.to_csv(file_path, sep="\t", index=False)  # Exportar como texto con tabuladores
+            return None
+        else:
+            return df.to_string(index=False)
+    
+    except Exception as e:
+        return f"Error al exportar datos: {str(e)}"
 
 
 def osrf_to_csv_export(data, file_path):
     """
-    Workaround to export to a CSV file.
+    Exporta datos a un archivo CSV.
 
     Args:
-        data (list): Data to export.
-        file_path: File path for the output file.
+        data (list): Datos a exportar.
+        file_path: Ruta del archivo de salida.
     """
-    from pyexcel_io import get_data
+    # Crear un DataFrame a partir de los datos
     try:
-        old_data = {"OSRFramework": get_data(file_path) }
-    except:
-        # No information has been recovered
-        old_data = {"OSRFramework":[]}
+        df = pd.DataFrame(data)
+        
+        # Verificar si hay datos en el DataFrame
+        if df.empty:
+            print("No hay datos para exportar.")
+            return
 
-    # Generating the new tabular data.
-    tabular_data = _generate_tabular_data(data, old_data)
+        # Exportar el DataFrame a CSV
+        df.to_csv(file_path, index=False)
+        print(f"Datos exportados exitosamente a {file_path}")
 
-    from pyexcel_io import save_data
-    # Storing the file
-    # NOTE: when working with CSV files it is no longer a dict because it is a one-sheet-format
-    save_data(file_path, tabular_data["OSRFramework"])
+    except Exception as e:
+        print(f"Error al exportar los datos a CSV: {str(e)}")
 
 
 def osrf_to_ods_export(data, file_path):
     """
-    Workaround to export to a .ods file.
+    Exporta datos a un archivo .ods.
 
     Args:
-        data (list): Data to export.
-        file_path: File path for the output file.
+        data (list): Datos a exportar, cada elemento en la lista debe ser una lista de filas.
+        file_path: Ruta del archivo de salida.
     """
-    from pyexcel_ods import get_data
-    try:
-        #old_data = get_data(file_path)
-        # A change in the API now returns only an array of arrays if there is only one sheet.
-        old_data = {"OSRFramework": get_data(file_path) }
-    except:
-        # No information has been recovered
-        old_data = {"OSRFramework":[]}
+    # Crear un nuevo documento de hoja de cálculo ODS
+    doc = OpenDocumentSpreadsheet()
 
-    # Generating the new tabular data
-    tabular_data = _generate_tabular_data(data, old_data)
+    # Crear una nueva hoja de datos
+    table = Table(name="OSRFramework")
 
-    from pyexcel_ods import save_data
-    # Storing the file
-    save_data(file_path, tabular_data)
+    # Verificar si hay datos para exportar
+    if not data:
+        print("No hay datos para exportar.")
+        return
+
+    # Rellenar la hoja con los datos
+    for row_data in data:
+        row = TableRow()
+        for cell_data in row_data:
+            cell = TableCell()
+            cell.addElement(P(text=str(cell_data)))
+            row.addElement(cell)
+        table.addElement(row)
+
+    # Agregar la hoja de datos al documento
+    doc.spreadsheet.addElement(table)
+
+    # Guardar el archivo ODS
+    doc.save(file_path)
+    print(f"Datos exportados exitosamente a {file_path}")
 
 
 def osrf_to_xls_export(data, file_path):
@@ -369,22 +377,24 @@ def osrf_to_xls_export(data, file_path):
 
     Args:
         data (list): Data to export.
-        file_path: File path for the output file.
+        file_path (str): File path for the output file.
     """
-    from pyexcel_xls import get_data
-    try:
-        #old_data = get_data(file_path)
-        # A change in the API now returns only an array of arrays if there is only one sheet.
-        old_data = {"OSRFramework": get_data(file_path) }
-    except:
-        # No information has been recovered
-        old_data = {"OSRFramework":[]}
+    # Crear un libro de Excel y una hoja
+    workbook = xlwt.Workbook()
+    sheet = workbook.add_sheet("OSRFramework_" + datetime.now().strftime("%Y-%m-%d"))
 
-    # Generating the new tabular data
-    tabular_data = _generate_tabular_data(data, old_data)
-    from pyexcel_xls import save_data
-    # Storing the file
-    save_data(file_path, tabular_data)
+    # Agregar encabezados
+    headers = data[0].keys() if data else []
+    for col, header in enumerate(headers):
+        sheet.write(0, col, header)
+
+    # Escribir los datos
+    for row, record in enumerate(data, start=1):
+        for col, (key, value) in enumerate(record.items()):
+            sheet.write(row, col, value)
+
+    # Guardar el archivo .xls
+    workbook.save(file_path)
 
 
 def osrf_to_xlsx_export(data, file_path):
@@ -393,164 +403,109 @@ def osrf_to_xlsx_export(data, file_path):
 
     Args:
         data (list): Data to export.
-        file_path: File path for the output file.
+        file_path (str): File path for the output file.
     """
-    from pyexcel_xlsx import get_data
-    try:
-        #old_data = get_data(file_path)
-        # A change in the API now returns only an array of arrays if there is only one sheet.
-        old_data = {"OSRFramework": get_data(file_path) }
-    except:
-        # No information has been recovered
-        old_data = {"OSRFramework":[]}
+    # Crear un libro de Excel y una hoja
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "OSRFramework_" + datetime.now().strftime("%Y-%m-%d")
 
-    # Generating the new tabular data
-    tabular_data = _generate_tabular_data(data, old_data)
+    # Agregar encabezados
+    headers = data[0].keys() if data else []
+    sheet.append(headers)
 
-    from pyexcel_xlsx import save_data
-    # Storing the file
-    save_data(file_path, tabular_data)
+    # Escribir los datos
+    for record in data:
+        row = [record.get(header, "") for header in headers]
+        sheet.append(row)
+
+    # Guardar el archivo .xlsx
+    workbook.save(file_path)
 
 
-def _generate_graph_data(data, old_data=nx.Graph()):
+def _generate_graph_data(data, old_data=None):
     """
-    Processing the data from i3visio structures to generate nodes and edges
+    Processing the data from i3visio structures to generate nodes and edges.
 
     This function uses the networkx graph library. It will create a new node
-    for each and i3visio.<something> entities while it will add properties for
-    all the attribute starting with "@".
+    for each i3visio.<something> entity while adding properties for all attributes
+    starting with "@".
 
     Args:
-        d: The i3visio structures containing a list of
+        data (list): The i3visio structures containing a list of entities.
         old_data: A graph structure representing the previous information.
 
     Returns:
         A graph structure representing the updated information.
     """
+    if old_data is None:
+        old_data = nx.Graph()
+    
     def _addNewNode(ent, g):
         """
-        Wraps the creation of a node
+        Wraps the creation of a node.
 
         Args:
-            ent:   The hi3visio-like entities to be used as the identifier.
-                ent = {
-                    "value":"i3visio",
-                    "type":"com.i3visio.Alias,
-                }
+            ent: The hi3visio-like entities to be used as the identifier.
             g:   The graph in which the entity will be stored.
 
         Returns:
             The label used to represent this element.
         """
-        try:
-            label = unicode(ent["value"])
-        except UnicodeEncodeError as e:
-            # Printing that an error was found
-            label = str(ent["value"])
+        label = str(ent["value"])  # Changed to str for Python 3 compatibility
         g.add_node(label)
-        g.node[label]["type"] = ent["type"]
+        g.nodes[label]["type"] = ent["type"]
         return label
 
     def _processAttributes(elems, g):
         """
-        Function that processes a list of elements to obtain new attributes.
+        Processes a list of elements to obtain new attributes.
 
         Args:
             elems (list): List of i3visio-like entities.
             g: The graph in which the entity will be stored.
 
         Returns:
-            newAtts: Dict of attributes (to be stored as attributes for the
-                given entity).
-            newEntities: List of new Entities (to be stored as attributes for
-                the given entity).
+            Tuple of (newAtts, newEntities) where:
+            newAtts: Dict of attributes.
+            newEntities: List of new entities.
         """
         newAtts = {}
-        newEntities= []
+        newEntities = []
 
         for att in elems:
-            # If it is an attribute
             if att["type"][0] == "@":
-                # Removing the @ and the  _ of the attributes
-                attName = str(att["type"][1:]).replace('_', '')
+                attName = att["type"][1:].replace('_', '')
                 try:
                     newAtts[attName] = int(att["value"])
-                except:
+                except ValueError:
                     newAtts[attName] = att["value"]
             elif att["type"][:12] == "i3visio.":
-                # Creating a dict to represent the pair: type, value entity.
                 ent = {
                     "value": att["value"],
                     "type": att["type"],
                 }
-                # Appending the new Entity to the entity list
                 newEntities.append(ent)
-
-                # Appending the new node
                 hashLabel = _addNewNode(ent, g)
-
-                # Make this recursive to link the attributes in each and every att
                 newAttsInAttributes, newEntitiesInAttributes = _processAttributes(att["attributes"], g)
-
-                # Updating the attributes to the current entity
-                g.node[hashLabel].update(newAttsInAttributes)
-
-                # Creating the edges (the new entities have also been created in the _processAttributes
+                g.nodes[hashLabel].update(newAttsInAttributes)
                 for new in newEntitiesInAttributes:
-                    graphData.add_edge(hashLabel, json.dumps(new))
-                    try:
-                        # Here, we would add the properties of the edge
-                        #graphData.edge[hashLabel][json.dumps(new)]["@times_seen"] +=1
-                        pass
-                    except:
-                        # If the attribute does not exist, we would initialize it
-                        #graphData.edge[hashLabel][json.dumps(new)]["@times_seen"] = 1
-                        pass
-            else:
-                # An unexpected type
-                pass
+                    g.add_edge(hashLabel, json.dumps(new))
 
         return newAtts, newEntities
 
     graphData = old_data
-    # Iterating through the results
     for elem in data:
-        # Creating a dict to represent the pair: type, value entity.
         ent = {
-            "value":elem["value"],
-            "type":elem["type"],
+            "value": elem["value"],
+            "type": elem["type"],
         }
-
-        # Appending the new node
         new_node = _addNewNode(ent, graphData)
-
-        # Processing the attributes to grab the attributes (starting with "@..." and entities)
         newAtts, newEntities = _processAttributes(elem["attributes"], graphData)
-
-        # Updating the attributes to the current entity
-        graphData.node[new_node].update(newAtts)
-
-        # Creating the edges (the new entities have also been created in the _processAttributes
+        graphData.nodes[new_node].update(newAtts)
         for other_node in newEntities:
-            # Serializing the second entity
-            serEnt = json.dumps(new_node)
-
-            try:
-                other_node = unicode(other_node["value"])
-            except UnicodeEncodeError as e:
-                # Printing that an error was found
-                other_node = str(other_node["value"])
-
-            # Adding the edge
-            graphData.add_edge(new_node, other_node)
-            try:
-                # Here, we would add the properties of the edge
-                #graphData.edge[hashLabel][hashLabelSeconds]["times_seen"] +=1
-                pass
-            except:
-                # If the attribute does not exist, we would initialize it
-                #graphData.edge[hashLabel][hashLabelSeconds]["times_seen"] = 1
-                pass
+            other_node_label = str(other_node["value"])  # Changed to str for Python 3 compatibility
+            graphData.add_edge(new_node, other_node_label)
 
     return graphData
 
@@ -823,7 +778,7 @@ def showLicense():
         # Grab the license online and print it.
         text = urllib.urlopen(LICENSE_URL).read()
         print("License retrieved from " + emphasis(LICENSE_URL) + ".")
-        raw_input("\n\tPress " + emphasis("<ENTER>") + " to print it.\n")
+        input("\n\tPress " + emphasis("<ENTER>") + " to print it.\n")
         print(text)
     except:
         print(warning("The license could not be downloaded and printed."))
