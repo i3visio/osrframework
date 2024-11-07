@@ -24,164 +24,143 @@ import os
 import sys
 
 import osrframework
-import osrframework.utils.banner as banner
-import osrframework.utils.platform_selection as platform_selection
-import osrframework.utils.configuration as configuration
-import osrframework.utils.general as general
+from osrframework.utils import banner, platform_selection, configuration, general
 
 
-def perform_search(platformNames=[], queries=[], exclude_platform_names=[]):
-    """Method to perform the search itself on the different platforms
+def perform_search(platform_names=[], queries=[], exclude_platform_names=[]):
+    """Performs the search on selected platforms.
 
     Args:
-        platformNames: List of names of the platforms.
-        queries: List of queries to be performed.
-        exclude_platform_names: A list of platforms not to be searched.
+        platform_names: List of platform names to search.
+        queries: List of queries to perform.
+        exclude_platform_names: List of platforms to exclude from search.
 
     Returns:
-        list: A list with the entities collected.
+        list: A list of collected entities.
     """
-    # Grabbing the <Platform> objects
-    platforms = platform_selection.get_platforms_by_name(platformNames, mode="searchfy", exclude_platform_names=exclude_platform_names)
+    platforms = platform_selection.get_platforms_by_name(
+        platform_names, mode="searchfy", exclude_platform_names=exclude_platform_names
+    )
     results = []
-    for q in queries:
-        for pla in platforms:
-            # This returns a json.txt!
-            entities = pla.get_info(query=q, mode="searchfy")
+    for query in queries:
+        for platform in platforms:
+            entities = platform.get_info(query=query, mode="searchfy")
             if entities != "[]":
-                results += json.loads(entities)
+                results.extend(json.loads(entities))
     return results
 
+
 def get_parser():
-    """Defines the argument parser
+    """Defines the argument parser.
 
     Returns:
-        argparse.ArgumentParser.
+        argparse.ArgumentParser: Configured argument parser.
     """
     DEFAULT_VALUES = configuration.get_configuration_values_for("searchfy")
-    # Capturing errors just in case the option is not found in the configuration
-    try:
-        exclude_list = [DEFAULT_VALUES["exclude_platforms"]]
-    except:
-        exclude_list = []
+    exclude_list = DEFAULT_VALUES.get("exclude_platforms", [])
 
-    parser = argparse.ArgumentParser(description='searchfy - Piece of software that performs a query on the platforms in OSRFramework.', prog='searchfy', epilog='Check the README.md file for further details on the usage of this program or follow us on Twitter in <http://twitter.com/i3visio>.', add_help=False, conflict_handler='resolve')
+    parser = argparse.ArgumentParser(
+        description='searchfy - OSRFramework tool to perform queries across platforms.',
+        prog='searchfy',
+        epilog='Refer to README.md or visit <http://twitter.com/i3visio>.',
+        add_help=False,
+        conflict_handler='resolve'
+    )
     parser._optionals.title = "Input options (one required)"
 
-    # Adding the main options
     group_main = parser.add_mutually_exclusive_group(required=True)
-    group_main.add_argument('--license', required=False, action='store_true', default=False, help='shows the GPLv3+ license and exists.')
-    group_main.add_argument('-q', '--queries', metavar='<searches>', nargs='+', action='store', help = 'the list of queries to be performed).')
+    group_main.add_argument('--license', action='store_true', help='Shows the GPLv3+ license and exits.')
+    group_main.add_argument('-q', '--queries', metavar='<searches>', nargs='+', help='List of queries to be performed.')
 
-    listAll = platform_selection.get_all_platform_names("searchfy")
+    all_platforms = platform_selection.get_all_platform_names("searchfy")
 
-    # Configuring the processing options
-    group_processing = parser.add_argument_group('Processing arguments', 'Configuring the way in which searchfy will process the identified profiles.')
-    group_processing.add_argument('-e', '--extension', metavar='<sum_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx' ], required=False, default=DEFAULT_VALUES.get("extension", ["csv"]), action='store', help='output extension for the summary files. Default: xls.')
-    group_processing.add_argument('-F', '--file_header', metavar='<alternative_header_file>', required=False, default=DEFAULT_VALUES.get("file_header", "profiles"), action='store', help='Header for the output filenames to be generated. If None was provided the following will be used: profiles.<extension>' )
-    group_processing.add_argument('-o', '--output_folder', metavar='<path_to_output_folder>', required=False,  default=DEFAULT_VALUES.get("output_folder", "."), action='store', help='output folder for the generated documents. While if the paths does not exist, usufy.py will try to create; if this argument is not provided, usufy will NOT write any down any data. Check permissions if something goes wrong.')
-    group_processing.add_argument('-p', '--platforms', metavar='<platform>', choices=listAll, nargs='+', required=False, default=DEFAULT_VALUES.get("platforms", []) ,action='store', help='select the platforms where you want to perform the search amongst the following: ' + str(listAll) + '. More than one option can be selected.')
-    group_processing.add_argument('-w', '--web_browser', required=False, action='store_true', help='opening the URIs returned in the default web browser.')
-    group_processing.add_argument('-x', '--exclude', metavar='<platform>', choices=listAll, nargs='+', required=False, default=exclude_list, action='store', help='select the platforms that you want to exclude from the processing.')
+    group_processing = parser.add_argument_group('Processing arguments')
+    group_processing.add_argument(
+        '-e', '--extension', metavar='<output_ext>', nargs='+', choices=['csv', 'gml', 'json', 'ods', 'png', 'txt', 'xls', 'xlsx'],
+        default=DEFAULT_VALUES.get("extension", ["csv"]), help='Output extension for summary files. Default: csv.'
+    )
+    group_processing.add_argument(
+        '-F', '--file_header', metavar='<header>', default=DEFAULT_VALUES.get("file_header", "profiles"),
+        help='Header for output filenames. Default: profiles.<extension>.'
+    )
+    group_processing.add_argument(
+        '-o', '--output_folder', metavar='<output_folder>', default=DEFAULT_VALUES.get("output_folder", "."),
+        help='Folder for generated documents. Created if it does not exist.'
+    )
+    group_processing.add_argument(
+        '-p', '--platforms', metavar='<platform>', choices=all_platforms, nargs='+', default=DEFAULT_VALUES.get("platforms", []),
+        help=f'Select platforms to search. Available options: {all_platforms}.'
+    )
+    group_processing.add_argument(
+        '-w', '--web_browser', action='store_true', help='Opens URIs in the default web browser.'
+    )
+    group_processing.add_argument(
+        '-x', '--exclude', metavar='<platform>', choices=all_platforms, nargs='+', default=exclude_list,
+        help='Exclude platforms from processing.'
+    )
 
-    # About options
-    group_about = parser.add_argument_group('About arguments', 'Showing additional information about this program.')
-    group_about.add_argument('-h', '--help', action='help', help='shows this help and exists.')
-    group_about.add_argument('--version', action='version', version='[%(prog)s] OSRFramework ' + osrframework.__version__, help='shows the version of the program and exists.')
+    group_about = parser.add_argument_group('About arguments')
+    group_about.add_argument('-h', '--help', action='help', help='Shows this help message and exits.')
+    group_about.add_argument('--version', action='version', version=f'[%(prog)s] OSRFramework {osrframework.__version__}', help='Shows the version.')
 
     return parser
 
 
 def main(params=None):
-    """Main function to launch searchfy
-
-    The function is created in this way so as to let other applications make
-    use of the full configuration capabilities of the application. The
-    parameters received are used as parsed by this modules `get_parser()`.
+    """Main function to launch searchfy.
 
     Args:
-        params (list): A list with the parameters as grabbed by the terminal. It is
-            None when this is called by an entry_point. If it is called by osrf
-            the data is already parsed.
+        params (list, optional): List of command-line parameters. Defaults to None.
 
     Returns:
-        list. A list of i3visio entities.
+        list: List of i3visio entities.
     """
-    if params is None:
-        parser = get_parser()
-        args = parser.parse_args(params)
-    else:
-        args = params
+    parser = get_parser()
+    args = parser.parse_args(params)
 
-    results = []
+    if args.license:
+        general.showLicense()
+        return []
 
     print(general.title(banner.text))
-
-    saying_hello = f"""
+    print(general.info("""
      Searchfy | Copyright (C) Yaiza Rubio & Félix Brezo (i3visio) 2014-2021
 
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you
 are welcome to redistribute it under certain conditions. For additional info,
-visit <{general.LICENSE_URL}>.
-"""
-    print(general.info(saying_hello))
+visit <{}>.
+""".format(general.LICENSE_URL)))
 
-    if args.license:
-        general.showLicense()
-    else:
-        # Showing the execution time...
-        start_time = dt.datetime.now()
-        print(f"{start_time}\tStarting search in different platform(s)... Relax!\n")
-        print(general.emphasis("\tPress <Ctrl + C> to stop...\n"))
-        # Performing the search
-        try:
-            results = perform_search(platformNames=args.platforms, queries=args.queries, exclude_platform_names=args.exclude)
-        except KeyboardInterrupt:
-            print(general.error("\n[!] Process manually stopped by the user. Workers terminated without providing any result.\n"))
-            results = []
+    start_time = dt.datetime.now()
+    print(f"{start_time}\tStarting search across selected platform(s)...\n")
 
-        # Generating summary files for each ...
-        if args.extension:
-            # Verifying if the outputPath exists
-            if not os.path.exists (args.output_folder):
-                os.makedirs(args.output_folder)
+    try:
+        results = perform_search(platform_names=args.platforms, queries=args.queries, exclude_platform_names=args.exclude)
+    except KeyboardInterrupt:
+        print(general.error("\n[!] Process manually stopped. No results were returned.\n"))
+        return []
 
-            # Grabbing the results
-            fileHeader = os.path.join(args.output_folder, args.file_header)
+    if args.extension:
+        os.makedirs(args.output_folder, exist_ok=True)
+        file_header = os.path.join(args.output_folder, args.file_header)
 
-            # Iterating through the given extensions to print its values
-            for ext in args.extension:
-                # Generating output files
-                general.export_usufy(results, ext, fileHeader)
-
-        # Printing the results if requested
-        now = dt.datetime.now()
-        print(f"\n{now}\tResults obtained:\n")
-        print(general.success(general.osrf_to_text_export(results)))
-
-        if args.web_browser:
-            general.open_results_in_browser(results)
-
-        now = dt.datetime.now()
-        print("\n{date}\tYou can find all the information collected in the following files:".format(date=str(now)))
         for ext in args.extension:
-            # Showing the output files
-            print("\t" + general.emphasis(fileHeader + "." + ext))
+            general.export_usufy(results, ext, file_header)
 
-        # Showing the execution time...
-        end_time = dt.datetime.now()
-        print(f"\n{end_time}\tFinishing execution...\n")
-        print("Total time used:\t" + general.emphasis(str(end_time-start_time)))
-        try:
-            print("Average seconds/query:\t" + general.emphasis(str((end_time-start_time).total_seconds()/len(args.platforms))) +" seconds\n")
-        except:
-            pass
+    print(f"\nResults obtained:\n{general.success(general.osrf_to_text_export(results))}")
 
-        # Urging users to place an issue on Github...
-        print(banner.footer)
+    if args.web_browser:
+        general.open_results_in_browser(results)
 
-    if params:
-        return results
+    end_time = dt.datetime.now()
+    print(f"\n{end_time}\tExecution finished.\n")
+    print(f"Total time:\t{str(end_time - start_time)}")
+    if args.platforms:
+        avg_time = (end_time - start_time).total_seconds() / len(args.platforms)
+        print(f"Average seconds/query:\t{avg_time:.2f} seconds\n")
+    print(banner.footer)
+
+    return results
 
 
 if __name__ == "__main__":
