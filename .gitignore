@@ -30,3 +30,38 @@ fuzz.txt
 *.back
 osrframework-virtualenv
 possible_emails*
+
+# Testing related
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.py[cod]
+*$py.class
+
+# Claude settings
+.claude/*
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# Poetry
+# Note: poetry.lock should be committed to version control
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+__pycache__/
+*.egg-info/
+.eggs/
+build/
+dist/
+*.whl

@@ -1,0 +1,146 @@
+[tool.poetry]
+name = "osrframework"
+version = "0.20.0"
+description = "OSRFramework - A set of AGPLv3+ OSINT tools developed by i3visio analysts for online research."
+authors = ["Felix Brezo and Yaiza Rubio <contacto@i3visio.com>"]
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+homepage = "http://github.com/i3visio/osrframework"
+repository = "http://github.com/i3visio/osrframework"
+keywords = ["python", "osint", "harvesting", "profiling", "username", "socialmedia", "forums"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Software Development :: Libraries",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Telecommunications Industry",
+    "Natural Language :: English",
+    "Topic :: Communications",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Text Processing :: Markup :: HTML"
+]
+packages = [{include = "osrframework"}]
+
+[tool.poetry.scripts]
+alias_generator = "osrframework.alias_generator:main"
+"alias_generator.py" = "osrframework.alias_generator:main"
+domainfy = "osrframework.domainfy:main"
+"domainfy.py" = "osrframework.domainfy:main"
+checkfy = "osrframework.checkfy:main"
+"checkfy.py" = "osrframework.checkfy:main"
+mailfy = "osrframework.mailfy:main"
+"mailfy.py" = "osrframework.mailfy:main"
+phonefy = "osrframework.phonefy:main"
+"phonefy.py" = "osrframework.phonefy:main"
+searchfy = "osrframework.searchfy:main"
+"searchfy.py" = "osrframework.searchfy:main"
+usufy = "osrframework.usufy:main"
+"usufy.py" = "osrframework.usufy:main"
+osrf = "osrframework.launcher:main"
+osrframework-cli = "osrframework.launcher:main"
+test = "pytest:main"
+tests = "pytest:main"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+setuptools = "*"
+beautifulsoup4 = "*"
+requests = "*"
+python-emailahoy3 = "*"
+pyexcel = "0.2.1"
+pyexcel-ods = "0.1.1"
+pyexcel-xls = "0.1.0"
+pyexcel-xlsx = "0.1.0"
+pyexcel-io = "0.1.0"
+pyexcel-text = "0.2.0"
+tweepy = "*"
+networkx = "*"
+decorator = "*"
+validate-email = "*"
+tabulate = "*"
+oauthlib = ">=1.0.0"
+python-whois = "*"
+pyyaml = "*"
+colorama = "*"
+configparser = "*"
+cfscrape = "*"
+duckpy = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.12.0"
+
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=osrframework",
+    "--cov-branch",
+    "--cov-report=term-missing:skip-covered",
+    "--cov-report=html:htmlcov",
+    "--cov-report=xml:coverage.xml",
+    "--cov-fail-under=80",
+    "-vv"
+]
+markers = [
+    "unit: marks tests as unit tests (fast, isolated)",
+    "integration: marks tests as integration tests (may require external resources)",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')"
+]
+console_output_style = "progress"
+junit_suite_name = "osrframework_tests"
+
+[tool.coverage.run]
+source = ["osrframework"]
+branch = true
+parallel = true
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/site-packages/*",
+    "*/distutils/*"
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = true
+fail_under = 80
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:"
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
