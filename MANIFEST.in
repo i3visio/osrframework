@@ -1,9 +1,0 @@
-recursive-include config *cfg
-recursive-include config/plugins *sample
-recursive-include osrframework/transforms/lib/osrframework-maltego-settings *
-recursive-include osrframework/transforms/lib *txt
-recursive-include osrframework/static *
-recursive-include osrframework/templates *
-include *md
-recursive-include doc *md
-include requirements.txt
