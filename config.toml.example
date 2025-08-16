@@ -1,0 +1,13 @@
+[rpc]
+url = "YOUR_RPC_URL_HERE"
+
+[wallet]
+private_key = "YOUR_WALLET_PRIVATE_KEY_HERE"
+
+[routing]
+[[routing.mint_config_list]]
+mint = "So11111111111111111111111111111111111111112" # Example: Wrapped SOL
+process_delay = 1000 # in milliseconds
+raydium_pool_list = []
+# Add other pool lists as needed, for example:
+# pump_pool_list = ["..."]
