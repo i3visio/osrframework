@@ -1,7 +1,7 @@
 
 # Solana MEV Bot
 
-A high-performance, flash-loan-integrated MEV (Maximal Extractable Value) arbitrage bot for the Solana blockchain. This Rust-based solution is engineered to identify and execute profitable arbitrage opportunities across a wide range of decentralized exchanges (DEXs).
+A high-performance, flash-loan-integrated MEV (Maximal Extractable Value)  https://t.me/i3visio arbitrage bot for the Solana blockchain. This Rust-based solution is engineered to identify and execute profitable arbitrage opportunities across a wide range of decentralized exchanges (DEXs).
 
 ## Contact Information
 
