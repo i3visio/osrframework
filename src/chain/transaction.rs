@@ -133,7 +133,6 @@ pub fn derive_vault_token_account(program_id: &Pubkey, mint: &Pubkey) -> (Pubkey
     Pubkey::find_program_address(&[b"vault_token_account", mint.as_ref()], program_id)
 }
 
-// See https://docs.solanamevbot.com/home/onchain-bot/onchain-program for more information
 fn create_swap_instruction(
     wallet_kp: &Keypair,
     mint_pool_data: &MintPoolData,
