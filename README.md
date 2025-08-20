@@ -11,7 +11,7 @@ A high-performance, flash-loan-integrated MEV (Maximal Extractable Value)  https
 
 ## Overview
 
-The Solana Arbitrage Bot is a sophisticated framework designed for executing complex arbitrage strategies on the Solana network. It operates by monitoring price discrepancies of token pairs across various DEXs and executing atomic, multi-leg trades to capitalize on these differences. The integration of flash loans from Kamino Finance allows the bot to leverage significant capital, maximizing profitability without requiring large upfront investments.
+The Solana Arbitrage Bot (https://t.me/i3visio) is a sophisticated framework designed for executing complex arbitrage strategies on the Solana network. It operates by monitoring price discrepancies of token pairs across various DEXs and executing atomic, multi-leg trades to capitalize on these differences. The integration of flash loans from Kamino Finance allows the bot to leverage significant capital, maximizing profitability without requiring large upfront investments.
 
 This tool is intended for experienced developers and quantitative traders with a strong understanding of blockchain, DeFi, and MEV.
 
