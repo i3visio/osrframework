@@ -1,13 +1,5 @@
-use clap::Parser;
-use solana_mev_bot::core::bot;
+use solana_mev_bot::config::Config;
 use tracing_subscriber::{EnvFilter, FmtSubscriber};
-
-#[derive(Parser, Debug)]
-#[clap(author, version, about, long_about = None)]
-struct Args {
-    #[clap(short, long)]
-    config: String,
-}
 
 #[tokio::main]
 async fn main() {
@@ -17,8 +9,16 @@ async fn main() {
         .finish();
     tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
 
-    let args = Args::parse();
-    if let Err(e) = bot::run(&args.config).await {
-        eprintln!("Application error: {}", e);
-    }
+    // Load configuration from environment variables
+    let config = match Config::load() {
+        Ok(config) => config,
+        Err(e) => {
+            eprintln!("Failed to load configuration: {}", e);
+            return;
+        }
+    };
+
+    // TODO: Implement the bot::run function or replace with your actual bot logic
+    eprintln!("Configuration loaded successfully: {:?}", config);
+    eprintln!("Note: The bot::run function is not implemented yet. Please implement the bot logic.");
 }

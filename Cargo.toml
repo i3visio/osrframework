@@ -27,6 +27,7 @@ spl-associated-token-account = { version = "1.1.3", features = [
 # Serialization/deserialization
 serde = { version = "1.0", features = ["derive"] }
 toml = "0.5"
+dotenv = "0.15"
 
 # Async runtime
 tokio = { version = "1.32", features = ["full"] }
@@ -42,8 +43,8 @@ bytemuck = { version = "1.15.0", features = ["derive"] }
 anchor-lang = "0.31.1"
 arrayref = "0.3.7"
 
-# Command line argument parsing
-clap = { version = "3.2", features = ["derive"] }
+# Command line argument parsing (removed - no longer needed)
+# clap = { version = "3.2", features = ["derive"] }
 
 # Logging
 tracing = "0.1"
